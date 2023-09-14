@@ -11,6 +11,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        // ignore foreign key constraints
+        DB::statement('PRAGMA foreign_keys = OFF');
+
         Schema::drop('teams');
         Schema::drop('team_user');
         Schema::drop('team_invitations');
