@@ -12,7 +12,7 @@ return new class extends Migration {
     public function up(): void
     {
         // ignore foreign key constraints
-        DB::statement('PRAGMA foreign_keys = OFF');
+        Schema::disableForeignKeyConstraints();
 
         Schema::drop('teams');
         Schema::drop('team_user');
@@ -21,6 +21,8 @@ return new class extends Migration {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('current_team_id');
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
