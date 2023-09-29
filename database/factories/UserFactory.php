@@ -24,6 +24,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
+            'role' => User::USER_ROLE,
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'two_factor_secret' => null,
@@ -57,6 +58,18 @@ class UserFactory extends Factory
                 ])
                 ->when(is_callable($callback), $callback),
             'companies'
+        );
+    }
+
+    public function withcurrentCompany(callable $callback = null): static
+    {
+        return $this->for(
+            Company::factory()
+                ->state(fn () => [
+                    'name' => $this->faker->unique()->company(),
+                ])
+                ->when(is_callable($callback), $callback),
+            'currentCompany'
         );
     }
 }

@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <x-button>
+                    <x-button.primary>
                         {{ __('Email Password Reset Link') }}
                     </x-button>
                 </div>

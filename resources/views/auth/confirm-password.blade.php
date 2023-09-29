@@ -15,13 +15,13 @@
 
             <div>
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" autofocus />
+                <x-input id="password" class="block w-full mt-1" type="password" name="password" required autocomplete="current-password" autofocus />
             </div>
 
             <div class="flex justify-end mt-4">
-                <x-button class="ml-4">
+                <x-button.primary class="ml-4">
                     {{ __('Confirm') }}
-                </x-button>
+                </x-button.primary>
             </div>
         </form>
     </x-authentication-card>

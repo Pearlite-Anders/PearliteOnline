@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,21 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/companies', \App\Livewire\Company\Index::class)->name('companies.index');
+    Route::get('/companies/create', \App\Livewire\Company\Create::class)->name('companies.create');
+    Route::get('/companies/{company}/edit', \App\Livewire\Company\Edit::class)->name('companies.edit');
+
+    Route::get('/users', \App\Livewire\User\Index::class)->name('users.index');
+    Route::get('/users/create', \App\Livewire\User\Create::class)->name('users.create');
+    Route::get('/users/{user}/edit', \App\Livewire\User\Edit::class)->name('users.edit');
+
+    Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
+        auth()->user()->current_company_id = $company->id;
+        auth()->user()->save();
+
+        return redirect()->route('companies.index');
+    })->name('switch-company');
+
+
 });

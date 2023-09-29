@@ -12,6 +12,11 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <!-- Show users current company name as pill -->
+                @if(auth()->user()->currentCompany)
+                    <span class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">{{ auth()->user()->currentCompany->name }}</span>
+                @endif
+
                 <!-- Settings Dropdown -->
                 <div class="relative ml-3">
                     <x-dropdown align="right" width="48">

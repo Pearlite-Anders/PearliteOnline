@@ -52,9 +52,9 @@
                     <a class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" href="{{ route('login') }}">
                         {{ __('Already registered?') }}
                     </a>
-                    <x-button class="mt-4">
+                    <x-button.primary class="mt-4">
                         {{ __('Register') }}
-                    </x-button>
+                    </x-button.primary>
                 </div>
             </form>
         </div>

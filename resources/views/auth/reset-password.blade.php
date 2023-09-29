@@ -31,9 +31,9 @@
                     <x-input id="password_confirmation" class="block w-full mt-1" type="password" name="password_confirmation" required autocomplete="new-password" />
                 </div>
                 <div class="flex items-center justify-end mt-4">
-                    <x-button>
+                    <x-button.primary>
                         {{ __('Reset Password') }}
-                    </x-button>
+                    </x-button.primary>
                 </div>
             </form>
         </div>

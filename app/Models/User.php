@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -18,6 +18,11 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
+
+    public const ADMIN_ROLE = 'admin';
+    public const PARTNER_ROLE = 'partner';
+    public const USER_ROLE = 'user';
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +30,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'current_company_id', 'role',
     ];
 
     /**
@@ -65,6 +70,38 @@ class User extends Authenticatable
      */
     public function companies()
     {
+        if ($this->isAdmin()) {
+            return Company::query();
+        }
         return $this->belongsToMany(Company::class);
+    }
+
+    public function getCompaniesAttribute()
+    {
+        if ($this->isAdmin()) {
+            return Company::all();
+        }
+
+        return $this->getRelationValue('companies');
+    }
+
+    public function currentCompany()
+    {
+        return $this->belongsTo(Company::class, 'current_company_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === self::ADMIN_ROLE;
+    }
+
+    public function isPartner()
+    {
+        return $this->role === self::PARTNER_ROLE;
+    }
+
+    public function isUser()
+    {
+        return $this->role === self::USER_ROLE;
     }
 }
