@@ -55,13 +55,13 @@
                                         @if($confirming == $user->id)
                                             <x-button
                                                 wire:click="delete({{ $user->id }})"
-                                                class="bg-red-600 hover:bg-red-700"
+                                                class="bg-red-700 hover:bg-red-800"
                                             >
                                                 <x-icon.check class="w-4 h-4 text-white" />
                                             </x-button>
                                             <x-button
                                                 wire:click="cancelConfirmDelete"
-                                                class="bg-green-500 hover:bg-green-600"
+                                                class="bg-cyan-600 hover:bg-cyan-700"
                                             >
                                                 <x-icon.x class="w-4 h-4 text-white" />
                                             </x-button>
