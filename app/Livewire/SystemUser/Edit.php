@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\SystemUser;
 
 use App\Models\User;
 use App\Models\Company;
@@ -13,27 +13,32 @@ class Edit extends Component
 
     public function update()
     {
+        if(!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
         $this->authorize('update', $this->user);
         $this->form->validate();
 
-        $allowed_permissions = [];
-        foreach($this->form->permissions as $module_key => $module) {
-            foreach($module as $permission => $value) {
-                if($value) {
-                    $allowed_permissions[] = $module_key .'.'. $permission;
-                }
-            }
-        }
-        $this->user->syncPermissions($allowed_permissions);
-
         $this->user->name = $this->form->name;
         $this->user->email = $this->form->email;
+        $this->user->role = $this->form->role;
 
         if($this->form->password) {
             $this->user->password = bcrypt($this->form->password);
         }
 
         $this->user->save();
+
+        $companies = [];
+        foreach($this->form->companies as $company_id => $value) {
+            if($value) {
+                $companies[] = $company_id;
+            }
+        }
+        if($this->user->role == User::PARTNER_ROLE) {
+            $this->user->companies()->sync($companies);
+        }
 
 
         $this->dispatch(
@@ -49,23 +54,20 @@ class Edit extends Component
         $this->form->name = $user->name;
         $this->form->email = $user->email;
         $this->form->role = $user->role;
-
-
-        // Permissions
-        $permissions = [];
-        foreach(auth()->user()->currentCompany->modules() as $module_key => $module) {
-            foreach($module->permissions as $permission => $permission_name) {
-                $permissions[$module_key][$permission] = $user->can($module_key .'.'. $permission);
-            }
-        }
-
-        $this->form->permissions = $permissions;
+        $this->form->companies = $user->companies->pluck('id')->mapWithKeys(function ($company_id) {
+            return [$company_id => true];
+        })->toArray();
     }
 
     public function render()
     {
+        if(!auth()->user()->isAdmin()) {
+            abort(403);
+        }
         $this->authorize('update', $this->user);
 
-        return view('livewire.user.edit');
+        return view('livewire.system-user.edit')->with([
+            'companies' => Company::all(),
+        ]);
     }
 }

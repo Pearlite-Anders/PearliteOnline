@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\SystemUser;
 
 use Livewire\Attributes\Rule;
 use Livewire\Form as LivewireForm;
@@ -16,5 +16,8 @@ class Form extends LivewireForm
     #[Rule('min:4')]
     public $password = '';
 
-    public $permissions = [];
+    #[Rule('required')]
+    public $role = '';
+
+    public $companies = [];
 }

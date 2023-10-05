@@ -21,28 +21,12 @@
             />
             <x-input-error for="form.name" class="mt-2" />
         </div>
-        <div></div>
-        @if(auth()->user()->isAdmin())
-            <div>
-                <x-label for="form.role" :value="__('Role')" />
-                <x-input.select
-                    wire:model="form.role"
-                    placeholder="{{ __('Select a role') }}"
-                    required
-                >
-                    <option value="{{ App\Models\User::USER_ROLE }}">{{ __('User') }}</option>
-                    <option value="{{ App\Models\User::PARTNER_ROLE }}">{{ __('Partner') }}</option>
-                    <option value="{{ App\Models\User::ADMIN_ROLE }}">{{ __('Admin') }}</option>
-                </x-input.select>
-                <x-input-error for="form.role" class="mt-2" />
-            </div>
-        @endif
         <div>
             <x-label for="form.password" :value="__('Password')" />
             <x-input
                 type="password"
                 wire:model="form.password"
-                placeholder="{{ __('password') }}"
+                placeholder="{{ __('Password') }}"
             />
             <x-input-error for="form.password" class="mt-2" />
         </div>

@@ -42,18 +42,6 @@ test('admin can create a user', function () {
     expect($user->role)->toBe(User::USER_ROLE);
 });
 
-test('admin see all users', function () {
-    $this->actingAs(User::factory([
-        'role' => 'admin',
-    ])->create());
-
-    $user = User::factory()->create();
-
-    $this->get(route('users.index'))
-        ->assertSuccessful()
-        ->assertSee($user->name);
-});
-
 test('admin can update a user', function () {
     $this->actingAs($user = User::factory([
         'role' => 'admin',
@@ -86,9 +74,11 @@ test('admin can update a user', function () {
 test('admin can see the option to make a user Partner or Admin', function () {
     $this->actingAs(User::factory([
         'role' => User::ADMIN_ROLE,
-    ])->create());
+    ])->withCurrentCompany()->create());
 
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+        'current_company_id' => auth()->user()->currentCompany->id
+    ]);
 
     $this->get(route('users.edit', $user))
         ->assertSuccessful()
@@ -99,9 +89,11 @@ test('admin can see the option to make a user Partner or Admin', function () {
 test('partner cannot see the option to make a user Partner or Admin', function () {
     $this->actingAs(User::factory([
         'role' => User::PARTNER_ROLE,
-    ])->create()->givePermissionTo('users.edit'));
+    ])->withCurrentCompany()->create()->givePermissionTo('users.edit'));
 
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+        'current_company_id' => auth()->user()->currentCompany->id
+    ]);
 
     $this->get(route('users.edit', $user))
         ->assertSuccessful()
@@ -111,13 +103,20 @@ test('partner cannot see the option to make a user Partner or Admin', function (
 });
 
 test('user cannot see the option to make a user Partner or Admin', function () {
+    $company = Company::factory()->create();
     $currentUser = User::factory([
         'role' => User::USER_ROLE,
+        'current_company_id' => $company->id
     ])->create();
     $currentUser->givePermissionTo('users.edit');
     $this->actingAs($currentUser);
 
-    $user = User::factory()->create();
+    $user = User::factory([
+        'current_company_id' => $company->id
+    ])->create();
+
+    $company->users()->attach($user);
+    $company->users()->attach($currentUser);
 
     $this->get(route('users.edit', $user))
         ->assertSuccessful()
@@ -194,4 +193,32 @@ test('user cannot see user from other company', function () {
         ->assertDontSee($user->name);
 });
 
-// test('user with permission to edit can delete a user', fuu)
+test('user with permission to edit can delete a user', function () {
+    $this->actingAs(User::factory([
+        'role' => User::USER_ROLE,
+    ])->withCurrentCompany()->create()->givePermissionTo('users.edit'));
+
+    $user = User::factory()->create([
+        'current_company_id' => auth()->user()->currentCompany->id
+    ]);
+
+    Livewire::test(App\Livewire\User\Index::class)
+        ->call('delete', $user);
+
+    expect($user->fresh()->deleted_at)->not()->toBeNull();
+});
+
+test('user without permission to edit cannot delete a user', function () {
+    $this->actingAs(User::factory([
+        'role' => User::USER_ROLE,
+    ])->withCurrentCompany()->create()->givePermissionTo('users.view'));
+
+    $user = User::factory()->create([
+        'current_company_id' => auth()->user()->currentCompany->id
+    ]);
+
+    Livewire::test(App\Livewire\User\Index::class)
+        ->call('delete', $user);
+
+    expect($user->fresh()->deleted_at)->toBeNull();
+});

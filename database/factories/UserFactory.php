@@ -61,7 +61,7 @@ class UserFactory extends Factory
         );
     }
 
-    public function withcurrentCompany(callable $callback = null): static
+    public function withCurrentCompany(callable $callback = null): static
     {
         return $this->for(
             Company::factory()

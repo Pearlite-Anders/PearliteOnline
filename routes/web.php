@@ -39,6 +39,11 @@ Route::middleware([
     Route::get('/users/create', \App\Livewire\User\Create::class)->name('users.create');
     Route::get('/users/{user}/edit', \App\Livewire\User\Edit::class)->name('users.edit');
 
+    Route::get('/system-users', \App\Livewire\SystemUser\Index::class)->name('system-users.index');
+    Route::get('/system-users/create', \App\Livewire\SystemUser\Create::class)->name('system-users.create');
+    Route::get('/system-users/{user}/edit', \App\Livewire\SystemUser\Edit::class)->name('system-users.edit');
+
+
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;
         auth()->user()->save();

@@ -44,6 +44,11 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
+
+        if($user->is($model)) {
+            return false;
+        }
+
         return $user->can('users.edit');
     }
 

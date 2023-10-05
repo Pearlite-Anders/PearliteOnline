@@ -6,6 +6,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
+    use SoftDeletes;
 
     public const ADMIN_ROLE = 'admin';
     public const PARTNER_ROLE = 'partner';
@@ -103,5 +105,19 @@ class User extends Authenticatable
     public function isUser()
     {
         return $this->role === self::USER_ROLE;
+    }
+
+    public function humanRole()
+    {
+        switch ($this->role) {
+            case self::ADMIN_ROLE:
+                return __('Admin');
+            case self::PARTNER_ROLE:
+                return __('Partner');
+            case self::USER_ROLE:
+                return __('User');
+            default:
+                return __('Unknown');
+        }
     }
 }

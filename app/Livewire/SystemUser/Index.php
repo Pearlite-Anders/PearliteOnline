@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\SystemUser;
 
 use App\Models\User;
 use App\Models\Company;
@@ -26,11 +26,12 @@ class Index extends Component
 
     public function delete(User $user)
     {
+        if(!auth()->user()->isAdmin()) {
+            abort(403);
+        }
         $this->authorize('delete', $user);
 
-        if(auth()->user()->currentCompany) {
-            auth()->user()->currentCompany->users()->detach($user);
-        }
+        $user->delete();
 
         $this->dispatch(
             'banner-message',
@@ -41,15 +42,12 @@ class Index extends Component
 
     public function render()
     {
-        $this->authorize('viewAny', User::class);
-        if(auth()->user()->currentCompany) {
-            $users = auth()->user()->currentCompany->users()->where('role', User::USER_ROLE)->paginate(100);
-        } else {
-            $users = User::where('id', 0)->paginate(100);
+        if(!auth()->user()->isAdmin()) {
+            abort(403);
         }
 
-        return view('livewire.user.index')->with([
-            'users' => $users,
+        return view('livewire.system-user.index')->with([
+            'users' => User::where('role', '!=', User::USER_ROLE)->paginate(100)
         ]);
     }
 }

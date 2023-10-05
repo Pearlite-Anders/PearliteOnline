@@ -6,7 +6,7 @@
       <div class="w-full mb-1 text-black">
         <div class="my-2 md:my-4">
           <h1 class="m-0 text-xl font-semibold leading-7 text-gray-900 sm:text-2xl sm:leading-8">
-            {{ __('Users') }}
+            {{ __('System Users') }}
           </h1>
 
         </div>
@@ -16,9 +16,9 @@
           </div>
           <div class="flex items-center ml-auto">
             @can('create', App\Models\User::class)
-                <x-button.link href="{{ route('users.create') }}" class="inline-flex items-center justify-center">
+                <x-button.link href="{{ route('system-users.create') }}" class="inline-flex items-center justify-center">
                     <x-icon.plus class="mr-2 -ml-1 align-middle" />
-                    {{ __('Add User') }}
+                    {{ __('Add system User') }}
                 </x-button.link>
             @endcan
           </div>
@@ -44,7 +44,7 @@
                                 <x-table.cell class="text-right">
                                     @can('update', $user)
                                         <x-button.link
-                                            href="{{ route('users.edit', $user) }}"
+                                            href="{{ route('system-users.edit', $user) }}"
                                             class="text-gray-600 bg-transparent hover:bg-gray-100 hover:text-gray-900"
                                         >
                                             <x-icon.pencil class="w-4 h-4 text-gray-600" />

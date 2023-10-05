@@ -18,11 +18,10 @@ class Create extends Component
             return;
         }
 
-        $user = User::where('email', $this->form->email)->first();
+        $user = User::withTrashed()->where('email', $this->form->email)->first();
         if(!$user) {
             $user = User::create(array_merge($this->form->toArray(), [
                 'current_company_id' => auth()->user()->currentCompany->id,
-                'role' => auth()->user()->isAdmin() ? $this->form->role : User::USER_ROLE,
             ]));
         }
 

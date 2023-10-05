@@ -2,13 +2,21 @@
 
 <div
     x-data="{{ json_encode(['show' => true, 'style' => $style, 'message' => $message]) }}"
-    class="fixed inset-0 z-50 flex flex-col items-end justify-center px-4 py-6 space-y-4 pointer-events-none sm:p-6 sm:justify-start"
+    class="fixed inset-0 z-50 flex flex-col items-end justify-end px-4 py-6 space-y-4 pointer-events-none sm:p-6"
     style="display: none;"
     x-show="show && message"
     x-on:banner-message.window="
         style = event.detail.style;
         message = event.detail.message;
         show = true;
+        setTimeout(() => {
+            show = false;
+        }, 5000);
+    "
+    x-init="
+        setTimeout(() => {
+            show = false;
+        }, 5000);
     "
 >
     <div
