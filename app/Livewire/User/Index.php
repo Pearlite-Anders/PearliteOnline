@@ -43,7 +43,6 @@ class Index extends Component
     {
         $this->authorize('viewAny', User::class);
         $users = auth()->user()->currentCompany->users()->where('role', User::USER_ROLE)->paginate(100);
-        dd($users);
         if(auth()->user()->currentCompany) {
         } else {
             $users = User::where('id', 0)->paginate(100);
