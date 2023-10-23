@@ -16,6 +16,11 @@ class Company extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function welding_certificates()
+    {
+        return $this->hasMany(WeldingCertificate::class);
+    }
+
     public function modules()
     {
         return [
@@ -26,7 +31,23 @@ class Company extends Model
                     'view' => __('View'),
                     'edit' => __('Edit'),
                 ]
-            ]
+            ],
+            'welding-certificates' => (object)[
+                'name' => __('Welding Certificates'),
+                'class' => \App\Livewire\WeldingCertificates\Index::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'settings' => (object)[
+                'name' => __('Settings'),
+                'class' => \App\Livewire\Settings::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
         ];
     }
 }

@@ -2,29 +2,20 @@
     <!-- listen for escape with a alpinejs block -->
     <div x-data @keydown.escape.window="$wire.cancelConfirmDelete"></div>
 
-    <div class="items-center justify-between block p-4 bg-white border-t-0 border-b border-gray-200 border-solid sm:flex border-x-0">
-      <div class="w-full mb-1 text-black">
-        <div class="my-2 md:my-4">
-          <h1 class="m-0 text-xl font-semibold leading-7 text-gray-900 sm:text-2xl sm:leading-8">
+    <x-index-header>
+        <x-slot name="heading">
+            <x-icon.users class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
             {{ __('Users') }}
-          </h1>
-
-        </div>
-        <div class="sm:flex">
-          <div class="items-center hidden mb-3 sm:mb-0 sm:flex">
-
-          </div>
-          <div class="flex items-center ml-auto">
+        </x-slot>
+        <x-slot name="buttons">
             @can('create', App\Models\User::class)
                 <x-button.link href="{{ route('users.create') }}" class="inline-flex items-center justify-center">
                     <x-icon.plus class="mr-2 -ml-1 align-middle" />
                     {{ __('Add User') }}
                 </x-button.link>
             @endcan
-          </div>
-        </div>
-      </div>
-    </div>
+        </x-slot>
+    </x-index-header>
 
     <div class="flex flex-col leading-6 text-black">
         <div class="overflow-x-auto">

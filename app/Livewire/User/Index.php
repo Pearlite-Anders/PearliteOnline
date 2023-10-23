@@ -42,8 +42,9 @@ class Index extends Component
     public function render()
     {
         $this->authorize('viewAny', User::class);
+        $users = auth()->user()->currentCompany->users()->where('role', User::USER_ROLE)->paginate(100);
+        dd($users);
         if(auth()->user()->currentCompany) {
-            $users = auth()->user()->currentCompany->users()->where('role', User::USER_ROLE)->paginate(100);
         } else {
             $users = User::where('id', 0)->paginate(100);
         }

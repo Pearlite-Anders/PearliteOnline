@@ -5,3 +5,28 @@
 [x-cloak] {
     display: none;
 }
+
+.choices .choices__inner {
+    @apply w-full min-h-0 p-1 m-0 text-base leading-6 text-gray-900 border border-gray-300 border-solid rounded-md appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-gray-300 focus:outline-offset-2;
+
+    .choices__list--multiple .choices__item {
+        @apply bg-cyan-600 border-cyan-600;
+
+        padding: 2px 10px;
+    }
+
+    .choices__input {
+        margin-bottom: 0;
+        padding: 4px 0 4px 2px;
+    }
+
+
+}
+
+.choices[data-type*=select-one] .choices__inner {
+    padding-bottom: 0 !important;
+
+    .choices__list--single {
+        padding: 8px 16px 8px 5px;
+    }
+}

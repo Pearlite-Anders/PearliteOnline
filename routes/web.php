@@ -43,6 +43,12 @@ Route::middleware([
     Route::get('/system-users/create', \App\Livewire\SystemUser\Create::class)->name('system-users.create');
     Route::get('/system-users/{user}/edit', \App\Livewire\SystemUser\Edit::class)->name('system-users.edit');
 
+    Route::get('/welding-certificate', \App\Livewire\WeldingCertificates\Index::class)->name('welding-certificates.index');
+    Route::get('/welding-certificate/create', \App\Livewire\WeldingCertificates\Create::class)->name('welding-certificates.create');
+    Route::get('/welding-certificate/{weldingCertificate}/edit', \App\Livewire\WeldingCertificates\Edit::class)->name('welding-certificates.edit');
+
+    Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
+
 
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;
