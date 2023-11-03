@@ -2,10 +2,11 @@
 
 namespace App\Livewire\WeldingCertificates;
 
+use Livewire\Attributes\On;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Computed;
 
-trait ComputedAttributes
+trait Shared
 {
     #[Computed]
     public function date_expiration()
@@ -25,6 +26,12 @@ trait ComputedAttributes
         }
 
         return '';
+    }
+
+    #[On('signature_boxes')]
+    public function updateSignatureBoxes($boxes)
+    {
+        $this->form->signature_boxes = $boxes;
     }
 
 

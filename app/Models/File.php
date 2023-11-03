@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class File extends Model
 {
     use HasFactory;
+
+    public static $default_disk = 's3';
 
     public static function fromTemporaryUpload(TemporaryUploadedFile $uploaded_file, $model, $company_id = '')
     {
@@ -20,12 +23,27 @@ class File extends Model
         $file = new self();
         $file->company_id = $company_id ? $company_id : $company_id;
         $file->name = $uploaded_file->getClientOriginalName();
-        $file->path = $uploaded_file->store(config('app.env') .'/'. $file->company_id . '/files', 's3');
+        $file->path = $uploaded_file->store(config('app.env') .'/'. $file->company_id . '/files', self::$default_disk);
         $file->size = $uploaded_file->getSize();
         $file->fileable_type = get_class($model);
         $file->fileable_id = $model->id;
         $file->save();
 
         return $file;
+    }
+
+    public function isPDF()
+    {
+        return preg_match('/\.pdf$/', $this->path);
+    }
+
+    public function isImage()
+    {
+        return preg_match('/\.(jpg|jpeg|png)$/', $this->path);
+    }
+
+    public function temporary_url()
+    {
+        return Storage::disk(self::$default_disk)->temporaryUrl($this->path, now()->addMinutes(60));
     }
 }

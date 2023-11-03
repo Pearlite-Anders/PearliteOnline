@@ -19,5 +19,8 @@
 
     "
 >
-    <input type="file" x-ref="input">
+    <input
+        type="file"
+        x-ref="input"
+    />
 </div>

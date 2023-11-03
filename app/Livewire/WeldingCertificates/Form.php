@@ -31,6 +31,8 @@ class Form extends LivewireForm
     public $date_examination;
     public $last_signature;
     public $new_certificate;
+    public $current_file;
+    public $signature_boxes = [];
 
     private $uploaded_certificate;
 
@@ -42,6 +44,11 @@ class Form extends LivewireForm
                 $meta->value = $meta->value->format('Y.m.d');
             }
             $this->{$meta->key} = $meta->value;
+        }
+
+        if($weldingCertificate->current_file_id) {
+            $this->current_file = File::find($weldingCertificate->current_file_id);
+
         }
     }
 
@@ -59,6 +66,8 @@ class Form extends LivewireForm
     public function update($weldingCertificate)
     {
         $weldingCertificate->update($this->transformedData());
+
+        return $this->handleUploads($weldingCertificate);
     }
 
     public function transformedData()
@@ -71,7 +80,6 @@ class Form extends LivewireForm
             $this->uploaded_certificate = $data['new_certificate'];
             unset($data['new_certificate']);
         }
-
 
         if($data['date_examination']) {
             $data['date_examination'] = Carbon::createFromFormat('Y.m.d', $data['date_examination'])->format('Y-m-d');
@@ -87,8 +95,14 @@ class Form extends LivewireForm
     public function handleUploads(WeldingCertificate $welding_certificate)
     {
         if($this->uploaded_certificate) {
+            if($welding_certificate->current_file_id) {
+                $previous_files = $welding_certificate->previous_files;
+                $previous_files[] = $welding_certificate->current_file_id;
+                $welding_certificate->previous_files = $previous_files;
+            }
+
             $file = File::fromTemporaryUpload($this->uploaded_certificate, $welding_certificate);
-            $welding_certificate->current_certificate = $file->id;
+            $welding_certificate->current_file_id = $file->id;
             $welding_certificate->save();
         }
 

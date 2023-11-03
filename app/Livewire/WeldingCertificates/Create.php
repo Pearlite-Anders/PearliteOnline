@@ -7,7 +7,7 @@ use Livewire\WithFileUploads;
 
 class Create extends Component
 {
-    use ComputedAttributes, WithFileUploads;
+    use Shared, WithFileUploads;
 
     public Form $form;
 

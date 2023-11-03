@@ -20,6 +20,10 @@ class WeldingCertificate extends Model
         'date_examination' => 'date',
     ];
 
+    protected $casts = [
+        'previous_files' => 'array',
+    ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);
