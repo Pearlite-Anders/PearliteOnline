@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Data\UserFilters;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
@@ -54,6 +55,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'filters' => 'array',
+        'columns' => 'array',
     ];
 
     /**
@@ -64,6 +67,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public const LABEL_KEY = 'name';
+
+    public function getLabel()
+    {
+        return $this->name;
+    }
 
     /**
      * Get all of the companies the user owns or belongs to.
@@ -105,6 +115,53 @@ class User extends Authenticatable
     public function isUser()
     {
         return $this->role === self::USER_ROLE;
+    }
+
+    public function getColumns($type)
+    {
+        $columns = $this->columns[$type] ?? [];
+
+        if (empty($columns)) {
+            $columns = $type::getDefaultColumns();
+        } else {
+            $columns = collect(json_decode(json_encode($columns)));
+        }
+
+        return $columns;
+    }
+
+    public function saveColumns($type, $columns)
+    {
+        $user_columns = $this->columns ?? [];
+        $user_columns[$type] = $columns;
+        $this->columns = $user_columns;
+        $this->save();
+    }
+
+    public function getFilters($type)
+    {
+        $filters = $this->filters[$type] ?? [];
+
+        if (empty($filters)) {
+            $filters = $type::getDefaultfilters();
+        } else {
+            $filters = collect(json_decode(json_encode($filters)));
+        }
+
+        return $filters;
+    }
+
+    public function saveFilters($type, $filters)
+    {
+        $user_filters = $this->filters ?? [];
+        $user_filters[$type] = $filters;
+        $this->filters = $user_filters;
+        $this->save();
+    }
+
+    public static function get_choices()
+    {
+        return auth()->user()->currentCompany->users()->where('role', self::USER_ROLE)->get()->pluck('name', 'id')->toArray();
     }
 
     public function humanRole()

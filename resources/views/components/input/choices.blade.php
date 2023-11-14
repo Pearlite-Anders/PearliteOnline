@@ -20,12 +20,14 @@
                     @this.set('{{ $attributes['wire:model'] }}', values);
             },false);
 
-            items = @json($attributes['selected']);
+            items = {!! str_replace('"', "'", json_encode($attributes['selected'], JSON_HEX_APOS)) !!};
 
             if(Array.isArray(items)) {
                 items.forEach(function(select) {
                     choices.setChoiceByValue((select).toString());
                 });
+            } else {
+                choices.setChoiceByValue((items).toString());
             }
             }
             function getSelectValues(select) {
@@ -35,10 +37,16 @@
                 for (var i=0, iLen=options.length; i<iLen; i++) {
                     opt = options[i];
                     if (opt.selected) {
-                    result.push(opt.value || opt.text);
+                        result.push(opt.value || opt.text);
                     }
                 }
-                return result;
+                if(select.multiple) {
+                    return result;
+                }
+
+                console.log(result[0]);
+
+                return result[0];
             }
         ">
         <select

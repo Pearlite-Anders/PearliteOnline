@@ -4,6 +4,7 @@
     x-init="
         pond = FilePond.create($refs.input);
         pond.setOptions({
+            credits: false,
             allowMultiple: {{ isset($attributes['multiple']) ? 'true' : 'false' }},
             server: {
                 process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {

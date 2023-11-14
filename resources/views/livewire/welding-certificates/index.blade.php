@@ -2,44 +2,66 @@
     <!-- listen for escape with a alpinejs block -->
     <div x-data @keydown.escape.window="$wire.cancelConfirmDelete"></div>
 
-    <div class="items-center justify-between block p-4 bg-white border-t-0 border-b border-gray-200 border-solid sm:flex border-x-0">
-      <div class="w-full mb-1 text-black">
-        <div class="my-2 md:my-4">
-          <h1 class="flex items-center m-0 text-xl font-semibold leading-7 text-gray-900 sm:text-2xl sm:leading-8">
+    <x-index-header>
+        <x-slot name="heading">
             <x-icon.welding-certificate class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
             {{ __('Welding Certificates') }}
-          </h1>
-        </div>
-        <div class="sm:flex">
-          <div class="items-center hidden mb-3 sm:mb-0 sm:flex">
-
-          </div>
-          <div class="flex items-center ml-auto">
+        </x-slot>
+        <x-slot name="search">
+            <div class="flex space-x-2">
+                <div class="relative mt-1 lg:w-64 xl:w-64">
+                    <input
+                        type="search"
+                        wire:model.live.debounce.500ms="search"
+                        class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
+                        placeholder="{{ __('Search..') }}"
+                    />
+                </div>
+                <x-table-filters :filters="$filters" :model="$model" :filter_columns="$filter_columns" />
+            </div>
+        </x-slot>
+        <x-slot name="buttons">
+            <livewire:table-columns :columns="$columns" />
             @can('create', App\Models\WeldingCertificate::class)
                 <x-button.link href="{{ route('welding-certificates.create') }}" class="inline-flex items-center justify-center">
                     <x-icon.plus class="mr-2 -ml-1 align-middle" />
                     {{ __('Add Welding Certificate') }}
                 </x-button.link>
             @endcan
-          </div>
-        </div>
-      </div>
-    </div>
+        </x-slot>
+    </x-index-header>
 
     <div class="flex flex-col leading-6 text-black">
         <div class="overflow-x-auto">
-            <div class="overflow-hidden">
-                <x-table>
-                    <x-slot name="head">
-                        <x-table.heading sortable>{{ __('Number') }}</x-table.heading>
-                        <x-table.heading />
-                    </x-slot>
-                    <x-slot name="body">
-                        @foreach($weldingCertificates as $weldingCertificate)
-                            <x-table.row>
-                                <x-table.cell>{{ $weldingCertificate->number }}</x-table.cell>
+            <x-table>
+                <x-slot name="head">
+                    @foreach($columns as $column)
+                        @continue($column->visible === false)
+                        @if(
+                            App\Models\WeldingCertificate::SYSTEM_COLUMNS[$column->key]['type'] == 'relationship' ||
+                            App\Models\WeldingCertificate::SYSTEM_COLUMNS[$column->key]['type'] == 'calculated'
+                        )
+                            <x-table.heading wire:click="sortBy('{{ $column->key }}' )" sortable :multiColumn="false" :direction="$sorts['{{ $column->key }}'] ?? null">{{ App\Models\WeldingCertificate::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                        @else
+                            <x-table.heading wire:click="sortBy('data->{{ $column->key }}')" sortable :multiColumn="false" :direction="$sorts['data->{{ $column->key }}'] ?? null">{{ App\Models\WeldingCertificate::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                        @endif
+                    @endforeach
+                    <x-table.heading />
+                </x-slot>
+                <x-slot name="body">
+                    @foreach($weldingCertificates as $weldingCertificate)
+                        <x-table.row>
+                            @foreach($columns as $column)
+                                @continue($column->visible === false)
+                                <x-table.model-value-cell
+                                    :key="$column->key"
+                                    :column="App\Models\WeldingCertificate::SYSTEM_COLUMNS[$column->key]"
+                                    :model="$weldingCertificate"
+                                />
+                            @endforeach
 
-                                <x-table.cell class="text-right">
+                            <x-table.cell class="text-right">
+                                <div class="flex">
                                     @can('update', $weldingCertificate)
                                         <x-button.link
                                             href="{{ route('welding-certificates.edit', $weldingCertificate) }}"
@@ -48,7 +70,6 @@
                                             <x-icon.pencil class="w-4 h-4 text-gray-600" />
                                         </x-button.link>
                                     @endcan
-
                                     @can('delete', $weldingCertificate)
                                         @if($confirming == $weldingCertificate->id)
                                             <x-button
@@ -72,11 +93,13 @@
                                             </x-button>
                                         @endif
                                     @endcan
-                                </x-table.cell>
-                            </x-table.row>
-                        @endforeach
-                    </x-slot>
-                </x-table>
+                                </div>
+                            </x-table.cell>
+                        </x-table.row>
+                    @endforeach
+                </x-slot>
+            </x-table>
+            <div class="overflow-hidden">
             </div>
             @if ($weldingCertificates->hasPages())
                 <div class="px-6 py-4 bg-white border-t">

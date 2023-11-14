@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Data\DataObjectSynth;
 use App\Models\User;
+use Livewire\Livewire;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +28,8 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
         });
+
+        Livewire::propertySynthesizer(DataObjectSynth::class);
+
     }
 }

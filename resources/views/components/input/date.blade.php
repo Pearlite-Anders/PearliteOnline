@@ -10,7 +10,10 @@
                         this.value = date;
                         @this.set('{{ $attributes['wire:model'] }}', dateString)
                     }
-                })
+                });
+
+                console.log(this.value);
+                console.log(this.value);
 
                 this.$watch('value', () => picker.setDate(this.value))
             },

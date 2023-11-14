@@ -5,46 +5,23 @@ namespace App\Livewire\WeldingCertificates;
 use App\Models\File;
 use Livewire\Attributes\Rule;
 use Illuminate\Support\Carbon;
+use Spatie\LaravelData\Optional;
 use Livewire\Attributes\Computed;
 use App\Models\WeldingCertificate;
 use Livewire\Form as LivewireForm;
+use App\Data\WeldingCertificateData;
 
 class Form extends LivewireForm
 {
-    public $number;
     public $welder_id;
-    public $designation;
-    public $welding_process;
-    public $plate_pipe;
-    public $type_of_weld;
-    public $material_group;
-    public $filler_material_type;
-    public $filler_material_group;
-    public $filler_material_designation;
-    public $shielding_gas;
-    public $type_of_current_and_polarity;
-    public $material_thickness;
-    public $deposited_thickness;
-    public $outside_pip_diameter;
-    public $welding_position;
-    public $weld_details;
-    public $date_examination;
-    public $last_signature;
     public $new_certificate;
     public $current_file;
-    public $signature_boxes = [];
-
-    private $uploaded_certificate;
+    public $data;
 
     public function setFields(WeldingCertificate $weldingCertificate)
     {
         $this->welder_id = $weldingCertificate->welder_id;
-        foreach($weldingCertificate->allMeta as $meta) {
-            if($meta->type == 'date' && $meta->value) {
-                $meta->value = $meta->value->format('Y.m.d');
-            }
-            $this->{$meta->key} = $meta->value;
-        }
+        $this->data = $weldingCertificate->data;
 
         if($weldingCertificate->current_file_id) {
             $this->current_file = File::find($weldingCertificate->current_file_id);
@@ -74,19 +51,18 @@ class Form extends LivewireForm
     {
         $data = array_merge([
             'company_id' => auth()->user()->currentCompany->id,
-        ], $this->all());
+        ], $this->except([
+            'new_certificate',
+            'current_file',
+            'uploaded_certificate'
+        ]));
 
-        if($data['new_certificate']) {
-            $this->uploaded_certificate = $data['new_certificate'];
-            unset($data['new_certificate']);
+        if(optional($data['data'])['date_examination']) {
+            $data['data']['date_examination'] = Carbon::createFromFormat('Y.m.d', $data['data']['date_examination'])->format('Y-m-d');
         }
 
-        if($data['date_examination']) {
-            $data['date_examination'] = Carbon::createFromFormat('Y.m.d', $data['date_examination'])->format('Y-m-d');
-        }
-
-        if($data['last_signature']) {
-            $data['last_signature'] = Carbon::createFromFormat('Y.m.d', $data['last_signature'])->format('Y-m-d');
+        if(optional($data['data'])['last_signature']) {
+            $data['data']['last_signature'] = Carbon::createFromFormat('Y.m.d', $data['data']['last_signature'])->format('Y-m-d');
         }
 
         return $data;
@@ -94,14 +70,14 @@ class Form extends LivewireForm
 
     public function handleUploads(WeldingCertificate $welding_certificate)
     {
-        if($this->uploaded_certificate) {
+        if($this->new_certificate) {
             if($welding_certificate->current_file_id) {
                 $previous_files = $welding_certificate->previous_files;
                 $previous_files[] = $welding_certificate->current_file_id;
                 $welding_certificate->previous_files = $previous_files;
             }
 
-            $file = File::fromTemporaryUpload($this->uploaded_certificate, $welding_certificate);
+            $file = File::fromTemporaryUpload($this->new_certificate, $welding_certificate);
             $welding_certificate->current_file_id = $file->id;
             $welding_certificate->save();
         }

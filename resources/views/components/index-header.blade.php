@@ -107,7 +107,7 @@
                 </div> -->
             </div>
             @if (isset($buttons))
-                <div class="flex items-center ml-auto">
+                <div class="flex items-center ml-auto space-x-4">
                     {{ $buttons }}
                 </div>
             @endif

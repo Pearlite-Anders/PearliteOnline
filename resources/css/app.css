@@ -30,3 +30,7 @@
         padding: 8px 16px 8px 5px;
     }
 }
+
+.filepond--credits {
+    display: none;
+}

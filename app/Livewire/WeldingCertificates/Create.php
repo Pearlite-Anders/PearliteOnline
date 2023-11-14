@@ -4,6 +4,8 @@ namespace App\Livewire\WeldingCertificates;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\WeldingCertificate;
+use App\Data\WeldingCertificateData;
 
 class Create extends Component
 {
@@ -14,11 +16,14 @@ class Create extends Component
     public function create()
     {
         // $this->form->validate();
-
         $weldingCertificate = $this->form->create();
 
         return redirect()->route('welding-certificates.index')->with('flash.banner', 'Welding Certificate created.');
+    }
 
+    public function mount()
+    {
+        $this->form->data = WeldingCertificateData::from(['number' => '']);
     }
 
     public function render()
