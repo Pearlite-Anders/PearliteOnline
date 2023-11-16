@@ -3,7 +3,7 @@
         x-data='signature_editor(
             @json($form->current_file->temporary_url()),
             @json(url("/")),
-            @json($form->signature_boxes),
+            @json(optional($form->data)["signature_boxes"]) ?? [],
         )'
         class="mt-2"
     >
@@ -49,7 +49,7 @@
                             >{{ __('Clear boxes') }}</x-button.secondary>
                         </div>
 
-                        <div>
+                        <div x-show="total_pages > 1" class="flex space-x-2">
                             <x-button.secondary
                                 @click="prevPage()"
                             >{{ __('Prev Page') }}</x-button.secondary>
@@ -69,7 +69,7 @@
                     <div class="flex justify-between">
                         <div class="flex space-x-2">
                             <div class="flex items-center px-4 py-2 text-white rounded" style="background:#0097b2;">{{ __('Date') }}</div>
-                            <!-- <div class="flex items-center px-4 py-2 text-white rounded" style="background:#00bf63;">{{ __('Title') }}</div> -->
+                            <div class="flex items-center px-4 py-2 text-white rounded" style="background:#00bf63;">{{ __('Title') }}</div>
                             <div class="flex items-center px-4 py-2 text-white rounded" style="background:#FF3131;">{{ __('Signature') }}</div>
                         </div>
                         <x-button.primary

@@ -58,11 +58,19 @@ class Form extends LivewireForm
         ]));
 
         if(optional($data['data'])['date_examination']) {
-            $data['data']['date_examination'] = Carbon::createFromFormat('Y.m.d', $data['data']['date_examination'])->format('Y-m-d');
+            if(preg_match('/\d{4}\.\d{2}\.\d{2}/', $data['data']['date_examination'])) {
+                $data['data']['date_examination'] = Carbon::createFromFormat('Y.m.d', $data['data']['date_examination'])->format('Y-m-d');
+            } else {
+                $data['data']['date_examination'] = Carbon::parse($data['data']['date_examination'])->format('Y-m-d');
+            }
         }
 
         if(optional($data['data'])['last_signature']) {
-            $data['data']['last_signature'] = Carbon::createFromFormat('Y.m.d', $data['data']['last_signature'])->format('Y-m-d');
+            if(preg_match('/\d{4}\.\d{2}\.\d{2}/', $data['data']['last_signature'])) {
+                $data['data']['last_signature'] = Carbon::createFromFormat('Y.m.d', $data['data']['last_signature'])->format('Y-m-d');
+            } else {
+                $data['data']['last_signature'] = Carbon::parse($data['data']['last_signature'])->format('Y-m-d');
+            }
         }
 
         return $data;

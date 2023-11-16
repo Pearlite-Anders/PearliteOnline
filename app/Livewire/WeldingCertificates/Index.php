@@ -2,6 +2,7 @@
 
 namespace App\Livewire\WeldingCertificates;
 
+use App\Livewire\DataTable\WithClickableRow;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Livewire\Shared\Datagrid;
@@ -16,14 +17,15 @@ use App\Livewire\DataTable\WithPerPagePagination;
 
 class Index extends Component
 {
-    use WithPerPagePagination, WithSorting, WithColumns, WithFilters, WithDelete, WithSearch;
+    use WithPerPagePagination, WithSorting, WithColumns, WithFilters, WithDelete, WithSearch, WithClickableRow;
 
     public $model = WeldingCertificate::class;
 
     public function getRowsQueryProperty()
     {
         $query = auth()->user()->currentCompany->welding_certificates()
-                    ->when($this->search, fn($query, $term) => $this->applySearch($query, $term));
+                    ->when($this->search, fn ($query, $term) => $this->applySearch($query, $term))
+                    ->when($this->filters, fn ($query, $filters) => $this->applyFilters($query, $filters));
 
         return $this->applySorting($query);
     }

@@ -22,6 +22,10 @@ class WeldingCertificate extends Model
     ];
 
     public const SYSTEM_COLUMNS = [
+        'certificate' => [
+            'type' => 'welding_certificate',
+            'label' => 'Certificate',
+        ],
         'number' => [
             'type' => 'text',
             'label' => 'Number',
@@ -35,7 +39,7 @@ class WeldingCertificate extends Model
             'class' => User::class,
             'label' => 'Welder',
             'placeholder' => 'Choose user',
-            'filter' => 'select'
+            'filter' => 'relationship'
         ],
         'designation' => [
             'type' => 'text',
@@ -111,14 +115,14 @@ class WeldingCertificate extends Model
             'label' => 'Material thickness',
             'placeholder' => '12',
             'postfix' => 'mm',
-            'filter' => 'seach'
+            'filter' => 'search'
         ],
         'deposited_thickness' => [
             'type' => 'text',
             'label' => 'Deposited thickness',
             'placeholder' => '12',
             'postfix' => 'mm',
-            'filter' => 'seach'
+            'filter' => 'search'
         ],
         'outside_pip_diameter' => [
             'type' => 'text',
@@ -161,11 +165,11 @@ class WeldingCertificate extends Model
             'label' => 'Date next signature',
             'filter' => 'date'
         ],
-        'form.data.signed' => [
+        'signed' => [
             'type' => 'number',
             'label' => 'Current signatures',
         ],
-        'form.data.max_signatures' => [
+        'max_signatures' => [
             'type' => 'number',
             'label' => 'Max signatures',
         ],
@@ -194,13 +198,18 @@ class WeldingCertificate extends Model
     public static function getDefaultFilters()
     {
         $order = 0;
-        return collect(self::SYSTEM_COLUMNS)->map(function ($column, $index) use (&$order) {
-            return (object)[
-                'key' => $index,
-                'label' => $column['label'],
-                'order' => $order++,
-            ];
-        })->values();
+        return collect(self::SYSTEM_COLUMNS)
+            ->filter(function ($column) {
+                return optional($column)['filter'];
+            })
+            ->map(function ($column, $index) use (&$order) {
+                return (object)[
+                    'key' => $index,
+                    'label' => $column['label'],
+                    'visible' => true,
+                    'order' => $order++,
+                ];
+            })->values();
     }
 
     public function company()
@@ -218,6 +227,15 @@ class WeldingCertificate extends Model
         if(optional($this->data)['date_examination']) {
             $date_examination = Carbon::parse($this->data['date_examination']);
             return $date_examination->addYears(3)->format('Y.m.d');
+        }
+        return null;
+    }
+
+    public function getDateNextSignatureAttribute()
+    {
+        if(optional($this->data)['last_signature']) {
+            $last_signature = Carbon::parse($this->data['last_signature']);
+            return $last_signature->addMonths(6)->format('Y.m.d');
         }
         return null;
     }

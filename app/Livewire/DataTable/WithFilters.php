@@ -2,22 +2,74 @@
 
 namespace App\Livewire\DataTable;
 
-use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Url;
+use Illuminate\Support\Carbon;
+use Livewire\Attributes\Reactive;
 
-trait WithFilters {
+trait WithFilters
+{
 
     public $filter_columns = [];
 
     #[Url]
     public $filters = [];
 
+    public $showModal = false;
+
+    public function applyFilters($query)
+    {
+        foreach ($this->filters as $key => $value) {
+            if (!$value) {
+                continue;
+            }
+            $column = $this->model::getColumn($key);
+            if ($column->filter == 'select') {
+                $query->where('data->' . $key, $value);
+                continue;
+            } elseif ($column->filter == 'search') {
+                $query->where('data->' . $key, 'like', '%' . $value . '%');
+                continue;
+            } elseif ($column->filter == 'date') {
+                if(optional($value)['min'] && optional($value)['max']) {
+                    $query->whereBetween('data->' . $key, [Carbon::createFromFormat('Y.m.d', $value['min']), Carbon::createFromFormat('Y.m.d', $value['max'])]);
+                } elseif(optional($value)['min']) {
+                    $query->where('data->' . $key, '>=', Carbon::createFromFormat('Y.m.d', $value['min']));
+                } elseif(optional($value)['max']) {
+                    $query->where('data->' . $key, '<=', Carbon::createFromFormat('Y.m.d', $value['max']));
+                }
+                continue;
+            } elseif ($column->filter == 'relationship') {
+                $query->where($key, $value);
+                continue;
+            }
+        }
+
+        return $query;
+    }
+
     public function mountWithFilters()
     {
         $this->filter_columns = auth()->user()->getFilters($this->model);
     }
 
-    public function reorderfilters($sourceIndex, $targetIndex)
+    public function toggleModal()
+    {
+        $this->showModal = !$this->showModal;
+    }
+
+    public function toggleFilterVisibility($columnLabel)
+    {
+        $this->filter_columns = $this->filter_columns->map(function ($column) use ($columnLabel) {
+            if ($column->label === $columnLabel) {
+                $column->visible = !$column->visible;
+            }
+            return $column;
+        });
+
+        $this->savefilters();
+    }
+
+    public function reorderFilters($sourceIndex, $targetIndex)
     {
         if ($sourceIndex === $targetIndex) {
             return;
@@ -37,5 +89,10 @@ trait WithFilters {
     public function savefilters()
     {
         auth()->user()->saveFilters($this->model, $this->filter_columns);
+    }
+
+    public function clearFilters()
+    {
+        $this->filters = [];
     }
 }

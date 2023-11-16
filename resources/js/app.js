@@ -114,8 +114,9 @@ Alpine.data('signature_editor', (path, url, boxes) => ({
         this.stage.add(this.layer);
     },
     addSignatureBoxes(cobinations) {
-        this.addBox('date', cobinations, (this.stage.width() / 2) - (37.5), (this.stage.height() / 2) - (cobinations * 25 / 2), cobinations * 25, 75);
-        this.addBox('signature', cobinations, (this.stage.width() / 2) + (37.5), (this.stage.height() / 2) - (cobinations * 25 / 2), cobinations * 25, 75);
+        this.addBox('date', cobinations, (this.stage.width() / 2) - (75), (this.stage.height() / 2) - (cobinations * 25 / 2), cobinations * 25, 75);
+        this.addBox('title', cobinations, (this.stage.width() / 2) - (0), (this.stage.height() / 2) - (cobinations * 25 / 2), cobinations * 25, 75);
+        this.addBox('signature', cobinations, (this.stage.width() / 2) + (75), (this.stage.height() / 2) - (cobinations * 25 / 2), cobinations * 25, 75);
     },
     addBox(type, combinations, x, y, height, width) {
         Konva.Image.fromURL(`${this.url}/images/${type}-${combinations}.png`, (image) => {
@@ -156,7 +157,7 @@ Alpine.data('signature_editor', (path, url, boxes) => ({
         });
 
         let boxes = this.layer.children.filter((item) => {
-            return item.attrs.name && item.attrs.name.match(/date|signature/);
+            return item.attrs.name && item.attrs.name.match(/date|title|signature/);
         }).map((item) => {
             return {
                 name: item.attrs.name,
@@ -172,7 +173,7 @@ Alpine.data('signature_editor', (path, url, boxes) => ({
     },
     save(close) {
         this.updateBoxes();
-        this.$wire.form.signature_boxes = this.boxes;
+        this.$wire.form.data.signature_boxes = this.boxes;
         this.open = false;
     },
     nextPage() {

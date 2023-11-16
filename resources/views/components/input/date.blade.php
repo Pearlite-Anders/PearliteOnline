@@ -1,9 +1,11 @@
 <div wire:ignore>
     <div
+        class="relative"
         x-data="{
             value: '{{ $attributes['value'] }}',
+            picker: null,
             init() {
-                let picker = flatpickr(this.$refs.picker, {
+                this.picker = flatpickr(this.$refs.picker, {
                     dateFormat: 'Y.m.d',
                     defaultDate: this.value,
                     onChange: (date, dateString) => {
@@ -12,17 +14,24 @@
                     }
                 });
 
-                console.log(this.value);
-                console.log(this.value);
-
-                this.$watch('value', () => picker.setDate(this.value))
+                this.$watch('value', () => this.picker.setDate(this.value))
             },
         }"
     >
         <input
-            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm bg-gray-50 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            class="block w-full border-gray-300 rounded-md shadow-sm bg-gray-50 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             x-ref="picker"
             type="text"
+            placeholder="{{ $attributes['placeholder'] ?? '' }}"
         >
+        <button
+            type="button"
+            class="absolute top-0 bottom-0 right-0 px-3"
+            @click="picker.clear()"
+            x-show="value.length"
+        >
+            <x-icon.x class="w-4 h-4" />
+        </button>
+
     </div>
 </div>
