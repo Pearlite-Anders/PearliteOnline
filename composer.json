@@ -15,7 +15,9 @@
         "league/flysystem-aws-s3-v3": "^3.16",
         "livewire/livewire": "^3.0",
         "spatie/laravel-data": "^3.9",
-        "spatie/laravel-permission": "^5.11"
+        "spatie/laravel-permission": "^5.11",
+        "setasign/fpdi": "^2.4",
+        "setasign/fpdi_pdf-parser": "2.0.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -27,6 +29,12 @@
         "pestphp/pest-plugin-laravel": "^2.0",
         "spatie/laravel-ignition": "^2.0"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://www.setasign.com/downloads/"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",

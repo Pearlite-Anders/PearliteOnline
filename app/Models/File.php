@@ -46,4 +46,21 @@ class File extends Model
     {
         return Storage::disk(self::$default_disk)->temporaryUrl($this->path, now()->addMinutes(60));
     }
+
+    public function temporary_download($return = '')
+    {
+        $content = Storage::disk(self::$default_disk)->get($this->path);
+        $extension = pathinfo($this->path, PATHINFO_EXTENSION);
+        $path = 'public/tmpFiles/'.uniqid('temp_pdf', true).'.'. $extension;
+
+        Storage::put($path, $content);
+        if($return == 'both') {
+            return [
+                'url' => url(Storage::disk(self::$default_disk)->url($path)),
+                'storage_path' => Storage::disk(self::$default_disk)->path('app/'.$path)
+            ];
+        }
+
+        return Storage::disk(self::$default_disk)->path('app/'.$path);
+    }
 }

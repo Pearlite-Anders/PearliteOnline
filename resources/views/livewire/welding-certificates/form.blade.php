@@ -4,6 +4,7 @@
     </h3>
     <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
         @foreach(App\Models\WeldingCertificate::SYSTEM_COLUMNS as $key => $column)
+            @if($column['type'] == 'welding_certificate') @continue @endif
             <div>
                 <x-label for="{{ $key }}" :value="__($column['label'])" />
                 @if($column['type'] == 'relationship')

@@ -17,11 +17,21 @@
         {{ optional($model->data)[$key] ? Carbon\Carbon::parse(optional($model->data)[$key])->format('Y.m.d') : '' }}
     </x-table.cell>
 @elseif($column['type'] == 'welding_certificate')
-    <x-table.cell>
+    <x-table.cell x-data @click.prevent.stop="console.log('stop')">
         @if($model->current_file_id)
             @php($file = App\Models\File::find($model->current_file_id))
+            @if($file)
+                <div class="flex items-center space-x-2">
+                    <x-file-with-modal
+                        :file="$file"
+                        :hide_name="true"
+                        icon_class="w-5 h-5 text-gray-800"
+                    />
+                    <livewire:welding-certificates.signer :file="$file" :welding_certificate="$model" />
+                </div>
+            @endif
         @endif
     </x-table.cell>
 @else
-    <x-table.cell>{{ optional($model->data)[$key] }}</x-table.cell>
+    <x-table.cell class="whitespace-nowrap">{{ optional($model->data)[$key] }}</x-table.cell>
 @endif

@@ -8,6 +8,7 @@
                 this.picker = flatpickr(this.$refs.picker, {
                     dateFormat: 'Y.m.d',
                     defaultDate: this.value,
+                    inline: {{ $attributes['inline'] ? 'true' : 'false' }},
                     onChange: (date, dateString) => {
                         this.value = date;
                         @this.set('{{ $attributes['wire:model'] }}', dateString)
@@ -19,14 +20,14 @@
         }"
     >
         <input
-            class="block w-full border-gray-300 rounded-md shadow-sm bg-gray-50 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            class="block w-full border-gray-300 rounded-md shadow-sm bg-gray-50 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 {{ $attributes['inline'] ? 'max-w-[310px]' : '' }} }}"
             x-ref="picker"
             type="text"
             placeholder="{{ $attributes['placeholder'] ?? '' }}"
         >
         <button
             type="button"
-            class="absolute top-0 bottom-0 right-0 px-3"
+            class="absolute top-[11px] right-0 px-3"
             @click="picker.clear()"
             x-show="value.length"
         >
