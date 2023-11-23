@@ -11,10 +11,20 @@
 @elseif($column['type'] == 'calculated')
         <x-table.cell>{{ optional($model)->{$key} }}</x-table.cell>
 @elseif($column['type'] == 'select')
-    <x-table.cell>{{ implode(', ', optional($model->data)[$key] ?? []) }}</x-table.cell>
+    <x-table.cell>
+        @if(is_array(optional($model->data)[$key]))
+            {{ implode(', ', optional($model->data)[$key] ?? []) }}
+        @else
+            {{ optional($column['options'])[optional($model->data)[$key]] }}
+        @endif
+    </x-table.cell>
 @elseif($column['type'] == 'date')
     <x-table.cell>
-        {{ optional($model->data)[$key] ? Carbon\Carbon::parse(optional($model->data)[$key])->format('Y.m.d') : '' }}
+        @if(preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($model->data)[$key]))
+            {{ Carbon\Carbon::parse(optional($model->data)[$key])->format('Y.m.d') }}
+        @else
+            {{ optional($model->data)[$key] }}
+        @endif
     </x-table.cell>
 @elseif($column['type'] == 'welding_certificate')
     <x-table.cell x-data @click.prevent.stop="console.log('stop')">
@@ -27,7 +37,7 @@
                         :hide_name="true"
                         icon_class="w-5 h-5 text-gray-800"
                     />
-                    <livewire:welding-certificates.signer :file="$file" :welding_certificate="$model" />
+                    <livewire:welding-certificates.signer :file="$file" :welding_certificate="$model" class="!py-0 !px-2 !leading-6 !text-xs" />
                 </div>
             @endif
         @endif

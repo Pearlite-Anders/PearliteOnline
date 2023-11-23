@@ -17,7 +17,7 @@
                         placeholder="{{ __('Global search..') }}"
                     />
                 </div>
-                <x-table-filters :filters="$filters" :model="$model" :filter_columns="$filter_columns" :show_modal="$showModal" />
+                <x-table-filters :filters="$filters" :model="$model" :filter_columns="$filter_columns" :show_modal="$showFilterSettingsModal" />
             </div>
         </x-slot>
         <x-slot name="buttons">

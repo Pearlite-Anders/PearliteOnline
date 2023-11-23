@@ -2,17 +2,18 @@
 
 namespace App\Livewire\WeldingCertificates;
 
-use App\Livewire\DataTable\WithClickableRow;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Livewire\Shared\Datagrid;
 use Livewire\Attributes\Reactive;
 use App\Models\WeldingCertificate;
 use App\Livewire\DataTable\WithDelete;
+use App\Livewire\DataTable\WithSearch;
 use App\Livewire\DataTable\WithColumns;
 use App\Livewire\DataTable\WithFilters;
 use App\Livewire\DataTable\WithSorting;
-use App\Livewire\DataTable\WithSearch;
+use App\Livewire\DataTable\WithClickableRow;
 use App\Livewire\DataTable\WithPerPagePagination;
 
 class Index extends Component

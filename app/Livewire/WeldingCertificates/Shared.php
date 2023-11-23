@@ -13,10 +13,15 @@ trait Shared
     public function date_expiration()
     {
         if(optional($this->form->data)['date_examination']) {
-            if(preg_match('/-/', $this->form->data['date_examination'])) {
-                return Carbon::createFromFormat('Y-m-d', $this->form->data['date_examination'])->addYears(3)->format('Y.m.d');
+            $years_to_add = 3;
+            if(optional($this->form->data)['type'] == 'welding_operator_certificate') {
+                $years_to_add = 6;
             }
-            return Carbon::createFromFormat('Y.m.d', $this->form->data['date_examination'])->addYears(3)->format('Y.m.d');
+
+            if(preg_match('/-/', $this->form->data['date_examination'])) {
+                return Carbon::createFromFormat('Y-m-d', $this->form->data['date_examination'])->addYears($years_to_add)->format('Y.m.d');
+            }
+            return Carbon::createFromFormat('Y.m.d', $this->form->data['date_examination'])->addYears($years_to_add)->format('Y.m.d');
         }
 
         return '';

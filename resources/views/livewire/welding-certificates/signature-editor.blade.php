@@ -5,7 +5,6 @@
             @json(url("/")),
             @json(optional($form->data)["signature_boxes"]) ?? [],
         )'
-        class="mt-2"
     >
         <x-button.secondary
             @click="open = true"

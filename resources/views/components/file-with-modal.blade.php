@@ -63,11 +63,6 @@
                         frameborder="0"
                         class="w-full aspect-[1/1.4]"
                     ></iframe>
-                    <iframe
-                        src="{{ $file->temporary_url() }}"
-                        frameborder="0"
-                        class="w-full aspect-[1/1.4]"
-                    ></iframe>
                 @elseif($file->isImage())
                     <img src="{{ $file->temporary_url() }}" alt="{{ $file->name }}" />
                 @endif

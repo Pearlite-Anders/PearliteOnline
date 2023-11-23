@@ -41,6 +41,17 @@ class WeldingCertificate extends Model
             'placeholder' => 'Choose user',
             'filter' => 'relationship'
         ],
+        'type' => [
+            'type' => 'select',
+            'multiple' => false,
+            'label' => 'Type',
+            'options' => [
+                'welding_certificate' => 'Welding certificate',
+                'welding_operator_certificate' => 'Welding operator certificate',
+            ],
+            'placeholder' => 'Choose',
+            'filter' => 'select'
+        ],
         'designation' => [
             'type' => 'text',
             'label' => 'Designation',
@@ -49,6 +60,7 @@ class WeldingCertificate extends Model
         ],
         'welding_process' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Welding process',
             'options' => 'welding_processes',
             'placeholder' => '135',
@@ -56,6 +68,7 @@ class WeldingCertificate extends Model
         ],
         'plate_pipe' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Plate/pipe',
             'options' => 'plate_pipes',
             'placeholder' => 'P',
@@ -63,6 +76,7 @@ class WeldingCertificate extends Model
         ],
         'type_of_weld' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Type of weld',
             'options' => 'type_of_welds',
             'placeholder' => 'FW',
@@ -70,6 +84,7 @@ class WeldingCertificate extends Model
         ],
         'material_group' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Material group',
             'options' => 'material_groups',
             'placeholder' => 'FM1',
@@ -77,6 +92,7 @@ class WeldingCertificate extends Model
         ],
         'filler_material_type' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Filler material type',
             'options' => 'filler_material_types',
             'placeholder' => 'S',
@@ -84,6 +100,7 @@ class WeldingCertificate extends Model
         ],
         'filler_material_group' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Filler material group',
             'options' => 'filler_material_groups',
             'placeholder' => 't12',
@@ -98,6 +115,7 @@ class WeldingCertificate extends Model
         ],
         'shielding_gas' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Shielding gas',
             'options' => 'shielding_gases',
             'placeholder' => 'ss',
@@ -105,6 +123,7 @@ class WeldingCertificate extends Model
         ],
         'type_of_current_and_polarity' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Type of current and polarity',
             'options' => 'type_of_current_and_polarities',
             'placeholder' => 'nb',
@@ -134,6 +153,7 @@ class WeldingCertificate extends Model
         ],
         'welding_position' => [
             'type' => 'select',
+            'multiple' => true,
             'label' => 'Welding position',
             'options' => 'welding_positions',
             'placeholder' => 'PA',
@@ -225,8 +245,13 @@ class WeldingCertificate extends Model
     public function getDateExpirationAttribute()
     {
         if(optional($this->data)['date_examination']) {
+            $years_to_add = 3;
+            if(optional($this->data)['type'] == 'welding_operator_certificate') {
+                $years_to_add = 6;
+            }
+
             $date_examination = Carbon::parse($this->data['date_examination']);
-            return $date_examination->addYears(3)->format('Y.m.d');
+            return $date_examination->addYears($years_to_add)->format('Y.m.d');
         }
         return null;
     }
@@ -234,8 +259,11 @@ class WeldingCertificate extends Model
     public function getDateNextSignatureAttribute()
     {
         if(optional($this->data)['last_signature']) {
-            $last_signature = Carbon::parse($this->data['last_signature']);
-            return $last_signature->addMonths(6)->format('Y.m.d');
+            if(preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($this->data)['last_signature'])) {
+                return Carbon::parse($this->data['last_signature'])->addMonths(6)->format('Y.m.d');
+            } else {
+                return Carbon::createFromFormat('Y.m.d', $this->data['last_signature'])->addMonths(6)->format('Y.m.d');
+            }
         }
         return null;
     }

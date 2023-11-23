@@ -14,7 +14,7 @@ trait WithFilters
     #[Url]
     public $filters = [];
 
-    public $showModal = false;
+    public $showFilterSettingsModal = false;
 
     public function applyFilters($query)
     {
@@ -22,6 +22,12 @@ trait WithFilters
             if (!$value) {
                 continue;
             }
+
+            if($key == 'ids') {
+                $query->whereIn('id', explode(',', $value));
+                continue;
+            }
+
             $column = $this->model::getColumn($key);
             if ($column->filter == 'select') {
                 $query->where('data->' . $key, $value);
@@ -31,7 +37,11 @@ trait WithFilters
                 continue;
             } elseif ($column->filter == 'date') {
                 if(optional($value)['min'] && optional($value)['max']) {
-                    $query->whereBetween('data->' . $key, [Carbon::createFromFormat('Y.m.d', $value['min']), Carbon::createFromFormat('Y.m.d', $value['max'])]);
+                    if(optional($value)['min'] == optional($value)['max']) {
+                        $query->where('data->' . $key, Carbon::createFromFormat('Y.m.d', $value['min'])->format('Y-m-d'));
+                    } else {
+                        $query->whereBetween('data->' . $key, [Carbon::createFromFormat('Y.m.d', $value['min'])->format('Y-m-d'), Carbon::createFromFormat('Y.m.d', $value['max'])->format('Y-m-d')]);
+                    }
                 } elseif(optional($value)['min']) {
                     $query->where('data->' . $key, '>=', Carbon::createFromFormat('Y.m.d', $value['min']));
                 } elseif(optional($value)['max']) {
@@ -52,9 +62,9 @@ trait WithFilters
         $this->filter_columns = auth()->user()->getFilters($this->model);
     }
 
-    public function toggleModal()
+    public function toggleFilterSettingsModal()
     {
-        $this->showModal = !$this->showModal;
+        $this->showFilterSettingsModal = !$this->showFilterSettingsModal;
     }
 
     public function toggleFilterVisibility($columnLabel)

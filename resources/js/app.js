@@ -165,6 +165,8 @@ Alpine.data('signature_editor', (path, url, boxes) => ({
                 y: item.attrs.y,
                 width: item.attrs.scaleX ? item.attrs.width * item.attrs.scaleX : item.attrs.width,
                 height: item.attrs.scaleY ? item.attrs.height * item.attrs.scaleY : item.attrs.height,
+                canvas_width:  this.stage.width(),
+                canvas_height: this.stage.height(),
                 page_number: this.page_number,
             }
         });

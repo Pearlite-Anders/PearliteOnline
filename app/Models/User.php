@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use App\Data\UserFilters;
+use Illuminate\Http\UploadedFile;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -17,7 +20,6 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
@@ -57,6 +59,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'filters' => 'array',
         'columns' => 'array',
+        'data' => 'array',
     ];
 
     /**
@@ -190,5 +193,60 @@ class User extends Authenticatable
             default:
                 return __('Unknown');
         }
+    }
+
+    /**
+     * Update the user's profile photo.
+     *
+     * @param  \Illuminate\Http\UploadedFile  $photo
+     * @param  string  $storagePath
+     * @return void
+     */
+    public function updateProfilePhoto(UploadedFile $photo)
+    {
+        tap($this->profile_photo_path, function ($previous) use ($photo) {
+            $file = File::fromTemporaryUpload($photo, $this, $this->current_company_id);
+
+            $this->forceFill(['profile_photo_path' => $file->id,])->save();
+
+            if ($previous) {
+                $file = File::find($previous);
+                $file->delete();
+            }
+        });
+    }
+
+    /**
+     * Delete the user's profile photo.
+     *
+     * @return void
+     */
+    public function deleteProfilePhoto()
+    {
+        if (is_null($this->profile_photo_path)) {
+            return;
+        }
+
+        $file = File::find($this->profile_photo_path);
+        $file->delete();
+
+        $this->forceFill([
+            'profile_photo_path' => null,
+        ])->save();
+    }
+
+    /**
+     * Get the URL to the user's profile photo.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function profilePhotoUrl(): Attribute
+    {
+        return Attribute::get(function (): string {
+            $file = File::find($this->profile_photo_path);
+            return $this->profile_photo_path
+                    ? $file->temporary_url()
+                    : '';
+        });
     }
 }

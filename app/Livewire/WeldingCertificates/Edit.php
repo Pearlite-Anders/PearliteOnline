@@ -31,6 +31,13 @@ class Edit extends Component
         );
     }
 
+    #[On('welding-certificate-signed')]
+    public function updateWeldingCertificate()
+    {
+        $this->weldingCertificate = $this->weldingCertificate->refresh();
+        $this->form->setFields($this->weldingCertificate);
+    }
+
     public function mount(WeldingCertificate $weldingCertificate)
     {
         $this->weldingCertificate = $weldingCertificate;

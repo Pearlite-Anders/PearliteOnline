@@ -1,7 +1,8 @@
 <div>
     <x-button.primary
+        type="button"
         wire:click="toggleOpen"
-        class="!py-0 !px-2 !leading-6 !text-xs"
+        class="{{ $class }}"
     >{{ __('Sign') }}</x-button.primary>
 
     @if($open)
@@ -12,6 +13,14 @@
                     {{ __('Sign certificate') }}
                 </h3>
 
+                @if($welding_certificate->data['signed'] >= $welding_certificate->data['max_signatures'])
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500">
+                            {{ __('This certificate has been signed maximum amount of times.') }}
+                        </p>
+                    </div>
+                @else
+
                 <div class="flex justify-center mt-4">
                     <x-input.date
                         wire:model="date"
@@ -20,13 +29,23 @@
                         :inline="true"
                     />
                 </div>
+                @endif
             </div>
         </div>
 
         <div class="flex flex-row justify-end px-6 py-4 text-right bg-gray-100">
-            <x-button.primary
-                wire:click="sign"
-            >{{ __('Sign') }}</x-button.primary>
+            @if($welding_certificate->data['signed'] < $welding_certificate->data['max_signatures'])
+                <x-button.primary
+                    type="button"
+                    wire:click="sign"
+                    wire:loading.remove
+                >{{ __('Sign') }}</x-button.primary>
+                <x-button.primary
+                    wire:loading
+                    wire:target="sign"
+                    class="opacity-50 cursor-wait"
+                >{{ __('Signing...') }}</x-button.primary>
+            @endif
             <x-button.secondary
                 wire:click="toggleOpen"
             >{{ __('Cancel') }}</x-button.secondary>

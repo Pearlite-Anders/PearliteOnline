@@ -122,7 +122,7 @@
             @endforeach
         </div>
         <div class="flex justify-end mt-4 space-x-4">
-            <x-button.secondary wire:click="toggleModal" class="flex items-center justify-center">
+            <x-button.secondary wire:click="toggleFilterSettingsModal" class="flex items-center justify-center">
                 <x-icon.settings class="w-6 h-6 mr-2 -ml-2 text-gray-600" /> {{__('Settings')}}
             </x-button.secondary>
             <x-button.secondary wire:click="clearFilters" class="flex items-center justify-center">
@@ -178,7 +178,7 @@
             </div>
 
             <div class="flex flex-row justify-end px-6 py-4 text-right bg-gray-100">
-                <x-button.secondary wire:click="toggleModal">
+                <x-button.secondary wire:click="toggleFilterSettingsModal">
                     {{ __('Close') }}
                 </x-button.secondary>
             </div>

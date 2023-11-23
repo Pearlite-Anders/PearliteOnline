@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,33 @@ class File extends Model
         $file->name = $uploaded_file->getClientOriginalName();
         $file->path = $uploaded_file->store(config('app.env') .'/'. $file->company_id . '/files', self::$default_disk);
         $file->size = $uploaded_file->getSize();
+        $file->fileable_type = get_class($model);
+        $file->fileable_id = $model->id;
+        $file->save();
+
+        return $file;
+    }
+
+    public static function newFromString($string, $model, $name, $company_id = '')
+    {
+        if(empty($string)) {
+            return false;
+        }
+
+        if(empty($company_id)) {
+            $company_id = $model->company_id;
+        }
+
+        $extension = pathinfo($name, PATHINFO_EXTENSION);
+        $path = Str::slug(config('app.env')) .'/'. $company_id .'/files/' . Str::random(40) .'.'. $extension;
+        Storage::disk(self::$default_disk)->put($path, $string);
+        unset($string);
+
+        $file = new self();
+        $file->company_id = $company_id ? $company_id : $company_id;
+        $file->name = $name;
+        $file->path = $path;
+        $file->size = Storage::disk(self::$default_disk)->size($path);
         $file->fileable_type = get_class($model);
         $file->fileable_id = $model->id;
         $file->save();
@@ -56,11 +84,11 @@ class File extends Model
         Storage::put($path, $content);
         if($return == 'both') {
             return [
-                'url' => url(Storage::disk(self::$default_disk)->url($path)),
-                'storage_path' => Storage::disk(self::$default_disk)->path('app/'.$path)
+                'url' => url(Storage::disk('local')->url($path)),
+                'storage_path' => Storage::disk('local')->path($path)
             ];
         }
 
-        return Storage::disk(self::$default_disk)->path('app/'.$path);
+        return Storage::disk('local')->path($path);
     }
 }

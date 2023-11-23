@@ -29,13 +29,13 @@
                     />
                 @elseif($column['type'] == 'select')
                     <x-input.choices
-                        multiple
                         class="block w-full mt-1"
                         wire:model="form.data.{{ $key }}"
-                        :options="App\Models\Setting::get($column['options'])"
+                        :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
                         :selected="optional($form->data)[$key] ?? []"
                         prettyname="{{ $key }}"
                         placeholder="{{ $column['placeholder'] ?? '' }}"
+                        :multiple="$column['multiple']"
                     />
                 @else
                     <x-input
@@ -70,7 +70,11 @@
                             :file="$form->current_file"
                             :path="$form->current_file->temporary_url()"
                         />
-                        @include('livewire.welding-certificates.signature-editor')
+
+                        <div class="flex mt-2 space-x-4">
+                            @include('livewire.welding-certificates.signature-editor')
+                            <livewire:welding-certificates.signer  :file="$form->current_file" :welding_certificate="$weldingCertificate" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,17 +86,19 @@
             {{ __('Previous certificates') }}
         </h3>
         @if (isset($weldingCertificate) && $weldingCertificate->previous_files)
-            <ul>
-                @foreach(array_reverse($weldingCertificate->previous_files) as $file_id)
-                    @php( $file = \App\Models\File::find($file_id) )
-                    <li class="py-1">
-                        <x-file-with-modal
-                            :file="$file"
-                            svg_location="left"
-                        />
-                    </li>
-                @endforeach
-            </ul>
+            <div class="overflow-auto max-h-[215px]">
+                <ul>
+                    @foreach(array_reverse($weldingCertificate->previous_files) as $file_id)
+                        @php( $file = \App\Models\File::find($file_id) )
+                        <li class="py-1">
+                            <x-file-with-modal
+                                :file="$file"
+                                svg_location="left"
+                            />
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
     </div>
