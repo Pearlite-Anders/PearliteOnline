@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use App\Data\WeldingCertificateData;
 use Illuminate\Support\Carbon;
-use Kolossal\Multiplex\HasMeta;
+use App\Models\Trait\HasFilter;
+use App\Models\Trait\HasCompany;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class WeldingCertificate extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasFilter, HasCompany;
 
     protected $guarded = [];
 
@@ -194,48 +193,6 @@ class WeldingCertificate extends Model
             'label' => 'Max signatures',
         ],
     ];
-
-    public static function getDefaultColumns()
-    {
-        $order = 0;
-        return collect(self::SYSTEM_COLUMNS)->map(function ($column, $index) use (&$order) {
-            return (object)[
-                'key' => $index,
-                'label' => $column['label'],
-                'visible' => true,
-                'order' => $order++,
-            ];
-        })->values();
-    }
-
-    public static function getColumn($key)
-    {
-        $column =  (object)self::SYSTEM_COLUMNS[$key];
-        $column->key = $key;
-        return $column;
-    }
-
-    public static function getDefaultFilters()
-    {
-        $order = 0;
-        return collect(self::SYSTEM_COLUMNS)
-            ->filter(function ($column) {
-                return optional($column)['filter'];
-            })
-            ->map(function ($column, $index) use (&$order) {
-                return (object)[
-                    'key' => $index,
-                    'label' => $column['label'],
-                    'visible' => true,
-                    'order' => $order++,
-                ];
-            })->values();
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
 
     public function welder()
     {

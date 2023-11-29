@@ -47,6 +47,14 @@ Route::middleware([
     Route::get('/welding-certificate/create', \App\Livewire\WeldingCertificates\Create::class)->name('welding-certificates.create');
     Route::get('/welding-certificate/{weldingCertificate}/edit', \App\Livewire\WeldingCertificates\Edit::class)->name('welding-certificates.edit');
 
+    Route::get('/wpqr', \App\Livewire\Wpqr\Index::class)->name('wpqr.index');
+    Route::get('/wpqr/create', \App\Livewire\Wpqr\Create::class)->name('wpqr.create');
+    Route::get('/wpqr/{wpqr}/edit', \App\Livewire\Wpqr\Edit::class)->name('wpqr.edit');
+
+    Route::get('/wps', \App\Livewire\Wps\Index::class)->name('wps.index');
+    Route::get('/wps/create', \App\Livewire\Wps\Create::class)->name('wps.create');
+    Route::get('/wps/{wps}/edit', \App\Livewire\Wps\Edit::class)->name('wps.edit');
+
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
 
 

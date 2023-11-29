@@ -146,6 +146,19 @@ class Setting extends Model
                 'sl' => 'sl',
                 'ml' => 'ml',
             ],
+            'type_of_joints' => [
+                'FW' => 'FW',
+                'BW' => 'BW',
+            ],
+            'type_of_joint_preparations' => [
+                'V' => 'V',
+                'K' => 'K',
+                'Y' => 'Y',
+            ],
+            'layers' => [
+                'sl' => 'sl',
+                'ml' => 'ml',
+            ]
         ]);
     }
 

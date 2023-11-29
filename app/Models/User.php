@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Data\UserFilters;
 use Illuminate\Http\UploadedFile;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;

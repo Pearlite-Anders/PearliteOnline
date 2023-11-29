@@ -12,6 +12,22 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+                        @can('viewAny', App\Models\Wps::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('wps.index') }}" :active="request()->routeIs('wps.*')">
+                                    <x-icon.wps class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('WPS') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\Wpqr::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('wpqr.index') }}" :active="request()->routeIs('wpqr.*')">
+                                    <x-icon.wpqr class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('WPQR') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
                         @can('viewAny', App\Models\User::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">

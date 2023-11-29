@@ -6,7 +6,13 @@
 
 @if($column['type'] == 'relationship')
     <x-table.cell>
-        {{ $model->{$column['relationship']} ? $model->{$column['relationship']}->{ $column['class']::LABEL_KEY } : '' }}
+        @if(preg_match('/\./', $column['class']::LABEL_KEY))
+            @php($keys = explode('.', $column['class']::LABEL_KEY))
+            @php($value = optional(optional($model->{$column['relationship']})->{$keys[0]})[$keys[1]])
+            {{ $value }}
+        @else
+            {{ $model->{$column['relationship']} ? $model->{$column['relationship']}->{ $column['class']::LABEL_KEY } : '' }}
+        @endif
     </x-table.cell>
 @elseif($column['type'] == 'calculated')
         <x-table.cell>{{ optional($model)->{$key} }}</x-table.cell>

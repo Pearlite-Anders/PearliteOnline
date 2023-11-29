@@ -16,9 +16,19 @@ class Company extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function welding_certificates()
+    public function weldingcertificates()
     {
         return $this->hasMany(WeldingCertificate::class);
+    }
+
+    public function wpqrs()
+    {
+        return $this->hasMany(Wpqr::class);
+    }
+
+    public function wps()
+    {
+        return $this->hasMany(Wps::class);
     }
 
     public function modules()
@@ -35,6 +45,22 @@ class Company extends Model
             'welding-certificates' => (object)[
                 'name' => __('Welding Certificates'),
                 'class' => \App\Livewire\WeldingCertificates\Index::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'wpqr' => (object)[
+                'name' => __('WPQR'),
+                'class' => \App\Livewire\Wpqr\Index::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'wps' => (object)[
+                'name' => __('WPS'),
+                'class' => \App\Livewire\Wps\Index::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),

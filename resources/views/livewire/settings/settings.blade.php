@@ -26,6 +26,16 @@
                         wire:click="setSection('welding-certificates')"
                     >{{ __('Welding Certificates') }}</button>
                 </li>
+                <li>
+                    <button
+                        href="#multiple-choice"
+                        @if($section == 'multiple-choice')
+                            aria-current="page"
+                            class="text-cyan-500"
+                        @endif
+                        wire:click="setSection('multiple-choice')"
+                    >{{ __('Multiple Choice Fields') }}</button>
+                </li>
             </ul>
         </x-slot>
     </x-index-header>
@@ -33,6 +43,7 @@
     <div class="max-w-5xl px-4 pt-8 pb-4 leading-6 text-black border-t border-b-0 border-gray-200 border-solid border-x-0">
         @include('livewire.settings.general')
         @include('livewire.settings.welding-certificates')
+        @include('livewire.settings.multiple-choice')
     </div>
 
 </div>
