@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "aws/aws-sdk-php": "^3.291",
         "guzzlehttp/guzzle": "^7.2",
         "kolossal-io/laravel-multiplex": "^1.0",
         "laravel/framework": "^10.10",
@@ -14,10 +15,10 @@
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.16",
         "livewire/livewire": "^3.0",
-        "spatie/laravel-data": "^3.9",
-        "spatie/laravel-permission": "^5.11",
         "setasign/fpdi-fpdf": "^2.3",
-        "setasign/fpdi_pdf-parser": "2.0.4"
+        "setasign/fpdi_pdf-parser": "2.0.4",
+        "spatie/laravel-data": "^3.9",
+        "spatie/laravel-permission": "^5.11"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
