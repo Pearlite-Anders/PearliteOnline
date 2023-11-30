@@ -5,7 +5,7 @@
     <x-index-header>
         <x-slot name="heading">
             <x-icon.wps class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-            {{ __('WPQR') }}
+            {{ __('WPS') }}
         </x-slot>
         <x-slot name="search">
             <div class="relative grid w-full grid-cols-1 gap-4 pr-16 md:grid-cols-8">
@@ -25,7 +25,7 @@
             @can('create', App\Models\Wps::class)
                 <x-button.link href="{{ route('wps.create') }}" class="inline-flex items-center justify-center whitespace-nowrap">
                     <x-icon.plus class="mr-2 -ml-1 align-middle" />
-                    {{ __('Add WPQR') }}
+                    {{ __('Add WPS') }}
                 </x-button.link>
             @endcan
         </x-slot>

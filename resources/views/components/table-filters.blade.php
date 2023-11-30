@@ -1,5 +1,5 @@
 <div x-data="{ open: false }" class="col-span-6">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3"
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
         @php($count = 0)
         @php($visible = 0)
         @foreach($filterColumns as $filter)
@@ -29,7 +29,8 @@
                         class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                     >
                         <option value="">{{ __($filter_column->label) }}</option>
-                        @foreach(App\Models\Setting::get($filter_column->options) as $option)
+                        @php($options = is_array($filter_column->options) ? $filter_column->options : App\Models\Setting::get($filter_column->options))
+                        @foreach($options as $option)
                             <option value="{{ $option }}">{{ __($option) }}</option>
                         @endforeach
                     </select>
@@ -81,7 +82,8 @@
                             class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                         >
                             <option value="">{{ __($filter_column->label) }}</option>
-                            @foreach(App\Models\Setting::get($filter_column->options) as $option)
+                            @php($options = is_array($filter_column->options) ? $filter_column->options : App\Models\Setting::get($filter_column->options))
+                            @foreach($options as $option)
                                 <option value="{{ $option }}">{{ __($option) }}</option>
                             @endforeach
                         </select>
