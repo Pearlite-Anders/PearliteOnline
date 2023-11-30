@@ -7,6 +7,7 @@
         wire:submit="update"
     >
         @include('livewire.welding-certificates.form')
+
         <div class="items-center text-black sm:flex">
             <div class="mb-3 sm:mb-0 sm:flex">
                 <x-button.primary>

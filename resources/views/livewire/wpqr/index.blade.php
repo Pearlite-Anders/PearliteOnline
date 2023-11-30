@@ -75,27 +75,30 @@
                                         </x-button.link>
                                     @endcan
                                     @can('delete', $wpqr)
-                                        @if($confirming == $wpqr->id)
-                                            <x-button
-                                                wire:click="delete({{ $wpqr->id }})"
-                                                class="bg-red-700 hover:bg-red-800"
-                                            >
-                                                <x-icon.check class="w-4 h-4 text-white" />
-                                            </x-button>
-                                            <x-button
-                                                wire:click="cancelConfirmDelete"
-                                                class="bg-cyan-600 hover:bg-cyan-700"
-                                            >
-                                                <x-icon.x class="w-4 h-4 text-white" />
-                                            </x-button>
-                                        @else
-                                            <x-button
-                                                wire:click="confirmDelete({{ $wpqr->id }})"
-                                                class="bg-transparent hover:bg-gray-100 hover:text-gray-900"
-                                            >
-                                                <x-icon.trash class="w-4 h-4 text-red-600" />
-                                            </x-button>
-                                        @endif
+                                        <div class="flex" x-data @click.prevent.stop="console.log('stop')">
+                                            @if($confirming == $wpqr->id)
+                                                <x-button
+                                                    type="button"
+                                                    wire:click="delete({{ $wpqr->id }})"
+                                                    class="bg-red-700 hover:bg-red-800"
+                                                >
+                                                    <x-icon.check class="w-4 h-4 text-white" />
+                                                </x-button>
+                                                <x-button
+                                                    wire:click="cancelConfirmDelete"
+                                                    class="bg-cyan-600 hover:bg-cyan-700"
+                                                >
+                                                    <x-icon.x class="w-4 h-4 text-white" />
+                                                </x-button>
+                                            @else
+                                                <x-button
+                                                    wire:click="confirmDelete({{ $wpqr->id }})"
+                                                    class="bg-transparent hover:bg-gray-100 hover:text-gray-900"
+                                                >
+                                                    <x-icon.trash class="w-4 h-4 text-red-600" />
+                                                </x-button>
+                                            @endif
+                                        </div>
                                     @endcan
                                 </div>
                             </x-table.cell>

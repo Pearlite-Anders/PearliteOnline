@@ -1,4 +1,11 @@
 @props(['disabled' => false])
+@php
+    foreach($attributes as $key => $value) {
+        if($key == 'value') {
+            $attributes[$key] = __($value);
+        }
+    }
+@endphp
 
 <div x-data wire:ignore>
     <div

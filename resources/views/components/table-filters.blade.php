@@ -15,9 +15,9 @@
                         wire:model.live="filters.{{ $filter->key }}"
                         class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                     >
-                        <option value="">{{ $filter_column->label }}</option>
+                        <option value="">{{ __($filter_column->label) }}</option>
                         @foreach($filter_column->class::get_choices() as $key => $option)
-                            <option value="{{ $key }}">{{ $option }}</option>
+                            <option value="{{ $key }}">{{ __($option) }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -28,9 +28,9 @@
                         wire:model.live="filters.{{ $filter->key }}"
                         class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                     >
-                        <option value="">{{ $filter_column->label }}</option>
+                        <option value="">{{ __($filter_column->label) }}</option>
                         @foreach(App\Models\Setting::get($filter_column->options) as $option)
-                            <option value="{{ $option }}">{{ $option }}</option>
+                            <option value="{{ $option }}">{{ __($option) }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -41,7 +41,7 @@
                         type="search"
                         wire:model.live.debounce.500ms="filters.{{ $filter->key }}"
                         class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
-                        placeholder="{{ $filter_column->label }}"
+                        placeholder="{{ __($filter_column->label) }}"
                     />
                 </div>
             @endif
@@ -66,9 +66,9 @@
                             wire:model.live="filters.{{ $filter->key }}"
                             class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                         >
-                            <option value="">{{ $filter_column->label }}</option>
+                            <option value="">{{ __($filter_column->label) }}</option>
                             @foreach($filter_column->class::get_choices() as $key => $option)
-                                <option value="{{ $key }}">{{ $option }}</option>
+                                <option value="{{ $key }}">{{ __($option) }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -80,9 +80,9 @@
                             wire:model.live="filters.{{ $filter->key }}"
                             class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                         >
-                            <option value="">{{ $filter_column->label }}</option>
+                            <option value="">{{ __($filter_column->label) }}</option>
                             @foreach(App\Models\Setting::get($filter_column->options) as $option)
-                                <option value="{{ $option }}">{{ $option }}</option>
+                                <option value="{{ $option }}">{{ __($option) }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -95,26 +95,26 @@
                             id="$filter->key"
                             wire:model.live.debounce.500ms="filters.{{ $filter->key }}"
                             class=""
-                            placeholder="{{ $filter_column->label }}"
+                            placeholder="{{ __($filter_column->label) }}"
                         />
                     </div>
                 @endif
                 @if(optional($filter_column)->filter == 'date')
                     <div class="relative grid grid-cols-2 col-span-2 gap-4">
                         <div>
-                            <x-label for="$filter->key" :value="__('From: ') . $filter_column->label" class="!mb-0 text-xs leading-tight" />
+                            <x-label for="$filter->key" :value="__('From: ') . __($filter_column->label)" class="!mb-0 text-xs leading-tight" />
                             <x-input.date
                                 wire:model="filters.{{ $filter->key }}.min"
                                 :value="optional(optional($filters)[$filter->key])['min']"
-                                placeholder="{{__('From: ') . $filter_column->label }}"
+                                placeholder="{{__('From: ') . __($filter_column->label) }}"
                             />
                         </div>
                         <div>
-                            <x-label for="$filter->key" :value="__('To: ') . $filter_column->label" class="!mb-0 text-xs leading-tight" />
+                            <x-label for="$filter->key" :value="__('To: ') . __($filter_column->label)" class="!mb-0 text-xs leading-tight" />
                             <x-input.date
                                 wire:model="filters.{{ $filter->key }}.max"
                                 :value="optional(optional($filters)[$filter->key])['max']"
-                                placeholder="{{__('To: ') . $filter_column->label }}"
+                                placeholder="{{__('To: ') . __($filter_column->label) }}"
                             />
                         </div>
                     </div>

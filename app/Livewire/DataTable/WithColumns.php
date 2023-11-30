@@ -2,13 +2,17 @@
 
 namespace App\Livewire\DataTable;
 
-trait WithColumns {
+trait WithColumns
+{
 
     public $columns = [];
 
     public function mountWithColumns()
     {
-        $this->columns = auth()->user()->getColumns($this->model);
+        $this->columns = auth()->user()->getColumns($this->model)->map(function ($column) {
+            $column->label = __($column->label);
+            return $column;
+        });
     }
 
     public function toggleColumnVisibility($columnLabel)

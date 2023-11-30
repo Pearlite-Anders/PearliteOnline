@@ -65,5 +65,16 @@ Route::middleware([
         return redirect()->route('companies.index');
     })->name('switch-company');
 
+    Route::get('lang/{locale}', function ($locale) {
+        if (in_array($locale, ['en', 'da'])) {
+            if (Illuminate\Support\Facades\Auth::check()) {
+                Illuminate\Support\Facades\Auth::user()->locale = $locale;
+                Illuminate\Support\Facades\Auth::user()->save();
+            }
+        }
+        return redirect()->back();
+    })->name('locale');
+
+
 
 });

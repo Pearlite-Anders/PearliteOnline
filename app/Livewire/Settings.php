@@ -57,7 +57,7 @@ class Settings extends Component
     public function mount()
     {
         $this->settings = Setting::all()->toArray();
-        $this->section = request()->get('section', 'general');
+        $this->section = request()->get('section', 'welding-certificates');
     }
 
     public function render()

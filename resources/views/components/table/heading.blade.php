@@ -11,7 +11,11 @@
         <span class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">{{ $slot }}</span>
     @else
         <button {{ $attributes->except('class') }} class="flex items-center space-x-1 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase group focus:outline-none focus:underline">
-            <span>{{ $slot }}</span>
+            <span>
+                @if($slot)
+                    {{ __((string)$slot) }}
+                @endif
+            </span>
 
             <span class="relative flex items-center">
                 @if ($multiColumn)
