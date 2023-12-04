@@ -7,13 +7,14 @@
     }
 @endphp
 
-<div x-data wire:ignore>
+<div wire:ignore>
     <div
         x-data
         x-init="() => {
             var choices = new Choices($refs.{{ $attributes['prettyname'] }}, {
                 removeItems: true,
                 removeItemButton: true,
+                allowHTML: false,
                 noResultsText: '{{ __('No results found') }}',
                 noChoicesText: '{{ __('No choices to choose from') }}',
                 itemSelectText: '{{ __('Press to select') }}',
@@ -23,8 +24,23 @@
             });
 
             choices.passedElement.element.addEventListener('change', function(event) {
-                    values = getSelectValues($refs.{{ $attributes['prettyname'] }});
-                    @this.set('{{ $attributes['wire:model'] }}', values);
+                values = getSelectValues($refs.{{ $attributes['prettyname'] }});
+                @this.set('{{ $attributes['wire:model'] }}', values);
+                var input = choices.input;
+                if (choices.getValue(true).length > 0) {
+                    if (input) {
+                        input.placeholder = '';
+                        setTimeout(function() {
+                            input.element.style.width = 3 + 'ch';
+                        }, 50);
+                    }
+                } else {
+                    var input = choices.input;
+                    if (input) {
+                        input.placeholder = '{{ $attributes['placeholder'] }}';
+                        input.element.style.width = input.element.placeholder.length + 1 + 'ch';
+                    }
+                }
             },false);
 
             items = {!! str_replace('"', "'", json_encode($attributes['selected'], JSON_HEX_APOS)) !!};
@@ -34,7 +50,9 @@
                     choices.setChoiceByValue((select).toString());
                 });
             } else {
-                choices.setChoiceByValue((items).toString());
+                if(items) {
+                    choices.setChoiceByValue((items).toString());
+                }
             }
             }
             function getSelectValues(select) {
@@ -50,8 +68,6 @@
                 if(select.multiple) {
                     return result;
                 }
-
-                console.log(result[0]);
 
                 return result[0];
             }

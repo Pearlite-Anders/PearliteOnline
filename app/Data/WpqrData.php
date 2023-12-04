@@ -13,7 +13,7 @@ class WpqrData extends Data implements Wireable
 
     public function __construct(
         public string $name,
-        public ?string $standard,
+        public ?array $standard,
         public ?array $welding_process,
         public ?array $type_of_joint,
         public ?string $throat_thickness,

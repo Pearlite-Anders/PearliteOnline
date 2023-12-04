@@ -1,11 +1,12 @@
 <div x-data="{ open: false }" class="col-span-6">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3 ">
         @php($count = 0)
         @php($visible = 0)
+        @php($filterColumnsToShow = 0)
         @foreach($filterColumns as $filter)
             @php($count++)
             @if(!$filter->visible) @continue @endif
-            @if($visible >= 3) @break @endif
+            @if($visible >= $filterColumnsToShow) @break @endif
             @php($visible++)
 
             @php($filter_column = $model::getColumn($filter->key))
@@ -48,8 +49,8 @@
             @endif
         @endforeach
     </div>
-    @if(count($filterColumns) > 3)
-        <div class="absolute top-0 right-0">
+    @if(count($filterColumns) > $filterColumnsToShow)
+        <div class="">
             <x-button.secondary @click="open = !open">
                 <x-icon.plus class="w-6 h-6" x-show="!open" />
                 <x-icon.minus class="w-6 h-6" x-show="open" />
@@ -96,7 +97,6 @@
                             type="search"
                             id="$filter->key"
                             wire:model.live.debounce.500ms="filters.{{ $filter->key }}"
-                            class=""
                             placeholder="{{ __($filter_column->label) }}"
                         />
                     </div>

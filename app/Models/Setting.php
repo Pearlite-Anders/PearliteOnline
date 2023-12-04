@@ -158,7 +158,7 @@ class Setting extends Model
             'layers' => [
                 'sl' => 'sl',
                 'ml' => 'ml',
-            ]
+            ],
         ]);
     }
 

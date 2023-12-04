@@ -18,13 +18,23 @@
                 </li>
                 <li>
                     <button
+                        href="#wpqr"
+                        @if($section == 'wpqr')
+                            aria-current="page"
+                            class="text-cyan-500"
+                        @endif
+                        wire:click="setSection('wpqr')"
+                    >{{ __('WPQR') }}</button>
+                </li>
+                <li>
+                    <button
                         href="#multiple-choice"
                         @if($section == 'multiple-choice')
                             aria-current="page"
                             class="text-cyan-500"
                         @endif
                         wire:click="setSection('multiple-choice')"
-                    >{{ __('Multiple Choice Fields') }}</button>
+                    >{{ __('Common Multiple Choice Fields') }}</button>
                 </li>
             </ul>
         </x-slot>
@@ -32,6 +42,7 @@
 
     <div class="max-w-5xl px-4 pt-8 pb-4 leading-6 text-black border-t border-b-0 border-gray-200 border-solid border-x-0">
         @include('livewire.settings.welding-certificates')
+        @include('livewire.settings.wpqr')
         @include('livewire.settings.multiple-choice')
     </div>
 

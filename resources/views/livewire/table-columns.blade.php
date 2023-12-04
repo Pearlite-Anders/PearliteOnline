@@ -31,11 +31,18 @@
                                             @click="toggleVisibility(column)"
                                         />
                                         <x-icon.eye-slash
-                                            class="w-5 h-5 mr-2 text-gray-600"
+                                            class="w-5 h-5 mr-2 text-red-600"
                                             x-show="!column.visible"
                                             @click="toggleVisibility(column)"
                                         />
-                                        <span x-text="column.label" class="pointer-events-none"></span>
+                                        <span
+                                            x-text="column.label"
+                                            class="pointer-events-none"
+                                            :class="{
+                                                'opacity-50': draggingIndex === index,
+                                                'text-red-600': column.visible === false,
+                                            }"
+                                        ></span>
                                     </div>
                                 </div>
                             </template>
