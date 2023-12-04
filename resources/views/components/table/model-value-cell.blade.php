@@ -20,7 +20,7 @@
     <x-table.cell>
         @if(is_array(optional($model->data)[$key]))
             {{ implode(', ', optional($model->data)[$key] ?? []) }}
-        @else
+        @elseif(is_array($column['options']) && optional($model->data)[$key])
             {{ optional($column['options'])[optional($model->data)[$key]] }}
         @endif
     </x-table.cell>
