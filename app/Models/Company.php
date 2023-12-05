@@ -72,7 +72,7 @@ class Company extends Model
                 ]
             ],
             'welder' => (object)[
-                'name' => __('Welder'),
+                'name' => __('Welders'),
                 'class' => \App\Livewire\Welder::class,
                 'permissions' => [
                     'view' => __('View'),
