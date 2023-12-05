@@ -35,7 +35,7 @@ class WeldingCertificate extends Model
         'welder_id' => [
             'type' => 'relationship',
             'relationship' => 'welder',
-            'class' => User::class,
+            'class' => Welder::class,
             'label' => 'Welder',
             'placeholder' => 'Choose user',
             'filter' => 'relationship'
@@ -196,7 +196,7 @@ class WeldingCertificate extends Model
 
     public function welder()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Welder::class);
     }
 
     public function getDateExpirationAttribute()

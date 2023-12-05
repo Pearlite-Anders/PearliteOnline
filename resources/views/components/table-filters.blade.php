@@ -59,7 +59,7 @@
     @endif
     <div x-show="open" @click.outside="open = false" class="absolute left-0 right-0 p-4 mt-3 bg-white border rounded-sm shadow-md">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
-            @foreach($filterColumns->slice(($count - 1), -1) as $filter)
+            @foreach($filterColumns as $filter)
                 @php($filter_column = $model::getColumn($filter->key))
                 @if(optional($filter_column)->filter == 'relationship')
                     <div class="relative">

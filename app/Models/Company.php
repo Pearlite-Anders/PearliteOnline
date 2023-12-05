@@ -31,12 +31,17 @@ class Company extends Model
         return $this->hasMany(Wps::class);
     }
 
+    public function welders()
+    {
+        return $this->hasMany(Welder::class);
+    }
+
     public function modules()
     {
         return [
             'users' => (object)[
                 'name' => __('Users'),
-                'class' => \App\Livewire\User\Index::class,
+                'class' => \App\Modal\User::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
@@ -44,7 +49,7 @@ class Company extends Model
             ],
             'welding-certificates' => (object)[
                 'name' => __('Welding Certificates'),
-                'class' => \App\Livewire\WeldingCertificates\Index::class,
+                'class' => \App\Modal\WeldingCertificates::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
@@ -52,7 +57,7 @@ class Company extends Model
             ],
             'wpqr' => (object)[
                 'name' => __('WPQR'),
-                'class' => \App\Livewire\Wpqr\Index::class,
+                'class' => \App\Modal\Wpqr::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
@@ -60,7 +65,15 @@ class Company extends Model
             ],
             'wps' => (object)[
                 'name' => __('WPS'),
-                'class' => \App\Livewire\Wps\Index::class,
+                'class' => \App\Modal\Wps::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'welder' => (object)[
+                'name' => __('Welder'),
+                'class' => \App\Livewire\Welder::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),

@@ -1,6 +1,6 @@
 <div
     id="multiple-choice"
-    @unless($section == 'multiple-choice')
+    @unless($section == 'wpqr')
         class="hidden"
     @endunless
 >

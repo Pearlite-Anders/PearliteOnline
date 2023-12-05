@@ -55,6 +55,10 @@ Route::middleware([
     Route::get('/wps/create', \App\Livewire\Wps\Create::class)->name('wps.create');
     Route::get('/wps/{wps}/edit', \App\Livewire\Wps\Edit::class)->name('wps.edit');
 
+    Route::get('/welder', \App\Livewire\Welder\Index::class)->name('welder.index');
+    Route::get('/welder/create', \App\Livewire\Welder\Create::class)->name('welder.create');
+    Route::get('/welder/{welder}/edit', \App\Livewire\Welder\Edit::class)->name('welder.edit');
+
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
 
 

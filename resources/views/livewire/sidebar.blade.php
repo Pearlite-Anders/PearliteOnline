@@ -28,6 +28,14 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+                        @can('viewAny', App\Models\Welder::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('welder.index') }}" :active="request()->routeIs('welder.*')">
+                                    <x-icon.welder class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Welders') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
                         @can('viewAny', App\Models\User::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
