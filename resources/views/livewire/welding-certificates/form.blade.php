@@ -22,6 +22,8 @@
             />
         </div>
 
+        <script src="https://unpkg.com/pdfjs-dist@3/build/pdf.min.js"></script>
+        <script src="https://unpkg.com/konva@9/konva.min.js"></script>
         @if ($form->current_file)
             <div class="grid grid-cols-1 gap-6 mb-6">
                 <div>
@@ -38,6 +40,9 @@
                     </div>
                 </div>
             </div>
+        @endif
+        @if($form->new_certificate)
+            @include('livewire.welding-certificates.signature-editor')
         @endif
 
     </div>

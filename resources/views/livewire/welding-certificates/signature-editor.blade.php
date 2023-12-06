@@ -1,7 +1,7 @@
 <div>
     <div
         x-data='signature_editor(
-            @json($form->current_file->temporary_url()),
+            @json($form->new_certificate ? $form->new_certificate->temporaryUrl()  : ( $form->current_file ? $form->current_file->temporary_url() : null)),
             @json(url("/")),
             @json(optional($form->data)["signature_boxes"]) ?? [],
         )'
@@ -68,8 +68,8 @@
                     <div class="flex justify-between">
                         <div class="flex space-x-2">
                             <div class="flex items-center px-4 py-2 text-white rounded" style="background:#0097b2;">{{ __('Date') }}</div>
-                            <div class="flex items-center px-4 py-2 text-white rounded" style="background:#00bf63;">{{ __('Title') }}</div>
                             <div class="flex items-center px-4 py-2 text-white rounded" style="background:#FF3131;">{{ __('Signature') }}</div>
+                            <div class="flex items-center px-4 py-2 text-white rounded" style="background:#00bf63;">{{ __('Title') }}</div>
                         </div>
                         <x-button.primary
                             type="button"
@@ -84,7 +84,4 @@
             </div>
         </div>
     </div>
-
-    <script src="https://unpkg.com/pdfjs-dist@3/build/pdf.min.js"></script>
-    <script src="https://unpkg.com/konva@9/konva.min.js"></script>
 </div>
