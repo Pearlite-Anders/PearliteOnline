@@ -75,20 +75,40 @@
                         </select>
                     </div>
                 @endif
-                @if(optional($filter_column)->filter == 'select')
-                    <div class="relative">
-                        <x-label for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
-                        <select
-                            wire:model.live="filters.{{ $filter->key }}"
-                            class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
-                        >
-                            <option value="">{{ __($filter_column->label) }}</option>
-                            @php($options = is_array($filter_column->options) ? $filter_column->options : App\Models\Setting::get($filter_column->options))
-                            @foreach($options as $option)
-                                <option value="{{ $option }}">{{ __($option) }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                @if(optional($filter_column)->filter == 'radios' || optional($filter_column)->filter == 'select')
+                    @php($options = is_array($filter_column->options) ? $filter_column->options : App\Models\Setting::get($filter_column->options))
+                    @if(optional($filter_column)->filter == 'radios' || count($options) <= 10)
+                        <div class="relative">
+                            <x-label :for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
+                            <div class="flex flex-wrap -mx-2">
+                                @foreach($options as $key => $label)
+                                    <label class="flex mx-2 mb-2 px-2 py-2 text-sm leading-none border rounded-md cursor-pointer focus:outline-none focus:ring-4 ring-cyan-300/25 @if(optional($filters)[$filter->key] == $key) border-cyan-400 bg-slate-50 @else bg-white  border-gray-200 @endif">
+                                        <input
+                                            type="radio"
+                                            wire:model.live="filters.{{ $filter->key }}"
+                                            value="{{ $key }}"
+                                            class="hidden"
+                                        />
+                                        <span>{{ __($label) }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                    @elseif(optional($filter_column)->filter == 'select')
+                        <div class="relative">
+                            <x-label :for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
+                            <select
+                                :id="$filter->key"
+                                wire:model.live="filters.{{ $filter->key }}"
+                                class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
+                            >
+                                <option value="">{{ __($filter_column->label) }}</option>
+                                @foreach($options as $option)
+                                    <option value="{{ $option }}">{{ __($option) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
                 @endif
                 @if(optional($filter_column)->filter == 'search')
                     <div class="relative">

@@ -35,6 +35,9 @@ trait WithFilters
             } elseif ($column->filter == 'search') {
                 $query->where('data->' . $key, 'like', '%' . $value . '%');
                 continue;
+            } elseif ($column->filter == 'radios') {
+                $query->where('data->' . $key, $value);
+                continue;
             } elseif ($column->filter == 'date') {
                 if(optional($value)['min'] && optional($value)['max']) {
                     if(optional($value)['min'] == optional($value)['max']) {

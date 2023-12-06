@@ -24,6 +24,14 @@
             {{ optional($column['options'])[optional($model->data)[$key]] }}
         @endif
     </x-table.cell>
+@elseif($column['type'] == 'radios')
+    <x-table.cell>
+        @if(is_array(optional($model->data)[$key]))
+            {{ optional($model->data)[$key] }}
+        @elseif(is_array($column['options']) && optional($model->data)[$key])
+            {{ optional($column['options'])[optional($model->data)[$key]] }}
+        @endif
+    </x-table.cell>
 @elseif($column['type'] == 'date')
     <x-table.cell>
         @if(preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($model->data)[$key]))

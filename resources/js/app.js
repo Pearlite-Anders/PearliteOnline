@@ -18,6 +18,13 @@ import * as FilePond from 'filepond';
 window.FilePond = FilePond;
 import 'filepond/dist/filepond.min.css';
 
+import ui from '@alpinejs/ui';
+import focus from '@alpinejs/focus';
+Alpine.plugin(ui);
+Alpine.plugin(focus);
+
+
+
 Alpine.data('signature_editor', (path, url, boxes) => ({
     pdf_path: path,
     url: url,

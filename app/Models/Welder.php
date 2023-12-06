@@ -29,26 +29,24 @@ class Welder extends Model
             'filter' => 'search'
         ],
         'position' => [
-            'type' => 'select',
+            'type' => 'radios',
             'multiple' => false,
             'label' => 'Internal/External',
             'options' => [
                 'internal' => 'Internal',
                 'external' => 'External',
             ],
-            'placeholder' => 'Choose',
-            'filter' => 'select'
+            'filter' => 'radios'
         ],
         'status' => [
-            'type' => 'select',
+            'type' => 'radios',
             'multiple' => false,
             'label' => 'Active/Inactive',
             'options' => [
                 'active' => 'Active',
                 'inactive' => 'Inactive',
             ],
-            'placeholder' => 'Choose',
-            'filter' => 'select'
+            'filter' => 'radios'
         ],
     ];
 }
