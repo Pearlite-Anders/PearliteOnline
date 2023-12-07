@@ -6,6 +6,7 @@
 >
 
 @php($arraySections = [
+    'wpqr_standards' => __('Standards'),
 ])
 
 @foreach($arraySections as $arraySectionKey => $arraySectionName)

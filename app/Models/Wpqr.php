@@ -30,10 +30,12 @@ class Wpqr extends Model
             'filter' => 'search'
         ],
         'standard' => [
-            'type' => 'text',
+            'type' => 'select',
+            'multiple' => true,
             'label' => 'Standard',
+            'options' => 'wpqr_standards',
             'placeholder' => 'EN 15614-1',
-            'filter' => 'search'
+            'filter' => 'select'
         ],
         'welding_process' => [
             'type' => 'select',

@@ -159,6 +159,13 @@ class Setting extends Model
                 'sl' => 'sl',
                 'ml' => 'ml',
             ],
+            'wpqr_standards' => [
+                'EN 15614-1' => 'EN 15614-1',
+                'EN 15613' => 'EN 15613',
+                'EN 15612' => 'EN 15612',
+                'EN 15611' => 'EN 15611',
+                'EN 15610' => 'EN 15610',
+            ]
         ]);
     }
 
