@@ -21,7 +21,6 @@ class Wpqr extends Model
     public const LABEL_KEY = 'data.name';
 
     public const SYSTEM_COLUMNS = [
-
         'name' => [
             'type' => 'text',
             'label' => 'WPQR name',
@@ -173,8 +172,8 @@ class Wpqr extends Model
         ],
     ];
 
-    public static function get_choices()
+    public function loadAll()
     {
-        return auth()->user()->currentCompany->wpqrs->pluck(self::LABEL_KEY, 'id')->toArray();
+        return $this->load(['company']);
     }
 }

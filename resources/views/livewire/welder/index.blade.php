@@ -35,6 +35,7 @@
         <div class="overflow-x-auto">
             <x-table>
                 <x-slot name="head">
+                    <x-table.heading />
                     @foreach($columns as $column)
                         @continue($column->visible === false)
                         @if(
@@ -55,6 +56,13 @@
                             :can_edit="auth()->user()->can('update', $welder)"
                             class="cursor-pointer hover:bg-gray-50"
                         >
+                            <x-table.cell class="text-right">
+                                <livewire:table-row-preview
+                                    :model="$welder"
+                                    :edit_link="route('welder.edit', $welder)"
+                                    :can_edit="auth()->user()->can('update', $welder)"
+                                />
+                            </x-table.cell>
                             @foreach($columns as $column)
                                 @continue($column->visible === false)
                                 <x-table.model-value-cell

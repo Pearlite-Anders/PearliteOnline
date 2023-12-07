@@ -2,6 +2,7 @@
 
 namespace App\Models\Trait;
 
+use App\Models\Company;
 use Illuminate\Support\Str;
 
 trait HasCompany

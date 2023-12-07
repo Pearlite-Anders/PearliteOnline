@@ -225,4 +225,8 @@ class WeldingCertificate extends Model
         return null;
     }
 
+    public function loadAll() {
+        return $this->load(['company', 'welder']);
+    }
+
 }

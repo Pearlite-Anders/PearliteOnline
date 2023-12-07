@@ -49,4 +49,9 @@ class Welder extends Model
             'filter' => 'radios'
         ],
     ];
+
+    public function loadAll()
+    {
+        return $this;
+    }
 }

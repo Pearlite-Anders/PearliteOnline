@@ -2,8 +2,10 @@
 
 namespace App\Models\Trait;
 
+use App\Models\File;
+use Illuminate\Support\Carbon;
 
-Trait HasFilter
+trait HasFilter
 {
 
     public static function getDefaultColumns()
@@ -41,5 +43,73 @@ Trait HasFilter
                     'order' => $order++,
                 ];
             })->values();
+    }
+
+    public function getColumnValue($column_key, $formatting = true)
+    {
+        $column = self::getColumn($column_key);
+        $value = '';
+
+        if($column->type == 'relationship') {
+            if(preg_match('/\./', $column->class::LABEL_KEY)) {
+                $keys = explode('.', $column->class::LABEL_KEY);
+                $value = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
+            } else {
+                $value = $this->{$column->relationship} ? $this->{$column->relationship}->{ $column->class::LABEL_KEY } : '';
+            }
+        } elseif($column->type == 'calculated') {
+            $value = optional($this)->{$column_key};
+        } elseif($column->type == 'select') {
+            if(is_array(optional($this->data)[$column_key])) {
+                $value = implode(', ', optional($this->data)[$column_key] ?? []);
+            } elseif(is_array($column->options) && optional($this->data)[$column_key]) {
+                $value = optional($column->options)[optional($this->data)[$column_key]];
+            }
+        } elseif($column->type == 'radios') {
+            if(is_array($column->options) && optional($this->data)[$column_key]) {
+                $value = optional($column->options)[optional($this->data)[$column_key]];
+            }
+        } elseif($column->type == 'date') {
+            if(preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($this->data)[$column_key])) {
+                $value = Carbon::parse(optional($this->data)[$column_key])->format('Y.m.d');
+            } else {
+                $value = optional($this->data)[$column_key];
+            }
+        } elseif($column->type == 'welding_certificate') {
+            if($this->current_file_id) {
+                $file = File::find($this->current_file_id);
+                $value = $file->temporary_url();
+            }
+        } else {
+            $value = optional($this->data)[$column_key];
+        }
+
+        if(!$formatting) {
+            return $value;
+        }
+
+        $value = __($value);
+
+        if(optional($column)->prefix && $value) {
+            $value = __($column->prefix) . $value;
+        }
+
+        if(optional($column)->postfix && $value) {
+            $value = $value . __($column->postfix);
+        }
+
+        if($column->type == 'welding_certificate' && $value) {
+            return '<a href="' . $value . '" target="_blank">' . __('Download') . '</a>';
+        }
+
+        return $value;
+    }
+
+    public function toArray()
+    {
+        return collect(self::getDefaultColumns())->mapWithKeys(function ($column) {
+            $value = $this->getColumnValue($column->key);
+            return [__($column->label) => $value];
+        })->toArray();
     }
 }

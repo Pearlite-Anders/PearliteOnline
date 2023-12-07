@@ -180,4 +180,9 @@ class Wps extends Model
     {
         return $this->belongsTo(Wpqr::class);
     }
+
+    public function loadAll()
+    {
+        return $this->load(['company', 'wpqr']);
+    }
 }
