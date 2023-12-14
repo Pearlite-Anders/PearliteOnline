@@ -25,6 +25,17 @@ class WeldingCertificate extends Model
             'type' => 'welding_certificate',
             'label' => 'Certificate',
         ],
+        'type' => [
+            'type' => 'select',
+            'multiple' => false,
+            'label' => 'Type',
+            'options' => [
+                'welding_certificate' => 'Welding certificate',
+                'welding_operator_certificate' => 'Welding operator certificate',
+            ],
+            'placeholder' => 'Choose',
+            'filter' => 'select'
+        ],
         'number' => [
             'type' => 'text',
             'label' => 'Number',
@@ -39,23 +50,6 @@ class WeldingCertificate extends Model
             'label' => 'Welder',
             'placeholder' => 'Choose user',
             'filter' => 'relationship'
-        ],
-        'type' => [
-            'type' => 'select',
-            'multiple' => false,
-            'label' => 'Type',
-            'options' => [
-                'welding_certificate' => 'Welding certificate',
-                'welding_operator_certificate' => 'Welding operator certificate',
-            ],
-            'placeholder' => 'Choose',
-            'filter' => 'select'
-        ],
-        'designation' => [
-            'type' => 'text',
-            'label' => 'Designation',
-            'placeholder' => 'EN ISO 9606-1 135 P FW FM1 S t12 PE ss nb',
-            'filter' => 'search'
         ],
         'welding_process' => [
             'type' => 'select',
@@ -86,7 +80,7 @@ class WeldingCertificate extends Model
             'multiple' => true,
             'label' => 'Material group',
             'options' => 'material_groups',
-            'placeholder' => 'FM1',
+            'placeholder' => '1.1',
             'filter' => 'select'
         ],
         'filler_material_type' => [
@@ -102,7 +96,7 @@ class WeldingCertificate extends Model
             'multiple' => true,
             'label' => 'Filler material group',
             'options' => 'filler_material_groups',
-            'placeholder' => 't12',
+            'placeholder' => 'FM1',
             'filter' => 'select'
         ],
         'filler_material_designation' => [
@@ -117,7 +111,7 @@ class WeldingCertificate extends Model
             'multiple' => true,
             'label' => 'Shielding gas',
             'options' => 'shielding_gases',
-            'placeholder' => 'ss',
+            'placeholder' => 'M21',
             'filter' => 'select'
         ],
         'type_of_current_and_polarity' => [
@@ -125,7 +119,7 @@ class WeldingCertificate extends Model
             'multiple' => true,
             'label' => 'Type of current and polarity',
             'options' => 'type_of_current_and_polarities',
-            'placeholder' => 'nb',
+            'placeholder' => 'DC+',
             'filter' => 'select'
         ],
         'material_thickness' => [
@@ -161,7 +155,7 @@ class WeldingCertificate extends Model
         'weld_details' => [
             'type' => 'text',
             'label' => 'Weld details',
-            'placeholder' => '1.2',
+            'placeholder' => 'ss nb',
             'filter' => 'search'
         ],
         'date_examination' => [
@@ -225,7 +219,8 @@ class WeldingCertificate extends Model
         return null;
     }
 
-    public function loadAll() {
+    public function loadAll()
+    {
         return $this->load(['company', 'welder']);
     }
 

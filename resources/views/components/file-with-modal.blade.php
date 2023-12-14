@@ -55,11 +55,11 @@
             <div
                 x-on:click.stop
                 x-trap.noscroll.inert="open"
-                class="relative w-full max-w-2xl p-12 overflow-y-auto bg-white shadow-lg rounded-xl"
+                class="relative w-full max-w-6xl p-12 overflow-y-auto bg-white shadow-lg rounded-xl"
             >
                 @if($file->isPDF())
                     <iframe
-                        src="{{ $file->temporary_url() }}"
+                        src="{{ $file->temporary_url() }}#navpanes=0"
                         frameborder="0"
                         class="w-full aspect-[1/1.4]"
                     ></iframe>
