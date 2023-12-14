@@ -162,6 +162,20 @@ class User extends Authenticatable
             $filters = $type::getDefaultfilters();
         } else {
             $filters = collect(json_decode(json_encode($filters)));
+            $default_filters = $type::getDefaultfilters();
+            if($filters->pluck('key')->sort()->values() != $default_filters->pluck('key')->sort()->values()) {
+                $default_filters->each(function ($filter) use (&$filters) {
+                    if(!$filters->contains('key', $filter->key)) {
+                        $filters->push($filter);
+                    }
+                });
+
+                $filters = $filters->filter(function ($filter) use ($default_filters) {
+                    return $default_filters->contains('key', $filter->key);
+                });
+
+                $this->saveFilters($type, $filters);
+            }
         }
 
         return $filters;
