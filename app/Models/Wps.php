@@ -19,6 +19,10 @@ class Wps extends Model
     ];
 
     public const SYSTEM_COLUMNS = [
+        'file' => [
+            'type' => 'file',
+            'label' => 'File',
+        ],
         'number' => [
             'type' => 'text',
             'label' => 'WPS no.',

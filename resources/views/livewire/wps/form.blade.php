@@ -4,7 +4,7 @@
     </h3>
     <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
         @foreach(App\Models\Wps::SYSTEM_COLUMNS as $key => $column)
-            @if($column['type'] == 'welding_certificate') @continue @endif
+            @if(in_array($column['type'], ['file', 'welding_certificate'])) @continue @endif
             @include('livewire.common.field')
         @endforeach
 

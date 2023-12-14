@@ -35,7 +35,6 @@
         <div class="overflow-x-auto">
             <x-table>
                 <x-slot name="head">
-                    <x-table.heading />
                     @foreach($columns as $column)
                         @continue($column->visible === false)
                         @if(
@@ -56,13 +55,6 @@
                             :can_edit="auth()->user()->can('update', $wpqr)"
                             class="cursor-pointer hover:bg-gray-50"
                         >
-                            <x-table.cell class="text-right">
-                                <livewire:table-row-preview
-                                    :model="$wpqr"
-                                    :edit_link="route('wpqr.edit', $wpqr)"
-                                    :can_edit="auth()->user()->can('update', $wpqr)"
-                                />
-                            </x-table.cell>
                             @foreach($columns as $column)
                                 @continue($column->visible === false)
                                 <x-table.model-value-cell

@@ -21,6 +21,10 @@ class Wpqr extends Model
     public const LABEL_KEY = 'data.name';
 
     public const SYSTEM_COLUMNS = [
+        'file' => [
+            'type' => 'file',
+            'label' => 'File',
+        ],
         'name' => [
             'type' => 'text',
             'label' => 'WPQR name',

@@ -4,43 +4,8 @@
     'model',
 ])
 
-@if($column['type'] == 'relationship')
-    <x-table.cell>
-        @if(preg_match('/\./', $column['class']::LABEL_KEY))
-            @php($keys = explode('.', $column['class']::LABEL_KEY))
-            @php($value = optional(optional($model->{$column['relationship']})->{$keys[0]})[$keys[1]])
-            {{ $value }}
-        @else
-            {{ $model->{$column['relationship']} ? $model->{$column['relationship']}->{ $column['class']::LABEL_KEY } : '' }}
-        @endif
-    </x-table.cell>
-@elseif($column['type'] == 'calculated')
-        <x-table.cell>{{ optional($model)->{$key} }}</x-table.cell>
-@elseif($column['type'] == 'select')
-    <x-table.cell>
-        @if(is_array(optional($model->data)[$key]))
-            {{ implode(', ', optional($model->data)[$key] ?? []) }}
-        @elseif(is_array($column['options']) && optional($model->data)[$key])
-            {{ optional($column['options'])[optional($model->data)[$key]] }}
-        @endif
-    </x-table.cell>
-@elseif($column['type'] == 'radios')
-    <x-table.cell>
-        @if(is_array(optional($model->data)[$key]))
-            {{ optional($model->data)[$key] }}
-        @elseif(is_array($column['options']) && optional($model->data)[$key])
-            {{ optional($column['options'])[optional($model->data)[$key]] }}
-        @endif
-    </x-table.cell>
-@elseif($column['type'] == 'date')
-    <x-table.cell>
-        @if(preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($model->data)[$key]))
-            {{ Carbon\Carbon::parse(optional($model->data)[$key])->format('Y.m.d') }}
-        @else
-            {{ optional($model->data)[$key] }}
-        @endif
-    </x-table.cell>
-@elseif($column['type'] == 'welding_certificate')
+
+@if($column['type'] == 'welding_certificate')
     <x-table.cell x-data @click.prevent.stop="console.log('stop')">
         @if($model->current_file_id)
             @php($file = App\Models\File::find($model->current_file_id))
@@ -56,6 +21,19 @@
             @endif
         @endif
     </x-table.cell>
+@elseif($column['type'] == 'file')
+    <x-table.cell x-data @click.prevent.stop="console.log('stop')">
+        @if($model->current_file_id)
+            @php($file = App\Models\File::find($model->current_file_id))
+            @if($file)
+                <x-file-with-modal
+                    :file="$file"
+                    :hide_name="true"
+                    icon_class="w-5 h-5 text-gray-800"
+                />
+            @endif
+        @endif
+    </x-table.cell>
 @else
-    <x-table.cell class="whitespace-nowrap">{{ optional($model->data)[$key] }}</x-table.cell>
+    <x-table.cell class="whitespace-nowrap">{{ $model->getColumnValue($key) }}</x-table.cell>
 @endif
