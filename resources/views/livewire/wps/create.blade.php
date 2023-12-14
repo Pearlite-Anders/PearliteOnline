@@ -10,7 +10,7 @@
         <div class="items-center text-black sm:flex">
             <div class="mb-3 sm:mb-0 sm:flex">
                 <x-button.primary>
-                    {{ __('Create') }}
+                    {{ __('Save') }}
                 </x-button.primary>
             </div>
         </div>

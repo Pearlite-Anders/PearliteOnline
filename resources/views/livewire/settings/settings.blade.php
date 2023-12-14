@@ -28,6 +28,16 @@
                 </li>
                 <li>
                     <button
+                        href="#wps"
+                        @if($section == 'wps')
+                            aria-current="page"
+                            class="text-cyan-500"
+                        @endif
+                        wire:click="setSection('wps')"
+                    >{{ __('WPS') }}</button>
+                </li>
+                <li>
+                    <button
                         href="#multiple-choice"
                         @if($section == 'multiple-choice')
                             aria-current="page"
@@ -43,6 +53,7 @@
     <div class="max-w-5xl px-4 pt-8 pb-4 leading-6 text-black border-t border-b-0 border-gray-200 border-solid border-x-0">
         @include('livewire.settings.welding-certificates')
         @include('livewire.settings.wpqr')
+        @include('livewire.settings.wps')
         @include('livewire.settings.multiple-choice')
     </div>
 

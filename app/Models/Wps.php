@@ -35,10 +35,12 @@ class Wps extends Model
             'filter' => 'relationship'
         ],
         'standard' => [
-            'type' => 'text',
+            'type' => 'select',
+            'multiple' => true,
             'label' => 'Standard',
+            'options' => 'wps_standards',
             'placeholder' => 'EN 15614-1',
-            'filter' => 'search'
+            'filter' => 'select'
         ],
         'welding_process' => [
             'type' => 'select',
@@ -67,7 +69,7 @@ class Wps extends Model
             'multiple' => true,
             'label' => 'Type of joint preparation',
             'options' => 'type_of_joint_preparations',
-            'placeholder' => 'FW',
+            'placeholder' => 'V',
             'filter' => 'select'
         ],
         'plate_pipe' => [
@@ -97,7 +99,7 @@ class Wps extends Model
             'multiple' => true,
             'label' => 'Material group',
             'options' => 'material_groups',
-            'placeholder' => 'FM1',
+            'placeholder' => '1.1',
             'filter' => 'select'
         ],
         'shielding_gas' => [
@@ -105,7 +107,7 @@ class Wps extends Model
             'multiple' => true,
             'label' => 'Shielding gas',
             'options' => 'shielding_gases',
-            'placeholder' => 'ss',
+            'placeholder' => 'M21',
             'filter' => 'select'
         ],
         'type_of_current_and_polarity' => [
@@ -113,7 +115,7 @@ class Wps extends Model
             'multiple' => true,
             'label' => 'Type of current and polarity',
             'options' => 'type_of_current_and_polarities',
-            'placeholder' => 'nb',
+            'placeholder' => 'DC+',
             'filter' => 'select'
         ],
         'filler_material_designation' => [
