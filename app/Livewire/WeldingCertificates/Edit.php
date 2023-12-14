@@ -18,17 +18,9 @@ class Edit extends Component
     {
         $this->form->update($this->weldingCertificate);
 
-        if($this->form->new_certificate) {
-            return redirect()
-                    ->route('welding-certificates.edit', $this->weldingCertificate)
-                    ->with('flash.banner', 'Welding Certificate updated.');
-        }
-
-        $this->dispatch(
-            'banner-message',
-            style: 'success',
-            message: __('Welding Certificate updated successfully.')
-        );
+        return redirect()
+                ->route('welding-certificates.index')
+                ->with('flash.banner', 'Welding Certificate updated.');
     }
 
     #[On('welding-certificate-signed')]

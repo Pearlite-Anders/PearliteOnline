@@ -17,17 +17,9 @@ class Edit extends Component
     {
         $this->form->update($this->welder);
 
-        if($this->form->new_file) {
-            return redirect()
-                    ->route('welder.edit', $this->welder)
-                    ->with('flash.banner', __('WPQR updated.'));
-        }
-
-        $this->dispatch(
-            'banner-message',
-            style: 'success',
-            message: __('Welding Certificate updated successfully.')
-        );
+        return redirect()
+                ->route('welder.index')
+                ->with('flash.banner', __('Welder updated.'));
     }
 
     public function mount(Welder $welder)

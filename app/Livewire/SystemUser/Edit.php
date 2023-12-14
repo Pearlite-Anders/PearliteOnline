@@ -41,11 +41,9 @@ class Edit extends Component
         }
 
 
-        $this->dispatch(
-            'banner-message',
-            style: 'success',
-            message: __('User updated successfully.')
-        );
+        return redirect()
+                ->route('system-users.index')
+                ->with('flash.banner', __('User updated.'));
     }
 
     public function mount(User $user)

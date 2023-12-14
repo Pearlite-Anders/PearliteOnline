@@ -18,10 +18,9 @@ class Edit extends Component
             'name' => $this->form->name,
         ]);
 
-        $this->dispatch('banner-message',
-            style: 'success',
-            message: __('Company updated successfully.')
-        );
+        return redirect()
+                ->route('companies.index')
+                ->with('flash.banner', __('Company updated.'));
     }
 
     public function mount(Company $company)

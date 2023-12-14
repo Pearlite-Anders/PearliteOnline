@@ -17,17 +17,9 @@ class Edit extends Component
     {
         $this->form->update($this->wpqr);
 
-        if($this->form->new_file) {
-            return redirect()
-                    ->route('wpqr.edit', $this->wpqr)
-                    ->with('flash.banner', __('WPQR updated.'));
-        }
-
-        $this->dispatch(
-            'banner-message',
-            style: 'success',
-            message: __('Welding Certificate updated successfully.')
-        );
+        return redirect()
+                ->route('wpqr.index')
+                ->with('flash.banner', __('WPQR updated.'));
     }
 
     public function mount(Wpqr $wpqr)

@@ -36,11 +36,9 @@ class Edit extends Component
         $this->user->save();
 
 
-        $this->dispatch(
-            'banner-message',
-            style: 'success',
-            message: __('User updated successfully.')
-        );
+        return redirect()
+                ->route('users.index')
+                ->with('flash.banner', __('User updated.'));
     }
 
     public function mount(User $user)

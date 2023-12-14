@@ -17,17 +17,10 @@ class Edit extends Component
     {
         $this->form->update($this->wps);
 
-        if($this->form->new_file) {
-            return redirect()
-                    ->route('wps.edit', $this->wps)
-                    ->with('flash.banner', __('WPQR updated.'));
-        }
+        return redirect()
+                ->route('wps.index')
+                ->with('flash.banner', __('WPS updated.'));
 
-        $this->dispatch(
-            'banner-message',
-            style: 'success',
-            message: __('Welding Certificate updated successfully.')
-        );
     }
 
     public function mount(Wps $wps)
