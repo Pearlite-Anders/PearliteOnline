@@ -23,7 +23,7 @@ class Wpqr extends Model
     public const SYSTEM_COLUMNS = [
         'file' => [
             'type' => 'file',
-            'label' => 'File',
+            'label' => 'Preview',
         ],
         'name' => [
             'type' => 'text',

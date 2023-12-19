@@ -129,18 +129,19 @@ class User extends Authenticatable
 
         $columns = collect(json_decode(json_encode($columns)));
         $default_columns = $type::getDefaultColumns();
-        if(count($columns) < count($default_columns)) {
+
+        if($columns->pluck('key')->sort()->values() != $default_columns->pluck('key')->sort()->values()) {
             $default_columns->each(function ($column) use (&$columns) {
                 if(!$columns->contains('key', $column->key)) {
                     $columns->push($column);
                 }
             });
-        }
 
-        if(count($columns) > count($default_columns)) {
             $columns = $columns->filter(function ($column) use ($default_columns) {
                 return $default_columns->contains('key', $column->key);
             });
+
+            $this->saveColumns($type, $columns);
         }
 
         return $columns;

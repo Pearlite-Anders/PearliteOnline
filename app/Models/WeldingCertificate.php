@@ -25,6 +25,10 @@ class WeldingCertificate extends Model
             'type' => 'welding_certificate',
             'label' => 'Certificate',
         ],
+        'file' => [
+            'type' => 'file',
+            'label' => 'Preview',
+        ],
         'type' => [
             'type' => 'select',
             'multiple' => false,

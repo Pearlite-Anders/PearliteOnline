@@ -21,7 +21,7 @@ class Wps extends Model
     public const SYSTEM_COLUMNS = [
         'file' => [
             'type' => 'file',
-            'label' => 'File',
+            'label' => 'Preview',
         ],
         'number' => [
             'type' => 'text',
