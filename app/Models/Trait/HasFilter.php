@@ -60,10 +60,16 @@ trait HasFilter
         } elseif($column->type == 'calculated') {
             $value = optional($this)->{$column_key};
         } elseif($column->type == 'select') {
+            $options = is_array($column->options) ? $column->options : \App\Models\Setting::get($column->options);
             if(is_array(optional($this->data)[$column_key])) {
-                $value = implode(', ', optional($this->data)[$column_key] ?? []);
-            } elseif(is_array($column->options) && optional($this->data)[$column_key]) {
-                $value = optional($column->options)[optional($this->data)[$column_key]];
+                $value = [];
+                foreach($this->data[$column_key] as $key => $val) {
+                    $value[$key] = optional($options)[$val];
+                }
+
+                $value = implode(', ', $value);
+            } elseif(optional($this->data)[$column_key]) {
+                $value = optional($options)[$this->data[$column_key]];
             }
         } elseif($column->type == 'radios') {
             if(is_array($column->options) && optional($this->data)[$column_key]) {
