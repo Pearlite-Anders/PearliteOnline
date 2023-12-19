@@ -18,6 +18,7 @@ class Signer extends Component
     private $temp_file;
     private $sizes;
 
+
     public function toggleOpen()
     {
         if(!$this->date) {
@@ -25,6 +26,10 @@ class Signer extends Component
         }
 
         $this->open = !$this->open;
+
+        if($this->open) {
+            $this->check_for_potential_errors();
+        }
     }
 
     public function sign()
@@ -62,6 +67,10 @@ class Signer extends Component
             $signature = $file->temporary_download();
         }
 
+        if(!$signature) {
+            return $this->addError('signature_boxes', __('No signature found'));
+        }
+
         for ($pageNumber = 1; $pageNumber <= $pageCount; $pageNumber++) {
             $this->addTemplate($pageNumber);
             $this->addBoxToPdf($signature_boxes, 'date', $date, $signed, $pageNumber);
@@ -88,6 +97,25 @@ class Signer extends Component
         $this->toggleOpen();
 
         $this->dispatch('welding-certificate-signed');
+    }
+
+    public function check_for_potential_errors()
+    {
+        $data = $this->welding_certificate->data;
+        $signature_boxes = optional($data)['signature_boxes'];
+        if(empty($signature_boxes)) {
+            $this->addError('signature_boxes', __('No signature boxes found'));
+        }
+
+        $signed = optional($data)['signed'];
+        if($signed >= optional($data)['max_signatures']) {
+            $this->addError('signature_boxes', __('Max signatures reached'));
+        }
+
+        if(!auth()->user()->profile_photo_path) {
+            $this->addError('signature_boxes', sprintf(__('No signature found on your profile, please upload one: <a href="%s" class="underline">Edit Profile</a>'), route('profile.show')));
+        }
+
     }
 
     private function addTemplate($pageNumber = 1)
