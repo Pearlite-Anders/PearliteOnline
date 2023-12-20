@@ -1,4 +1,4 @@
-<div>
+<div class="@if($column['type'] == 'textarea') md:col-span-3 @endif">
     <x-label for="{{ $key }}" :value="__($column['label'])" />
     @if($column['type'] == 'relationship')
         <x-input.choices
@@ -37,6 +37,12 @@
             :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
             :selected="optional($form->data)[$key] ?? ''"
         />
+    @elseif($column['type'] == 'textarea')
+        <x-input.textarea
+            wire:model="form.data.{{$key}}"
+            placeholder="{{ __($column['placeholder'] ?? '') }}"
+            rows="5"
+        />
     @else
         <x-input
             wire:model="form.data.{{$key}}"
@@ -45,4 +51,4 @@
             prefix="{{ __($column['prefix'] ?? '') }}"
         />
     @endif
-    </div>
+</div>

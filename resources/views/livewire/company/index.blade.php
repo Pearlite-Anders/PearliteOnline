@@ -5,10 +5,12 @@
             {{ __('Companies') }}
         </x-slot>
         <x-slot name="buttons">
-            <x-button.link href="{{ route('companies.create') }}" class="inline-flex items-center justify-center">
-                <x-icon.plus class="mr-2 -ml-1 align-middle" />
-                {{ __('Add company') }}
-            </x-button.link>
+            @if(auth()->user()->isAdmin())
+                <x-button.link href="{{ route('companies.create') }}" class="inline-flex items-center justify-center">
+                    <x-icon.plus class="mr-2 -ml-1 align-middle" />
+                    {{ __('Add company') }}
+                </x-button.link>
+            @endif
         </x-slot>
     </x-index-header>
 
@@ -22,8 +24,12 @@
                     </x-slot>
                     <x-slot name="body">
                         @foreach($companies as $company)
-                            <x-table.row>
-                                <x-table.cell>{{ $company->name }}</x-table.cell>
+                            <x-table.row class="hover:bg-gray-50">
+                                <x-table.cell>
+                                    <a href="{{ route('companies.show', $company) }}" class="text-gray-900 hover:text-gray-600">
+                                        {{ $company->data['name'] }}
+                                    </a>
+                                </x-table.cell>
 
                                 <x-table.cell class="text-right">
                                     @if(auth()->user()->currentCompany()->is($company))

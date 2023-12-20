@@ -12,21 +12,17 @@ class Edit extends Component
 
     public function update()
     {
-        $this->form->validate();
-
-        $this->company->update([
-            'name' => $this->form->name,
-        ]);
+        $this->form->update($this->company);
 
         return redirect()
-                ->route('companies.index')
+                ->route('company.show', $this->company)
                 ->with('flash.banner', __('Company updated.'));
     }
 
     public function mount(Company $company)
     {
         $this->company = $company;
-        $this->form->name = $company->name;
+        $this->form->setFields($company);
     }
 
     public function render()

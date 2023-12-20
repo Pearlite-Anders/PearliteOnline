@@ -58,7 +58,7 @@
 
 
         @foreach($companies as $company)
-            <div class="text-lg font-bold">{{ $company->name }}</div>
+            <div class="text-lg font-bold">{{ $company->data['name'] }}</div>
             <div
                 x-data="{ value: $wire.get('form.companies.{{ $company->id }}') }"
                 class="flex items-center space-x-4 md:space-x-0"

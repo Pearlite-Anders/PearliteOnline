@@ -2,14 +2,65 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Trait\HasFilter;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Company extends Model
 {
-    use HasFactory;
+    use HasFactory, HasFilter, SoftDeletes;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'data' => 'array'
+    ];
+
+    public const SYSTEM_COLUMNS = [
+        'name' => [
+            'type' => 'text',
+            'label' => 'Name',
+            'required' => true,
+            'placeholder' => '',
+            'filter' => 'search'
+        ],
+        'road' => [
+            'type' => 'text',
+            'label' => 'Road',
+            'required' => true,
+            'placeholder' => '',
+            'filter' => 'search'
+        ],
+        'phone' => [
+            'type' => 'text',
+            'label' => 'Phone',
+            'required' => true,
+            'placeholder' => '',
+            'filter' => 'search'
+        ],
+        'email' => [
+            'type' => 'text',
+            'label' => 'Email',
+            'required' => true,
+            'placeholder' => '',
+            'filter' => 'search'
+        ],
+        'invoice_email' => [
+            'type' => 'text',
+            'label' => 'Invoice email',
+            'required' => true,
+            'placeholder' => '',
+            'filter' => 'search'
+        ],
+        'remarks' => [
+            'type' => 'textarea',
+            'label' => 'Remarks',
+            'required' => true,
+            'placeholder' => '',
+            'filter' => 'search'
+        ],
+    ];
 
     public function users()
     {

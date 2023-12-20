@@ -33,6 +33,7 @@ Route::middleware([
 
     Route::get('/companies', \App\Livewire\Company\Index::class)->name('companies.index');
     Route::get('/companies/create', \App\Livewire\Company\Create::class)->name('companies.create');
+    Route::get('/companies/{company}', \App\Livewire\Company\Show::class)->name('companies.show');
     Route::get('/companies/{company}/edit', \App\Livewire\Company\Edit::class)->name('companies.edit');
 
     Route::get('/users', \App\Livewire\User\Index::class)->name('users.index');
@@ -65,6 +66,10 @@ Route::middleware([
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;
         auth()->user()->save();
+
+        if(request('redirect')) {
+            return redirect(request('redirect'));
+        }
 
         return redirect()->route('companies.index');
     })->name('switch-company');
