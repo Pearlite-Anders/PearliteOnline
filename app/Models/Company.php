@@ -87,6 +87,11 @@ class Company extends Model
         return $this->hasMany(Welder::class);
     }
 
+    public function contactpeople()
+    {
+        return $this->hasMany(ContactPerson::class);
+    }
+
     public function modules()
     {
         return [

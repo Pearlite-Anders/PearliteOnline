@@ -31,10 +31,13 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
+
     Route::get('/companies', \App\Livewire\Company\Index::class)->name('companies.index');
     Route::get('/companies/create', \App\Livewire\Company\Create::class)->name('companies.create');
     Route::get('/companies/{company}', \App\Livewire\Company\Show::class)->name('companies.show');
     Route::get('/companies/{company}/edit', \App\Livewire\Company\Edit::class)->name('companies.edit');
+    Route::get('/companies/{company}/contact-person/create', \App\Livewire\ContactPerson\Create::class)->name('contact-person.create');
+    Route::get('/companies/{company}/contact-person/{contactPerson}/edit', \App\Livewire\ContactPerson\Edit::class)->name('contact-person.edit');
 
     Route::get('/users', \App\Livewire\User\Index::class)->name('users.index');
     Route::get('/users/create', \App\Livewire\User\Create::class)->name('users.create');

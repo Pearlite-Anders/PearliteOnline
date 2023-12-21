@@ -76,25 +76,25 @@
             <h3 class="flex items-center mx-0 mt-0 mb-4 text-xl font-bold leading-7">
                 {{ __('Bruger') }}
             </h3>
-            <table class="w-full table-fixed">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-collapse">Navn</th>
+            <x-table>
+                <x-slot name="head">
+                    <x-table.row>
+                        <x-table.heading sortable>{{ __('Name') }}</x-table.heading>
                         @foreach($company->modules() as $module_key => $module)
-                            <th <th class="p-2 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-collapse">
+                            <x-table.heading>
                                 {{ $module->name }}
-                            </th>
+                            </x-table.heading>
                         @endforeach
-                    </tr>
-                </thead>
-                <tbody>
+                    </x-table.row>
+                </x-slot>
+                <x-slot name="body">
                     @foreach($company->users()->where('role', App\Models\User::USER_ROLE)->get() as $key => $user)
-                        <tr class="{{ $key % 2 == 0 ? 'bg-white' : 'bg-gray-50' }}">
-                            <td class="p-2 text-sm font-normal leading-5 text-gray-900 border-collapse whitespace-nowrap">
+                        <x-table.row>
+                            <x-table.cell>
                                 {{ $user->name }}
-                            </td>
+                            </x-table.cell>
                             @foreach($company->modules() as $module_key => $module)
-                                <td class="p-2 text-sm font-normal leading-5 text-center text-gray-900 border-collapse whitespace-nowrap">
+                                <x-table.cell class="text-center">
                                     @php($persmissions = [])
                                     @foreach($module->permissions as $permission => $permission_name)
                                         @if($user->can($module_key .'.'. $permission))
@@ -106,16 +106,13 @@
                                     @elseif(in_array('view', $persmissions))
                                         <span class="text-cyan-600">{{ __('View') }}</span>
                                     @else
-
                                     @endif
-
-                                </td>
+                                </x-table.cell>
                             @endforeach
-                        </tr>
+                        </x-table.row>
                     @endforeach
-                </tbody>
-
-            </table>
+                </x-slot>
+            </x-table>
         </div>
     </div>
     <div class="p-4 leading-6 text-black">
@@ -123,23 +120,31 @@
             <h3 class="flex items-center mx-0 mt-0 mb-4 text-xl font-bold leading-7">
                 {{ __('Partners') }}
             </h3>
-            <table class="w-full table-fixed">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="p-2 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-collapse">Navn</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($company->users()->where('role', App\Models\User::PARTNER_ROLE)->get() as $key => $user)
-                        <tr class="{{ $key % 2 == 0 ? 'bg-white' : 'bg-gray-50' }}">
-                            <td class="p-2 text-sm font-normal leading-5 text-gray-900 border-collapse whitespace-nowrap">
-                                {{ $user->name }}
-                            </td>
-                        </tr>
+            <x-table>
+                <x-slot name="head">
+                    <x-table.row>
+                        <x-table.heading sortable>{{ __('Name') }}</x-table.heading>
+                    </x-table.row>
+                </x-slot>
+                <x-slot name="body">
+                    @foreach($company->users()->where('role', App\Models\User::USER_ROLE)->get() as $key => $user)
+                        <x-table.row>
+                            @foreach($company->users()->where('role', App\Models\User::PARTNER_ROLE)->get() as $key => $user)
+                                <x-table.cell >
+                                    {{ $user->name }}
+                                </x-table.cell>
+                            @endforeach
+                        </x-table.row>
                     @endforeach
-                </tbody>
+                </x-slot>
+            </x-table>
 
-            </table>
+        </div>
+    </div>
+
+    <div class="p-4 leading-6 text-black">
+        <div class="px-4 pb-8 mb-4 leading-6 text-black bg-white rounded-lg shadow">
+            <livewire:contact-person.index :company="$company" />
         </div>
     </div>
 
