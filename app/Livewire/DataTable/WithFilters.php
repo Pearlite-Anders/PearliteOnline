@@ -30,7 +30,8 @@ trait WithFilters
 
             $column = $this->model::getColumn($key);
             if ($column->filter == 'select') {
-                $query->where('data->' . $key, $value);
+                $query->whereJsonContains('data->' . $key, $value);
+
                 continue;
             } elseif ($column->filter == 'search') {
                 $query->where('data->' . $key, 'like', '%' . $value . '%');
