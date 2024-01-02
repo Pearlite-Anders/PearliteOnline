@@ -6,6 +6,7 @@ use App\Models\File;
 use Livewire\Component;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use setasign\FpdiPdfParser\PdfParser\PdfParser;
 
 class Signer extends Component
 {
@@ -38,7 +39,12 @@ class Signer extends Component
         $this->pdf->SetFont('Arial', '', '7');
 
         $this->temp_file = $this->file->temporary_download();
-        $pageCount = $this->pdf->setSourceFile($this->temp_file);
+        $pageCount = $this->pdf->setSourceFileWithParserParams(
+            $this->temp_file,
+            [
+                PdfParser::PARAM_IGNORE_PERMISSIONS => true
+            ]
+        );
 
         $data = $this->welding_certificate->data;
         $signature_boxes = optional($data)['signature_boxes'];

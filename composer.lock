@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "210b444c77ef630ed3e76373f97a73e1",
+    "content-hash": "c85acce8b6d5ccfb15f440d35b19a895",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -4386,13 +4386,13 @@
         },
         {
             "name": "setasign/fpdi_pdf-parser",
-            "version": "2.0.4",
+            "version": "2.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://www.setasign.com/downloads/2132008/FPDI_PDF-Parser-2.0.4.zip"
+                "url": "https://www.setasign.com/downloads/5501383/FPDI_PDF-Parser-2.1.1.zip"
             },
             "require": {
-                "setasign/fpdi": "^2.0"
+                "setasign/fpdi": "^2.5.0"
             },
             "type": "library",
             "autoload": {
@@ -4406,7 +4406,7 @@
             "support": {
                 "email": "support@setasign.com"
             },
-            "time": "2018-11-06T00:00:00+00:00"
+            "time": "2023-10-10T00:00:00+00:00"
         },
         {
             "name": "spatie/laravel-data",
