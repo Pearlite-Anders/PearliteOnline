@@ -107,7 +107,7 @@ class WeldingCertificate extends Model
             'type' => 'text',
             'label' => 'Filler material designation',
             'options' => 'filler_material_designations',
-            'placeholder' => 'PE',
+            'placeholder' => 'G 42 3 M21 3Si1',
             'filter' => 'search'
         ],
         'shielding_gas' => [

@@ -2,15 +2,17 @@
 
 namespace App\Providers;
 
-use App\Actions\Jetstream\AddTeamMember;
+use Livewire\Livewire;
+use Laravel\Jetstream\Jetstream;
 use App\Actions\Jetstream\CreateTeam;
 use App\Actions\Jetstream\DeleteTeam;
 use App\Actions\Jetstream\DeleteUser;
+use Illuminate\Support\ServiceProvider;
+use App\Actions\Jetstream\AddTeamMember;
+use App\Actions\Jetstream\UpdateTeamName;
 use App\Actions\Jetstream\InviteTeamMember;
 use App\Actions\Jetstream\RemoveTeamMember;
-use App\Actions\Jetstream\UpdateTeamName;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Jetstream\Jetstream;
+use App\Livewire\Profile\UpdateProfileInformation;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,8 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::removeTeamMembersUsing(RemoveTeamMember::class);
         Jetstream::deleteTeamsUsing(DeleteTeam::class);
         Jetstream::deleteUsersUsing(DeleteUser::class);
+
+        Livewire::component('profile.update-profile-information', UpdateProfileInformation::class);
     }
 
     /**

@@ -9,7 +9,7 @@
 
     <x-slot name="form">
         <!-- Profile Photo -->
-        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
+        <div x-data="{photoName: null, photoPreview: null}" class="hidden col-span-6 sm:col-span-4">
             <!-- Profile Photo File Input -->
             <input type="file" class="hidden"
                         wire:model.live="photo"
