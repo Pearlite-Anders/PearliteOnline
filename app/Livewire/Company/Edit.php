@@ -15,7 +15,7 @@ class Edit extends Component
         $this->form->update($this->company);
 
         return redirect()
-                ->route('company.show', $this->company)
+                ->route('companies.show', $this->company)
                 ->with('flash.banner', __('Company updated.'));
     }
 
