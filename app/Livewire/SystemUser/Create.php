@@ -24,10 +24,14 @@ class Create extends Component
 
         $user = User::withTrashed()->where('email', $this->form->email)->first();
         if(!$user) {
-            $user = User::create(array_merge($this->form->toArray()));
+            $user = User::create(array_merge($this->form->toArray(), [
+                'password' => bcrypt($this->form->password),
+            ]));
         } else {
             $user->restore();
-            $user->update(array_merge($this->form->toArray()));
+            $user->update(array_merge($this->form->toArray(), [
+                'password' => bcrypt($this->form->password),
+            ]));
         }
 
         $companies = [];

@@ -27,7 +27,8 @@ class Create extends Component
             $user->restore();
             $user->update(array_merge($this->form->toArray(), [
                 'current_company_id' => auth()->user()->currentCompany->id,
-                'role' => 'user'
+                'role' => 'user',
+                'password' => bcrypt($this->form->password),
             ]));
         }
 
