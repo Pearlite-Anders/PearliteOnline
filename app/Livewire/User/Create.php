@@ -23,6 +23,12 @@ class Create extends Component
             $user = User::create(array_merge($this->form->toArray(), [
                 'current_company_id' => auth()->user()->currentCompany->id,
             ]));
+        } else {
+            $user->restore();
+            $user->update(array_merge($this->form->toArray(), [
+                'current_company_id' => auth()->user()->currentCompany->id,
+                'role' => 'user'
+            ]));
         }
 
         if(auth()->user()->currentCompany) {
