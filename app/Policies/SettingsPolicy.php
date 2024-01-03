@@ -9,11 +9,11 @@ class SettingsPolicy
 
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('settings.view');
+        return $user->hasPermissionTo('settings.view') || $user->isPartner();
     }
 
     public function update(User $user)
     {
-        return $user->hasPermissionTo('settings.edit');
+        return $user->hasPermissionTo('settings.edit') || $user->isPartner();
     }
 }
