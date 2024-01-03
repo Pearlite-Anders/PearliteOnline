@@ -24,7 +24,9 @@ class Create extends Component
                 'current_company_id' => auth()->user()->currentCompany->id,
             ]));
         } else {
-            $user->restore();
+            if(!$user->trashed()) {
+                $user->restore();
+            }
             $user->update(array_merge($this->form->toArray(), [
                 'current_company_id' => auth()->user()->currentCompany->id,
                 'role' => 'user',
@@ -33,7 +35,9 @@ class Create extends Component
         }
 
         if(auth()->user()->currentCompany) {
-            auth()->user()->currentCompany->users()->attach($user);
+            if(!$user->companies->contains(auth()->user()->currentCompany->id)) {
+                auth()->user()->currentCompany->users()->attach($user);
+            }
         }
 
         $allowed_permissions = [];
