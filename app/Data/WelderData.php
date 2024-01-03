@@ -13,6 +13,7 @@ class WelderData extends Data implements Wireable
 
     public function __construct(
         public string $name,
+        public ?string $welder_id,
         public ?string $position,
         public ?string $status,
     ) {

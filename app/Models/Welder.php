@@ -28,6 +28,13 @@ class Welder extends Model
             'placeholder' => 'Anders Andersen',
             'filter' => 'search'
         ],
+        'welder_id' => [
+            'type' => 'text',
+            'label' => 'Welder ID',
+            'required' => false,
+            'placeholder' => '123',
+            'filter' => 'search'
+        ],
         'position' => [
             'type' => 'radios',
             'multiple' => false,
