@@ -4,13 +4,16 @@ namespace App\Policies;
 
 use App\Models\User;
 
-trait BasePolicy
+class BasePolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
+        if($user->isPartner()) {
+            return true;
+        }
 
         return $user->can($this->type .'.view') || $user->can($this->type .'.edit');
     }
@@ -20,6 +23,10 @@ trait BasePolicy
      */
     public function view(User $user): bool
     {
+        if($user->isPartner()) {
+            return true;
+        }
+
         return $user->can($this->type .'.view') || $user->can($this->type .'.edit');
     }
 
@@ -28,6 +35,10 @@ trait BasePolicy
      */
     public function create(User $user): bool
     {
+        if($user->isPartner()) {
+            return true;
+        }
+
         return $user->can($this->type .'.edit');
     }
 
@@ -36,6 +47,10 @@ trait BasePolicy
      */
     public function update(User $user): bool
     {
+        if($user->isPartner()) {
+            return true;
+        }
+
         return $user->can($this->type .'.edit');
     }
 
@@ -44,6 +59,10 @@ trait BasePolicy
      */
     public function delete(User $user): bool
     {
+        if($user->isPartner()) {
+            return true;
+        }
+
         return $user->can($this->type .'.edit');
     }
 
@@ -52,6 +71,10 @@ trait BasePolicy
      */
     public function restore(User $user): bool
     {
+        if($user->isPartner()) {
+            return true;
+        }
+
         return $user->can($this->type .'.edit');
     }
 
@@ -60,6 +83,10 @@ trait BasePolicy
      */
     public function forceDelete(User $user): bool
     {
+        if($user->isPartner()) {
+            return true;
+        }
+
         return $user->can($this->type .'.edit');
     }
 }

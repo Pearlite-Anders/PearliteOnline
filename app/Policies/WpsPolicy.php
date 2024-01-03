@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\WeldingCertificate;
 use Illuminate\Auth\Access\Response;
 
-class WeldingCertificatePolicy extends BasePolicy
+class WpsPolicy extends BasePolicy
 {
-    public $type = 'welding-certificates';
+    public $type = 'wps';
 }
