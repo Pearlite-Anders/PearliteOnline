@@ -67,15 +67,7 @@ class Signer extends Component
             $date = $this->date;
         }
 
-        $signature = null;
-        if(auth()->user()->profile_photo_path) {
-            $file = File::find(auth()->user()->profile_photo_path);
-            $signature = $file->temporary_download();
-        }
-
-        if(!$signature) {
-            return $this->addError('signature_boxes', __('No signature found'));
-        }
+        $signature = auth()->user()->get_digital_signature();
 
         for ($pageNumber = 1; $pageNumber <= $pageCount; $pageNumber++) {
             $this->addTemplate($pageNumber);
@@ -117,11 +109,6 @@ class Signer extends Component
         if($signed >= optional($data)['max_signatures']) {
             $this->addError('signature_boxes', __('Max signatures reached'));
         }
-
-        if(!auth()->user()->profile_photo_path) {
-            $this->addError('signature_boxes', sprintf(__('No signature found on your profile, please upload one: <a href="%s" class="underline">Edit Profile</a>'), route('profile.show')));
-        }
-
     }
 
     private function addTemplate($pageNumber = 1)

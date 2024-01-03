@@ -9,6 +9,7 @@
         "aws/aws-sdk-php": "^3.291",
         "barryvdh/laravel-translation-manager": "^0.6.5",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^3.2",
         "kolossal-io/laravel-multiplex": "^1.0",
         "laravel/framework": "^10.10",
         "laravel/jetstream": "^4.0",

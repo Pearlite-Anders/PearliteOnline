@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Intervention\Image\Image;
 use Illuminate\Http\UploadedFile;
 use Laravel\Sanctum\HasApiTokens;
+use Intervention\Image\ImageManager;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +13,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Intervention\Image\Drivers\Imagick\Driver;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Intervention\Image\Interfaces\EncoderInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -262,5 +266,46 @@ class User extends Authenticatable
                     ? $file->temporary_url()
                     : '';
         });
+    }
+
+    public function get_digital_signature($base64 = false, $hide_time = false)
+    {
+        $date = now()->setTimezone('Europe/Copenhagen');
+
+        // create new manager instance with desired driver
+        $manager = new ImageManager(Driver::class);
+        $image = $manager->create(302, 72);
+
+        // add a black border
+        $image->drawRectangle(0, 0, function ($draw) {
+            $draw->size(300, 70);
+            $draw->background('#fff');
+            $draw->border('#0891b2', 2);
+        });
+
+        $image->text('Digital Signatur', 5, 22, function ($font) {
+            $font->filename(resource_path('fonts/Roboto-Bold.ttf'));
+            $font->size(22);
+            $font->color('#000');
+        });
+
+        $image->text($this->name, 5, 45, function ($font) {
+            $font->filename(resource_path('fonts/Roboto-Regular.ttf'));
+            $font->size(18);
+            $font->color('#000');
+        });
+
+        $image->text($date->format('Y.m.d'.($hide_time ? '' : ' - H:i')), 5, 65, function ($font) {
+            $font->filename(resource_path('fonts/Roboto-Regular.ttf'));
+            $font->size(18);
+            $font->color('#000');
+        });
+
+        if ($base64) {
+            return (string) $image->toPng()->toDataUri();
+        } else {
+            $image->save(Storage::disk('local')->path('livewire-tmp/'.$this->id.'.png'));
+            return Storage::disk('local')->path('livewire-tmp/'.$this->id.'.png');
+        }
     }
 }
