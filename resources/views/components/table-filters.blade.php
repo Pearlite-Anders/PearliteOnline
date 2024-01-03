@@ -60,6 +60,7 @@
     <div x-show="open" @click.outside="open = false" class="absolute left-0 right-0 p-4 mt-3 bg-white border rounded-sm shadow-md">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
             @foreach($filterColumns as $filter)
+                @if($filter->visible !== true) @continue @endif
                 @php($filter_column = $model::getColumn($filter->key))
                 @if(optional($filter_column)->filter == 'relationship')
                     <div class="relative">
@@ -77,7 +78,7 @@
                 @endif
                 @if(optional($filter_column)->filter == 'radios' || optional($filter_column)->filter == 'select')
                     @php($options = is_array($filter_column->options) ? $filter_column->options : App\Models\Setting::get($filter_column->options))
-                    @if(optional($filter_column)->filter == 'radios' || count($options) <= 10)
+                    @if(optional($filter_column)->filter == 'radios' || count($options) <= 11)
                         <div class="relative">
                             <x-label :for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
                             <div class="flex flex-wrap -mx-2">
@@ -151,61 +152,66 @@
                 <x-icon.trash class="w-6 h-6 mr-2 -ml-2 text-gray-600" /> {{__('Clear filters')}}
             </x-button.secondary>
         </div>
-    </div>
-    @if($showModal)
-        <x-modal maxWidth="sm">
-            <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4" wire:ignore>
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="text-lg font-medium text-gray-900">
-                        {{ __('Sort filters and toggle visibility') }}
-                    </h3>
-                    <p class="mt-2 text-sm text-gray-500">
-                        {{ __('The first 3 filters will be shown by default, the rest will be hidden behind a toggle.') }}
-                    </p>
-
-                    <div class="mt-4 text-sm text-gray-600">
-                        <div x-data="dragDropFilters()">
-                            <template x-for="(column, index) in draggableColumns" :key="column.label">
-                                <div>
-                                    <div
-                                        @dragstart="startDrag($event, index)"
-                                        @dragover.prevent
-                                        @dragenter="dragEnter($event, index)"
-                                        @dragleave="dragLeave($event)"
-                                        @drop="drop($event, index)"
-                                        @dragend="endDrag($event)"
-                                        class="flex items-center px-1 py-1 transition-all duration-300 cursor-pointer draggable-column"
-                                        draggable="true"
-                                    >
-                                        <x-icon.eye
-                                            class="w-5 h-5 mr-2 text-gray-600"
-                                            x-show="column.visible"
-                                            @click="toggleVisibility(column)"
-                                        />
-                                        <x-icon.eye-slash
-                                            class="w-5 h-5 mr-2 text-gray-600"
-                                            x-show="!column.visible"
-                                            @click="toggleVisibility(column)"
-                                        />
-                                        <span x-text="column.label" class="pointer-events-none"></span>
-                                    </div>
-                                </div>
-                            </template>
-                        </div>
-                        <p class="mt-2 text-gray-500">
-                            {{ __('Drag and drop to reorder columns. Click the eye icon to toggle visibility.') }}
+        @if($showModal)
+            <x-modal maxWidth="sm">
+                <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4" wire:ignore>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            {{ __('Sort filters and toggle visibility') }}
+                        </h3>
+                        <p class="mt-2 text-sm text-gray-500">
+                            {{ __('The first 3 filters will be shown by default, the rest will be hidden behind a toggle.') }}
                         </p>
+
+                        <div class="mt-4 text-sm text-gray-600">
+                            <div x-data="dragDropFilters()">
+                                <template x-for="(column, index) in draggableColumns" :key="column.label">
+                                    <div>
+                                        <div
+                                            @dragstart="startDrag($event, index)"
+                                            @dragover.prevent
+                                            @dragenter="dragEnter($event, index)"
+                                            @dragleave="dragLeave($event)"
+                                            @drop="drop($event, index)"
+                                            @dragend="endDrag($event)"
+                                            class="flex items-center px-1 py-1 transition-all duration-300 cursor-pointer draggable-column"
+                                            draggable="true"
+                                        >
+                                            <x-icon.eye
+                                                class="w-5 h-5 mr-2 text-gray-600"
+                                                x-show="column.visible"
+                                                @click="toggleVisibility(column)"
+                                            />
+                                            <x-icon.eye-slash
+                                                class="w-5 h-5 mr-2 text-red-600"
+                                                x-show="!column.visible"
+                                                @click="toggleVisibility(column)"
+                                            />
+                                            <span
+                                                x-text="column.label"
+                                                class="pointer-events-none"
+                                                :class="{
+                                                    'opacity-50': draggingIndex === index,
+                                                    'text-red-600': column.visible === false,
+                                                }"
+                                            ></span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            <p class="mt-2 text-gray-500">
+                                {{ __('Drag and drop to reorder columns. Click the eye icon to toggle visibility.') }}
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="flex flex-row justify-end px-6 py-4 text-right bg-gray-100">
-                <x-button.secondary wire:click="toggleFilterSettingsModal">
-                    {{ __('Close') }}
-                </x-button.secondary>
-            </div>
-        </x-modal>
-
-
-    @endif
+                <div class="flex flex-row justify-end px-6 py-4 text-right bg-gray-100">
+                    <x-button.secondary wire:click="toggleFilterSettingsModal">
+                        {{ __('Close') }}
+                    </x-button.secondary>
+                </div>
+            </x-modal>
+        @endif
+    </div>
 </div>

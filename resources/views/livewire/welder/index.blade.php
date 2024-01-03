@@ -8,7 +8,7 @@
             {{ __('Welder') }}
         </x-slot>
         <x-slot name="search">
-            <div class="relative grid w-full grid-cols-1 gap-4 pr-16 md:grid-cols-8">
+            <div class="grid w-full grid-cols-1 gap-4 pr-16 md:grid-cols-8">
                 <div class="relative col-span-2">
                     <input
                         type="search"

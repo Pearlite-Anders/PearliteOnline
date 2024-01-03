@@ -12,7 +12,7 @@
             </h1>
 
         </div>
-        <div class="items-start sm:flex sm:space-x-2">
+        <div class="relative items-start sm:flex sm:space-x-2">
             <div class="items-center flex-grow hidden mb-3 sm:mb-0 sm:flex">
                 @if(isset($search))
                     {{ $search }}
