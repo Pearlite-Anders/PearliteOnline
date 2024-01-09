@@ -4,6 +4,7 @@ namespace App\Livewire\Company;
 
 use App\Models\Company;
 use Livewire\Component;
+use App\Data\CompanyData;
 
 class Create extends Component
 {
@@ -16,6 +17,11 @@ class Create extends Component
         $company->users()->attach(auth()->user());
 
         return redirect()->route('companies.index')->with('flash.banner', 'Company created.');
+    }
+
+    public function mount()
+    {
+        $this->form->data = CompanyData::from(['name' => '']);
     }
 
     public function render()

@@ -10,6 +10,23 @@ class Form extends LivewireForm
 {
     public $data;
 
+    public function rules()
+    {
+        return [
+            'data.name' => ['required', 'string', 'max:255'],
+            'data.address' => [],
+            'data.city' => [],
+            'data.state' => [],
+            'data.zip' => [],
+            'data.phone' => [],
+            'data.email' => [],
+            'data.website' => [],
+            'data.logo' => [],
+            'data.notes' => [],
+            'data.active' => [],
+        ];
+    }
+
     public function setFields(Company $company)
     {
         $this->data = $company->data;

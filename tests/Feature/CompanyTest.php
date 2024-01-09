@@ -12,12 +12,12 @@ test('companies can be created', function () {
     ])->create());
 
     Livewire::test(App\Livewire\Company\Create::class)
-        ->set('form.name', 'Test Company')
-        ->assertSet('form.name', 'Test Company')
+        ->set('form.data.name', 'Test Company')
+        ->assertSet('form.data.name', 'Test Company')
         ->call('create');
 
     expect($user->fresh()->companies)->toHaveCount(1);
-    expect($user->fresh()->companies()->latest('id')->first()->name)->toEqual('Test Company');
+    expect($user->fresh()->companies()->first()->data['name'])->toEqual('Test Company');
 });
 
 test('company create page is rendered', function () {
@@ -68,8 +68,8 @@ test('admin can see all companies', function () {
 
 
     Livewire::test(App\Livewire\Company\Index::class)
-        ->assertSee($company_1->name)
-        ->assertSee($company_2->name);
+        ->assertSee($company_1->data['name'])
+        ->assertSee($company_2->data['name']);
 });
 
 test('admin can update a company', function () {
@@ -80,11 +80,11 @@ test('admin can update a company', function () {
     $company = Company::factory()->create();
 
     Livewire::test(App\Livewire\Company\Edit::class, ['company' => $company])
-        ->set('form.name', 'Test Company')
-        ->assertSet('form.name', 'Test Company')
+        ->set('form.data.name', 'Test Company')
+        ->assertSet('form.data.name', 'Test Company')
         ->call('update');
 
-    expect($user->fresh()->companies()->latest('id')->first()->name)->toEqual('Test Company');
+    expect($user->fresh()->companies()->first()->data['name'])->toEqual('Test Company');
 });
 
 test('partner cannot update a company', function () {
@@ -143,5 +143,5 @@ test('if user has current company it is show in header', function () {
     $user->currentCompany()->associate($company);
     $user->save();
 
-    get(route('dashboard'))->assertSee($company->name);
+    get(route('dashboard'))->assertSee($company->data['name']);
 });

@@ -92,12 +92,17 @@ class Company extends Model
         return $this->hasMany(ContactPerson::class);
     }
 
+    public function ces()
+    {
+        return $this->hasMany(Ce::class);
+    }
+
     public function modules()
     {
         return [
             'users' => (object)[
                 'name' => __('Users'),
-                'class' => \App\Modal\User::class,
+                'class' => \App\Models\User::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
@@ -105,7 +110,7 @@ class Company extends Model
             ],
             'welding-certificates' => (object)[
                 'name' => __('Welding Certificates'),
-                'class' => \App\Modal\WeldingCertificates::class,
+                'class' => \App\Models\WeldingCertificate::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
@@ -113,7 +118,7 @@ class Company extends Model
             ],
             'wpqr' => (object)[
                 'name' => __('WPQR'),
-                'class' => \App\Modal\Wpqr::class,
+                'class' => \App\Models\Wpqr::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
@@ -121,7 +126,7 @@ class Company extends Model
             ],
             'wps' => (object)[
                 'name' => __('WPS'),
-                'class' => \App\Modal\Wps::class,
+                'class' => \App\Models\Wps::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
@@ -129,7 +134,15 @@ class Company extends Model
             ],
             'welder' => (object)[
                 'name' => __('Welders'),
-                'class' => \App\Livewire\Welder::class,
+                'class' => \App\Models\Welder::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'ce' => (object)[
+                'name' => __('CE'),
+                'class' => \App\Models\Ce::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
