@@ -45,6 +45,7 @@
         />
     @else
         <x-input
+            :live="isset($live)"
             wire:model="form.data.{{$key}}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
             postfix="{{ __($column['postfix'] ?? '') }}"
