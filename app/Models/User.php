@@ -276,13 +276,6 @@ class User extends Authenticatable
         $manager = new ImageManager(Driver::class);
         $image = $manager->create(302, 72);
 
-        // add a black border
-        $image->drawRectangle(0, 0, function ($draw) {
-            $draw->size(300, 70);
-            $draw->background('#fff');
-            $draw->border('#0891b2', 2);
-        });
-
         $image->text('Digital Signatur', 5, 22, function ($font) {
             $font->filename(resource_path('fonts/Roboto-Bold.ttf'));
             $font->size(22);
