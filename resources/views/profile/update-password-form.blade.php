@@ -32,7 +32,7 @@
             {{ __('Saved.') }}
         </x-action-message>
 
-        <x-button.primary>
+        <x-button.primary type="submit" wire:loading.attr="disabled">
             {{ __('Save') }}
         </x-button.primary>
     </x-slot>

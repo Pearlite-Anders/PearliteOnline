@@ -21,6 +21,14 @@ trait HasFilter
         })->values();
     }
 
+    public static function getColumns()
+    {
+        return collect(self::SYSTEM_COLUMNS)->map(function ($column, $index){
+            $column['key'] = $index;
+            return $column;
+        });
+    }
+
     public static function getColumn($key)
     {
         $column =  (object)self::SYSTEM_COLUMNS[$key];

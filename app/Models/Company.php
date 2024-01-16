@@ -97,6 +97,11 @@ class Company extends Model
         return $this->hasMany(Ce::class);
     }
 
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
     public function modules()
     {
         return [
@@ -156,6 +161,14 @@ class Company extends Model
                     'edit' => __('Edit'),
                 ]
             ],
+            'project' => (object)[
+                'name' => __('Projects'),
+                'class' => \App\Models\Project::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ]
         ];
     }
 }

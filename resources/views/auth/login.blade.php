@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="flex items-center mt-4">
-                    <x-button.primary class="">
+                    <x-button.primary type="submit" wire:loading.attr="disabled">
                         {{ __('Log in') }}
                     </x-button.primary>
                 </div>

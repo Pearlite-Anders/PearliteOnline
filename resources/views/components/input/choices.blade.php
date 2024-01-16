@@ -11,7 +11,8 @@
     <div
         x-data
         x-init="() => {
-            var choices = new Choices($refs.{{ $attributes['prettyname'] }}, {
+            window.ChoicesArray = window.ChoicesArray || {};
+            window.ChoicesArray['{{ $attributes['prettyname'] }}'] = new Choices($refs.{{ $attributes['prettyname'] }}, {
                 removeItems: true,
                 removeItemButton: true,
                 allowHTML: false,
@@ -23,11 +24,11 @@
                 placeholderValue: '{{ $attributes['placeholder'] }}',
             });
 
-            choices.passedElement.element.addEventListener('change', function(event) {
+            window.ChoicesArray['{{ $attributes['prettyname'] }}'].passedElement.element.addEventListener('change', function(event) {
                 values = getSelectValues($refs.{{ $attributes['prettyname'] }});
                 @this.set('{{ $attributes['wire:model'] }}', values);
-                var input = choices.input;
-                if (choices.getValue(true).length > 0) {
+                var input = window.ChoicesArray['{{ $attributes['prettyname'] }}'].input;
+                if (window.ChoicesArray['{{ $attributes['prettyname'] }}'].getValue(true).length > 0) {
                     if (input) {
                         input.placeholder = '';
                         setTimeout(function() {
@@ -35,7 +36,7 @@
                         }, 50);
                     }
                 } else {
-                    var input = choices.input;
+                    var input = window.ChoicesArray['{{ $attributes['prettyname'] }}'].input;
                     if (input) {
                         input.placeholder = '{{ $attributes['placeholder'] }}';
                         input.element.style.width = input.element.placeholder.length + 1 + 'ch';
@@ -47,11 +48,11 @@
 
             if(Array.isArray(items)) {
                 items.forEach(function(select) {
-                    choices.setChoiceByValue((select).toString());
+                    window.ChoicesArray['{{ $attributes['prettyname'] }}'].setChoiceByValue((select).toString());
                 });
             } else {
                 if(items) {
-                    choices.setChoiceByValue((items).toString());
+                    window.ChoicesArray['{{ $attributes['prettyname'] }}'].setChoiceByValue((items).toString());
                 }
             }
             }
@@ -71,6 +72,26 @@
 
                 return result[0];
             }
+
+
+            $wire.on('refreshChoices', (param) => {
+                if(param[2] == '{{ $attributes['prettyname'] }}') {
+                    window.ChoicesArray['{{ $attributes['prettyname'] }}'].clearChoices();
+                    window.ChoicesArray['{{ $attributes['prettyname'] }}'].setChoices(async () => {
+                        console.log(param[0]);
+
+                        return Object.keys(param[0]).map((item, index) => {
+                            return {
+                                value: item,
+                                label: param[0][item]
+                            }
+                        });
+                    }, 'value', 'label', true);
+                    setTimeout(() => {
+                        window.ChoicesArray['{{ $attributes['prettyname'] }}'].setChoiceByValue((param[1]).toString());
+                    }, 100)
+                }
+            });
         ">
         <select
             id="{{ $attributes['prettyname'] }}"

@@ -1,7 +1,7 @@
 <aside id="sidebar" class="fixed top-0 left-0 flex-col flex-shrink-0 hidden w-64 h-full pt-16 duration-75 md:flex">
     <div class="relative flex flex-1 min-h-0 pt-0 border-r">
         <div class="flex flex-col flex-1 overflow-auto">
-            <div class="flex-1 px-3 leading-6 text-black bg-white">
+            <div class="flex-1 px-3 pb-16 leading-6 text-black bg-white">
                 @if(auth()->user()->currentCompany)
                     <ul class="px-0 pt-0 pb-2 m-0 text-black list-none">
                         @can('viewAny', App\Models\WeldingCertificate::class)
@@ -36,6 +36,22 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+                        @can('viewAny', App\Models\Ce::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('ce.index') }}" :active="request()->routeIs('ce.*')">
+                                    <x-icon.ce class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('CE Marking') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\Project::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('project.index') }}" :active="request()->routeIs('project.*')">
+                                    <x-icon.project class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Projects') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
                         @can('viewAny', App\Models\User::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
@@ -50,7 +66,7 @@
         </div>
     </div>
 
-    <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 leading-6 text-black lg:flex">
+    <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 leading-6 text-black bg-white lg:flex">
         @if(Auth::user()->isAdmin() || Auth::user()->isPartner())
             <a
                 href="{{ route('companies.index') }}"

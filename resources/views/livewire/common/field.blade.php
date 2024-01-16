@@ -1,6 +1,27 @@
-<div class="@if($column['type'] == 'textarea') md:col-span-3 @endif">
-    <x-label for="{{ $key }}" :value="__($column['label'])" />
-    @if($column['type'] == 'relationship')
+<div
+    class="
+        @if($column['type'] == 'textarea') md:col-span-3 @endif
+        @if(optional($column)['dependencies'])
+            @foreach($column['dependencies'] as $dependency => $values)
+                @if($form->data->{$dependency} && !in_array($form->data->{$dependency}, $values))
+                    hidden
+                @endif
+            @endforeach
+        @endif
+    "
+    :key="$key"
+>
+    @unless(optional($column)['create_popup'])
+        <div class="flex">
+            <x-label for="{{ $key }}" :value="__($column['label'])" />
+        </div>
+    @endunless
+    @if($column['type'] == 'relationship' && optional($column)['create_popup'])
+        <livewire:relationship-field-with-create
+            :$column
+            wire:model="form.{{$key}}"
+        />
+    @elseif($column['type'] == 'relationship')
         <x-input.choices
             class="block w-full mt-1"
             :selected="$form->{$key}"

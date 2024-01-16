@@ -9,7 +9,7 @@
 @else
     <button
         {{ $attributes->merge([
-            'type' => 'submit',
+            'type' => 'button',
             'class' => 'py-2 px-4 border-0 rounded-md text-sm leading-5 font-medium focus:outline-none transition duration-150 ease-in-out' . ($attributes->get('disabled') ? ' opacity-75 cursor-not-allowed' : ''),
         ]) }}
     >

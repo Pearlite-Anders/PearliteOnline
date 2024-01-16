@@ -38,6 +38,16 @@
                 </li>
                 <li>
                     <button
+                        href="#ce"
+                        @if($section == 'ce')
+                            aria-current="page"
+                            class="text-cyan-500"
+                        @endif
+                        wire:click="setSection('ce')"
+                    >{{ __('CE') }}</button>
+                </li>
+                <li>
+                    <button
                         href="#multiple-choice"
                         @if($section == 'multiple-choice')
                             aria-current="page"
@@ -54,6 +64,7 @@
         @include('livewire.settings.welding-certificates')
         @include('livewire.settings.wpqr')
         @include('livewire.settings.wps')
+        @include('livewire.settings.ce')
         @include('livewire.settings.multiple-choice')
     </div>
 

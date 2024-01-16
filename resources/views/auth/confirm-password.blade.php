@@ -19,7 +19,7 @@
             </div>
 
             <div class="flex justify-end mt-4">
-                <x-button.primary class="ml-4">
+                <x-button.primary class="ml-4" type="submit" wire:loading.attr="disabled">
                     {{ __('Confirm') }}
                 </x-button.primary>
             </div>

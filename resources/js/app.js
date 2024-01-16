@@ -23,8 +23,6 @@ import focus from '@alpinejs/focus';
 Alpine.plugin(ui);
 Alpine.plugin(focus);
 
-
-
 Alpine.data('signature_editor', (path, url, boxes) => ({
     pdf_path: path,
     url: url,
@@ -202,3 +200,25 @@ Alpine.data('signature_editor', (path, url, boxes) => ({
         }
     }
 }));
+
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+document.addEventListener('alpine:init', () => {
+    // Magic: $tooltip
+    Alpine.magic('tooltip', el => message => {
+        let instance = tippy(el, { content: message, trigger: 'manual' })
+
+        instance.show()
+
+        setTimeout(() => {
+            instance.hide()
+
+            setTimeout(() => instance.destroy(), 150)
+        }, 2000)
+    })
+
+    // Directive: x-tooltip
+    Alpine.directive('tooltip', (el, { expression }) => {
+        tippy(el, { content: expression })
+    })
+})

@@ -51,7 +51,7 @@
                                         ">
                             {{ __('Use an authentication code') }}
                         </button>
-                        <x-button.primary class="mt-4">
+                        <x-button.primary class="mt-4" type="submit" wire:loading.attr="disabled">
                             {{ __('Log in') }}
                         </x-button.primary>
                     </div>

@@ -55,95 +55,20 @@ test('admin can update a user', function () {
                     'form.name' => 'Test User',
                     'form.email' => 'test@test.com',
                     'form.password' => '123456',
-                    'form.role' => User::PARTNER_ROLE
                 ]
             )
             ->assertSet('form.name', 'Test User')
             ->assertSet('form.email', 'test@test.com')
             ->assertSet('form.password', '123456')
-            ->assertSet('form.role', User::PARTNER_ROLE)
             ->call('update');
 
     $userToUpdate->refresh();
     expect($userToUpdate->name)->toBe('Test User');
     expect($userToUpdate->email)->toBe('test@test.com');
-    expect($userToUpdate->role)->toBe(User::PARTNER_ROLE);
+    expect($userToUpdate->role)->toBe(User::USER_ROLE);
     expect(Hash::check('123456', $userToUpdate->password))->toBeTrue();
 });
 
-test('admin can see the option to make a user Partner or Admin', function () {
-    $this->actingAs(User::factory([
-        'role' => User::ADMIN_ROLE,
-    ])->withCurrentCompany()->create());
-
-    $user = User::factory()->create([
-        'current_company_id' => auth()->user()->currentCompany->id
-    ]);
-
-    $this->get(route('users.edit', $user))
-        ->assertSuccessful()
-        ->assertSee('Partner')
-        ->assertSee('Admin');
-});
-
-test('partner cannot see the option to make a user Partner or Admin', function () {
-    $this->actingAs(User::factory([
-        'role' => User::PARTNER_ROLE,
-    ])->withCurrentCompany()->create()->givePermissionTo('users.edit'));
-
-    $user = User::factory()->create([
-        'current_company_id' => auth()->user()->currentCompany->id
-    ]);
-
-    $this->get(route('users.edit', $user))
-        ->assertSuccessful()
-        ->assertDontSee('Partner')
-        ->assertDontSee('Admin')
-        ->assertDontSee('Role');
-});
-
-test('user cannot see the option to make a user Partner or Admin', function () {
-    $company = Company::factory()->create();
-    $currentUser = User::factory([
-        'role' => User::USER_ROLE,
-        'current_company_id' => $company->id
-    ])->create();
-    $currentUser->givePermissionTo('users.edit');
-    $this->actingAs($currentUser);
-
-    $user = User::factory([
-        'current_company_id' => $company->id
-    ])->create();
-
-    $company->users()->attach($user);
-    $company->users()->attach($currentUser);
-
-    $this->get(route('users.edit', $user))
-        ->assertSuccessful()
-        ->assertDontSee('Partner')
-        ->assertDontSee('Admin')
-        ->assertDontSee('Role');
-});
-
-test('user cannot save a new role', function () {
-    $this->actingAs(User::factory([
-        'role' => User::USER_ROLE,
-    ])->withCurrentCompany()->create()->givePermissionTo('users.edit'));
-
-    $userToUpdate = User::factory()->create();
-
-    Livewire::test(App\Livewire\User\Edit::class, ['user' => $userToUpdate])
-            ->set(
-                [
-                    'form.role' => User::PARTNER_ROLE
-                ]
-            )
-            ->assertSet('form.role', User::PARTNER_ROLE)
-            ->call('update');
-
-    $userToUpdate->refresh();
-    expect($userToUpdate->role)->not()->toBe(User::PARTNER_ROLE);
-});
 
 test('user cannot see admins', function () {
     $this->actingAs(User::factory([

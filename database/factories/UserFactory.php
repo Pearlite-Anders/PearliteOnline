@@ -66,7 +66,9 @@ class UserFactory extends Factory
         return $this->for(
             Company::factory()
                 ->state(fn () => [
-                    'name' => $this->faker->unique()->company(),
+                    'data' => [
+                        'name' => $this->faker->unique()->company(),
+                    ]
                 ])
                 ->when(is_callable($callback), $callback),
             'currentCompany'

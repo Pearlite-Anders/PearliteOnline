@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <x-button.primary>
+                    <x-button.primary type="submit" wire:loading.attr="disabled">
                         {{ __('Email Password Reset Link') }}
                     </x-button>
                 </div>

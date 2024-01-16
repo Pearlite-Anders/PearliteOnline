@@ -9,7 +9,7 @@
         @include('livewire.wpqr.form')
         <div class="items-center text-black sm:flex">
             <div class="mb-3 sm:mb-0 sm:flex">
-                <x-button.primary>
+                <x-button.primary type="submit" wire:loading.attr="disabled">
                     {{ __('Update') }}
                 </x-button.primary>
             </div>

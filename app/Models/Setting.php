@@ -172,6 +172,73 @@ class Setting extends Model
                 'EN 15612' => 'EN 15612',
                 'EN 15611' => 'EN 15611',
                 'EN 15610' => 'EN 15610',
+            ],
+            'ce_execution_standards' => [
+                'EN 1090-2' => 'EN 1090-2',
+                'EN 1090-3' => 'EN 1090-3',
+                'EN 1090-4' => 'EN 1090-4',
+                'EN 1090-5' => 'EN 1090-5',
+            ],
+            'ce_execution_classes' => [
+                'EXC 1' => 'EXC 1',
+                'EXC 2' => 'EXC 2',
+                'EXC 3' => 'EXC 3',
+                'EXC 4' => 'EXC 4',
+            ],
+            'ce_standards' => [
+                'EN 1090-1:2009 + A1:2011' => 'EN 1090-1:2009 + A1:2011',
+            ],
+            'ce_tolerance_classes' => [
+                'Klasse 1' => 'Klasse 1',
+                'Klasse 2' => 'Klasse 2',
+            ],
+            'ce_weldabilities' => [
+                'S235JR' => 'S235JR',
+                'S275JR' => 'S275JR',
+                'S355J2' => 'S355J2',
+            ],
+            'ce_technical_delivery_conditions' => [
+                'EN 10025-2' => 'EN 10025-2',
+                'EN 10025-3' => 'EN 10025-3',
+                'EN 10025-4' => 'EN 10025-4',
+                'EN 10025-5' => 'EN 10025-5',
+                'EN 10025-6' => 'EN 10025-6',
+                'EN 10210-1' => 'EN 10210-1',
+                'EN 10219-1' => 'EN 10219-1',
+                'EN 10149' => 'EN 10149',
+            ],
+            'ce_fracture_toughnesses' => [
+                '27J ved 20 °C' => '27J ved 20 °C',
+                '27J ved -20 °C' => '27J ved -20 °C',
+                'Deklarereres ikke for byggevare af aluminium' => 'Deklarereres ikke for byggevare af aluminium.',
+            ],
+            'ce_behavior_in_fires' => [
+                'A1' => 'A1',
+            ],
+            'ce_durabilities' => [
+                'Ubehandlet' => 'Ubehandlet',
+                'C1 Lav' => 'C1 Lav',
+                'C1 Middel' => 'C1 Middel',
+                'C1 Høj' => 'C1 Høj',
+                'C2 Lav' => 'C2 Lav',
+                'C2 Middel' => 'C2 Middel',
+                'C2 Høj' => 'C2 Høj',
+                'C3 Lav' => 'C3 Lav',
+                'C3 Middel' => 'C3 Middel',
+                'C3 Høj' => 'C3 Høj',
+                'C4 Lav' => 'C4 Lav',
+                'C4 Middel' => 'C4 Middel',
+                'C4 Høj' => 'C4 Høj',
+                'C5 Lav' => 'C5 Lav',
+                'C5 Middel' => 'C5 Middel',
+                'C5 Høj' => 'C5 Høj',
+                'Galvaniseret' => 'Galvaniseret',
+            ],
+            'ce_machining_qualities' => [
+                'P1' => 'P1',
+                'P2' => 'P2',
+                'P3' => 'P3',
+                'Ubelagt, NPD' => 'Ubelagt, NPD',
             ]
         ]);
     }

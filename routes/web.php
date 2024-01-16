@@ -63,6 +63,14 @@ Route::middleware([
     Route::get('/welder/create', \App\Livewire\Welder\Create::class)->name('welder.create');
     Route::get('/welder/{welder}/edit', \App\Livewire\Welder\Edit::class)->name('welder.edit');
 
+    Route::get('/project', \App\Livewire\Project\Index::class)->name('project.index');
+    Route::get('/project/create', \App\Livewire\Project\Create::class)->name('project.create');
+    Route::get('/project/{project}/edit', \App\Livewire\Project\Edit::class)->name('project.edit');
+
+    Route::get('/ce', \App\Livewire\Ce\Index::class)->name('ce.index');
+    Route::get('/ce/create', \App\Livewire\Ce\Create::class)->name('ce.create');
+    Route::get('/ce/{ce}/edit', \App\Livewire\Ce\Edit::class)->name('ce.edit');
+
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
 
 

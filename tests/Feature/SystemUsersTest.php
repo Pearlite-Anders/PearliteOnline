@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Livewire\Livewire;
+use Illuminate\Support\Facades\Hash;
 
 test('confirm system users can be rendered for admins', function () {
     $user = User::factory([
@@ -32,7 +33,7 @@ test('admin can create a system-user', function () {
         'role' => USER::ADMIN_ROLE,
     ])->withCurrentCompany()->create());
 
-    Livewire::test(App\Livewire\SystemUser\Create::class)
+    Livewire::test(\App\Livewire\SystemUser\Create::class)
         ->set(
             [
                 'form.name' => 'Test User',
@@ -81,15 +82,15 @@ test('dont sees normal users', function () {
 });
 
 test('admin can update a user', function () {
-    $this->actingAs($user = User::factory([
-        'role' => 'admin',
+    $this->actingAs(User::factory([
+        'role' => User::ADMIN_ROLE
     ])->withCurrentCompany()->create());
 
     $userToUpdate = User::factory([
         'role' => User::PARTNER_ROLE,
     ])->create();
 
-    Livewire::test(App\Livewire\SystemUser\Edit::class, ['user' => $userToUpdate])
+    Livewire::test(\App\Livewire\SystemUser\Edit::class, ['user' => $userToUpdate])
             ->set(
                 [
                     'form.name' => 'Test User',
@@ -111,17 +112,11 @@ test('admin can update a user', function () {
     expect(Hash::check('123456', $userToUpdate->password))->toBeTrue();
 });
 
-test('user without permission to edit cannot delete a user', function () {
+test('user without permission to edit cannot render system user index', function () {
     $this->actingAs(User::factory([
         'role' => User::USER_ROLE,
     ])->withCurrentCompany()->create()->givePermissionTo('users.view'));
 
-    $user = User::factory()->create([
-        'current_company_id' => auth()->user()->currentCompany->id
-    ]);
-
-    Livewire::test(\App\Livewire\SystemUser\Index::class)
-        ->call('delete', $user);
-
-    expect($user->fresh()->deleted_at)->toBeNull();
+    $livewire = Livewire::test(\App\Livewire\SystemUser\Index::class);
+    $livewire->assertForbidden();
 });
