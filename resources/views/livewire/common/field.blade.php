@@ -12,8 +12,11 @@
     :key="$key"
 >
     @unless(optional($column)['create_popup'])
-        <div class="flex">
-            <x-label for="{{ $key }}" :value="__($column['label'])" />
+        <div class="flex mb-2 item-center">
+            <x-label for="{{ $key }}" :value="__($column['label'])" class="!mb-0" />
+            @if(optional($column)['help'])
+                <x-tooltip-question-mark :tooltip="$column['help']" class="h-4 ml-1 mt-[2px]" />
+            @endif
         </div>
     @endunless
     @if($column['type'] == 'relationship' && optional($column)['create_popup'])

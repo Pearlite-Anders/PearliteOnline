@@ -130,7 +130,8 @@ class Ce extends Model
             'multiple' => false,
             'options' => 'ce_durabilities',
             'placeholder' => 'C3 Middel',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Pre-treatment level is the pre-treatment before surface treatment, for example, before painting.'
         ],
         'load_bearing_capacity' => [
             'type' => 'text',
@@ -145,7 +146,8 @@ class Ce extends Model
             'type' => 'text',
             'label' => 'Manufacturing',
             'placeholder' => 'Sagsnummer',
-            'filter' => 'search'
+            'filter' => 'search',
+            'help' => 'Specify the path to how project planning can be provided, for example, via case number or customer\'s tender material.'
         ],
 
     ];
