@@ -41,7 +41,7 @@
     @elseif($column['type'] == 'date')
         <x-input.date
             wire:model="form.data.{{ $key }}"
-            :value="optional($form->data)[$key]"
+            :value="optional($form->data)->{$key}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
         />
     @elseif($column['type'] == 'select')
@@ -49,7 +49,7 @@
             class="block w-full mt-1"
             wire:model="form.data.{{ $key }}"
             :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
-            :selected="optional($form->data)[$key] ?? []"
+            :selected="optional($form->data)->{$key} ?? []"
             prettyname="{{ $key }}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
             :multiple="$column['multiple']"
@@ -59,7 +59,7 @@
             class="block w-full mt-1"
             wire:model="form.data.{{ $key }}"
             :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
-            :selected="optional($form->data)[$key] ?? ''"
+            :selected="optional($form->data)->{$key} ?? ''"
         />
     @elseif($column['type'] == 'textarea')
         <x-input.textarea

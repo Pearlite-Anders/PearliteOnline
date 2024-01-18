@@ -23,7 +23,7 @@ trait HasFilter
 
     public static function getColumns()
     {
-        return collect(self::SYSTEM_COLUMNS)->map(function ($column, $index){
+        return collect(self::SYSTEM_COLUMNS)->map(function ($column, $index) {
             $column['key'] = $index;
             return $column;
         });
@@ -59,7 +59,18 @@ trait HasFilter
         $value = '';
 
         if($column->type == 'relationship') {
-            if(preg_match('/\./', $column->class::LABEL_KEY)) {
+            if(is_array($column->class::LABEL_KEY)) {
+                $values = [];
+                foreach($column->class::LABEL_KEY as $key) {
+                    if(preg_match('/\./', $key)) {
+                        $keys = explode('.', $key);
+                        $values[] = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
+                    } else {
+                        $values[] = $this->{$column->relationship} ? $this->{$column->relationship}->{ $key } : '';
+                    }
+                }
+                $value = implode(' - ', $values);
+            } elseif(preg_match('/\./', $column->class::LABEL_KEY)) {
                 $keys = explode('.', $column->class::LABEL_KEY);
                 $value = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
             } else {

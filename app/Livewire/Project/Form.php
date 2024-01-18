@@ -3,8 +3,9 @@
 namespace App\Livewire\Project;
 
 use App\Models\File;
-use Illuminate\Support\Carbon;
 use App\Models\Project;
+use App\Data\ProjectData;
+use Illuminate\Support\Carbon;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
@@ -15,7 +16,7 @@ class Form extends LivewireForm
 
     public function setFields(Project $project)
     {
-        $this->data = $project->data;
+        $this->data = ProjectData::from($project->data);
 
         if($project->current_file_id) {
             $this->current_file = File::find($project->current_file_id);

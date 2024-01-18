@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Ce;
 
+use App\Data\CeData;
 use App\Models\File;
 use Illuminate\Support\Carbon;
 use App\Models\Ce;
@@ -16,11 +17,13 @@ class Form extends LivewireForm
 
     public function setFields(Ce $ce)
     {
-        $this->data = $ce->data;
+        $this->data = CeData::from($ce->data);
 
         if($ce->current_file_id) {
             $this->current_file = File::find($ce->current_file_id);
         }
+
+        $this->project_id = $ce->project_id;
     }
 
     public function create()

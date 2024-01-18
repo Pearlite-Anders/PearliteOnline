@@ -2,9 +2,10 @@
 
 namespace App\Livewire\Wps;
 
-use App\Models\File;
-use Illuminate\Support\Carbon;
 use App\Models\Wps;
+use App\Models\File;
+use App\Data\WpsData;
+use Illuminate\Support\Carbon;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
@@ -16,7 +17,7 @@ class Form extends LivewireForm
 
     public function setFields(Wps $wps)
     {
-        $this->data = $wps->data;
+        $this->data = WpsData::from($wps->data);
         $this->wpqr_id = $wps->wpqr_id;
 
         if($wps->current_file_id) {

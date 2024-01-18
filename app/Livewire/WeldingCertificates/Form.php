@@ -21,7 +21,7 @@ class Form extends LivewireForm
     public function setFields(WeldingCertificate $weldingCertificate)
     {
         $this->welder_id = $weldingCertificate->welder_id;
-        $this->data = $weldingCertificate->data;
+        $this->data = WeldingCertificateData::from($weldingCertificate->data);
 
         if($weldingCertificate->current_file_id) {
             $this->current_file = File::find($weldingCertificate->current_file_id);

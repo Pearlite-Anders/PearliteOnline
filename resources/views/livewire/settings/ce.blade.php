@@ -15,7 +15,9 @@
         <x-slot name="form">
             <div class="col-span-5 space-y-4">
                 <div>
-                    <x-label for="ce.identification_number" :value="__('The notified body\'s identification number')" />
+                    <div class="flex mb-2 item-center">
+                        <x-label for="ce.identification_number" :value="__('The notified body\'s identification number')" class="!mb-0" />
+                    </div>
                     <x-input
                         id="ce.identification_number"
                         type="text"
@@ -44,7 +46,10 @@
                     />
                 </div>
                 <div>
-                    <x-label for="ce.release_of_cadmium" :value="__('Release of Cadmium')" />
+                    <div class="flex mb-2 item-center">
+                        <x-label for="ce.release_of_cadmium" :value="__('Release of Cadmium')" class="!mb-0" />
+                        <x-tooltip-question-mark :tooltip="__('Normally, there is no testing for the content of CADMIUM, therefore “NPD” is indicated')" class="h-4 ml-1 mt-[2px]" />
+                    </div>
                     <x-input
                         id="ce.release_of_cadmium"
                         type="text"
@@ -54,7 +59,10 @@
                     />
                 </div>
                 <div>
-                    <x-label for="ce.emission_of_radioactivity" :value="__('Emission of Radioactivity')" />
+                    <div class="flex mb-2 item-center">
+                        <x-label for="ce.release_of_lead" :value="__('Release of Lead')" class="!mb-0" />
+                        <x-tooltip-question-mark :tooltip="__('Normally, there is no testing for emission of radioactivity, therefore “NPD” is indicated')" class="h-4 ml-1 mt-[2px]" />
+                    </div>
                     <x-input
                         id="ce.emission_of_radioactivity"
                         type="text"

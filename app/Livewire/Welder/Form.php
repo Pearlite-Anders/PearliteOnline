@@ -3,8 +3,9 @@
 namespace App\Livewire\Welder;
 
 use App\Models\File;
-use Illuminate\Support\Carbon;
 use App\Models\Welder;
+use App\Data\WelderData;
+use Illuminate\Support\Carbon;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
@@ -15,7 +16,7 @@ class Form extends LivewireForm
 
     public function setFields(Welder $welder)
     {
-        $this->data = $welder->data;
+        $this->data = WelderData::from($welder->data);
 
         if($welder->current_file_id) {
             $this->current_file = File::find($welder->current_file_id);

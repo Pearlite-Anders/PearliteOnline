@@ -14,8 +14,6 @@ class Create extends Component
 
     public function create()
     {
-        return;
-        dd($this);
         // $this->form->validate();
         $this->form->create();
 

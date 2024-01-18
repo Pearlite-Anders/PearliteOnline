@@ -3,8 +3,9 @@
 namespace App\Livewire\Wpqr;
 
 use App\Models\File;
-use Illuminate\Support\Carbon;
 use App\Models\Wpqr;
+use App\Data\WpqrData;
+use Illuminate\Support\Carbon;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
@@ -15,7 +16,7 @@ class Form extends LivewireForm
 
     public function setFields(Wpqr $wpqr)
     {
-        $this->data = $wpqr->data;
+        $this->data = WpqrData::from($wpqr->data);
 
         if($wpqr->current_file_id) {
             $this->current_file = File::find($wpqr->current_file_id);

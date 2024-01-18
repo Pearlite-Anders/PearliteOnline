@@ -70,6 +70,8 @@ Route::middleware([
     Route::get('/ce', \App\Livewire\Ce\Index::class)->name('ce.index');
     Route::get('/ce/create', \App\Livewire\Ce\Create::class)->name('ce.create');
     Route::get('/ce/{ce}/edit', \App\Livewire\Ce\Edit::class)->name('ce.edit');
+    Route::get('/ce/{ce}/print', \App\Http\Controllers\CePrintController::class)->name('ce.print');
+
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
 

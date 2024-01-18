@@ -7,6 +7,5 @@
             @if(in_array($column['type'], ['file', 'welding_certificate'])) @continue @endif
             @include('livewire.common.field', ['live' => true])
         @endforeach
-
     </div>
 </div>

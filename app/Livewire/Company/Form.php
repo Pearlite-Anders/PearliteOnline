@@ -3,6 +3,7 @@
 namespace App\Livewire\Company;
 
 use App\Models\Company;
+use App\Data\CompanyData;
 use Livewire\Attributes\Rule;
 use Livewire\Form as LivewireForm;
 
@@ -29,7 +30,7 @@ class Form extends LivewireForm
 
     public function setFields(Company $company)
     {
-        $this->data = $company->data;
+        $this->data = CompanyData::from($company->data);
     }
 
     public function create()

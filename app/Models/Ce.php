@@ -52,7 +52,8 @@ class Ce extends Model
             'label' => 'Execution standard',
             'options' => 'ce_execution_standards',
             'placeholder' => 'EN 1090-2',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Specify the execution class, for example, EXC2',
         ],
         'execution_class' => [
             'type' => 'select',
@@ -60,7 +61,8 @@ class Ce extends Model
             'label' => 'Execution class',
             'options' => 'ce_execution_classes',
             'placeholder' => 'EXC 2',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Specify the execution standard, for example, EN 1090-2',
         ],
         'standard' => [
             'type' => 'select',
@@ -68,13 +70,15 @@ class Ce extends Model
             'multiple' => false,
             'options' => 'ce_standards',
             'placeholder' => 'EN 1090-1:2009 + A1:2011',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Execution standard'
         ],
         'scope' => [
             'type' => 'text',
             'label' => 'Scope',
             'placeholder' => 'Opsvejst stålbjælke',
-            'filter' => 'search'
+            'filter' => 'search',
+            'help' => 'Describe what the CE mark includes'
         ],
         'tolerance_class' => [
             'type' => 'select',
@@ -82,7 +86,8 @@ class Ce extends Model
             'multiple' => false,
             'options' => 'ce_tolerance_classes',
             'placeholder' => 'Klasse 1',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Specify tolerance class'
         ],
         'weldability' => [
             'type' => 'select',
@@ -90,7 +95,8 @@ class Ce extends Model
             'multiple' => true,
             'options' => 'ce_weldabilities',
             'placeholder' => 'S235JR',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Specify the types of steel used',
         ],
         'technical_delivery_conditions' => [
             'type' => 'select',
@@ -98,7 +104,8 @@ class Ce extends Model
             'multiple' => true,
             'options' => 'ce_technical_delivery_conditions',
             'placeholder' => 'EN 10025-2',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Specify the standard for technical delivery conditions, for example, EN 10025-2',
         ],
         'fracture_toughness' => [
             'type' => 'select',
@@ -106,7 +113,8 @@ class Ce extends Model
             'multiple' => true,
             'options' => 'ce_fracture_toughnesses',
             'placeholder' => '27J ved 20 °C',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Specify the toughness',
         ],
         'behavior_in_fire' => [
             'type' => 'select',
@@ -114,7 +122,8 @@ class Ce extends Model
             'multiple' => false,
             'options' => 'ce_behavior_in_fires',
             'placeholder' => 'A1',
-            'filter' => 'select'
+            'filter' => 'select',
+            'help' => 'Specify the Material Classification, for example, class “A1”',
         ],
         'machining_quality' => [
             'type' => 'select',
@@ -155,5 +164,10 @@ class Ce extends Model
     public function loadAll()
     {
         return $this;
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }

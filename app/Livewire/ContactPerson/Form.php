@@ -3,8 +3,9 @@
 namespace App\Livewire\ContactPerson;
 
 use App\Models\File;
-use Illuminate\Support\Carbon;
 use App\Models\ContactPerson;
+use Illuminate\Support\Carbon;
+use App\Data\ContactPersonData;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
@@ -14,7 +15,7 @@ class Form extends LivewireForm
 
     public function setFields(ContactPerson $contactPerson)
     {
-        $this->data = $contactPerson->data;
+        $this->data = ContactPersonData::from($contactPerson->data);
         $this->company = $contactPerson->company;
     }
 
