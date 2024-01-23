@@ -59,7 +59,7 @@
             class="block w-full mt-1"
             wire:model="form.data.{{ $key }}"
             :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
-            :selected="optional($form->data)->{$key} ?? ''"
+            :selected="optional($form->data)->{$key} ?? ($column['default'] ?? '' )"
         />
     @elseif($column['type'] == 'textarea')
         <x-input.textarea

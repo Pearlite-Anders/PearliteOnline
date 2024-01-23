@@ -43,7 +43,8 @@ class Project extends Model
                 'active' => 'Active',
                 'inactive' => 'Inactive',
             ],
-            'filter' => 'radios'
+            'filter' => 'radios',
+            'default' => 'active'
         ],
     ];
 

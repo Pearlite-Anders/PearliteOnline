@@ -32,7 +32,8 @@
     </x-index-header>
 
     <div class="flex flex-col leading-6 text-black">
-        <div class="overflow-x-auto">
+        <x-filter-status :filters="$filters" />
+        <div class="overflow-x-auto overflow-y-visible">
             <x-table>
                 <x-slot name="head">
                     @foreach($columns as $column)

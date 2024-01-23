@@ -190,6 +190,22 @@ class WeldingCertificate extends Model
             'type' => 'number',
             'label' => 'Max signatures',
         ],
+        'status' => [
+            'type' => 'radios',
+            'multiple' => false,
+            'label' => 'Active/Inactive',
+            'options' => [
+                'active' => 'Active',
+                'inactive' => 'Inactive',
+            ],
+            'filter' => 'radios',
+            'default' => 'active'
+        ],
+        'remarks' => [
+            'type' => 'textarea',
+            'label' => 'Remarks',
+            'filter' => 'search'
+        ],
     ];
 
     public function welder()

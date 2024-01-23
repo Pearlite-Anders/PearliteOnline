@@ -14,6 +14,8 @@ class ProjectData extends Data implements Wireable
     public function __construct(
         public ?string $name,
         public ?string $number,
+        public ?string $status,
+        public ?string $remarks
     ) {
     }
 }

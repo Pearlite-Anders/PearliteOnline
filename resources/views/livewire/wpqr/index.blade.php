@@ -32,6 +32,7 @@
     </x-index-header>
 
     <div class="flex flex-col leading-6 text-black">
+        <x-filter-status :filters="$filters" />
         <div class="overflow-x-auto">
             <x-table>
                 <x-slot name="head">

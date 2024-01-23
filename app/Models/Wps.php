@@ -180,6 +180,22 @@ class Wps extends Model
             'postfix' => 'Kj/mm',
             'filter' => 'search'
         ],
+        'status' => [
+            'type' => 'radios',
+            'multiple' => false,
+            'label' => 'Active/Inactive',
+            'options' => [
+                'active' => 'Active',
+                'inactive' => 'Inactive',
+            ],
+            'filter' => 'radios',
+            'default' => 'active'
+        ],
+        'remarks' => [
+            'type' => 'textarea',
+            'label' => 'Remarks',
+            'filter' => 'search'
+        ],
     ];
 
     public function wpqr()

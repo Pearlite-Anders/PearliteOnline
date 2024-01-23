@@ -32,6 +32,8 @@ class WpsData extends Data implements Wireable
         public ?string $interpass_temperature,
         public ?string $outer_pipe_diameter,
         public ?string $heat_input,
+        public ?string $status,
+        public ?string $remarks
     ) {
     }
 }
