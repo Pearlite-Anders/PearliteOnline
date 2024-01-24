@@ -168,7 +168,15 @@ class Company extends Model
                     'view' => __('View'),
                     'edit' => __('Edit'),
                 ]
-            ]
+            ],
+            'formula' => (object)[
+                'name' => __('Formulas'),
+                'class' => \App\Models\Formula::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
         ];
     }
 }

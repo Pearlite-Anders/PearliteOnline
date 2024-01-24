@@ -72,6 +72,9 @@ Route::middleware([
     Route::get('/ce/{ce}/edit', \App\Livewire\Ce\Edit::class)->name('ce.edit');
     Route::get('/ce/{ce}/print', \App\Http\Controllers\CePrintController::class)->name('ce.print');
 
+    Route::get('/formulas/carbon-equivalent', \App\Livewire\Formula\CarbonEquivalent::class)->name('formulas.carbon-equivalent');
+    Route::get('/formulas/heat-input', \App\Livewire\Formula\HeatInput::class)->name('formulas.heat-input');
+
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
 

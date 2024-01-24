@@ -44,6 +44,47 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+                        @can('viewAny', App\Models\Formula::class)
+                            <li
+                                class="mt-2 mb-0 text-left list-outside"
+                                x-data="{ open: {{ request()->routeIs('formulas.*') ? 'true' : 'false'}} }"
+                            >
+                                <button
+                                    @click="open = !open"
+                                    type="button"
+                                    class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg cursor-pointer hover:bg-cyan-50"
+                                >
+                                    <x-icon.calculator class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Formulas') }}
+                                    <x-icon.plus x-show="!open" class="w-4 h-4 ml-auto text-gray-500 align-middle duration-75 ease-in-out" />
+                                    <x-icon.minus x-show="open" class="w-4 h-4 ml-auto text-gray-500 align-middle duration-75 ease-in-out" />
+
+
+                                </button>
+                                <ul
+                                    x-show="open"
+                                    x-cloak
+                                    x-transition:enter="transition ease-out duration-100"
+                                    x-transition:enter-start="transform opacity-0 scale-95"
+                                    x-transition:enter-end="transform opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-75"
+                                    x-transition:leave-start="transform opacity-100 scale-100"
+                                    x-transition:leave-end="transform opacity-0 scale-95"
+                                    class="px-0 pt-0 pb-2 m-0 text-black list-none ml-7"
+                                >
+                                        <li class="mt-2 mb-0 text-left list-outside">
+                                            <x-nav-link href="{{ route('formulas.carbon-equivalent') }}" :active="request()->routeIs('formulas.carbon-equivalent')">
+                                                {{ __('Carbon Equivalent') }}
+                                            </x-nav-link>
+                                        </li>
+                                        <li class="mt-2 mb-0 text-left list-outside">
+                                            <x-nav-link href="{{ route('formulas.heat-input') }}" :active="request()->routeIs('formulas.heat-input')">
+                                                {{ __('Heat Input') }}
+                                            </x-nav-link>
+                                        </li>
+                                </ul>
+                            </li>
+                        @endcan
                         @can('viewAny', App\Models\Project::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('project.index') }}" :active="request()->routeIs('project.*')">

@@ -22,8 +22,8 @@ return new class extends Migration {
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
 
-        Permission::create(['name' => 'project.view']);
-        Permission::create(['name' => 'project.edit']);
+        Permission::create(['name' => 'formulas.view']);
+        Permission::create(['name' => 'formulas.edit']);
     }
 
     /**
