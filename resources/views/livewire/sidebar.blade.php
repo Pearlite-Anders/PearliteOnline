@@ -82,6 +82,11 @@
                                                 {{ __('Heat Input') }}
                                             </x-nav-link>
                                         </li>
+                                        <li class="mt-2 mb-0 text-left list-outside">
+                                            <x-nav-link href="{{ route('formulas.z-value') }}" :active="request()->routeIs('formulas.z-value')">
+                                                {{ __('Z Value') }}
+                                            </x-nav-link>
+                                        </li>
                                 </ul>
                             </li>
                         @endcan

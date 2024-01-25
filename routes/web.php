@@ -74,6 +74,7 @@ Route::middleware([
 
     Route::get('/formulas/carbon-equivalent', \App\Livewire\Formula\CarbonEquivalent::class)->name('formulas.carbon-equivalent');
     Route::get('/formulas/heat-input', \App\Livewire\Formula\HeatInput::class)->name('formulas.heat-input');
+    Route::get('/formulas/z-value', \App\Livewire\Formula\ZValue::class)->name('formulas.z-value');
 
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');

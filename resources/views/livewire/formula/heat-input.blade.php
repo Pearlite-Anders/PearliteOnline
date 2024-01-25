@@ -2,10 +2,10 @@
     <x-form-header>
         <x-slot name="title">{{ __('Heat Input') }}</x-slot>
     </x-form-header>
-    <div class="bottom-0 right-0 px-4 pt-8 pb-4 leading-6 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0">
-        <div class="p-4 mb-4 leading-6 text-black bg-white rounded-lg shadow xl:p-8 sm:p-6">
-            <div class="grid grid-cols-1 gap-2 mb-6 md:gap-6 md:grid-cols-4">
-                <div class="md:col-span-4">
+        <div class="bottom-0 right-0 px-4 pt-8 pb-4 leading-6 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0">
+            <div class="p-4 mb-4 leading-6 text-black bg-white rounded-lg shadow xl:p-8 sm:p-6">
+                <div class="grid grid-cols-1 gap-2 mb-6 md:gap-6 md:grid-cols-4">
+                    <div class="md:col-span-4">
                     <x-label for="c" value="Welding Process - K Factor"/>
 
                     <fieldset class="max-w-2xl">
