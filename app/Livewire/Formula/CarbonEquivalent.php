@@ -12,10 +12,15 @@ class CarbonEquivalent extends Component
     public $c;
     #[Url]
     public $mn;
+    #[Url]
     public $cr;
+    #[Url]
     public $mo;
+    #[Url]
     public $v;
+    #[Url]
     public $ni;
+    #[Url]
     public $cu;
 
     #[Computed]
