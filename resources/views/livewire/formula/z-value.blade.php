@@ -177,31 +177,41 @@
 
                     </fieldset>
                 </div>
-
             </div>
 
-            <div class="mt-12">
-                <table class="table w-full table-auto">
+            <div class="pt-12 mt-12 overflow-y-auto verflow-x-auto md:pt-8">
+                <table class="table min-w-full table-fixed">
                     <thead>
                         <tr>
                             <th colspan="2"></th>
                             <th colspan="{{ count($columns) }}" class="text-center">{{ __('Effective Material Thickness (s)') }}</th>
                         </tr>
                         <tr>
-                            <th class="w-20 text-xs text-left">{{ __('Effective Depth of Weld a(eff)') }}</th>
-                            <th class="w-20 text-xs text-left">{{ __('Depth of Weld a-measurement') }}</th>
+                            <th class="relative w-20 px-2 text-xs text-left">
+                                <div class="absolute origin-bottom-left transform -rotate-[60deg] md:-rotate-45 w-28" style="padding-left:21px;bottom:-10px;">
+                                    {{ __('Effective Depth of Weld a(eff)') }}
+                                </div>
+                            </th>
+                            <th class="relative w-20 px-2 text-xs text-left">
+                                <div class="absolute origin-bottom-left transform -rotate-[60deg] md:-rotate-45 w-28" style="padding-left:21px;bottom:-10px;">
+                                    {{ __('Depth of Weld a-measurement') }}
+                                </div>
+                            </th>
                             @foreach($columns as $column)
-                            <th>{{ $column['label'] }}</th>
+                                <th class="w-20 px-2">{{ $column['label'] }}</th>
                             @endforeach
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($rows as $row)
+                        @foreach($rows as $row_index => $row)
                         <tr>
-                            <td class="text-center">{{ $row['depth'] }}</td>
-                            <td class="text-center">{{ $row['a'] }}</td>
-                            @foreach($columns as $column)
-                            <td></td>
+                            <td class="w-20 px-2 text-center">{{ $row['depth'] }}</td>
+                            <td class="w-20 px-2 text-center">{{ $row['a'] }}</td>
+                            @foreach($columns as $column_index => $column)
+                                @php( $color_class = $this->values[$row_index][$column_index]['label'] == 'Z15' ? 'bg-green-200' : ($this->values[$row_index][$column_index]['label'] == 'Z25' ? 'bg-yellow-200' : ($this->values[$row_index][$column_index]['label'] == 'Z35' ? 'bg-red-200' : 'bg-slate-100')))
+                                <td class="w-20 text-center px-2 {{ $color_class }}">
+                                    {{ $this->values[$row_index][$column_index]['label'] }}
+                                </td>
                             @endforeach
                         </tr>
                         @endforeach

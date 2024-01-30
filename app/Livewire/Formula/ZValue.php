@@ -4,6 +4,7 @@ namespace App\Livewire\Formula;
 
 use Livewire\Component;
 use Livewire\Attributes\Url;
+use Livewire\Attributes\Computed;
 
 class ZValue extends Component
 {
@@ -160,6 +161,34 @@ class ZValue extends Component
             'thinkness_multiplier' => 15,
         ],
     ];
+
+    #[Computed]
+    public function values()
+    {
+        $values = [];
+        foreach($this->rows as $row_index => $row) {
+            foreach($this->columns as $column_index => $column) {
+                $depth_multiplier = $row['depth_multiplier'];
+                $thickness_multiplier = $column['thinkness_multiplier'];
+                $z_value = $depth_multiplier + $this->shape + $thickness_multiplier + $this->shrinkage * $this->preheating + $this->static;
+                $label = '-';
+                if($z_value >= 10 && $z_value < 20) {
+                    $label = 'Z15';
+                } elseif($z_value >= 20 && $z_value < 30) {
+                    $label = 'Z25';
+                } elseif($z_value >= 30 && $z_value < 40) {
+                    $label = 'Z35';
+                }
+
+                $values[$row_index][$column_index] = [
+                    'z_value' => $z_value,
+                    'label' => $label
+                ];
+            }
+        }
+
+        return $values;
+    }
 
     public function render()
     {
