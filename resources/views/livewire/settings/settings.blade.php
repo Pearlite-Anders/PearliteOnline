@@ -8,7 +8,6 @@
             <ul role="list" class="flex flex-none min-w-full text-sm font-semibold leading-6 text-gray-400 gap-x-4">
                 <li>
                     <button
-                        href="#welding-certificates"
                         @if($section == 'welding-certificates')
                             aria-current="page"
                             class="text-cyan-500"
@@ -18,7 +17,6 @@
                 </li>
                 <li>
                     <button
-                        href="#wpqr"
                         @if($section == 'wpqr')
                             aria-current="page"
                             class="text-cyan-500"
@@ -28,7 +26,6 @@
                 </li>
                 <li>
                     <button
-                        href="#wps"
                         @if($section == 'wps')
                             aria-current="page"
                             class="text-cyan-500"
@@ -38,7 +35,6 @@
                 </li>
                 <li>
                     <button
-                        href="#ce"
                         @if($section == 'ce')
                             aria-current="page"
                             class="text-cyan-500"
@@ -48,7 +44,15 @@
                 </li>
                 <li>
                     <button
-                        href="#multiple-choice"
+                        @if($section == 'supplier')
+                            aria-current="page"
+                            class="text-cyan-500"
+                        @endif
+                        wire:click="setSection('supplier')"
+                    >{{ __('Supplier') }}</button>
+                </li>
+                <li>
+                    <button
                         @if($section == 'multiple-choice')
                             aria-current="page"
                             class="text-cyan-500"
@@ -65,6 +69,7 @@
         @include('livewire.settings.wpqr')
         @include('livewire.settings.wps')
         @include('livewire.settings.ce')
+        @include('livewire.settings.supplier')
         @include('livewire.settings.multiple-choice')
     </div>
 

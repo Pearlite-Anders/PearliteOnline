@@ -45,10 +45,24 @@
             placeholder="{{ __($column['placeholder'] ?? '') }}"
         />
     @elseif($column['type'] == 'select')
+        @php
+            $options = is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options']);
+            if(optional($column)['prefix']) {
+                $options = array_map(function($item) use ($column) {
+                    return __($column['prefix']) . $item;
+                }, $options);
+            }
+
+            if(optional($column)['postfix']) {
+                $options = array_map(function($item) use ($column) {
+                    return $item . __($column['postfix']);
+                }, $options);
+            }
+        @endphp
         <x-input.choices
             class="block w-full mt-1"
             wire:model="form.data.{{ $key }}"
-            :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
+            :options="$options"
             :selected="optional($form->data)->{$key} ?? []"
             prettyname="{{ $key }}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"

@@ -67,6 +67,10 @@ Route::middleware([
     Route::get('/project/create', \App\Livewire\Project\Create::class)->name('project.create');
     Route::get('/project/{project}/edit', \App\Livewire\Project\Edit::class)->name('project.edit');
 
+    Route::get('/supplier', \App\Livewire\Supplier\Index::class)->name('supplier.index');
+    Route::get('/supplier/create', \App\Livewire\Supplier\Create::class)->name('supplier.create');
+    Route::get('/supplier/{supplier}/edit', \App\Livewire\Supplier\Edit::class)->name('supplier.edit');
+
     Route::get('/ce', \App\Livewire\Ce\Index::class)->name('ce.index');
     Route::get('/ce/create', \App\Livewire\Ce\Create::class)->name('ce.create');
     Route::get('/ce/{ce}/edit', \App\Livewire\Ce\Edit::class)->name('ce.edit');

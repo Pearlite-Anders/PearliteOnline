@@ -239,6 +239,13 @@ class Setting extends Model
                 'P2' => 'P2',
                 'P3' => 'P3',
                 'Ubelagt, NPD' => 'Ubelagt, NPD',
+            ],
+            'supplier_assessment_frequencies' => [
+                '6' => '6',
+                '12' => '12',
+                '24' => '24',
+                '36' => '36',
+                '48' => '48',
             ]
         ]);
     }

@@ -102,6 +102,11 @@ class Company extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function suppliers()
+    {
+        return $this->hasMany(Supplier::class);
+    }
+
     public function modules()
     {
         return [
@@ -172,6 +177,14 @@ class Company extends Model
             'formula' => (object)[
                 'name' => __('Formulas'),
                 'class' => \App\Models\Formula::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'supplier' => (object)[
+                'name' => __('Suppliers'),
+                'class' => \App\Models\Supplier::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
