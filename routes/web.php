@@ -71,6 +71,10 @@ Route::middleware([
     Route::get('/supplier/create', \App\Livewire\Supplier\Create::class)->name('supplier.create');
     Route::get('/supplier/{supplier}/edit', \App\Livewire\Supplier\Edit::class)->name('supplier.edit');
 
+    Route::get('/welding-coordination', \App\Livewire\WeldingCoordination\Index::class)->name('welding-coordination.index');
+    Route::get('/welding-coordination/create', \App\Livewire\WeldingCoordination\Create::class)->name('welding-coordination.create');
+    Route::get('/welding-coordination/{weldingCoordination}/edit', \App\Livewire\WeldingCoordination\Edit::class)->name('welding-coordination.edit');
+
     Route::get('/ce', \App\Livewire\Ce\Index::class)->name('ce.index');
     Route::get('/ce/create', \App\Livewire\Ce\Create::class)->name('ce.create');
     Route::get('/ce/{ce}/edit', \App\Livewire\Ce\Edit::class)->name('ce.edit');

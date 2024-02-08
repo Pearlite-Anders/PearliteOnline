@@ -1,6 +1,6 @@
 <div
     class="
-        @if($column['type'] == 'textarea') md:col-span-3 @endif
+        @if(in_array($column['type'], ['textarea', 'rich_text'])) md:col-span-3 @endif
         @if(optional($column)['dependencies'])
             @foreach($column['dependencies'] as $dependency => $values)
                 @if($form->data->{$dependency} && !in_array($form->data->{$dependency}, $values))
@@ -75,6 +75,13 @@
             :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
             :selected="optional($form->data)->{$key} ?? ($column['default'] ?? '' )"
         />
+    @elseif($column['type'] == 'rich_text')
+        <x-input.rich-text
+            wire:model="form.data.{{$key}}"
+            placeholder="{{ __($column['placeholder'] ?? '') }}"
+            rows="5"
+        />
+
     @elseif($column['type'] == 'textarea')
         <x-input.textarea
             wire:model="form.data.{{$key}}"

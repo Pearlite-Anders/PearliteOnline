@@ -3,6 +3,7 @@
     'svg_location' => 'top',
     'hide_name' => false,
     'icon_class' => 'w-6 h-6',
+    'with_delete' => false,
 ])
 
 <div x-data="{ open: false }" class="inline-flex">
@@ -16,6 +17,16 @@
             </svg>
             @if(!$hide_name)
                 {{ $file->name }}
+            @endif
+            {{ $with_delete }}
+            @if($with_delete)
+                <x-button.delete
+                    wire:click="deleteFile({{ $file->id }})"
+                    wire:loading.attr="disabled"
+                    class="ml-2"
+                >
+                    {{ __('Delete') }}
+                </x-button.delete>
             @endif
         </div>
     @else

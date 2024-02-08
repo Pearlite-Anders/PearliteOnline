@@ -22,6 +22,7 @@
         "filepond": "^4.30.4",
         "flatpickr": "^4.6.13",
         "puppeteer": "^21.7.0",
-        "tippy.js": "^6.3.7"
+        "tippy.js": "^6.3.7",
+        "trix": "^2.0.10"
     }
 }

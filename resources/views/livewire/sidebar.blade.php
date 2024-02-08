@@ -106,6 +106,14 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+                        @can('viewAny', App\Models\WeldingCoordination::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('welding-coordination.index') }}" :active="request()->routeIs('welding-coordination.*')">
+                                    <x-icon.project class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Welding Coordination') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
                         @can('viewAny', App\Models\User::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">

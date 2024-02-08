@@ -42,7 +42,6 @@ class Ce extends Model
                 'Method 2' => 'Method 2',
                 'Method 3a' => 'Method 3a',
                 'Method 3b' => 'Method  3b',
-
             ],
             'filter' => 'radios'
         ],

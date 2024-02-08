@@ -20,7 +20,6 @@ class File extends Model
             $company_id = $model->company_id;
         }
 
-
         $file = new self();
         $file->company_id = $company_id ? $company_id : $company_id;
         $file->name = $uploaded_file->getClientOriginalName();

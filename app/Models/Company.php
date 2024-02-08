@@ -107,6 +107,11 @@ class Company extends Model
         return $this->hasMany(Supplier::class);
     }
 
+    public function weldingcoordinations()
+    {
+        return $this->hasMany(WeldingCoordination::class);
+    }
+
     public function modules()
     {
         return [
