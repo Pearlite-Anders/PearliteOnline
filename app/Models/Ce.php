@@ -50,7 +50,7 @@ class Ce extends Model
             'multiple' => false,
             'label' => 'Execution standard',
             'options' => 'ce_execution_standards',
-            'placeholder' => 'EN 1090-2',
+            'placeholder' => 'Select - Example: EN 1090-2',
             'filter' => 'select',
             'help' => 'Specify the execution class, for example, EXC2',
         ],
@@ -59,7 +59,7 @@ class Ce extends Model
             'multiple' => false,
             'label' => 'Execution class',
             'options' => 'ce_execution_classes',
-            'placeholder' => 'EXC 2',
+            'placeholder' => 'Select - Example: EXC 2',
             'filter' => 'select',
             'help' => 'Specify the execution standard, for example, EN 1090-2',
         ],
@@ -68,9 +68,9 @@ class Ce extends Model
             'label' => 'Standard',
             'multiple' => false,
             'options' => 'ce_standards',
-            'placeholder' => 'EN 1090-1:2009 + A1:2011',
+            'placeholder' => 'Select - Example: EN 1090-1:2009 + A1:2011',
             'filter' => 'select',
-            'help' => 'Execution standard'
+            'help' => 'Execution standard',
         ],
         'scope' => [
             'type' => 'text',
@@ -84,7 +84,7 @@ class Ce extends Model
             'label' => 'Tolerance Class',
             'multiple' => false,
             'options' => 'ce_tolerance_classes',
-            'placeholder' => 'Klasse 1',
+            'placeholder' => 'Select - Example: Klasse 1',
             'filter' => 'select',
             'help' => 'Specify tolerance class'
         ],
@@ -102,7 +102,7 @@ class Ce extends Model
             'label' => 'Technical Delivery Conditions',
             'multiple' => true,
             'options' => 'ce_technical_delivery_conditions',
-            'placeholder' => 'EN 10025-2',
+            'placeholder' => 'Select - Example: EN 10025-2',
             'filter' => 'select',
             'help' => 'Specify the standard for technical delivery conditions, for example, EN 10025-2',
         ],
@@ -111,7 +111,7 @@ class Ce extends Model
             'label' => 'Fracture Toughness',
             'multiple' => true,
             'options' => 'ce_fracture_toughnesses',
-            'placeholder' => '27J ved 20 °C',
+            'placeholder' => 'Select - Example: 27J ved 20 °C',
             'filter' => 'select',
             'help' => 'Specify the toughness',
         ],
@@ -120,7 +120,7 @@ class Ce extends Model
             'label' => 'Behavior in Fire',
             'multiple' => false,
             'options' => 'ce_behavior_in_fires',
-            'placeholder' => 'A1',
+            'placeholder' => 'Select - Example: A1',
             'filter' => 'select',
             'help' => 'Specify the Material Classification, for example, class “A1”',
         ],
@@ -129,15 +129,27 @@ class Ce extends Model
             'label' => 'Machining Quality',
             'multiple' => false,
             'options' => 'ce_machining_qualities',
-            'placeholder' => 'P2',
+            'placeholder' => 'Select - Example: P2',
             'filter' => 'select'
+        ],
+        'surface' => [
+            'type' => 'select',
+            'label' => 'Surface',
+            'multiple' => false,
+            'options' => [
+                'paint' => 'Paint (EN 12944)',
+                'galvanization' => 'Galvanizing (EN 1461)',
+                'untreated' => 'Untreated',
+            ],
+            'placeholder' => 'Select',
+            'filter' => 'select',
         ],
         'durability' => [
             'type' => 'select',
             'label' => 'Durability',
             'multiple' => false,
             'options' => 'ce_durabilities',
-            'placeholder' => 'C3 Middel',
+            'placeholder' => 'Select - Example: C3 Middel',
             'filter' => 'select',
             'help' => 'Pre-treatment level is the pre-treatment before surface treatment, for example, before painting.'
         ],
@@ -146,18 +158,37 @@ class Ce extends Model
             'label' => 'Load Bearing Capacity',
             'placeholder' => 'Projektering ifølge EN 1990',
             'filter' => 'search',
-            'dependencies' => [
-                'method' => ['Method 2', 'Method 3b']
-            ]
         ],
-        'manufacturing' => [
+        'dimensioning' => [
             'type' => 'text',
-            'label' => 'Manufacturing',
-            'placeholder' => 'Sagsnummer',
+            'label' => 'Dimensioning',
+            'placeholder' => '',
             'filter' => 'search',
-            'help' => 'Specify the path to how project planning can be provided, for example, via case number or customer\'s tender material.'
         ],
-
+        'carrying_capacity' => [
+            'type' => 'text',
+            'label' => 'Carrying Capacity',
+            'placeholder' => '',
+            'filter' => 'search',
+        ],
+        'deformation_service_limit_state' => [
+            'type' => 'text',
+            'label' => 'Deformation in the Service Limit State',
+            'placeholder' => '',
+            'filter' => 'search',
+        ],
+        'fatigue_strength' => [
+            'type' => 'text',
+            'label' => 'Fatigue Strength',
+            'placeholder' => '',
+            'filter' => 'search',
+        ],
+        'fire_resistance' => [
+            'type' => 'text',
+            'label' => 'Fire Resistance',
+            'placeholder' => '',
+            'filter' => 'search',
+        ],
     ];
 
     public function loadAll()

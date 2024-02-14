@@ -1,6 +1,6 @@
 <div class="flex justify-center">
 
-    <div style="border: 1px solid #000;max-width: 400px;width:100%;font-size:12px;line-height:1.2;font-family:Arial;">
+    <div style="border: 1px solid #000;max-width: 325px;width:100%;font-size:12px;line-height:1.2;font-family:Arial;">
         <div style="text-align:center;border-bottom: 1px solid #000;">
             <div style="height:50px;"></div>
             <img src="{{ asset('images/ce-mark.png') }}" alt="CE" style="width:auto;height:40px;margin:0 auto 35px;display:block;">
@@ -83,7 +83,15 @@
                 {{__('Durability')}}:
                 @if(preg_match('/^P/i', $form->data->machining_quality))
                     {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} <x-tooltip-word :tooltip="__('Machining Quality')">{{ $form->data->machining_quality }}</x-tooltip-word>.
-                    {{ __('Surface painting according to EN ISO 12944-5,')}} <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
+
+                    @if($form->data->surface == 'paint')
+                        {{ __('Surface painted according to EN ISO 12944-5,')}}
+                    @elseif($form->data->surface == 'galvanization')
+                        {{ __('Surface galvanized according to EN ISO 1461,')}}
+                    @elseif($form->data->surface == 'untreated')
+                        {{ __('Surface untreated,')}}
+                    @endif
+                    <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
                 @else
                     {{ $form->data->machining_quality }}.
                 @endif
@@ -100,7 +108,13 @@
                 </div>
                 <div>
                     <span style="text-decoration:underline">{{ __('Manufacturing')}}:</span>
-                    {{ __('According to component specification') }} <x-tooltip-word :tooltip="__('Manufacturing')">{{ $form->data->manufacturing }}</x-tooltip-word>,
+                    {{ __('According to component specification') }}
+                    <x-tooltip-word :tooltip="__('Project')">
+                        @if($form->project_id)
+                            @php($project = App\Models\Project::find($form->project_id))
+                            {{ $project->data['number'] }} -  {{ $project->data['name'] }}
+                        @endif
+                    </x-tooltip-word>,
                     {{ __('and') }} <x-tooltip-word :tooltip="__('Execution Standard')">{{ $form->data->execution_standard }}</x-tooltip-word>. <x-tooltip-word :tooltip="__('Execution Class')">{{ $form->data->execution_class }}</x-tooltip-word>.
                 </div>
             </div>

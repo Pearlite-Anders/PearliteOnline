@@ -22,7 +22,7 @@
     @if($column['type'] == 'relationship' && optional($column)['create_popup'])
         <livewire:relationship-field-with-create
             :$column
-            wire:model="form.{{$key}}"
+            wire:model.live="form.{{$key}}"
         />
     @elseif($column['type'] == 'relationship')
         <x-input.choices
@@ -58,15 +58,18 @@
                     return $item . __($column['postfix']);
                 }, $options);
             }
+
+            $selected = optional($form->data)->{$key} ?? ($column['default'] ?? '' );
         @endphp
         <x-input.choices
             class="block w-full mt-1"
             wire:model="form.data.{{ $key }}"
             :options="$options"
-            :selected="optional($form->data)->{$key} ?? []"
+            :selected="$selected"
             prettyname="{{ $key }}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
             :multiple="$column['multiple']"
+            :selectFirst="optional($column)['select_first']"
         />
     @elseif($column['type'] == 'radios')
         <x-input.radios

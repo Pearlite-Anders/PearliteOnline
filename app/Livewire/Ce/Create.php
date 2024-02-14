@@ -22,7 +22,12 @@ class Create extends Component
 
     public function mount()
     {
-        $this->form->data = CeData::from(['name' => '']);
+        $this->form->data = CeData::from([
+            'name' => '',
+            'standard' => 'EN 1090-1:2009 + A1:2011',
+            'behavior_in_fire' => 'A1',
+            'tolerance_class' => 'Klasse 1',
+        ]);
     }
 
     public function render()
