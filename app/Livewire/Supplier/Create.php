@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Supplier;
 
-use App\Data\SupplierData;
 use Livewire\Component;
+use App\Models\Supplier;
+use App\Data\SupplierData;
 use Livewire\WithFileUploads;
 
 class Create extends Component
@@ -11,6 +12,7 @@ class Create extends Component
     use Shared, WithFileUploads;
 
     public Form $form;
+    public $supplier;
 
     public function create()
     {
@@ -23,6 +25,8 @@ class Create extends Component
     public function mount()
     {
         $this->form->data = SupplierData::from(['name' => '']);
+        $this->supplier = new Supplier();
+
     }
 
     public function render()
