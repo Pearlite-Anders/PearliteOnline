@@ -45,6 +45,12 @@ class Ce extends Model
             ],
             'filter' => 'radios'
         ],
+        'date' => [
+            'type' => 'date',
+            'label' => 'Date',
+            'placeholder' => 'Select',
+            'filter' => 'date',
+        ],
         'execution_standard' => [
             'type' => 'select',
             'multiple' => false,

@@ -10,7 +10,7 @@
             <div style="height:50px;"></div>
         </div>
         <div style="text-align:center;border-bottom: 1px solid #000;padding: 5px 0;">
-            <x-tooltip-word :tooltip="__('Manufacturer\'s address')"> {!! nl2br(setting('ce_company_address')) !!}</x-tooltip-word>
+            <x-tooltip-word :tooltip="__('Manufacturer\'s address')">{!! setting('ce_company_address') !!}, {!! setting('ce_company_zip') !!} {!! setting('ce_company_city') !!}</x-tooltip-word>
             <div style="margin-top: 25px;font-weight:bold;height:20px;">
                 <x-tooltip-word
                     :tooltip="__('Last two digits of the year of the year in which the marking is applied')"

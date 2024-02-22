@@ -28,12 +28,32 @@
                 </div>
                 <div>
                     <x-label for="ce.company_address" :value="__('Company adress')" />
-                    <x-input.textarea
+                    <x-input
                         id="ce.company_address"
                         class="block w-full"
                         wire:model="settings.ce_company_address"
-                        placeholder="Smedevej 12, 1234 Smedeby"
+                        placeholder="Smedevej 12"
                     />
+                </div>
+                <div class="flex space-x-4">
+                    <div>
+                        <x-label for="ce.company_zip" :value="__('Zipcode')" />
+                        <x-input
+                            id="ce.company_zip"
+                            class="block w-full"
+                            wire:model="settings.ce_company_zip"
+                            placeholder="7400"
+                        />
+                    </div>
+                    <div class="flex-grow">
+                        <x-label for="ce.company_city" :value="__('City')" />
+                        <x-input
+                            id="ce.company_city"
+                            class="block w-full"
+                            wire:model="settings.ce_company_city"
+                            placeholder="7400"
+                        />
+                    </div>
                 </div>
                 <div>
                     <x-label for="ce.certificate_number" :value="__('Certificate number')" />

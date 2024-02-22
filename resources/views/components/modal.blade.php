@@ -13,7 +13,7 @@ $maxWidth = [
 @endphp
 
 <div
-    x-data="{ show: @entangle($attributes->get('wire:model')).live }"
+    x-data="{ show: @entangle($attributes->get('wire:model.live')).live }"
     x-on:close.stop="show = false"
     x-on:keydown.escape.window="show = false"
     x-show="show"
