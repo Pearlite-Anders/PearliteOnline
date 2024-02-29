@@ -25,8 +25,11 @@ class CeData extends Data implements Wireable
         public ?string $machining_quality,
         public ?string $surface,
         public ?string $durability,
+        public ?string $dimensioning,
         public ?string $load_bearing_capacity,
-        public ?string $manufacturing,
+        public ?string $deformation_serviceability_limit_state,
+        public ?string $fatigue_strength,
+        public ?string $fire_resistance,
     ) {
     }
 }

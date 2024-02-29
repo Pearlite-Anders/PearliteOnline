@@ -47,8 +47,6 @@
                 <x-tooltip-word
                     :tooltip="__('Fracture Toughness')"
                 >{{ is_array(optional($ce->data['fracture_toughness']) ? implode(', ', $ce->data['fracture_toughness']) : '') }}</x-tooltip-word>
-                {{__('according to')}}
-
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Behavior in Fire: Material Classification: Class')}}
@@ -108,4 +106,15 @@
         </div>
 
     </div>
+</div>
+
+@pageBreak
+
+<div style="width: 750px;font-family:Arial;font-size:9pt;line-height:1;padding: 50px 25px;">
+    <h2 style="font-size: 14pt;font-weight:bold;text-align:center;margin-bottom:5px;">{{ __('Declaration of performance') }}</h2>
+    <div style="font-size: 10pt;font-style:italic;text-align:center;">{{ __('CPR 305/2011/EU') }}</div>
+    <div style="margin-top:25px;">1. Identification of the product type:</div>
+    <div style="font-weight:bold;text-align:center;">Structural metallic products and ancillaries</div>
+    <div style="margin-top:15px;">2. Construction product:</div>
+    <div style="font-weight:bold;text-align:center;">Structural metallic products and ancillaries</div>
 </div>

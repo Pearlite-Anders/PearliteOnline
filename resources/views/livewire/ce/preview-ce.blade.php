@@ -1,6 +1,6 @@
 <div class="flex justify-center">
 
-    <div style="border: 1px solid #000;max-width: 325px;width:100%;font-size:12px;line-height:1.2;font-family:Arial;">
+    <div style="border: 1px solid #000;max-width: 423px;width:100%;font-size:12px;line-height:1.2;font-family:Arial;zoom: 0.8;">
         <div style="text-align:center;border-bottom: 1px solid #000;">
             <div style="height:50px;"></div>
             <img src="{{ asset('images/ce-mark.png') }}" alt="CE" style="width:auto;height:40px;margin:0 auto 35px;display:block;">
@@ -56,8 +56,6 @@
                     <x-tooltip-word
                         :tooltip="__('Fracture Toughness')"
                     >{{ (is_array(optional($form->data)->fracture_toughness) ? implode(', ', $form->data->fracture_toughness) : '') }}</x-tooltip-word>
-                    {{__('according to')}}
-
             </div>
             <div style="font-weight:bold;margin-top:10px;">
                 {{__('Behavior in Fire: Material Classification: Class')}}
@@ -81,7 +79,11 @@
             </div>
             <div style="font-weight:bold;margin-top:10px;">
                 {{__('Durability')}}:
-                @if(preg_match('/^P/i', $form->data->machining_quality))
+                @if(
+                    preg_match('/^P/i', $form->data->machining_quality)
+                    ||
+                    $form->data->surface == 'untreated'
+                )
                     {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} <x-tooltip-word :tooltip="__('Machining Quality')">{{ $form->data->machining_quality }}</x-tooltip-word>.
 
                     @if($form->data->surface == 'paint')
@@ -91,28 +93,58 @@
                     @elseif($form->data->surface == 'untreated')
                         {{ __('Surface untreated,')}}
                     @endif
-                    <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
+
+                    @unless($form->data->surface == 'untreated')
+                        <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
+                    @endunless
                 @else
                     {{ $form->data->machining_quality }}.
                 @endif
             </div>
             <div style="margin-top:10px;font-weight:bold;">
                 <div style="text-decoration:underline;">{{__('Structural Characteristics')}}:</div>
-                <div>
-                    <span style="text-decoration:underline">{{ __('Load bearing capacity')}}:</span>
-                    @if(in_array($form->data->method, ['Method 2', 'Method 3b']))
-                        <x-tooltip-word :tooltip="__('Load bearing capacity')">{{ $form->data->load_bearing_capacity }}</x-tooltip-word>
-                    @else
-                        {{ __('NPD') }}
-                    @endif
-                </div>
+                @if(in_array($form->data->method, ['Method 3a']))
+                    <div>
+                        <span style="text-decoration:underline">{{ __('Dimensioning')}}:</span>
+                        {{ __('According to') }} <x-tooltip-word :tooltip="__('Dimensioning')">{{ $form->data->dimensioning }}</x-tooltip-word>
+                    </div>
+                @endif
+                @if(in_array($form->data->method, ['Method 1','Method 2', 'Method 3b']))
+                    <div>
+                        <span style="text-decoration:underline">{{ __('Load bearing capacity')}}:</span>
+                        <x-tooltip-word :tooltip="__('Load bearing capacity')">
+
+                            {{ $form->data->load_bearing_capacity }}
+                        </x-tooltip-word>
+                    </div>
+                @endif
+                @if(in_array($form->data->method, ['Method 2', 'Method 3b']))
+                    <div>
+                        <span style="text-decoration:underline">{{ __('Deformation at serviceability limit state')}}:</span>
+                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">{{ $form->data->deformation_serviceability_limit_state }}</x-tooltip-word>
+                    </div>
+                @endif
+                @if(in_array($form->data->method, ['Method 2', 'Method 3b']))
+                    <div>
+                        <span style="text-decoration:underline">{{ __('Fatigue Strength') }}:</span>
+                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">{{ $form->data->fatigue_strength }}</x-tooltip-word>
+                    </div>
+                @endif
+                @if(in_array($form->data->method, ['Method 2', 'Method 3b']))
+                    <div>
+                        <span style="text-decoration:underline">{{ __('Resistance to fire') }}:</span>
+                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">{{ $form->data->fire_resistance }}</x-tooltip-word>
+                    </div>
+                @endif
                 <div>
                     <span style="text-decoration:underline">{{ __('Manufacturing')}}:</span>
                     {{ __('According to component specification') }}
                     <x-tooltip-word :tooltip="__('Project')">
                         @if($form->project_id)
                             @php($project = App\Models\Project::find($form->project_id))
-                            {{ $project->data['number'] }} -  {{ $project->data['name'] }}
+                            @if($project)
+                                {{ $project->data['number'] }} -  {{ $project->data['name'] }}
+                            @endif
                         @endif
                     </x-tooltip-word>,
                     {{ __('and') }} <x-tooltip-word :tooltip="__('Execution Standard')">{{ $form->data->execution_standard }}</x-tooltip-word>. <x-tooltip-word :tooltip="__('Execution Class')">{{ $form->data->execution_class }}</x-tooltip-word>.

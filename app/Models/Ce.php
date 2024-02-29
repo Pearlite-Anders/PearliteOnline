@@ -130,14 +130,6 @@ class Ce extends Model
             'filter' => 'select',
             'help' => 'Specify the Material Classification, for example, class “A1”',
         ],
-        'machining_quality' => [
-            'type' => 'select',
-            'label' => 'Machining Quality',
-            'multiple' => false,
-            'options' => 'ce_machining_qualities',
-            'placeholder' => 'Select - Example: P2',
-            'filter' => 'select'
-        ],
         'surface' => [
             'type' => 'select',
             'label' => 'Surface',
@@ -159,11 +151,13 @@ class Ce extends Model
             'filter' => 'select',
             'help' => 'Pre-treatment level is the pre-treatment before surface treatment, for example, before painting.'
         ],
-        'load_bearing_capacity' => [
-            'type' => 'text',
-            'label' => 'Load Bearing Capacity',
-            'placeholder' => 'Projektering ifølge EN 1990',
-            'filter' => 'search',
+        'machining_quality' => [
+            'type' => 'select',
+            'label' => 'Machining Quality',
+            'multiple' => false,
+            'options' => 'ce_machining_qualities',
+            'placeholder' => 'Select - Example: P2',
+            'filter' => 'select'
         ],
         'dimensioning' => [
             'type' => 'text',
@@ -171,15 +165,17 @@ class Ce extends Model
             'placeholder' => '',
             'filter' => 'search',
         ],
-        'carrying_capacity' => [
-            'type' => 'text',
-            'label' => 'Carrying Capacity',
-            'placeholder' => '',
+        'load_bearing_capacity' => [
+            'type' => 'system_text',
+            'default' => 'Dette er en default værdi',
+            'npd_button' => true,
+            'label' => 'Load Bearing Capacity',
+            'placeholder' => 'Projektering ifølge EN 1990',
             'filter' => 'search',
         ],
-        'deformation_service_limit_state' => [
+        'deformation_serviceability_limit_state' => [
             'type' => 'text',
-            'label' => 'Deformation in the Service Limit State',
+            'label' => 'Deformation at Serviceability Limit State',
             'placeholder' => '',
             'filter' => 'search',
         ],
@@ -191,7 +187,7 @@ class Ce extends Model
         ],
         'fire_resistance' => [
             'type' => 'text',
-            'label' => 'Fire Resistance',
+            'label' => 'Resistance to Fire',
             'placeholder' => '',
             'filter' => 'search',
         ],

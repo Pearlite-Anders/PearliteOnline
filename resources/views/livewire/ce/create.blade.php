@@ -11,7 +11,8 @@
         <div class="p-4 mb-4 leading-6 text-black bg-white rounded-lg shadow xl:p-8 sm:p-6">
             <div class="flex-row-reverse gap-6 md:flex">
                 <div class="flex-1 mb-6 md:mb-0">
-                    @include('livewire.ce.preview')
+                    @include('livewire.ce.preview-ce')
+                    @include('livewire.ce.preview-declaration')
                 </div>
                 <div class="flex-1">
                     @include('livewire.ce.form')
