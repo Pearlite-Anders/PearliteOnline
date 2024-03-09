@@ -165,34 +165,34 @@
     <div style="margin-top:18px;">{{ __('9. Declared Performance') }}</div>
     <table cellspacing="0" callpadding="0" style="width:100%;border: 1px solid #333;margin-top:15px;font-size:9pt;">
         <tr>
-            <td style="border: 1px solid #333;padding: 8px 2px;font-style:italic;">{{ __('Essential characteristic') }}</td>
-            <td style="border: 1px solid #333;padding: 8px 2px;font-style:italic;">{{ __('Performance') }}</td>
-            <td style="border: 1px solid #333;padding: 8px 2px;font-style:italic;text-align:center;">{{ __('Harmonized standard') }}</td>
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 8px 2px;font-style:italic;">{{ __('Essential characteristic') }}</td>
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 8px 2px;font-style:italic;">{{ __('Performance') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 8px 2px;font-style:italic;text-align:center;">{{ __('Harmonized standard') }}</td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Dimensions- and tolerances') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">{{ optional($ce->data)['tolerance_class'] }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;text-align:center;" rowspan="10">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Dimensions- and tolerances') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">{{ optional($ce->data)['tolerance_class'] }}</td>
+            <td style="border-left: 1px solid #333;padding: 3px 2px;font-weight:bold;text-align:center;" rowspan="10">
                 {{ optional($ce->data)['standard'] }}
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 {{ (is_array(optional(optional($ce->data))['weldability']) ? implode(', ', optional($ce->data)['weldability']) : '') }}
                 {{__('according to')}}
                 {{ (is_array(optional(optional($ce->data))['technical_delivery_conditions']) ? implode(', ', optional($ce->data)['technical_delivery_conditions']) : '') }}
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 {{ (is_array(optional(optional($ce->data))['fracture_toughness']) ? implode(', ', optional($ce->data)['fracture_toughness']) : '') }}
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Load bearing capacity') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Load bearing capacity') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 @if(optional($ce->data)['load_bearing_capacity'])
                     {{ optional($ce->data)['load_bearing_capacity'] }}
                 @else
@@ -201,8 +201,8 @@
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Deformation at serviceability limit state') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Deformation at serviceability limit state') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 @if(optional($ce->data)['deformation_serviceability_limit_state'])
                     {{ optional($ce->data)['deformation_serviceability_limit_state'] }}
                 @else
@@ -211,8 +211,8 @@
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fatigue strength') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Fatigue strength') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 @if(optional($ce->data)['fatigue_strength'])
                     {{ optional($ce->data)['fatigue_strength'] }}
                 @else
@@ -221,8 +221,8 @@
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Resistance to fire') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Resistance to fire') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 @if(optional($ce->data)['fire_resistance'])
                     {{ optional($ce->data)['fire_resistance'] }}
                 @else
@@ -231,20 +231,20 @@
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Release of cadmium') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Release of cadmium') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 {{ setting('ce_release_of_cadmium') }}
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Emission of radioactivity') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Emission of radioactivity') }}</td>
+            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 {{ setting('ce_emission_of_radioactivity') }}
             </td>
         </tr>
         <tr>
-            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Durability') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+            <td style="border-right: 1px solid #333;padding: 3px 2px;">{{ __('Durability') }}</td>
+            <td style="padding: 3px 2px;font-weight:bold;">
                 @if(
                     preg_match('/^P/i', optional($ce->data)['machining_quality'])
                     ||
