@@ -18,28 +18,28 @@
     </div>
     <div style="padding: 25px 10px;text-align:left;">
         <div style="text-align:center;font-weight:bold;">
-            {{ $ce->data['standard'] }}
+            {{ optional($ce->data)['standard'] }}
         </div>
         <div style="text-align:center;margin-top:10px;">
-            {{ $ce->data['scope'] }}
+            {{ optional($ce->data)['scope'] }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Tolerances for Geometric Data')}}:
-            {{ $ce->data['tolerance_class'] }}
+            {{ optional($ce->data)['tolerance_class'] }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Weldability')}}:
-            {{ is_array(optional($ce->data['weldability']) ? implode(', ', $ce->data['weldability']) : '') }}
+            {{ is_array(optional(optional($ce->data)['weldability']) ? implode(', ', optional($ce->data)['weldability']) : '') }}
             {{__('according to')}}
-            {{ is_array(optional($ce->data['technical_delivery_conditions']) ? implode(', ', $ce->data['technical_delivery_conditions']) : '') }}
+            {{ is_array(optional(optional($ce->data)['technical_delivery_conditions']) ? implode(', ', optional($ce->data)['technical_delivery_conditions']) : '') }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Fracture toughness')}}:
-            {{ is_array(optional($ce->data['fracture_toughness']) ? implode(', ', $ce->data['fracture_toughness']) : '') }}
+            {{ is_array(optional(optional($ce->data)['fracture_toughness']) ? implode(', ', optional($ce->data)['fracture_toughness']) : '') }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Behavior in Fire: Material Classification: Class')}}
-            {{ $ce->data['behavior_in_fire'] }}
+            {{ optional($ce->data)['behavior_in_fire'] }}
 
         </div>
         <div style="font-weight:bold;margin-top:10px;">
@@ -54,71 +54,71 @@
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Durability')}}:
             @if(
-                preg_match('/^P/i', $ce->data['machining_quality'])
+                preg_match('/^P/i', optional($ce->data)['machining_quality'])
                 ||
-                $ce->data['surface'] == 'untreated'
+                optional($ce->data)['surface'] == 'untreated'
             )
                 {{ __('Surface preparation according to EN 1090-2, Preparation grade') }}
-                {{ $ce->data['machining_quality'] }}
+                {{ optional($ce->data)['machining_quality'] }}
 
-                @if($ce->data['surface'] == 'paint')
+                @if(optional($ce->data)['surface'] == 'paint')
                     {{ __('Surface painted according to EN ISO 12944-5,')}}
-                @elseif($ce->data['surface'] == 'galvanization')
+                @elseif(optional($ce->data)['surface'] == 'galvanization')
                     {{ __('Surface galvanized according to EN ISO 1461,')}}
-                @elseif($ce->data['surface'] == 'untreated')
+                @elseif(optional($ce->data)['surface'] == 'untreated')
                     {{ __('Surface untreated,')}}
                 @endif
 
-                @unless($ce->data['surface'] == 'untreated')
-                    {{ $ce->data['durability'] }}
+                @unless(optional($ce->data)['surface'] == 'untreated')
+                    {{ optional($ce->data)['durability'] }}
                 @endunless
             @else
-                {{ $ce->data['machining_quality'] }}.
+                {{ optional($ce->data)['machining_quality'] }}.
             @endif
         </div>
         <div style="margin-top:10px;font-weight:bold;">
             <div style="text-decoration:underline;">{{__('Structural Characteristics')}}:</div>
-            @if(in_array($ce->data['method'], ['Method 3a']))
+            @if(in_array(optional($ce->data)['method'], ['Method 3a']))
                 <div>
                     <span style="text-decoration:underline">{{ __('Dimensioning')}}:</span>
-                    {{ __('According to') }} {{ $ce->data['dimensioning'] }}
+                    {{ __('According to') }} {{ optional($ce->data)['dimensioning'] }}
                 </div>
             @endif
-            @if(in_array($ce->data['method'], ['Method 1','Method 2', 'Method 3b']))
+            @if(in_array(optional($ce->data)['method'], ['Method 1','Method 2', 'Method 3b']))
                 <div>
                     <span style="text-decoration:underline">{{ __('Load bearing capacity')}}:</span>
-                    @if($ce->data['load_bearing_capacity'])
-                        {{ $ce->data['load_bearing_capacity'] }}
+                    @if(optional($ce->data)['load_bearing_capacity'])
+                        {{ optional($ce->data)['load_bearing_capacity'] }}
                     @else
                         {{ App\Models\Ce::getColumn('load_bearing_capacity')->default }}
                     @endif
                 </div>
             @endif
-            @if(in_array($ce->data['method'], ['Method 2', 'Method 3b']))
+            @if(in_array(optional($ce->data)['method'], ['Method 2', 'Method 3b']))
                 <div>
                     <span style="text-decoration:underline">{{ __('Deformation at serviceability limit state')}}:</span>
-                    @if($ce->data['deformation_serviceability_limit_state'])
-                        {{ $ce->data['deformation_serviceability_limit_state'] }}
+                    @if(optional($ce->data)['deformation_serviceability_limit_state'])
+                        {{ optional($ce->data)['deformation_serviceability_limit_state'] }}
                     @else
                         {{ App\Models\Ce::getColumn('deformation_serviceability_limit_state')->default }}
                     @endif
                 </div>
             @endif
-            @if(in_array($ce->data['method'], ['Method 2', 'Method 3b']))
+            @if(in_array(optional($ce->data)['method'], ['Method 2', 'Method 3b']))
                 <div>
                     <span style="text-decoration:underline">{{ __('Fatigue Strength') }}:</span>
-                    @if($ce->data['fatigue_strength'])
-                        {{ $ce->data['fatigue_strength'] }}
+                    @if(optional($ce->data)['fatigue_strength'])
+                        {{ optional($ce->data)['fatigue_strength'] }}
                     @else
                         {{ App\Models\Ce::getColumn('fatigue_strength')->default }}
                     @endif
                 </div>
             @endif
-            @if(in_array($ce->data['method'], ['Method 2', 'Method 3b']))
+            @if(in_array(optional($ce->data)['method'], ['Method 2', 'Method 3b']))
                 <div>
                     <span style="text-decoration:underline">{{ __('Resistance to fire') }}:</span>
-                    @if($ce->data['fire_resistance'])
-                        {{ $ce->data['fire_resistance'] }}
+                    @if(optional($ce->data)['fire_resistance'])
+                        {{ optional($ce->data)['fire_resistance'] }}
                     @else
                         {{ App\Models\Ce::getColumn('fire_resistance')->default }}
                     @endif
@@ -130,7 +130,7 @@
                 @if($ce->project)
                     {{ $ce->project->data['number'] }} -  {{ $ce->project->data['name'] }}
                 @endif
-                {{ __('and') }} {{ $ce->data['execution_standard'] }}. {{ $ce->data['execution_class'] }}.
+                {{ __('and') }} {{ optional($ce->data)['execution_standard'] }}. {{ optional($ce->data)['execution_class'] }}.
             </div>
         </div>
 
@@ -171,30 +171,30 @@
         </tr>
         <tr>
             <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Dimensions- and tolerances') }}</td>
-            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">{{ $ce->data['tolerance_class'] }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">{{ optional($ce->data)['tolerance_class'] }}</td>
             <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;text-align:center;" rowspan="10">
-                {{ $ce->data['standard'] }}
+                {{ optional($ce->data)['standard'] }}
             </td>
         </tr>
         <tr>
             <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
             <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                {{ (is_array(optional($ce->data)['weldability']) ? implode(', ', $ce->data['weldability']) : '') }}
+                {{ (is_array(optional(optional($ce->data))['weldability']) ? implode(', ', optional($ce->data)['weldability']) : '') }}
                 {{__('according to')}}
-                {{ (is_array(optional($ce->data)['technical_delivery_conditions']) ? implode(', ', $ce->data['technical_delivery_conditions']) : '') }}
+                {{ (is_array(optional(optional($ce->data))['technical_delivery_conditions']) ? implode(', ', optional($ce->data)['technical_delivery_conditions']) : '') }}
             </td>
         </tr>
         <tr>
             <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
             <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                {{ (is_array(optional($ce->data)['fracture_toughness']) ? implode(', ', $ce->data['fracture_toughness']) : '') }}
+                {{ (is_array(optional(optional($ce->data))['fracture_toughness']) ? implode(', ', optional($ce->data)['fracture_toughness']) : '') }}
             </td>
         </tr>
         <tr>
             <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Load bearing capacity') }}</td>
             <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                @if($ce->data['load_bearing_capacity'])
-                    {{ $ce->data['load_bearing_capacity'] }}
+                @if(optional($ce->data)['load_bearing_capacity'])
+                    {{ optional($ce->data)['load_bearing_capacity'] }}
                 @else
                     {{ App\Models\Ce::getColumn('load_bearing_capacity')->default }}
                 @endif
@@ -203,8 +203,8 @@
         <tr>
             <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Deformation at serviceability limit state') }}</td>
             <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                @if($ce->data['deformation_serviceability_limit_state'])
-                    {{ $ce->data['deformation_serviceability_limit_state'] }}
+                @if(optional($ce->data)['deformation_serviceability_limit_state'])
+                    {{ optional($ce->data)['deformation_serviceability_limit_state'] }}
                 @else
                     {{ App\Models\Ce::getColumn('deformation_serviceability_limit_state')->default }}
                 @endif
@@ -213,8 +213,8 @@
         <tr>
             <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fatigue strength') }}</td>
             <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                @if($ce->data['fatigue_strength'])
-                    {{ $ce->data['fatigue_strength'] }}
+                @if(optional($ce->data)['fatigue_strength'])
+                    {{ optional($ce->data)['fatigue_strength'] }}
                 @else
                     {{ App\Models\Ce::getColumn('fatigue_strength')->default }}
                 @endif
@@ -223,8 +223,8 @@
         <tr>
             <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Resistance to fire') }}</td>
             <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                @if($ce->data['fire_resistance'])
-                    {{ $ce->data['fire_resistance'] }}
+                @if(optional($ce->data)['fire_resistance'])
+                    {{ optional($ce->data)['fire_resistance'] }}
                 @else
                     {{ App\Models\Ce::getColumn('fire_resistance')->default }}
                 @endif
@@ -246,25 +246,25 @@
             <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Durability') }}</td>
             <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                 @if(
-                    preg_match('/^P/i', $ce->data['machining_quality'])
+                    preg_match('/^P/i', optional($ce->data)['machining_quality'])
                     ||
-                    $ce->data['surface'] == 'untreated'
+                    optional($ce->data)['surface'] == 'untreated'
                 )
-                    {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ $ce->data['machining_quality'] }}.
+                    {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ optional($ce->data)['machining_quality'] }}.
 
-                    @if($ce->data['surface'] == 'paint')
+                    @if(optional($ce->data)['surface'] == 'paint')
                         {{ __('Surface painted according to EN ISO 12944-5,')}}
-                    @elseif($ce->data['surface'] == 'galvanization')
+                    @elseif(optional($ce->data)['surface'] == 'galvanization')
                         {{ __('Surface galvanized according to EN ISO 1461,')}}
-                    @elseif($ce->data['surface'] == 'untreated')
+                    @elseif(optional($ce->data)['surface'] == 'untreated')
                         {{ __('Surface untreated,')}}
                     @endif
 
-                    @unless($ce->data['surface'] == 'untreated')
-                        {{ $ce->data['durability'] }}.
+                    @unless(optional($ce->data)['surface'] == 'untreated')
+                        {{ optional($ce->data)['durability'] }}.
                     @endunless
                 @else
-                    {{ $ce->data['machining_quality'] }}.
+                    {{ optional($ce->data)['machining_quality'] }}.
                 @endif
             </td>
         </tr>
