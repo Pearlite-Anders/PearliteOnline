@@ -34,8 +34,8 @@ class WeldingCertificate extends Model
             'multiple' => false,
             'label' => 'Type',
             'options' => [
-                'welding_certificate' => 'Welding certificate',
-                'welding_operator_certificate' => 'Welding operator certificate',
+                'welding_certificate' => 'Welding certificate EN 9606',
+                'welding_operator_certificate' => 'Welding operator certificate EN 14732',
             ],
             'placeholder' => 'Choose',
             'filter' => 'select'
@@ -157,8 +157,10 @@ class WeldingCertificate extends Model
             'filter' => 'select'
         ],
         'weld_details' => [
-            'type' => 'text',
+            'type' => 'select',
+            'multiple' => true,
             'label' => 'Weld details',
+            'options' => 'weld_detailses',
             'placeholder' => 'ss nb',
             'filter' => 'search'
         ],
@@ -168,7 +170,7 @@ class WeldingCertificate extends Model
             'filter' => 'date'
         ],
         'date_expiration' => [
-            'type' => 'calculated',
+            'type' => 'date',
             'label' => 'Certificate expiration date',
             'filter' => 'date'
         ],
@@ -178,17 +180,13 @@ class WeldingCertificate extends Model
             'filter' => 'date'
         ],
         'date_next_signature' => [
-            'type' => 'calculated',
+            'type' => 'date',
             'label' => 'Date next signature',
             'filter' => 'date'
         ],
         'signed' => [
             'type' => 'number',
             'label' => 'Current signatures',
-        ],
-        'max_signatures' => [
-            'type' => 'number',
-            'label' => 'Max signatures',
         ],
         'status' => [
             'type' => 'radios',
@@ -211,32 +209,6 @@ class WeldingCertificate extends Model
     public function welder()
     {
         return $this->belongsTo(Welder::class);
-    }
-
-    public function getDateExpirationAttribute()
-    {
-        if(optional($this->data)['date_examination']) {
-            $years_to_add = 3;
-            if(optional($this->data)['type'] == 'welding_operator_certificate') {
-                $years_to_add = 6;
-            }
-
-            $date_examination = Carbon::parse($this->data['date_examination']);
-            return $date_examination->addYears($years_to_add)->format('Y.m.d');
-        }
-        return null;
-    }
-
-    public function getDateNextSignatureAttribute()
-    {
-        if(optional($this->data)['last_signature']) {
-            if(preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($this->data)['last_signature'])) {
-                return Carbon::parse($this->data['last_signature'])->addMonths(6)->format('Y.m.d');
-            } else {
-                return Carbon::createFromFormat('Y.m.d', $this->data['last_signature'])->addMonths(6)->format('Y.m.d');
-            }
-        }
-        return null;
     }
 
     public function loadAll()

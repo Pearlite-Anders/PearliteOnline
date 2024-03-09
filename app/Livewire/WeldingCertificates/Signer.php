@@ -57,7 +57,7 @@ class Signer extends Component
         });
 
         $signed = optional($data)['signed'];
-        if($signed >= optional($data)['max_signatures']) {
+        if($signed >= 6) {
             return $this->addError('signature_boxes', __('Max signatures reached'));
         }
 
@@ -106,7 +106,7 @@ class Signer extends Component
         }
 
         $signed = optional($data)['signed'];
-        if($signed >= optional($data)['max_signatures']) {
+        if($signed >= 6) {
             $this->addError('signature_boxes', __('Max signatures reached'));
         }
     }

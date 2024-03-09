@@ -27,12 +27,13 @@ class WeldingCertificateData extends Data implements Wireable
         public ?string $deposited_thickness,
         public ?string $outside_pip_diameter,
         public ?array $welding_position,
-        public ?string $weld_details,
+        public ?array $weld_details,
         public ?string $date_examination,
+        public ?string $date_expiration,
         public ?string $last_signature,
+        public ?string $date_next_signature,
         public ?array $signature_boxes,
         public ?string $signed,
-        public ?string $max_signatures,
         public ?string $status,
         public ?string $remarks
     ) {

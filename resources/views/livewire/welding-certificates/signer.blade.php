@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     @else
-                        @if($welding_certificate->data['signed'] >= $welding_certificate->data['max_signatures'])
+                        @if($welding_certificate->data['signed'] >= 6)
                             <div class="mt-2">
                                 <p class="text-sm text-gray-500">
                                     {{ __('This certificate has been signed maximum amount of times.') }}
@@ -55,7 +55,7 @@
             </div>
 
             <div class="flex flex-row justify-end px-6 py-4 text-right bg-gray-100">
-                @if($welding_certificate->data['signed'] < $welding_certificate->data['max_signatures'] && !$errors->any())
+                @if($welding_certificate->data['signed'] < 6 && !$errors->any())
                     <x-button.primary
                         type="button"
                         wire:click="sign"

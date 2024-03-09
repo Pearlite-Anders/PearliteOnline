@@ -11,20 +11,11 @@
                     inline: {{ $attributes['inline'] ? 'true' : 'false' }},
                     onChange: (date, dateString) => {
                         this.value = date;
-                        $wire.set('{{ $attributes['wire:model'] }}', dateString)
-
+                        @this.set('{{ $attributes['wire:model'] }}', dateString)
                     }
                 });
 
-                $wire.$watch('{{$attributes['wire:model']}}', (value, old) => {
-                    if(this.value != value) {
-                        this.value = value;
-                    }
-                })
-
-                this.$watch('value', () => {
-                    this.picker.setDate(this.value);
-                })
+                this.$watch('value', () => this.picker.setDate(this.value))
             },
         }"
     >

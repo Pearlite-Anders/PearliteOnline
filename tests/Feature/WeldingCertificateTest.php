@@ -187,7 +187,7 @@ test('certificate expire date is calculated correct', function () {
     ])->load('meta');
 
     $welding_certificate = $user->currentCompany->welding_certificates()->with('meta')->first();
-    expect($welding_certificate->date_expiration)->toBe($welding_certificate->date_examination->addYears(3)->format('Y.m.d'));
+    expect($welding_certificate->date_expiration)->toBe($welding_certificate->date_examination->addYears(3)->subDay()->format('Y.m.d'));
 });
 
 test('new certificate pdf will be save upon creating', function () {

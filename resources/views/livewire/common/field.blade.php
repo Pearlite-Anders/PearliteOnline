@@ -44,6 +44,12 @@
             :value="optional($form->data)->{$key}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
         />
+    @elseif($column['type'] == 'calculated_date')
+        <x-input.date
+            wire:model="form.data.{{ $key }}"
+            :value="$this->{$key}"
+            placeholder="{{ __($column['placeholder'] ?? '') }}"
+        />
     @elseif($column['type'] == 'select')
         @php
             $options = is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options']);
