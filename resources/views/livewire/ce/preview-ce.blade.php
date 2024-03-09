@@ -1,6 +1,6 @@
 <div class="flex justify-center">
 
-    <div style="border: 1px solid #000;max-width: 423px;width:100%;font-size:12px;line-height:1.2;font-family:Arial;zoom: 0.8;">
+    <div style="border: 1px solid #000;max-width: 423px;width:100%;font-size:12px;line-height:1.2;font-family:Arial;transform:scale(0.8)">
         <div style="text-align:center;border-bottom: 1px solid #000;">
             <div style="height:50px;"></div>
             <img src="{{ asset('images/ce-mark.png') }}" alt="CE" style="width:auto;height:40px;margin:0 auto 35px;display:block;">
@@ -59,7 +59,7 @@
             </div>
             <div style="font-weight:bold;margin-top:10px;">
                 {{__('Behavior in Fire: Material Classification: Class')}}
-                    <x-tooltip-word
+                <x-tooltip-word
                     :tooltip="__('Behavior in Fire')"
                 >{{ $form->data->behavior_in_fire }}</x-tooltip-word>
 
@@ -113,27 +113,48 @@
                     <div>
                         <span style="text-decoration:underline">{{ __('Load bearing capacity')}}:</span>
                         <x-tooltip-word :tooltip="__('Load bearing capacity')">
-
-                            {{ $form->data->load_bearing_capacity }}
+                            @if($form->data->load_bearing_capacity)
+                                {{ $form->data->load_bearing_capacity }}
+                            @else
+                                {{ App\Models\Ce::getColumn('load_bearing_capacity')->default }}
+                            @endif
                         </x-tooltip-word>
                     </div>
                 @endif
                 @if(in_array($form->data->method, ['Method 2', 'Method 3b']))
                     <div>
                         <span style="text-decoration:underline">{{ __('Deformation at serviceability limit state')}}:</span>
-                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">{{ $form->data->deformation_serviceability_limit_state }}</x-tooltip-word>
+                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">
+                            @if($form->data->deformation_serviceability_limit_state)
+                                {{ $form->data->deformation_serviceability_limit_state }}
+                            @else
+                                {{ App\Models\Ce::getColumn('deformation_serviceability_limit_state')->default }}
+                            @endif
+                        </x-tooltip-word>
                     </div>
                 @endif
                 @if(in_array($form->data->method, ['Method 2', 'Method 3b']))
                     <div>
                         <span style="text-decoration:underline">{{ __('Fatigue Strength') }}:</span>
-                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">{{ $form->data->fatigue_strength }}</x-tooltip-word>
+                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">
+                            @if($form->data->fatigue_strength)
+                                {{ $form->data->fatigue_strength }}
+                            @else
+                                {{ App\Models\Ce::getColumn('fatigue_strength')->default }}
+                            @endif
+                        </x-tooltip-word>
                     </div>
                 @endif
                 @if(in_array($form->data->method, ['Method 2', 'Method 3b']))
                     <div>
                         <span style="text-decoration:underline">{{ __('Resistance to fire') }}:</span>
-                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">{{ $form->data->fire_resistance }}</x-tooltip-word>
+                        <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">
+                            @if($form->data->fire_resistance)
+                                {{ $form->data->fire_resistance }}
+                            @else
+                                {{ App\Models\Ce::getColumn('fire_resistance')->default }}
+                            @endif
+                        </x-tooltip-word>
                     </div>
                 @endif
                 <div>

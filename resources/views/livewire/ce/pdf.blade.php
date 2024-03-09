@@ -8,7 +8,7 @@
         <div style="height:50px;"></div>
     </div>
     <div style="text-align:center;border-bottom: 1px solid #000;padding: 5px 0;">
-        <x-tooltip-word :tooltip="__('Manufacturer\'s address')">{!! setting('ce_company_address') !!}, {!! setting('ce_company_zip') !!} {!! setting('ce_company_city') !!}</x-tooltip-word>
+        {!! setting('ce_company_address') !!}, {!! setting('ce_company_zip') !!} {!! setting('ce_company_city') !!}
         <div style="margin-top: 25px;font-weight:bold;height:20px;">
             {{ now()->format('y') }}
         </div>
@@ -21,87 +21,116 @@
             {{ $ce->data['standard'] }}
         </div>
         <div style="text-align:center;margin-top:10px;">
-            <x-tooltip-word
-                :tooltip="__('Describe what the CE mark includes')"
-            >{{ $ce->data['scope'] }}</x-tooltip-word>
-
+            {{ $ce->data['scope'] }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Tolerances for Geometric Data')}}:
-            <x-tooltip-word
-                :tooltip="__('Tolerance Class')"
-            >{{ $ce->data['tolerance_class'] }}</x-tooltip-word>
+            {{ $ce->data['tolerance_class'] }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Weldability')}}:
-
-                {{ is_array(optional($ce->data['weldability']) ? implode(', ', $ce->data['weldability']) : '') }}
-                {{__('according to')}}
-                <x-tooltip-word
-                    :tooltip="__('Technical Delivery Conditions')"
-                >{{ is_array(optional($ce->data['technical_delivery_conditions']) ? implode(', ', $ce->data['technical_delivery_conditions']) : '') }}</x-tooltip-word>
-
+            {{ is_array(optional($ce->data['weldability']) ? implode(', ', $ce->data['weldability']) : '') }}
+            {{__('according to')}}
+            {{ is_array(optional($ce->data['technical_delivery_conditions']) ? implode(', ', $ce->data['technical_delivery_conditions']) : '') }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Fracture toughness')}}:
-                <x-tooltip-word
-                    :tooltip="__('Fracture Toughness')"
-                >{{ is_array(optional($ce->data['fracture_toughness']) ? implode(', ', $ce->data['fracture_toughness']) : '') }}</x-tooltip-word>
+            {{ is_array(optional($ce->data['fracture_toughness']) ? implode(', ', $ce->data['fracture_toughness']) : '') }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Behavior in Fire: Material Classification: Class')}}
-                <x-tooltip-word
-                :tooltip="__('Behavior in Fire')"
-            >{{ $ce->data['behavior_in_fire'] }}</x-tooltip-word>
+            {{ $ce->data['behavior_in_fire'] }}
 
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Release of Cadmium')}}:
-            <x-tooltip-word
-                :tooltip="__('Release of Cadmium from CE Settings')"
-            >{{ setting('ce_release_of_cadmium') }}</x-tooltip-word>
+            {{ setting('ce_release_of_cadmium') }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Emission of Radioactivity')}}:
-            <x-tooltip-word
-                :tooltip="__('Emission of Radioactivity from CE Settings')"
-            >{{ setting('ce_emission_of_radioactivity') }}</x-tooltip-word>
+            {{ setting('ce_emission_of_radioactivity') }}
 
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Durability')}}:
-            @if(preg_match('/^P/i', $ce->data['machining_quality']))
-                {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} <x-tooltip-word :tooltip="__('Machining Quality')">{{ $ce->data['machining_quality'] }}</x-tooltip-word>.
-                @if(optional($ce->data)['surface'] == 'paint')
+            @if(
+                preg_match('/^P/i', $ce->data['machining_quality'])
+                ||
+                $ce->data['surface'] == 'untreated'
+            )
+                {{ __('Surface preparation according to EN 1090-2, Preparation grade') }}
+                {{ $ce->data['machining_quality'] }}
+
+                @if($ce->data['surface'] == 'paint')
                     {{ __('Surface painted according to EN ISO 12944-5,')}}
-                @elseif(optional($ce->data)['surface'] == 'galvanization')
+                @elseif($ce->data['surface'] == 'galvanization')
                     {{ __('Surface galvanized according to EN ISO 1461,')}}
-                @elseif(optional($ce->data)['surface'] == 'untreated')
+                @elseif($ce->data['surface'] == 'untreated')
                     {{ __('Surface untreated,')}}
                 @endif
-                <x-tooltip-word :tooltip="__('Durability')">{{ $ce->data['durability'] }}</x-tooltip-word>.
+
+                @unless($ce->data['surface'] == 'untreated')
+                    {{ $ce->data['durability'] }}
+                @endunless
             @else
                 {{ $ce->data['machining_quality'] }}.
             @endif
         </div>
         <div style="margin-top:10px;font-weight:bold;">
             <div style="text-decoration:underline;">{{__('Structural Characteristics')}}:</div>
-            <div>
-                <span style="text-decoration:underline">{{ __('Load bearing capacity')}}:</span>
-                @if(in_array($ce->data['method'], ['Method 2', 'Method 3b']))
-                    <x-tooltip-word :tooltip="__('Load bearing capacity')">{{ $ce->data['load_bearing_capacity'] }}</x-tooltip-word>
-                @else
-                    {{ __('NPD') }}
-                @endif
-            </div>
+            @if(in_array($ce->data['method'], ['Method 3a']))
+                <div>
+                    <span style="text-decoration:underline">{{ __('Dimensioning')}}:</span>
+                    {{ __('According to') }} {{ $ce->data['dimensioning'] }}
+                </div>
+            @endif
+            @if(in_array($ce->data['method'], ['Method 1','Method 2', 'Method 3b']))
+                <div>
+                    <span style="text-decoration:underline">{{ __('Load bearing capacity')}}:</span>
+                    @if($ce->data['load_bearing_capacity'])
+                        {{ $ce->data['load_bearing_capacity'] }}
+                    @else
+                        {{ App\Models\Ce::getColumn('load_bearing_capacity')->default }}
+                    @endif
+                </div>
+            @endif
+            @if(in_array($ce->data['method'], ['Method 2', 'Method 3b']))
+                <div>
+                    <span style="text-decoration:underline">{{ __('Deformation at serviceability limit state')}}:</span>
+                    @if($ce->data['deformation_serviceability_limit_state'])
+                        {{ $ce->data['deformation_serviceability_limit_state'] }}
+                    @else
+                        {{ App\Models\Ce::getColumn('deformation_serviceability_limit_state')->default }}
+                    @endif
+                </div>
+            @endif
+            @if(in_array($ce->data['method'], ['Method 2', 'Method 3b']))
+                <div>
+                    <span style="text-decoration:underline">{{ __('Fatigue Strength') }}:</span>
+                    @if($ce->data['fatigue_strength'])
+                        {{ $ce->data['fatigue_strength'] }}
+                    @else
+                        {{ App\Models\Ce::getColumn('fatigue_strength')->default }}
+                    @endif
+                </div>
+            @endif
+            @if(in_array($ce->data['method'], ['Method 2', 'Method 3b']))
+                <div>
+                    <span style="text-decoration:underline">{{ __('Resistance to fire') }}:</span>
+                    @if($ce->data['fire_resistance'])
+                        {{ $ce->data['fire_resistance'] }}
+                    @else
+                        {{ App\Models\Ce::getColumn('fire_resistance')->default }}
+                    @endif
+                </div>
+            @endif
             <div>
                 <span style="text-decoration:underline">{{ __('Manufacturing')}}:</span>
                 {{ __('According to component specification') }}
                 @if($ce->project)
                     {{ $ce->project->data['number'] }} -  {{ $ce->project->data['name'] }}
                 @endif
-                {{ $ce->data['manufacturing'] }},
-                {{ __('and') }} <x-tooltip-word :tooltip="__('Execution Standard')">{{ $ce->data['execution_standard'] }}</x-tooltip-word>. <x-tooltip-word :tooltip="__('Execution Class')">{{ $ce->data['execution_class'] }}</x-tooltip-word>.
+                {{ __('and') }} {{ $ce->data['execution_standard'] }}. {{ $ce->data['execution_class'] }}.
             </div>
         </div>
 
@@ -110,11 +139,157 @@
 
 @pageBreak
 
-<div style="width: 750px;font-family:Arial;font-size:9pt;line-height:1;padding: 50px 25px;">
+<div style="width: 750px;font-family:Arial;font-size:9pt;line-height:1;padding: 50px 75px;">
     <h2 style="font-size: 14pt;font-weight:bold;text-align:center;margin-bottom:5px;">{{ __('Declaration of performance') }}</h2>
     <div style="font-size: 10pt;font-style:italic;text-align:center;">{{ __('CPR 305/2011/EU') }}</div>
-    <div style="margin-top:25px;">1. Identification of the product type:</div>
-    <div style="font-weight:bold;text-align:center;">Structural metallic products and ancillaries</div>
-    <div style="margin-top:15px;">2. Construction product:</div>
-    <div style="font-weight:bold;text-align:center;">Structural metallic products and ancillaries</div>
+    <div style="margin-top:18px;">{{ __('1. Identification of the product type:') }}</div>
+    <div style="font-weight:bold;text-align:center;margin-top:5px;">{{ __('Structural metallic products and ancillaries') }}</div>
+    <div style="margin-top:15px;">{{ __('2. Construction product:') }}</div>
+    <div style="font-weight:bold;text-align:center;margin-top:5px;">{{ __('According to') }}
+        @if($ce->project)
+            {{ $ce->project->data['number'] }} -  {{ $ce->project->data['name'] }}
+        @endif
+    </div>
+    <div style="margin-top:18px;">{{ __('3. Intended use of the construction product:') }}</div>
+    <div style="font-weight:bold;text-align:center;margin-top:5px;">{{ __('Structural components for building and construction') }}</div>
+    <div style="margin-top:18px;">{{ __('4. Manufacture and address') }}</div>
+    <div style="font-weight:bold;text-align:center;margin-top:5px;">{{ auth()->user()->currentCompany->data['name'] }} {!! setting('ce_company_address') !!}, {!! setting('ce_company_zip') !!} {!! setting('ce_company_city') !!}</div>
+    <div style="margin-top:18px;">{{ __('5. Name and contact address of the authorized representative:') }}</div>
+    <div style="font-weight:bold;text-align:center;margin-top:5px;">{{ __('Irrelevant') }}</div>
+    <div style="margin-top:18px;">{{ __('6. System of assessment and verification of constancy of performance of the construction product:') }}</div>
+    <div style="font-weight:bold;text-align:center;margin-top:5px;">{{ __('System 2+') }}</div>
+    <div style="margin-top:18px;">{{ __('7. Name and identification number of the notified body covers by a harmonized standard:') }}</div>
+    <div style="font-weight:bold;text-align:center;margin-top:5px;">{{ setting('ce_identification_number') }}</div>
+    <div style="margin-top:18px;">{{ __('8. Name and identification number of the notified body covers by a European Technical Assessment:') }}</div>
+    <div style="font-weight:bold;text-align:center;margin-top:5px;">{{ __('Irrelevant') }}</div>
+    <div style="margin-top:18px;">{{ __('9. Declared Performance') }}</div>
+    <table cellspacing="0" callpadding="0" style="width:100%;border: 1px solid #333;margin-top:15px;font-size:9pt;">
+        <tr>
+            <td style="border: 1px solid #333;padding: 8px 2px;font-style:italic;">{{ __('Essential characteristic') }}</td>
+            <td style="border: 1px solid #333;padding: 8px 2px;font-style:italic;">{{ __('Performance') }}</td>
+            <td style="border: 1px solid #333;padding: 8px 2px;font-style:italic;text-align:center;">{{ __('Harmonized standard') }}</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Dimensions- and tolerances') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">{{ $ce->data['tolerance_class'] }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;text-align:center;" rowspan="10">
+                {{ $ce->data['standard'] }}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                {{ (is_array(optional($ce->data)['weldability']) ? implode(', ', $ce->data['weldability']) : '') }}
+                {{__('according to')}}
+                {{ (is_array(optional($ce->data)['technical_delivery_conditions']) ? implode(', ', $ce->data['technical_delivery_conditions']) : '') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                {{ (is_array(optional($ce->data)['fracture_toughness']) ? implode(', ', $ce->data['fracture_toughness']) : '') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Load bearing capacity') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                @if($ce->data['load_bearing_capacity'])
+                    {{ $ce->data['load_bearing_capacity'] }}
+                @else
+                    {{ App\Models\Ce::getColumn('load_bearing_capacity')->default }}
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Deformation at serviceability limit state') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                @if($ce->data['deformation_serviceability_limit_state'])
+                    {{ $ce->data['deformation_serviceability_limit_state'] }}
+                @else
+                    {{ App\Models\Ce::getColumn('deformation_serviceability_limit_state')->default }}
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fatigue strength') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                @if($ce->data['fatigue_strength'])
+                    {{ $ce->data['fatigue_strength'] }}
+                @else
+                    {{ App\Models\Ce::getColumn('fatigue_strength')->default }}
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Resistance to fire') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                @if($ce->data['fire_resistance'])
+                    {{ $ce->data['fire_resistance'] }}
+                @else
+                    {{ App\Models\Ce::getColumn('fire_resistance')->default }}
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Release of cadmium') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                {{ setting('ce_release_of_cadmium') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Emission of radioactivity') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                {{ setting('ce_emission_of_radioactivity') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Durability') }}</td>
+            <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
+                @if(
+                    preg_match('/^P/i', $ce->data['machining_quality'])
+                    ||
+                    $ce->data['surface'] == 'untreated'
+                )
+                    {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ $ce->data['machining_quality'] }}.
+
+                    @if($ce->data['surface'] == 'paint')
+                        {{ __('Surface painted according to EN ISO 12944-5,')}}
+                    @elseif($ce->data['surface'] == 'galvanization')
+                        {{ __('Surface galvanized according to EN ISO 1461,')}}
+                    @elseif($ce->data['surface'] == 'untreated')
+                        {{ __('Surface untreated,')}}
+                    @endif
+
+                    @unless($ce->data['surface'] == 'untreated')
+                        {{ $ce->data['durability'] }}.
+                    @endunless
+                @else
+                    {{ $ce->data['machining_quality'] }}.
+                @endif
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top:18px;">{{ __('10. The performance of the product identified in points 1 and 2 is in conformity with the declared performance in point 9.') }}</div>
+    <div style="margin-top:18px;">{{ __('This declaration of performance is issued under the sole responsibility of the manufacturer identified in point 4.') }}</div>
+
+    <div style="margin-top:18px;">{{ __('Signed for and on behalf of the manufacturer by:') }}</div>
+    <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
+        <div>{{ auth()->user()->name }} - {{ auth()->user()->data['title'] }}</div>
+        <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
+        <div style="font-style:italic;margin-top:5px;">{{ __('Name and function') }}</div>
+    </div>
+
+    <div style="display:flex;justify-content: space-around;margin-top:10px;">
+        <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
+            <div>{!! setting('ce_company_city') !!} - {{ now()->format('Y-m-d') }}</div>
+            <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
+            <div style="font-style:italic;margin-top:5px;">{{ __('Place and date of issue') }}</div>
+        </div>
+        <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
+            <div>&nbsp;</div>
+            <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
+            <div style="font-style:italic;margin-top:5px;">{{ __('Signature') }}</div>
+        </div>
+
+    </div>
 </div>

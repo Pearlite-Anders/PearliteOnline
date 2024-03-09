@@ -102,8 +102,6 @@
         'ce_technical_delivery_conditions' => __('Technical delivery conditions'),
         'ce_fracture_toughnesses' => __('Fracture toughness'),
         'ce_behavior_in_fires' => __('Fire resistance'),
-        'ce_durabilities' => __('Durability'),
-        'ce_machining_qualities' => __('Degree of pretreatment'),
         'ce_execution_standards' => __('Execution standard'),
         'ce_execution_classes' => __('Execution class'),
     ])

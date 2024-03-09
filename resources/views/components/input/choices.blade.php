@@ -26,7 +26,11 @@
 
             window.ChoicesArray['{{ $attributes['prettyname'] }}'].passedElement.element.addEventListener('change', function(event) {
                 values = getSelectValues($refs.{{ $attributes['prettyname'] }});
-                @this.set('{{ $attributes['wire:model'] }}', values);
+                if(values !== '{{ $attributes['placeholder'] }}') {
+                    @this.set('{{ $attributes['wire:model'] }}', values);
+                } else {
+                    @this.set('{{ $attributes['wire:model'] }}', '');
+                }
                 var input = window.ChoicesArray['{{ $attributes['prettyname'] }}'].input;
                 if (window.ChoicesArray['{{ $attributes['prettyname'] }}'].getValue(true).length > 0) {
                     if (input) {
@@ -78,8 +82,6 @@
                 if(param[2] == '{{ $attributes['prettyname'] }}') {
                     window.ChoicesArray['{{ $attributes['prettyname'] }}'].clearChoices();
                     window.ChoicesArray['{{ $attributes['prettyname'] }}'].setChoices(async () => {
-                        console.log(param[0]);
-
                         return Object.keys(param[0]).map((item, index) => {
                             return {
                                 value: item,
@@ -90,6 +92,12 @@
                     setTimeout(() => {
                         window.ChoicesArray['{{ $attributes['prettyname'] }}'].setChoiceByValue((param[1]).toString());
                     }, 100)
+                }
+            });
+
+            $wire.on('changeChoice', (param) => {
+                if(param[0] == '{{ $attributes['prettyname'] }}') {
+                    window.ChoicesArray['{{ $attributes['prettyname'] }}'].setChoiceByValue((param[1]).toString());
                 }
             });
         ">

@@ -111,7 +111,7 @@
                     @if(optional($column)['npd_button'])
                         <button
                             type="button"
-                            x-on:click="readonly = false;$wire.form.data.{{$key}} = 'NPD'"
+                            x-on:click="readonly = false;$wire.form.data.{{$key}} = 'NPD';$wire.$refresh()"
                             class="px-2 py-1 text-xs leading-none text-gray-500 border border-gray-300 rounded hover:border-cyan-300 hover:text-cyan-300"
                         >
                          {{ __('NPD') }}
@@ -132,8 +132,6 @@
                     @if(optional($column)['postfix'])
                         <span class="text-gray-500 pointer-events-none sm:text-sm">{{$column['postfix'] }}</span>
                     @endif
-
-
                 </div>
             </div>
             <div x-show="!readonly">
