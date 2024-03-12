@@ -45,6 +45,11 @@ trait WithFilters
                         $query->where('data->' . $key, 'like', '>%');
                         $query->whereRaw('? > CAST(SUBSTRING(JSON_UNQUOTE(JSON_EXTRACT(data, "$.' . $key . '")), 2) AS SIGNED)', [$value]);
                     });
+
+                    $query->orWhere(function($query) use ($key, $value) {
+                        $query->where('data->' . $key, 'like', '<%');
+                        $query->whereRaw('? < CAST(SUBSTRING(JSON_UNQUOTE(JSON_EXTRACT(data, "$.' . $key . '")), 2) AS SIGNED)', [$value]);
+                    });
                 });
                 continue;
             } elseif ($column->filter == 'radios') {
