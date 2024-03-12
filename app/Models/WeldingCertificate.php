@@ -138,7 +138,7 @@ class WeldingCertificate extends Model
             'label' => 'Deposited thickness',
             'placeholder' => '12',
             'postfix' => 'mm',
-            'filter' => 'search'
+            'filter' => 'search_number'
         ],
         'outside_pip_diameter' => [
             'type' => 'text',
@@ -146,7 +146,7 @@ class WeldingCertificate extends Model
             'placeholder' => '12',
             'prefix' => 'Ø',
             'postfix' => 'mm',
-            'filter' => 'search'
+            'filter' => 'search_number'
         ],
         'welding_position' => [
             'type' => 'select',
