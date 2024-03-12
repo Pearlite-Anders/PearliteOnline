@@ -24,7 +24,7 @@ class Create extends Component
 
     public function mount()
     {
-        $this->form->data = SupplierData::from(['name' => '']);
+        $this->form->data = SupplierData::from(['name' => '', 'status' => 'active']);
         $this->supplier = new Supplier();
 
     }

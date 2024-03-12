@@ -111,7 +111,7 @@
                         </div>
                     @endif
                 @endif
-                @if(optional($filter_column)->filter == 'search')
+                @if(optional($filter_column)->filter == 'search' || optional($filter_column)->filter == 'search_number')
                     <div class="relative">
                         <x-label for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
                         <x-input

@@ -22,7 +22,7 @@ class Create extends Component
 
     public function mount()
     {
-        $this->form->data = WpsData::from(['number' => '']);
+        $this->form->data = WpsData::from(['number' => '', 'status' => 'active']);
     }
 
     public function render()

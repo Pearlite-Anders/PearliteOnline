@@ -16,6 +16,7 @@ class Edit extends Component
 
     public function update()
     {
+
         $this->form->update($this->weldingCertificate);
 
         return redirect()

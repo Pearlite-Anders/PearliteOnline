@@ -22,7 +22,7 @@ class Create extends Component
 
     public function mount()
     {
-        $this->form->data = WpqrData::from(['name' => '']);
+        $this->form->data = WpqrData::from(['name' => '', 'status' => 'active']);
     }
 
     public function render()

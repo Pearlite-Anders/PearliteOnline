@@ -122,9 +122,19 @@ Alpine.data('signature_editor', (path, url, boxes) => ({
         this.stage.add(this.layer);
     },
     addSignatureBoxes(cobinations) {
-        this.addBox('date', cobinations, (this.stage.width() / 2) - (75), (this.stage.height() / 2) - (cobinations * 25 / 2), cobinations * 25, 75);
-        this.addBox('title', cobinations, (this.stage.width() / 2) + (75), (this.stage.height() / 2) - (cobinations * 25 / 2), cobinations * 25, 75);
-        this.addBox('signature', cobinations, (this.stage.width() / 2) - (0), (this.stage.height() / 2) - (cobinations * 25 / 2), cobinations * 25, 75);
+        console.log(this.stage.width())
+        console.log(this.stage.height())
+        console.log(cobinations)
+        if(cobinations >= 3) {
+            this.addBox('date', cobinations, 70, 550, 93, 39);
+            this.addBox('signature', cobinations, 112, 550, 93, 65);
+            this.addBox('title', cobinations, 182, 550, 93, 80);
+        }
+        if(cobinations === 6) {
+            this.addBox('date', cobinations, 267, 550, 93, 39);
+            this.addBox('signature', cobinations, 309, 550, 93, 65);
+            this.addBox('title', cobinations, 376, 550, 93, 80);
+        }
     },
     addBox(type, combinations, x, y, height, width) {
         Konva.Image.fromURL(`${this.url}/images/${type}-${combinations}.png`, (image) => {

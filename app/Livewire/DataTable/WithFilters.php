@@ -36,6 +36,15 @@ trait WithFilters
             } elseif ($column->filter == 'search') {
                 $query->where('data->' . $key, 'like', '%' . $value . '%');
                 continue;
+            } elseif ($column->filter == 'search_number') {
+                $query->where(function ($query) use ($key, $value) {
+                    $query->where('data->' . $key, 'like', '%' . $value . '%');
+                    $query->orWhere(function($query) use ($key, $value) {
+                        $query->where('data->' . $key, 'like', '>%');
+                        $query->whereRaw('? > CAST(SUBSTRING(JSON_UNQUOTE(JSON_EXTRACT(data, "$.' . $key . '")), 2) AS SIGNED)', [$value]);
+                    });
+                });
+                continue;
             } elseif ($column->filter == 'radios') {
                 $query->where('data->' . $key, $value);
                 continue;

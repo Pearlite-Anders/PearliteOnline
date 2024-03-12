@@ -25,7 +25,6 @@ class Form extends LivewireForm
 
         if($weldingCertificate->current_file_id) {
             $this->current_file = File::find($weldingCertificate->current_file_id);
-
         }
     }
 

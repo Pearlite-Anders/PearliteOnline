@@ -3,7 +3,7 @@
         x-data='signature_editor(
             @json($form->new_certificate ? $form->new_certificate->temporaryUrl()  : ( $form->current_file ? $form->current_file->temporary_url() : null)),
             @json(url("/")),
-            @json(optional($form->data)["signature_boxes"]) ?? [],
+            @json($form->data->signature_boxes) ?? [],
         )'
     >
         <x-button.secondary

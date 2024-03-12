@@ -23,7 +23,10 @@ class Create extends Component
 
     public function mount()
     {
-        $this->form->data = WeldingCertificateData::from(['number' => '']);
+        $this->form->data = WeldingCertificateData::from([
+            'number' => '',
+            'status' => 'active',
+        ]);
     }
 
     public function render()

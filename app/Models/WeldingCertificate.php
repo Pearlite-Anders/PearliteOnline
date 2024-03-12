@@ -131,7 +131,7 @@ class WeldingCertificate extends Model
             'label' => 'Material thickness',
             'placeholder' => '12',
             'postfix' => 'mm',
-            'filter' => 'search'
+            'filter' => 'search_number'
         ],
         'deposited_thickness' => [
             'type' => 'text',
