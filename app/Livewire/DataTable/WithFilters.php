@@ -13,6 +13,8 @@ trait WithFilters
 
     #[Url]
     public $filters = [];
+    public $preset_filters = [];
+    public $hide_filters = false;
 
     public $showFilterSettingsModal = false;
 

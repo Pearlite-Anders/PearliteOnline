@@ -6,9 +6,10 @@ use Livewire\Attributes\Url;
 
 trait WithSearch
 {
-
     #[Url]
     public $search = '';
+
+    public $hide_search = false;
 
     public function applySearch($query, $term)
     {

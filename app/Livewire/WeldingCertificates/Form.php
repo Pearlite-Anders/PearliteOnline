@@ -48,6 +48,8 @@ class Form extends LivewireForm
 
     public function transformedData()
     {
+        $this->welder_id = empty($this->welder_id) ? null : $this->welder_id;
+
         $data = array_merge([
             'company_id' => auth()->user()->currentCompany->id,
         ], $this->except([

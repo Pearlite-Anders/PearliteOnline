@@ -15,4 +15,10 @@
             </div>
         </div>
     </form>
+
+    <div class="p-4 leading-6 text-black">
+        <div class="px-4 pb-8 mb-4 leading-6 text-black bg-white rounded-lg shadow">
+            <livewire:welding-certificates.index :preset_filters="['welder_id' => $welder->id]" :hide_filters="true" :hide_search="true" />
+        </div>
+    </div>
 </div>

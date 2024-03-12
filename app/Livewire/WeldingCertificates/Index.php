@@ -16,6 +16,7 @@ use App\Livewire\DataTable\WithSorting;
 use App\Livewire\DataTable\WithClickableRow;
 use App\Livewire\DataTable\WithPerPagePagination;
 use App\Livewire\DataTable\WithTable;
+use App\Models\Welder;
 
 class Index extends Component
 {
@@ -26,7 +27,6 @@ class Index extends Component
     public function render()
     {
         $this->authorize('viewAny', WeldingCertificate::class);
-
         return view('livewire.welding-certificates.index')->with([
             'weldingCertificates' => $this->rows
         ]);
