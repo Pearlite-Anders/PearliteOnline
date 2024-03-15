@@ -79,7 +79,7 @@
         />
     @elseif($column['type'] == 'radios')
         <x-input.radios
-            class="block w-full mt-1"
+            class="block w-full mt-1 whitespace-nowrap"
             wire:model="form.data.{{ $key }}"
             :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
             :selected="optional($form->data)->{$key} ?? ($column['default'] ?? '' )"

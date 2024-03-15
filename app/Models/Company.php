@@ -112,6 +112,11 @@ class Company extends Model
         return $this->hasMany(WeldingCoordination::class);
     }
 
+    public function machineMaintenances()
+    {
+        return $this->hasMany(MachineMaintenance::class);
+    }
+
     public function modules()
     {
         return [
@@ -190,6 +195,22 @@ class Company extends Model
             'supplier' => (object)[
                 'name' => __('Suppliers'),
                 'class' => \App\Models\Supplier::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'welding-coordination' => (object)[
+                'name' => __('Welding Coordinations'),
+                'class' => \App\Models\WeldingCoordination::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'machine-maintenance' => (object)[
+                'name' => __('Machine Maintenances'),
+                'class' => \App\Models\MachineMaintenance::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),
