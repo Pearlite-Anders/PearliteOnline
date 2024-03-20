@@ -1,6 +1,6 @@
 <div>
     <x-form-header>
-        <x-slot name="title">{{ __('Heat Input') }}</x-slot>
+        <x-slot name="title">{{ __('Welding Speed pr. heat input') }}</x-slot>
     </x-form-header>
         <div class="bottom-0 right-0 px-4 pt-8 pb-4 leading-6 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0">
             <div class="p-4 mb-4 leading-6 text-black bg-white rounded-lg shadow xl:p-8 sm:p-6">
@@ -136,43 +136,33 @@
                     />
                 </div>
                 <div>
-                    <x-label for="c" :value="__('Welding Time (sec)')" class="!mb-0" />
+                    <x-label for="c" :value="__('Heat input (kj/mm)')" class="!mb-0" />
                     <x-input
                         :live="true"
-                        wire:model.live="t"
-                        placeholder="60"
-                        postfix="sec."
+                        wire:model.live="h"
+                        placeholder="0,442"
+                        postfix="kj/mm"
                     />
                 </div>
-                <div>
-                    <x-label for="c" :value="__('Welding length (mm)')" class="!mb-0" />
-                    <x-input
-                        :live="true"
-                        wire:model.live="l"
-                        placeholder="300"
-                        postfix="mm"
-                    />
-                </div>
-
             </div>
 
             <div class="mt-8">
                 <x-label value="" />
                 <h3 class="mx-0 mt-0 mb-2 text-lg font-bold leading-7">
-                    {{ __('Heat Input') }}
+                    {{ __('Welding Speed pr. heat input') }}
                 </h3>
                 <div class="flex items-center space-x-2 leading-tight">
                     <div>
-                        Heat input =
+                        {{ __('Welding Speed') }} =
                     </div>
                     <div class="flex flex-col items-center">
-                        <div>{{ $a ?? 'A' }} x {{ $v ?? 'V' }} x {{ $t ?? 's' }} x {{ $this->k_factor_value() ?? 'k-factor' }}</div>
+                        <div>{{ $a ?? 'A' }} x {{ $v ?? 'V' }} x {{ $this->k_factor_value() ?? 'k-factor' }} x 60</div>
                         <div class="h-[1px] bg-black w-full"></div>
-                        <div>{{ $l ?? 'mm' }} x 1000</div>
+                        <div>{{ $h ?? 'kj/mm' }} x 1000</div>
                     </div>
                     <div>=</div>
                     <div>
-                        {{ $this->heat_input ? $this->heat_input : '' }}
+                        {{ $this->heat_input ? $this->heat_input : '' }} mm/min
                     </div>
                 </div>
             </div>

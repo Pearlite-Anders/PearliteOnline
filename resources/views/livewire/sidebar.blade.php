@@ -80,21 +80,26 @@
                                     x-transition:leave-end="transform opacity-0 scale-95"
                                     class="px-0 pt-0 pb-2 m-0 text-black list-none ml-7"
                                 >
-                                        <li class="mt-2 mb-0 text-left list-outside">
-                                            <x-nav-link href="{{ route('formulas.carbon-equivalent') }}" :active="request()->routeIs('formulas.carbon-equivalent')">
-                                                {{ __('Carbon Equivalent') }}
-                                            </x-nav-link>
-                                        </li>
-                                        <li class="mt-2 mb-0 text-left list-outside">
-                                            <x-nav-link href="{{ route('formulas.heat-input') }}" :active="request()->routeIs('formulas.heat-input')">
-                                                {{ __('Heat Input') }}
-                                            </x-nav-link>
-                                        </li>
-                                        <li class="mt-2 mb-0 text-left list-outside">
-                                            <x-nav-link href="{{ route('formulas.z-value') }}" :active="request()->routeIs('formulas.z-value')">
-                                                {{ __('Z Value') }}
-                                            </x-nav-link>
-                                        </li>
+                                    <li class="mt-2 mb-0 text-left list-outside">
+                                        <x-nav-link href="{{ route('formulas.carbon-equivalent') }}" :active="request()->routeIs('formulas.carbon-equivalent')">
+                                            {{ __('Carbon Equivalent') }}
+                                        </x-nav-link>
+                                    </li>
+                                    <li class="mt-2 mb-0 text-left list-outside">
+                                        <x-nav-link href="{{ route('formulas.heat-input') }}" :active="request()->routeIs('formulas.heat-input')">
+                                            {{ __('Heat Input') }}
+                                        </x-nav-link>
+                                    </li>
+                                    <li class="mt-2 mb-0 text-left list-outside">
+                                        <x-nav-link href="{{ route('formulas.z-value') }}" :active="request()->routeIs('formulas.z-value')">
+                                            {{ __('Z Value') }}
+                                        </x-nav-link>
+                                    </li>
+                                    <li class="mt-2 mb-0 text-left list-outside">
+                                        <x-nav-link href="{{ route('formulas.welding-speed') }}" :active="request()->routeIs('formulas.welding-speed')">
+                                            {{ __('Welding speed pr. heat input') }}
+                                        </x-nav-link>
+                                    </li>
                                 </ul>
                             </li>
                         @endcan
