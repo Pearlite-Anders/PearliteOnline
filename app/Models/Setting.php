@@ -221,7 +221,10 @@ class Setting extends Model
                 '24' => '24',
                 '36' => '36',
                 '48' => '48',
-            ]
+            ],
+            'machine_maintenance_types' => [
+                'placeholder' => 'Placeholder',
+            ],
         ]);
     }
 

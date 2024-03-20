@@ -30,13 +30,16 @@ class MachineMaintenance extends Model
             'filter' => 'search'
         ],
         'type' => [
-            'type' => 'text',
+            'type' => 'select',
             'label' => 'Type',
-            'filter' => 'search'
+            'options' => 'machine_maintenance_types',
+            'multiple' => false,
+            'placeholder' => 'Choose',
+            'filter' => 'select'
         ],
-        'make' => [
+        'brand' => [
             'type' => 'text',
-            'label' => 'Make',
+            'label' => 'Brand',
             'filter' => 'search'
         ],
         'serial_number' => [
