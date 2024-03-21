@@ -14,11 +14,13 @@ class Form extends LivewireForm
     public $current_file;
     public $wpqr_id;
     public $data;
+    public $projects = [];
 
     public function setFields(Wps $wps)
     {
         $this->data = WpsData::from($wps->data);
         $this->wpqr_id = $wps->wpqr_id;
+        $this->projects = $wps->projects->pluck('id')->toArray();
 
         if($wps->current_file_id) {
             $this->current_file = File::find($wps->current_file_id);
@@ -31,14 +33,15 @@ class Form extends LivewireForm
             'company_id' => auth()->user()->currentCompany->id,
         ], $this->transformedData()));
 
-        $wps = $this->handleUploads($wps);
+        $wps->projects()->sync($this->projects);
 
-        return $wps;
+        return $this->handleUploads($wps);
     }
 
     public function update($wps)
     {
         $wps->update($this->transformedData());
+        $wps->projects()->sync($this->projects);
 
         return $this->handleUploads($wps);
     }
@@ -50,7 +53,8 @@ class Form extends LivewireForm
         ], $this->except([
             'new_file',
             'current_file',
-            'uploaded_certificate'
+            'uploaded_certificate',
+            'projects'
         ]));
 
         return $data;

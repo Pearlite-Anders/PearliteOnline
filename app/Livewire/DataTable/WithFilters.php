@@ -69,7 +69,13 @@ trait WithFilters
                 }
                 continue;
             } elseif ($column->filter == 'relationship') {
-                $query->where($key, $value);
+                if(isset($column->multiple) && $column->multiple) {
+                    $query->whereHas($column->relationship, function ($query) use ($key, $value) {
+                        $query->whereIn('id', explode(',', $value));
+                    });
+                } else {
+                    $query->where($key, $value);
+                }
                 continue;
             }
         }

@@ -59,22 +59,46 @@ trait HasFilter
         $value = '';
 
         if($column->type == 'relationship') {
-            if(is_array($column->class::LABEL_KEY)) {
-                $values = [];
-                foreach($column->class::LABEL_KEY as $key) {
-                    if(preg_match('/\./', $key)) {
-                        $keys = explode('.', $key);
-                        $values[] = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
-                    } else {
-                        $values[] = $this->{$column->relationship} ? $this->{$column->relationship}->{ $key } : '';
-                    }
+            if(isset($column->multiple) && $column->multiple) {
+                if(is_array($column->class::LABEL_KEY)) {
+                    $relations = optional($this->{$column->relationship})->map(function ($relation) use ($column) {
+                        $values = [];
+                        foreach($column->class::LABEL_KEY as $key) {
+                            if(preg_match('/\./', $key)) {
+                                $keys = explode('.', $key);
+                                $values[] = optional($relation->{$keys[0]})[$keys[1]];
+                            } else {
+                                $values[] = $relation->{ $key };
+                            }
+                        }
+                        return implode(' - ', $values);
+                    });
+                    $value = $relations->implode(', ');
+                } elseif(preg_match('/\./', $column->class::LABEL_KEY)) {
+                    $keys = explode('.', $column->class::LABEL_KEY);
+                    $value = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
+                } else {
+                    $value = $this->{$column->relationship} ? $this->{$column->relationship}->{ $column->class::LABEL_KEY } : '';
                 }
-                $value = implode(' - ', $values);
-            } elseif(preg_match('/\./', $column->class::LABEL_KEY)) {
-                $keys = explode('.', $column->class::LABEL_KEY);
-                $value = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
+
             } else {
-                $value = $this->{$column->relationship} ? $this->{$column->relationship}->{ $column->class::LABEL_KEY } : '';
+                if(is_array($column->class::LABEL_KEY)) {
+                    $values = [];
+                    foreach($column->class::LABEL_KEY as $key) {
+                        if(preg_match('/\./', $key)) {
+                            $keys = explode('.', $key);
+                            $values[] = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
+                        } else {
+                            $values[] = $this->{$column->relationship} ? $this->{$column->relationship}->{ $key } : '';
+                        }
+                    }
+                    $value = implode(' - ', $values);
+                } elseif(preg_match('/\./', $column->class::LABEL_KEY)) {
+                    $keys = explode('.', $column->class::LABEL_KEY);
+                    $value = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
+                } else {
+                    $value = $this->{$column->relationship} ? $this->{$column->relationship}->{ $column->class::LABEL_KEY } : '';
+                }
             }
         } elseif($column->type == 'calculated') {
             $value = optional($this)->{$column_key};

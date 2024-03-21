@@ -20,6 +20,8 @@ class Index extends Component
 
     public $model = WeldingCoordination::class;
 
+    public $compressed_header = false;
+
     public function render()
     {
         $this->authorize('viewAny', $this->model);

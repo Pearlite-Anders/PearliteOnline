@@ -2,22 +2,26 @@
     <!-- listen for escape with a alpinejs block -->
     <div x-data @keydown.escape.window="$wire.cancelConfirmDelete"></div>
 
-    <x-index-header>
+    <x-index-header :compressed_header="$compressed_header">
         <x-slot name="heading">
             <x-icon.truck class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
             {{ __('Welding Coordination') }}
         </x-slot>
         <x-slot name="search">
             <div class="grid w-full grid-cols-1 gap-4 pr-16 md:grid-cols-8">
-                <div class="relative col-span-2">
-                    <input
-                        type="search"
-                        wire:model.live.debounce.500ms="search"
-                        class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
-                        placeholder="{{ __('Global search..') }}"
-                    />
-                </div>
-                <x-table-filters :filters="$filters" :model="$model" :filter_columns="$filter_columns" :show_modal="$showFilterSettingsModal" />
+                @unless($hide_search)
+                    <div class="relative col-span-2">
+                        <input
+                            type="search"
+                            wire:model.live.debounce.500ms="search"
+                            class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
+                            placeholder="{{ __('Global search..') }}"
+                        />
+                    </div>
+                @endunless
+                @unless($hide_filters)
+                    <x-table-filters :filters="$filters" :model="$model" :filter_columns="$filter_columns" :show_modal="$showFilterSettingsModal" />
+                @endunless
             </div>
         </x-slot>
         <x-slot name="buttons">
@@ -32,7 +36,9 @@
     </x-index-header>
 
     <div class="flex flex-col leading-6 text-black">
-        <x-filter-status :filters="$filters" />
+        @unless($hide_filters)
+            <x-filter-status :filters="$filters" />
+        @endunless
         <div class="overflow-x-auto">
             <x-table>
                 <x-slot name="head">

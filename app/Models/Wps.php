@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Data\ProjectData;
 use App\Models\Trait\HasFilter;
 use App\Models\Trait\HasCompany;
 use Illuminate\Database\Eloquent\Model;
@@ -37,6 +38,17 @@ class Wps extends Model
             'label' => 'WPQR',
             'placeholder' => 'Choose wpqr',
             'filter' => 'relationship'
+        ],
+        'projects' => [
+            'type' => 'relationship',
+            'relationship' => 'projects',
+            'class' => Project::class,
+            'label' => 'Project',
+            'placeholder' => 'Choose project',
+            'filter' => 'relationship',
+            'create_popup' => true,
+            'data_class' => ProjectData::class,
+            'multiple' => true,
         ],
         'standard' => [
             'type' => 'select',
@@ -201,6 +213,11 @@ class Wps extends Model
     public function wpqr()
     {
         return $this->belongsTo(Wpqr::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class);
     }
 
     public function loadAll()
