@@ -78,6 +78,7 @@ Route::middleware([
     Route::get('/welding-coordination', \App\Livewire\WeldingCoordination\Index::class)->name('welding-coordination.index');
     Route::get('/welding-coordination/create', \App\Livewire\WeldingCoordination\Create::class)->name('welding-coordination.create');
     Route::get('/welding-coordination/{weldingCoordination}/edit', \App\Livewire\WeldingCoordination\Edit::class)->name('welding-coordination.edit');
+    Route::get('/welding-coordination/{weldingCoordination}/print', \App\Http\Controllers\WeldingCoordinationPrintController::class)->name('welding-coordination.print');
 
     Route::get('/ce', \App\Livewire\Ce\Index::class)->name('ce.index');
     Route::get('/ce/create', \App\Livewire\Ce\Create::class)->name('ce.create');

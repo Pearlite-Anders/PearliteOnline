@@ -29,14 +29,22 @@
     </x-table.cell>
 @elseif($column['type'] == 'rich_text')
     <x-table.cell>
-        <div x-data @click.prevent.stop="console.log('stop')">
+        <div
+            x-data="{ show: false }"
+            @click.prevent.stop="console.log('stop')"
+        >
             <x-button
+                @click="show = true"
                 class="!py-1 flex items-center !px-2 text-gray-600 bg-transparent hover:bg-gray-100 hover:text-gray-900"
             >
 
                 <x-icon.eye class="w-4 h-4 text-gray-800" />
                 <span class="ml-1 text-gray-600">{{ __('Show') }}</span>
             </x-button>
+
+            <x-alpine-modal maxWidth="2xl">
+                <div class="p-4">{!! $model->getColumnValue($key) !!}</div>
+            </x-alpine-modal>
         </div>
     </x-table.cell>
 @elseif($column['type'] == 'textarea')
