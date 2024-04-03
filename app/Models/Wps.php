@@ -19,6 +19,8 @@ class Wps extends Model
         'data' => 'array'
     ];
 
+    public const LABEL_KEY = 'data.number';
+
     public const SYSTEM_COLUMNS = [
         'file' => [
             'type' => 'file',
@@ -43,12 +45,13 @@ class Wps extends Model
             'type' => 'relationship',
             'relationship' => 'projects',
             'class' => Project::class,
-            'label' => 'Project',
+            'label' => 'Projects',
             'placeholder' => 'Choose project',
             'filter' => 'relationship',
             'create_popup' => true,
             'data_class' => ProjectData::class,
             'multiple' => true,
+            'hidden' => true
         ],
         'standard' => [
             'type' => 'select',

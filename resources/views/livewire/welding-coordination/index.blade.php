@@ -27,10 +27,20 @@
         <x-slot name="buttons">
             <livewire:table-columns :columns="$columns" />
             @can('create', App\Models\WeldingCoordination::class)
-                <x-button.link href="{{ route('welding-coordination.create') }}" class="inline-flex items-center justify-center whitespace-nowrap">
+                <x-button.link
+                    :href="route('welding-coordination.create')  .( $project_id ? '?project_id='. $project_id : '')"
+                    class="inline-flex items-center justify-center whitespace-nowrap"
+                >
                     <x-icon.plus class="mr-2 -ml-1 align-middle" />
                     {{ __('Add Welding Coordination') }}
                 </x-button.link>
+
+                <livewire:attach-project
+                    :model="App\Models\WeldingCoordination::class"
+                    :project_id="$project_id"
+                    :name="__('Welding Coordination')"
+                    name_field="purpose"
+                />
             @endcan
         </x-slot>
     </x-index-header>

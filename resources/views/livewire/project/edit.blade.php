@@ -23,6 +23,7 @@
                 :hide_filters="true"
                 :hide_search="true"
                 :compressed_header="true"
+                :project_id="$project->id"
             />
         </div>
     </div>
@@ -34,6 +35,8 @@
                 :hide_filters="true"
                 :hide_search="true"
                 :compressed_header="true"
+                :project_id="$project->id"
+                :attach_project="true"
             />
         </div>
     </div>

@@ -52,4 +52,14 @@ class Project extends Model
     {
         return $this;
     }
+
+    public function wps()
+    {
+        return $this->belongsToMany(Wps::class);
+    }
+
+    public function weldingcoordinations()
+    {
+        return $this->hasMany(WeldingCoordination::class);
+    }
 }

@@ -24,6 +24,7 @@ class Create extends Component
     public function mount()
     {
         $this->form->data = WeldingCoordinationData::from([]);
+        $this->form->project_id = request('project_id');
     }
 
     public function render()

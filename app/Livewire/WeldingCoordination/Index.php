@@ -21,6 +21,8 @@ class Index extends Component
     public $model = WeldingCoordination::class;
 
     public $compressed_header = false;
+    public $attach_project = false;
+    public $project_id;
 
     public function render()
     {

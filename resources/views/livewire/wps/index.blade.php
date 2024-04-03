@@ -27,10 +27,20 @@
         <x-slot name="buttons">
             <livewire:table-columns :columns="$columns" />
             @can('create', App\Models\Wps::class)
-                <x-button.link href="{{ route('wps.create') }}" class="inline-flex items-center justify-center whitespace-nowrap">
+                <x-button.link
+                    :href="route('wps.create') .( $project_id ? '?project_id='. $project_id : '')"
+                    class="inline-flex items-center justify-center whitespace-nowrap"
+                >
                     <x-icon.plus class="mr-2 -ml-1 align-middle" />
                     {{ __('Add WPS') }}
                 </x-button.link>
+
+                <livewire:attach-project
+                    :model="App\Models\Wps::class"
+                    :project_id="$project_id"
+                    :name="__('Wps')"
+                    name_field="number"
+                />
             @endcan
         </x-slot>
     </x-index-header>
