@@ -58,6 +58,21 @@ class Project extends Model
         return $this->belongsToMany(Wps::class);
     }
 
+    public function wpqrs()
+    {
+        return $this->belongsToMany(Wpqr::class);
+    }
+
+    public function welders()
+    {
+        return $this->belongsToMany(Welder::class);
+    }
+
+    public function weldingcertificates()
+    {
+        return $this->belongsToMany(WeldingCertificate::class);
+    }
+
     public function weldingcoordinations()
     {
         return $this->hasMany(WeldingCoordination::class);

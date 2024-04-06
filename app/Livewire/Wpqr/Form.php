@@ -13,6 +13,7 @@ class Form extends LivewireForm
     public $new_file;
     public $current_file;
     public $data;
+    public $project_id;
 
     public function setFields(Wpqr $wpqr)
     {
@@ -30,9 +31,11 @@ class Form extends LivewireForm
             'company_id' => auth()->user()->currentCompany->id,
         ], $this->transformedData()));
 
-        $wpqr = $this->handleUploads($wpqr);
+        if($this->project_id) {
+            $wpqr->projects()->sync([$this->project_id]);
+        }
 
-        return $wpqr;
+        return $this->handleUploads($wpqr);
     }
 
     public function update($wpqr)
@@ -49,7 +52,8 @@ class Form extends LivewireForm
         ], $this->except([
             'new_file',
             'current_file',
-            'uploaded_certificate'
+            'uploaded_certificate',
+            'project_id',
         ]));
 
         return $data;

@@ -2,7 +2,7 @@
     <!-- listen for escape with a alpinejs block -->
     <div x-data @keydown.escape.window="$wire.cancelConfirmDelete"></div>
 
-    <x-index-header>
+    <x-index-header :compressed_header="$compressed_header">
         <x-slot name="heading">
             <x-icon.welding-certificate class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
             {{ __('Welding Certificates') }}
@@ -27,10 +27,19 @@
         <x-slot name="buttons">
             <livewire:table-columns :columns="$columns" />
             @can('create', App\Models\WeldingCertificate::class)
-                <x-button.link href="{{ route('welding-certificates.create') }}" class="inline-flex items-center justify-center whitespace-nowrap">
+                <x-button.link href="{{ route('welding-certificates.create').( $project_id ? '?project_id='. $project_id : '') }}" class="inline-flex items-center justify-center whitespace-nowrap">
                     <x-icon.plus class="mr-2 -ml-1 align-middle" />
                     {{ __('Add Welding Certificate') }}
                 </x-button.link>
+
+                @if($project_id)
+                    <livewire:attach-project
+                        :model="App\Models\WeldingCertificate::class"
+                        :project_id="$project_id"
+                        :name="__('Welding Certificate')"
+                        name_field="number"
+                    />
+                @endif
             @endcan
         </x-slot>
     </x-index-header>

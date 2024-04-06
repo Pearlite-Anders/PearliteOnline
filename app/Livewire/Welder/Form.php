@@ -13,6 +13,7 @@ class Form extends LivewireForm
     public $new_file;
     public $current_file;
     public $data;
+    public $project_id;
 
     public function setFields(Welder $welder)
     {
@@ -29,9 +30,11 @@ class Form extends LivewireForm
             'company_id' => auth()->user()->currentCompany->id,
         ], $this->transformedData()));
 
-        $welder = $this->handleUploads($welder);
+        if($this->project_id) {
+            $welder->projects()->attach($this->project_id);
+        }
 
-        return $welder;
+        return $this->handleUploads($welder);
     }
 
     public function update($welder)
@@ -48,7 +51,8 @@ class Form extends LivewireForm
         ], $this->except([
             'new_file',
             'current_file',
-            'uploaded_certificate'
+            'uploaded_certificate',
+            'project_id',
         ]));
 
         return $data;

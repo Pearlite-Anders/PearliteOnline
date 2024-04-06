@@ -27,6 +27,8 @@ class Create extends Component
             'number' => '',
             'status' => 'active',
         ]);
+
+        $this->form->project_id = request('project_id');
     }
 
     public function render()

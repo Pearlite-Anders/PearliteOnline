@@ -17,6 +17,7 @@ class Form extends LivewireForm
     public $new_certificate;
     public $current_file;
     public $data;
+    public $project_id;
 
     public function setFields(WeldingCertificate $weldingCertificate)
     {
@@ -34,9 +35,11 @@ class Form extends LivewireForm
             'company_id' => auth()->user()->currentCompany->id,
         ], $this->transformedData()));
 
-        $welding_certificate = $this->handleUploads($welding_certificate);
+        if($this->project_id) {
+            $welding_certificate->projects()->sync($this->project_id);
+        }
 
-        return $welding_certificate;
+        return $this->handleUploads($welding_certificate);
     }
 
     public function update($weldingCertificate)
@@ -55,7 +58,8 @@ class Form extends LivewireForm
         ], $this->except([
             'new_certificate',
             'current_file',
-            'uploaded_certificate'
+            'uploaded_certificate',
+            'project_id',
         ]));
 
         if(optional($data['data'])['date_examination']) {

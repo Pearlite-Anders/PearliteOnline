@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Data\ProjectData;
 use Illuminate\Support\Carbon;
 use App\Models\Trait\HasFilter;
 use App\Models\Trait\HasCompany;
@@ -28,6 +29,18 @@ class WeldingCertificate extends Model
         'file' => [
             'type' => 'file',
             'label' => 'Preview',
+        ],
+        'projects' => [
+            'type' => 'relationship',
+            'relationship' => 'projects',
+            'class' => Project::class,
+            'label' => 'Projects',
+            'placeholder' => 'Choose project',
+            'filter' => 'relationship',
+            'create_popup' => true,
+            'data_class' => ProjectData::class,
+            'multiple' => true,
+            'hidden' => true
         ],
         'type' => [
             'type' => 'select',
@@ -205,6 +218,11 @@ class WeldingCertificate extends Model
             'filter' => 'search'
         ],
     ];
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class);
+    }
 
     public function welder()
     {

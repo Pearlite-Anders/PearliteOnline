@@ -19,6 +19,9 @@ class Index extends Component
     use WithTable, WithPerPagePagination, WithSorting, WithColumns, WithFilters, WithDelete, WithSearch, WithClickableRow;
 
     public $model = Welder::class;
+    public $compressed_header = false;
+    public $attach_project = false;
+    public $project_id;
 
     public function render()
     {

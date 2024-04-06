@@ -40,4 +40,43 @@
             />
         </div>
     </div>
+
+    <div class="p-4 leading-6 text-black">
+        <div class="px-4 pb-8 mb-4 leading-6 text-black bg-white rounded-lg shadow">
+            <livewire:wpqr.index
+                :preset_filters="['projects' => $project->id]"
+                :hide_filters="true"
+                :hide_search="true"
+                :compressed_header="true"
+                :project_id="$project->id"
+                :attach_project="true"
+            />
+        </div>
+    </div>
+
+    <div class="p-4 leading-6 text-black">
+        <div class="px-4 pb-8 mb-4 leading-6 text-black bg-white rounded-lg shadow">
+            <livewire:welding-certificates.index
+                :preset_filters="['projects' => $project->id]"
+                :hide_filters="true"
+                :hide_search="true"
+                :compressed_header="true"
+                :project_id="$project->id"
+                :attach_project="true"
+            />
+        </div>
+    </div>
+
+    <div class="p-4 leading-6 text-black">
+        <div class="px-4 pb-8 mb-4 leading-6 text-black bg-white rounded-lg shadow">
+            <livewire:welder.index
+                :preset_filters="['projects' => $project->id]"
+                :hide_filters="true"
+                :hide_search="true"
+                :compressed_header="true"
+                :project_id="$project->id"
+                :attach_project="true"
+            />
+        </div>
+    </div>
 </div>
