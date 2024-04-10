@@ -33,6 +33,12 @@
             prettyname="{{ $key }}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
         />
+    @elseif($column['type'] == 'dynamic_relationship')
+        <livewire:dynamic-relationship-field
+            :$column
+            :relation="$form->{$column['relationship']}"
+            wire:model.live="form.{{$key}}"
+        />
     @elseif($column['type'] == 'calculated')
         <x-input
             value="{{ $this->{$key} }}"

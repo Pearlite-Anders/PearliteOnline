@@ -20,4 +20,6 @@ class Form extends LivewireForm
     public $role = '';
 
     public $companies = [];
+
+    public $can_see_time_registration = false;
 }

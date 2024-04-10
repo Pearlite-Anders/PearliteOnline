@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Data\DataObjectSynth;
+use App\Models\TimeRegistration;
 use App\Models\User;
 use Livewire\Livewire;
 use Illuminate\Support\Facades\Gate;
@@ -23,8 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::before(function ($user, $ability) {
-            if ($user->isAdmin()) {
+        Gate::before(function ($user, $ability, $models) {
+
+            if (
+                $user->isAdmin() &&
+                !in_array(TimeRegistration::class, $models)
+            ) {
                 return true;
             }
         });

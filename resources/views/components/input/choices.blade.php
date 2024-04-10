@@ -80,7 +80,8 @@
 
             $wire.on('refreshChoices', (param) => {
                 if(param[2] == '{{ $attributes['prettyname'] }}') {
-                    window.ChoicesArray['{{ $attributes['prettyname'] }}'].clearChoices();
+                    console.log(param);
+                    window.ChoicesArray['{{ $attributes['prettyname'] }}'].clearStore();
                     window.ChoicesArray['{{ $attributes['prettyname'] }}'].setChoices(async () => {
                         return Object.keys(param[0]).map((item, index) => {
                             return {

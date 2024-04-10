@@ -14,8 +14,8 @@
         :selected="$value"
         wire:model="value"
         :options="$choices"
-        :prettyname="$column['key']"
-        placeholder="{{ __($column['placeholder'] ?? '') }}"
+        :prettyname="optional($column)['key']"
+        placeholder="{{ __(optional($column)['placeholder'] ?? '') }}"
     />
 
     @if($showCreatePopup)

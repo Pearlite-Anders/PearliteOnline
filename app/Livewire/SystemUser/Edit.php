@@ -40,6 +40,12 @@ class Edit extends Component
             $this->user->companies()->sync($companies);
         }
 
+        $permssions = [];
+        if($this->form->can_see_time_registration) {
+            $permssions[] = 'time_registration.view';
+        }
+
+        $this->user->syncPermissions($permssions);
 
         return redirect()
                 ->route('system-users.index')
@@ -55,6 +61,8 @@ class Edit extends Component
         $this->form->companies = $user->companies->pluck('id')->mapWithKeys(function ($company_id) {
             return [$company_id => true];
         })->toArray();
+
+        $this->form->can_see_time_registration = $user->hasPermissionTo('time_registration.view');
     }
 
     public function render()

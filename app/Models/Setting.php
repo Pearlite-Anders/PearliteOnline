@@ -43,6 +43,11 @@ class Setting extends Model
     public static function get($key, $deault = null, $company_id = null)
     {
         $company_id = $company_id ?? auth()->user()->currentCompany->id;
+        if(in_array($key, ['time_registration_tasks'])) {
+            $company_id = 0;
+        }
+
+
         $database_value = self::whereCompanyId($company_id)->where('key', $key)->first();
         if($database_value) {
             return $database_value->value;

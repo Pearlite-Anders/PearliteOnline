@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Trait\HasFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Company extends Model
@@ -16,6 +17,8 @@ class Company extends Model
     protected $casts = [
         'data' => 'array'
     ];
+
+    public const LABEL_KEY = 'data.name';
 
     public const SYSTEM_COLUMNS = [
         'name' => [
@@ -115,6 +118,19 @@ class Company extends Model
     public function machineMaintenances()
     {
         return $this->hasMany(MachineMaintenance::class);
+    }
+
+    public function timeregistrations()
+    {
+        return TimeRegistration::query();
+    }
+
+    public static function get_choices()
+    {
+        if(auth()->user()->is_admin) {
+            return self::all()->pluck('data.name', 'id')->toArray();
+        }
+        return auth()->user()->companies->pluck('data.name', 'id')->toArray();
     }
 
     public function modules()
