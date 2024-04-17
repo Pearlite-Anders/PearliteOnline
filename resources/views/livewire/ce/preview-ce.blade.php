@@ -42,20 +42,23 @@
             </div>
             <div style="font-weight:bold;margin-top:10px;">
                 {{__('Weldability')}}:
-                    <x-tooltip-word
-                        :tooltip="__('Weldability')"
-                    >{{ (is_array(optional($form->data)->weldability) ? implode(', ', $form->data->weldability) : '') }} </x-tooltip-word>
+                @if(optional($form->data)->weldability_group)
+                    <x-tooltip-word :tooltip="__('Weldability')">
+                            {{ setting('ce_weldability_group')[$form->data->weldability_group][0] }}
+                    </x-tooltip-word>
                     {{__('according to')}}
-                    <x-tooltip-word
-                        :tooltip="__('Technical Delivery Conditions')"
-                    >{{ (is_array(optional($form->data)->technical_delivery_conditions) ? implode(', ', $form->data->technical_delivery_conditions) : '') }}</x-tooltip-word>
-
+                        <x-tooltip-word :tooltip="__('Technical Delivery Conditions')" >
+                        {{ setting('ce_weldability_group')[$form->data->weldability_group][1] }}
+                    </x-tooltip-word>
+                @endif
             </div>
             <div style="font-weight:bold;margin-top:10px;">
                 {{__('Fracture toughness')}}:
-                    <x-tooltip-word
-                        :tooltip="__('Fracture Toughness')"
-                    >{{ (is_array(optional($form->data)->fracture_toughness) ? implode(', ', $form->data->fracture_toughness) : '') }}</x-tooltip-word>
+                @if(optional($form->data)->weldability_group)
+                    <x-tooltip-word :tooltip="__('Fracture Toughness')">
+                    {{ setting('ce_weldability_group')[$form->data->weldability_group][2] }}
+                    </x-tooltip-word>
+                @endif
             </div>
             <div style="font-weight:bold;margin-top:10px;">
                 {{__('Behavior in Fire: Material Classification: Class')}}
@@ -80,23 +83,24 @@
             <div style="font-weight:bold;margin-top:10px;">
                 {{__('Durability')}}:
                 @if(
-                    preg_match('/^P/i', $form->data->machining_quality)
-                    ||
-                    $form->data->surface == 'untreated'
+                    preg_match('/^P/i', $form->data->machining_quality) ||
+                    $form->data->surface == 'untreated' ||
+                    $form->data->surface == 'galvanization'
                 )
-                    {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} <x-tooltip-word :tooltip="__('Machining Quality')">{{ $form->data->machining_quality }}</x-tooltip-word>.
-
-                    @if($form->data->surface == 'paint')
-                        {{ __('Surface painted according to EN ISO 12944-5,')}}
-                    @elseif($form->data->surface == 'galvanization')
-                        {{ __('Surface galvanized according to EN ISO 1461,')}}
-                    @elseif($form->data->surface == 'untreated')
-                        {{ __('Surface untreated,')}}
+                    @if($form->data->surface != 'untreated' && $form->data->machining_quality != 'npd')
+                        {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} <x-tooltip-word :tooltip="__('Machining Quality')">{{ $form->data->machining_quality }}</x-tooltip-word>.
                     @endif
 
-                    @unless($form->data->surface == 'untreated')
-                        <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
-                    @endunless
+                    @if($form->data->surface == 'paint')
+                        {{ __('Surface painted according to EN ISO 12944-5')}}
+                    @elseif($form->data->surface == 'galvanization')
+                        {{ __('Surface galvanized according to EN ISO 1461')}}
+                    @elseif($form->data->surface == 'untreated')
+                        {{ __('Surface untreated')}}
+                    @endif
+                    @if($form->data->surface != 'untreated' && $form->data->durability != 'npd')
+                        , <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
+                    @endif
                 @else
                     {{ $form->data->machining_quality }}.
                 @endif

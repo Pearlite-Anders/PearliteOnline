@@ -29,13 +29,17 @@
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Weldability')}}:
-            {{ is_array(optional(optional($ce->data)['weldability']) ? implode(', ', optional($ce->data)['weldability']) : '') }}
-            {{__('according to')}}
-            {{ is_array(optional(optional($ce->data)['technical_delivery_conditions']) ? implode(', ', optional($ce->data)['technical_delivery_conditions']) : '') }}
+            @if(optional($ce->data)['weldability_group'])
+                {{ setting('ce_weldability_group')[$ce->data['weldability_group']][0] }}
+                {{__('according to')}}
+                {{ setting('ce_weldability_group')[$ce->data['weldability_group']][1] }}
+            @endif
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Fracture toughness')}}:
-            {{ is_array(optional(optional($ce->data)['fracture_toughness']) ? implode(', ', optional($ce->data)['fracture_toughness']) : '') }}
+            @if(optional($ce->data)['weldability_group'])
+                {{ setting('ce_weldability_group')[$ce->data['weldability_group']][2] }}
+            @endif
         </div>
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Behavior in Fire: Material Classification: Class')}}
@@ -54,26 +58,26 @@
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Durability')}}:
             @if(
-                preg_match('/^P/i', optional($ce->data)['machining_quality'])
-                ||
-                optional($ce->data)['surface'] == 'untreated'
+                preg_match('/^P/i', $ce->data['machining_quality']) ||
+                $ce->data['surface'] == 'untreated' ||
+                $ce->data['surface'] == 'galvanization'
             )
-                {{ __('Surface preparation according to EN 1090-2, Preparation grade') }}
-                {{ optional($ce->data)['machining_quality'] }}
-
-                @if(optional($ce->data)['surface'] == 'paint')
-                    {{ __('Surface painted according to EN ISO 12944-5,')}}
-                @elseif(optional($ce->data)['surface'] == 'galvanization')
-                    {{ __('Surface galvanized according to EN ISO 1461,')}}
-                @elseif(optional($ce->data)['surface'] == 'untreated')
-                    {{ __('Surface untreated,')}}
+                @if($ce->data['surface'] != 'untreated' && $ce->data['machining_quality'] != 'npd')
+                    {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ $ce->data['machining_quality'] }}.
                 @endif
 
-                @unless(optional($ce->data)['surface'] == 'untreated')
-                    {{ optional($ce->data)['durability'] }}
-                @endunless
+                @if($ce->data['surface'] == 'paint')
+                    {{ __('Surface painted according to EN ISO 12944-5')}}
+                @elseif($ce->data['surface'] == 'galvanization')
+                    {{ __('Surface galvanized according to EN ISO 1461')}}
+                @elseif($ce->data['surface'] == 'untreated')
+                    {{ __('Surface untreated')}}
+                @endif
+                @if($ce->data['surface'] != 'untreated' && $ce->data['durability'] != 'npd')
+                    , {{ $ce->data['durability'] }}.
+                @endif
             @else
-                {{ optional($ce->data)['machining_quality'] }}.
+                {{ $ce->data['machining_quality'] }}.
             @endif
         </div>
         <div style="margin-top:10px;font-weight:bold;">
@@ -179,15 +183,19 @@
         <tr>
             <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
             <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                {{ (is_array(optional(optional($ce->data))['weldability']) ? implode(', ', optional($ce->data)['weldability']) : '') }}
-                {{__('according to')}}
-                {{ (is_array(optional(optional($ce->data))['technical_delivery_conditions']) ? implode(', ', optional($ce->data)['technical_delivery_conditions']) : '') }}
+                @if(optional($ce->data)['weldability_group'])
+                    {{ setting('ce_weldability_group')[$ce->data['weldability_group']][0] }}
+                    {{__('according to')}}
+                    {{ setting('ce_weldability_group')[$ce->data['weldability_group']][1] }}
+                @endif
             </td>
         </tr>
         <tr>
             <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
             <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                {{ (is_array(optional(optional($ce->data))['fracture_toughness']) ? implode(', ', optional($ce->data)['fracture_toughness']) : '') }}
+                @if(optional($ce->data)['weldability_group'])
+                    {{ setting('ce_weldability_group')[$ce->data['weldability_group']][2] }}
+                @endif
             </td>
         </tr>
         <tr>
@@ -246,25 +254,26 @@
             <td style="border-right: 1px solid #333;padding: 3px 2px;">{{ __('Durability') }}</td>
             <td style="padding: 3px 2px;font-weight:bold;">
                 @if(
-                    preg_match('/^P/i', optional($ce->data)['machining_quality'])
-                    ||
-                    optional($ce->data)['surface'] == 'untreated'
+                    preg_match('/^P/i', $ce->data['machining_quality']) ||
+                    $ce->data['surface'] == 'untreated' ||
+                    $ce->data['surface'] == 'galvanization'
                 )
-                    {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ optional($ce->data)['machining_quality'] }}.
-
-                    @if(optional($ce->data)['surface'] == 'paint')
-                        {{ __('Surface painted according to EN ISO 12944-5,')}}
-                    @elseif(optional($ce->data)['surface'] == 'galvanization')
-                        {{ __('Surface galvanized according to EN ISO 1461,')}}
-                    @elseif(optional($ce->data)['surface'] == 'untreated')
-                        {{ __('Surface untreated,')}}
+                    @if($ce->data['surface'] != 'untreated' && $ce->data['machining_quality'] != 'npd')
+                        {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ $ce->data['machining_quality'] }}.
                     @endif
 
-                    @unless(optional($ce->data)['surface'] == 'untreated')
-                        {{ optional($ce->data)['durability'] }}.
-                    @endunless
+                    @if($ce->data['surface'] == 'paint')
+                        {{ __('Surface painted according to EN ISO 12944-5')}}
+                    @elseif($ce->data['surface'] == 'galvanization')
+                        {{ __('Surface galvanized according to EN ISO 1461')}}
+                    @elseif($ce->data['surface'] == 'untreated')
+                        {{ __('Surface untreated')}}
+                    @endif
+                    @if($ce->data['surface'] != 'untreated' && $ce->data['durability'] != 'npd')
+                        , {{ $ce->data['durability'] }}.
+                    @endif
                 @else
-                    {{ optional($ce->data)['machining_quality'] }}.
+                    {{ $ce->data['machining_quality'] }}.
                 @endif
             </td>
         </tr>

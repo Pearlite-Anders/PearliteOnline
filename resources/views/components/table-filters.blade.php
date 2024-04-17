@@ -1,5 +1,6 @@
 <div x-data="{ open: false }" class="col-span-6">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-3 ">
+
         @php($count = 0)
         @php($visible = 0)
         @php($filterColumnsToShow = 0)
@@ -78,6 +79,7 @@
                 @endif
                 @if(optional($filter_column)->filter == 'radios' || optional($filter_column)->filter == 'select')
                     @php($options = is_array($filter_column->options) ? $filter_column->options : App\Models\Setting::get($filter_column->options))
+
                     @if(optional($filter_column)->filter == 'radios' || count($options) <= 11)
                         <div class="relative">
                             <x-label :for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
@@ -90,7 +92,7 @@
                                             value="{{ $key }}"
                                             class="hidden"
                                         />
-                                        <span>{{ __($label) }}</span>
+                                            <span>{{ is_array($label) ? __(implode(' - ', $label)) : __($label) }}</span>
                                     </label>
                                 @endforeach
                             </div>
@@ -104,8 +106,8 @@
                                 class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                             >
                                 <option value="">{{ __($filter_column->label) }}</option>
-                                @foreach($options as $option)
-                                    <option value="{{ $option }}">{{ __($option) }}</option>
+                                @foreach($options as $key => $option)
+                                    <option value="{{$key}}">{{ __(is_array($option) ? implode(' - ', $option) : $option) }}</option>
                                 @endforeach
                             </select>
                         </div>

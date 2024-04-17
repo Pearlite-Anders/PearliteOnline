@@ -118,7 +118,7 @@
             @endif
             @if(count($attributes['options'])>0)
                 @foreach($attributes['options'] as $key=>$option)
-                    <option value="{{$key}}" >{{$option}}</option>
+                    <option value="{{$key}}">{{ __(is_array($option) ? implode(' - ', $option) : $option) }}</option>
                 @endforeach
             @endif
         </select>

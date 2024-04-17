@@ -198,6 +198,15 @@ class Setting extends Model
                 'Klasse 1' => 'Klasse 1',
                 'Klasse 2' => 'Klasse 2',
             ],
+            'ce_weldability_group' => [
+                'S235JR' => ['S235JR','EN 10025-2','27J at 20 °C'],
+                'S275JR' => ['S275JR','EN 10025-2','27J at 20 °C'],
+                'S355J2' => ['S355J2','EN 10025-2','27J at -20 °C'],
+                'S355J2H' => ['S355J2H','EN 10210-1','27J at -20 °C'],
+                'S235JRH' => ['S235JRH','EN 10219','27J at 20 °C'],
+                'S355J2H' => ['S355J2H','EN 10219','27J at -20 °C'],
+                'S355MC' => ['S355MC','EN 10149-2','27J at -20 °C'],
+            ],
             'ce_weldabilities' => [
                 'S235JR' => 'S235JR',
                 'S275JR' => 'S275JR',

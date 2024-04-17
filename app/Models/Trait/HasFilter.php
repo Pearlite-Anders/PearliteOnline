@@ -137,7 +137,11 @@ trait HasFilter
             return $value;
         }
 
-        $value = __($value);
+        if(is_array($value)) {
+            $value = __(implode(' - ', $value));
+        } else {
+            $value = __($value);
+        }
 
         if(optional($column)->prefix && $value) {
             $value = __($column->prefix) . $value;

@@ -85,6 +85,15 @@ class Ce extends Model
             'filter' => 'search',
             'help' => 'Describe what the CE mark includes'
         ],
+        'weldability_group' => [
+            'type' => 'select',
+            'label' => 'Weldability',
+            'multiple' => false,
+            'options' => 'ce_weldability_group',
+            'placeholder' => 'Select',
+            'filter' => 'select',
+            'help' => 'Specify the types of steel used',
+        ],
         'tolerance_class' => [
             'type' => 'select',
             'label' => 'Tolerance Class',
@@ -93,33 +102,6 @@ class Ce extends Model
             'placeholder' => 'Select - Example: Klasse 1',
             'filter' => 'select',
             'help' => 'Specify tolerance class'
-        ],
-        'weldability' => [
-            'type' => 'select',
-            'label' => 'Weldability',
-            'multiple' => true,
-            'options' => 'ce_weldabilities',
-            'placeholder' => 'S235JR',
-            'filter' => 'select',
-            'help' => 'Specify the types of steel used',
-        ],
-        'technical_delivery_conditions' => [
-            'type' => 'select',
-            'label' => 'Technical Delivery Conditions',
-            'multiple' => true,
-            'options' => 'ce_technical_delivery_conditions',
-            'placeholder' => 'Select - Example: EN 10025-2',
-            'filter' => 'select',
-            'help' => 'Specify the standard for technical delivery conditions, for example, EN 10025-2',
-        ],
-        'fracture_toughness' => [
-            'type' => 'select',
-            'label' => 'Fracture Toughness',
-            'multiple' => true,
-            'options' => 'ce_fracture_toughnesses',
-            'placeholder' => 'Select - Example: 27J ved 20 °C',
-            'filter' => 'select',
-            'help' => 'Specify the toughness',
         ],
         'behavior_in_fire' => [
             'type' => 'select',
@@ -147,7 +129,6 @@ class Ce extends Model
             'label' => 'Durability',
             'multiple' => false,
             'options' => [
-                'Ubehandlet' => 'Ubehandlet',
                 'C1 Lav' => 'C1 Lav',
                 'C1 Middel' => 'C1 Middel',
                 'C1 Høj' => 'C1 Høj',
@@ -163,11 +144,14 @@ class Ce extends Model
                 'C5 Lav' => 'C5 Lav',
                 'C5 Middel' => 'C5 Middel',
                 'C5 Høj' => 'C5 Høj',
-                'Galvaniseret' => 'Galvaniseret',
+                'npd' => 'NPD',
             ],
             'placeholder' => 'Select - Example: C3 Middel',
             'filter' => 'select',
-            'help' => 'Pre-treatment level is the pre-treatment before surface treatment, for example, before painting.'
+            'help' => 'Pre-treatment level is the pre-treatment before surface treatment, for example, before painting.',
+            'dependencies' => [
+                'surface' => ['paint', 'galvanization'],
+            ],
         ],
         'machining_quality' => [
             'type' => 'select',
@@ -177,10 +161,13 @@ class Ce extends Model
                 'P1' => 'P1',
                 'P2' => 'P2',
                 'P3' => 'P3',
-                'Ubelagt, NPD' => 'Ubelagt, NPD',
+                'npd' => 'NPD',
             ],
             'placeholder' => 'Select - Example: P2',
-            'filter' => 'select'
+            'filter' => 'select',
+            'dependencies' => [
+                'surface' => ['paint', 'galvanization'],
+            ],
         ],
         'dimensioning' => [
             'type' => 'text',

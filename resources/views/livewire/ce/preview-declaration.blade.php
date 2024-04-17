@@ -42,15 +42,19 @@
             <tr>
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                    {{ (is_array(optional($form->data)->weldability) ? implode(', ', $form->data->weldability) : '') }}
-                    {{__('according to')}}
-                    {{ (is_array(optional($form->data)->technical_delivery_conditions) ? implode(', ', $form->data->technical_delivery_conditions) : '') }}
+                    @if(optional($form->data)->weldability_group)
+                        {{ setting('ce_weldability_group')[$form->data->weldability_group][0] }}
+                        {{__('according to')}}
+                        {{ setting('ce_weldability_group')[$form->data->weldability_group][1] }}
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                    {{ (is_array(optional($form->data)->fracture_toughness) ? implode(', ', $form->data->fracture_toughness) : '') }}
+                    @if(optional($form->data)->weldability_group)
+                        {{ setting('ce_weldability_group')[$form->data->weldability_group][2] }}
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -109,23 +113,24 @@
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Durability') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                     @if(
-                        preg_match('/^P/i', $form->data->machining_quality)
-                        ||
-                        $form->data->surface == 'untreated'
+                        preg_match('/^P/i', $form->data->machining_quality) ||
+                        $form->data->surface == 'untreated' ||
+                        $form->data->surface == 'galvanization'
                     )
-                        {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ $form->data->machining_quality }}.
-
-                        @if($form->data->surface == 'paint')
-                            {{ __('Surface painted according to EN ISO 12944-5,')}}
-                        @elseif($form->data->surface == 'galvanization')
-                            {{ __('Surface galvanized according to EN ISO 1461,')}}
-                        @elseif($form->data->surface == 'untreated')
-                            {{ __('Surface untreated,')}}
+                        @if($form->data->surface != 'untreated' && $form->data->machining_quality != 'npd')
+                            {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} <x-tooltip-word :tooltip="__('Machining Quality')">{{ $form->data->machining_quality }}</x-tooltip-word>.
                         @endif
 
-                        @unless($form->data->surface == 'untreated')
-                            {{ $form->data->durability }}.
-                        @endunless
+                        @if($form->data->surface == 'paint')
+                            {{ __('Surface painted according to EN ISO 12944-5')}}
+                        @elseif($form->data->surface == 'galvanization')
+                            {{ __('Surface galvanized according to EN ISO 1461')}}
+                        @elseif($form->data->surface == 'untreated')
+                            {{ __('Surface untreated')}}
+                        @endif
+                        @if($form->data->surface != 'untreated' && $form->data->durability != 'npd')
+                            , <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
+                        @endif
                     @else
                         {{ $form->data->machining_quality }}.
                     @endif

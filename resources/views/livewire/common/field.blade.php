@@ -3,7 +3,10 @@
         @if(in_array($column['type'], ['textarea', 'rich_text'])) md:col-span-3 @endif
         @if(optional($column)['dependencies'])
             @foreach($column['dependencies'] as $dependency => $values)
-                @if($form->data->{$dependency} && !in_array($form->data->{$dependency}, $values))
+                @if(
+                    !$form->data->{$dependency} ||
+                    !in_array($form->data->{$dependency}, $values)
+                )
                     hidden
                 @endif
             @endforeach

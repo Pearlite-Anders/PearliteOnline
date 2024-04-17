@@ -11,6 +11,48 @@ trait Shared
 {
     public function updating($property, $value)
     {
+        if($property == 'form.data.surface') {
+            $current_value = $this->form->data->surface;
+            $new_value = '';
+            if($value == 'galvanization') {
+                if('npd' != $this->form->data->durability) {
+                    $this->form->data->durability = 'npd';
+                    $this->dispatch(
+                        'changeChoice',
+                        'durability',
+                        'npd'
+                    );
+                }
+                if('npd' != $this->form->data->machining_quality) {
+                    $this->form->data->machining_quality = 'npd';
+                    $this->dispatch(
+                        'changeChoice',
+                        'machining_quality',
+                        'npd'
+                    );
+                }
+            }
+
+            if($value == 'untreated') {
+                if($this->form->data->durability) {
+                    $this->form->data->durability = '';
+                    $this->dispatch(
+                        'changeChoice',
+                        'durability',
+                        ''
+                    );
+                }
+                if($this->form->data->machining_quality) {
+                    $this->form->data->machining_quality = '';
+                    $this->dispatch(
+                        'changeChoice',
+                        'machining_quality',
+                        ''
+                    );
+                }
+            }
+        }
+
         if($property == 'form.data.durability') {
             $current_value = $this->form->data->machining_quality;
             $new_value = '';
