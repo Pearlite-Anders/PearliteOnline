@@ -52,7 +52,8 @@ class DynamicRelationshipField extends Component
 
     public function getChoices()
     {
-        $model = 'App\Models\\' . Str::ucfirst($this->column['relationship']);
+        $model = Str::remove('_id', $this->column['relationship']);
+        $model = 'App\Models\\' . Str::ucfirst($model);
         $model = $model::find($this->relation);
         $plural_modal = Str::plural(Str::lower(Str::replace('App\Models\\', '', $this->column['class'])));
         $collection = $model->{$plural_modal};

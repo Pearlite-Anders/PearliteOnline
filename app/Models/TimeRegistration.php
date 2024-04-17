@@ -23,7 +23,7 @@ class TimeRegistration extends Model
     public const LABEL_KEY = ['data.name'];
 
     public const SYSTEM_COLUMNS = [
-        'company' => [
+        'company_id' => [
             'type' => 'relationship',
             'relationship' => 'company',
             'class' => Company::class,
@@ -34,9 +34,9 @@ class TimeRegistration extends Model
             'data_class' => CompanyData::class,
             'multiple' => false,
         ],
-        'project' => [
+        'project_id' => [
             'type' => 'dynamic_relationship',
-            'relationship' => 'company',
+            'relationship' => 'company_id',
             'class' => Project::class,
             'label' => 'Project',
             'placeholder' => 'Choose project',

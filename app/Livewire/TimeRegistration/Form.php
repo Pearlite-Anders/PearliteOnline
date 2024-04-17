@@ -11,12 +11,14 @@ use Livewire\Form as LivewireForm;
 class Form extends LivewireForm
 {
     public $data;
-    public $company;
-    public $project;
+    public $company_id;
+    public $project_id;
 
     public function setFields(TimeRegistration $registration)
     {
         $this->data = TimeRegistrationData::from($registration->data);
+        $this->company_id = $registration->company_id;
+        $this->project_id = $registration->project_id;
     }
 
     public function create()
@@ -25,8 +27,8 @@ class Form extends LivewireForm
             'company_id' => auth()->user()->currentCompany->id,
         ], $this->transformedData()));
 
-        $registration->project()->associate($this->project);
-        $registration->company()->associate($this->company);
+        $registration->project()->associate($this->project_id);
+        $registration->company()->associate($this->company_id);
 
         return $this->handleUploads($registration);
     }
@@ -34,6 +36,8 @@ class Form extends LivewireForm
     public function update($registration)
     {
         $registration->update($this->transformedData());
+        $registration->project()->associate($this->project_id);
+        $registration->company()->associate($this->company_id);
 
         return $this->handleUploads($registration);
     }
@@ -43,8 +47,8 @@ class Form extends LivewireForm
         $data = array_merge([
             'company_id' => auth()->user()->currentCompany->id,
         ], $this->except([
-            'company',
-            'project',
+            'company_id',
+            'project_id',
         ]));
 
         return $data;

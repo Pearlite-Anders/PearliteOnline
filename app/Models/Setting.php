@@ -48,13 +48,14 @@ class Setting extends Model
         }
 
 
+
         $database_value = self::whereCompanyId($company_id)->where('key', $key)->first();
         if($database_value) {
             return $database_value->value;
         }
 
         $value = self::default()->get($key);
-        if($value) {
+        if(!is_null($value)) {
             return $value;
         }
 
@@ -230,6 +231,7 @@ class Setting extends Model
             'machine_maintenance_types' => [
                 'placeholder' => 'Placeholder',
             ],
+            'time_registration_tasks' => []
         ]);
     }
 
