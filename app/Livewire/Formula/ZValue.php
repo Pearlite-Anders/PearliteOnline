@@ -170,7 +170,7 @@ class ZValue extends Component
             foreach($this->columns as $column_index => $column) {
                 $depth_multiplier = $row['depth_multiplier'];
                 $thickness_multiplier = $column['thinkness_multiplier'];
-                $z_value = $depth_multiplier + $this->shape + $thickness_multiplier + ($this->shrinkage * $this->static) + $this->preheating;
+                $z_value = $depth_multiplier + $this->shape + ($thickness_multiplier * $this->static) + $this->shrinkage + $this->preheating;
                 $label = '-';
                 if($z_value >= 10 && $z_value < 20) {
                     $label = 'Z15';
