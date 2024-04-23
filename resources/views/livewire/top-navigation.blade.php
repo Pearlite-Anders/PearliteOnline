@@ -88,6 +88,131 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <hr class="border-t border-gray-200">
+            @can('viewAny', App\Models\WeldingCertificate::class)
+                <x-responsive-nav-link href="{{ route('welding-certificates.index') }}" :active="request()->routeIs('welding-certificates.*')">
+                    {{ __('Welding Certificates') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('viewAny', App\Models\Wps::class)
+                <x-responsive-nav-link href="{{ route('wps.index') }}" :active="request()->routeIs('wps.*')">
+                    {{ __('WPS') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('viewAny', App\Models\Wpqr::class)
+                <x-responsive-nav-link href="{{ route('wpqr.index') }}" :active="request()->routeIs('wpqr.*')">
+                    {{ __('WPQR') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('viewAny', App\Models\WeldingCoordination::class)
+                <x-responsive-nav-link href="{{ route('welding-coordination.index') }}" :active="request()->routeIs('welding-coordination.*')">
+                    {{ __('Welding Coordination') }}
+                </x-responsive-nav-link>
+            @endcan
+            @if(
+                auth()->user()->can('viewAny', App\Models\WeldingCertificate::class) ||
+                auth()->user()->can('viewAny', App\Models\Wps::class) ||
+                auth()->user()->can('viewAny', App\Models\Wpqr::class) ||
+                auth()->user()->can('viewAny', App\Models\WeldingCoordination::class)
+            )
+                <hr class="border-t border-gray-200">
+            @endif
+            @can('viewAny', App\Models\MachineMaintenance::class)
+                <x-responsive-nav-link href="{{ route('machine-maintenance.index') }}" :active="request()->routeIs('machine-maintenance.*')">
+                    {{ __('Machine Maintenance') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('viewAny', App\Models\Supplier::class)
+                <x-responsive-nav-link href="{{ route('supplier.index') }}" :active="request()->routeIs('supplier.*')">
+                    {{ __('Suppliers') }}
+                </x-responsive-nav-link>
+            @endcan
+            @if(
+                auth()->user()->can('viewAny', App\Models\MachineMaintenance::class) ||
+                auth()->user()->can('viewAny', App\Models\Supplier::class)
+            )
+                <hr class="border-t border-gray-200">
+            @endif
+            @can('viewAny', App\Models\Project::class)
+                <x-responsive-nav-link href="{{ route('project.index') }}" :active="request()->routeIs('project.*')">
+                    {{ __('Projects') }}
+                </x-responsive-nav-link>
+                <hr class="border-t border-gray-200">
+            @endcan
+            @can('viewAny', App\Models\Ce::class)
+                <x-responsive-nav-link href="{{ route('ce.index') }}" :active="request()->routeIs('ce.*')">
+                    {{ __('CE') }}
+                </x-responsive-nav-link>
+                <hr class="border-t border-gray-200">
+            @endcan
+
+            @can('viewAny', App\Models\Formula::class)
+                <div
+                    class="mt-2 mb-0 text-left list-outside"
+                    x-data="{ open: {{ request()->routeIs('formulas.*') ? 'true' : 'false'}} }"
+                >
+                    <button
+                        @click="open = !open"
+                        type="button"
+                        class="flex items-center w-full py-2 pl-3 pr-4 text-base font-normal text-gray-900 border-l-4 border-transparent rounded-lg cursor-pointer hover:bg-cyan-50"
+                    >
+                        {{ __('Formulas') }}
+                        <x-icon.plus x-show="!open" class="w-4 h-4 ml-auto text-gray-500 align-middle duration-75 ease-in-out" />
+                        <x-icon.minus x-show="open" class="w-4 h-4 ml-auto text-gray-500 align-middle duration-75 ease-in-out" />
+
+
+                    </button>
+                    <ul
+                        x-show="open"
+                        x-cloak
+                        x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="transform opacity-0 scale-95"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="transform opacity-100 scale-100"
+                        x-transition:leave-end="transform opacity-0 scale-95"
+                        class="px-0 pt-0 pb-2 m-0 text-black list-none ml-7"
+                    >
+                        <li class="mt-2 mb-0 text-left list-outside">
+                            <x-nav-link class="text-sm" href="{{ route('formulas.carbon-equivalent') }}" :active="request()->routeIs('formulas.carbon-equivalent')">
+                                {{ __('Carbon Equivalent') }}
+                            </x-nav-link>
+                        </li>
+                        <li class="mt-2 mb-0 text-left list-outside">
+                            <x-nav-link class="text-sm" href="{{ route('formulas.heat-input') }}" :active="request()->routeIs('formulas.heat-input')">
+                                {{ __('Heat Input') }}
+                            </x-nav-link>
+                        </li>
+                        <li class="mt-2 mb-0 text-left list-outside">
+                            <x-nav-link class="text-sm" href="{{ route('formulas.z-value') }}" :active="request()->routeIs('formulas.z-value')">
+                                {{ __('Z Value') }}
+                            </x-nav-link>
+                        </li>
+                        <li class="mt-2 mb-0 text-left list-outside">
+                            <x-nav-link class="text-sm" href="{{ route('formulas.welding-speed') }}" :active="request()->routeIs('formulas.welding-speed')">
+                                {{ __('Welding speed pr. heat input') }}
+                            </x-nav-link>
+                        </li>
+                    </ul>
+                </div>
+                <hr class="border-t border-gray-200">
+            @endcan
+
+            @can('viewAny', App\Models\User::class)
+                <x-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
+                    {{ __('Users') }}
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('viewAny', App\Models\Welder::class)
+                <x-responsive-nav-link href="{{ route('welder.index') }}" :active="request()->routeIs('welder.*')">
+                    {{ __('Welders') }}
+                </x-responsive-nav-link>
+            @endcan
+
+
+
+
         </div>
 
         <!-- Responsive Settings Options -->

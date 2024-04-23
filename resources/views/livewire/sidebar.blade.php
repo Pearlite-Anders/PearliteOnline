@@ -4,6 +4,15 @@
             <div class="flex-1 px-3 pb-16 leading-6 text-black bg-white">
                 @if(auth()->user()->currentCompany)
                     <ul class="px-0 pt-0 pb-2 m-0 text-black list-none">
+                        <li class="mt-2 mb-0 text-left list-outside">
+                            <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                                <x-icon.home class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
+                        </li>
+                        <li class="mt-2 mb-0 text-left list-outside">
+                            <hr class="border-t border-gray-200">
+                        </li>
                         @can('viewAny', App\Models\WeldingCertificate::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('welding-certificates.index') }}" :active="request()->routeIs('welding-certificates.*')">
@@ -28,19 +37,30 @@
                                 </x-nav-link>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\Welder::class)
+                        @can('viewAny', App\Models\WeldingCoordination::class)
                             <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('welder.index') }}" :active="request()->routeIs('welder.*')">
-                                    <x-icon.welder class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('Welders') }}
+                                <x-nav-link href="{{ route('welding-coordination.index') }}" :active="request()->routeIs('welding-coordination.*')">
+                                    <x-icon.project class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Welding Coordination') }}
                                 </x-nav-link>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\Ce::class)
+
+                        @if(
+                            auth()->user()->can('viewAny', App\Models\WeldingCertificate::class) ||
+                            auth()->user()->can('viewAny', App\Models\Wps::class) ||
+                            auth()->user()->can('viewAny', App\Models\Wpqr::class) ||
+                            auth()->user()->can('viewAny', App\Models\WeldingCoordination::class)
+                        )
                             <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('ce.index') }}" :active="request()->routeIs('ce.*')">
-                                    <x-icon.ce class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('CE Marking') }}
+                                <hr class="border-t border-gray-200">
+                            </li>
+                        @endif
+                        @can('viewAny', App\Models\MachineMaintenance::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('machine-maintenance.index') }}" :active="request()->routeIs('machine-maintenance.*')">
+                                    <x-icon.project class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Maintenance') }}
                                 </x-nav-link>
                             </li>
                         @endcan
@@ -52,6 +72,38 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+                        @if(
+                            auth()->user()->can('viewAny', App\Models\MachineMaintenance::class) ||
+                            auth()->user()->can('viewAny', App\Models\Supplier::class)
+                        )
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <hr class="border-t border-gray-200">
+                            </li>
+                        @endif
+
+                        @can('viewAny', App\Models\Project::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('project.index') }}" :active="request()->routeIs('project.*')">
+                                    <x-icon.project class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Projects') }}
+                                </x-nav-link>
+                            </li>
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <hr class="border-t border-gray-200">
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\Ce::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('ce.index') }}" :active="request()->routeIs('ce.*')">
+                                    <x-icon.ce class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('CE Marking') }}
+                                </x-nav-link>
+                            </li>
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <hr class="border-t border-gray-200">
+                            </li>
+                        @endcan
+
                         @can('viewAny', App\Models\Formula::class)
                             <li
                                 class="mt-2 mb-0 text-left list-outside"
@@ -81,52 +133,32 @@
                                     class="px-0 pt-0 pb-2 m-0 text-black list-none ml-7"
                                 >
                                     <li class="mt-2 mb-0 text-left list-outside">
-                                        <x-nav-link href="{{ route('formulas.carbon-equivalent') }}" :active="request()->routeIs('formulas.carbon-equivalent')">
+                                        <x-nav-link class="text-sm" href="{{ route('formulas.carbon-equivalent') }}" :active="request()->routeIs('formulas.carbon-equivalent')">
                                             {{ __('Carbon Equivalent') }}
                                         </x-nav-link>
                                     </li>
                                     <li class="mt-2 mb-0 text-left list-outside">
-                                        <x-nav-link href="{{ route('formulas.heat-input') }}" :active="request()->routeIs('formulas.heat-input')">
+                                        <x-nav-link class="text-sm" href="{{ route('formulas.heat-input') }}" :active="request()->routeIs('formulas.heat-input')">
                                             {{ __('Heat Input') }}
                                         </x-nav-link>
                                     </li>
                                     <li class="mt-2 mb-0 text-left list-outside">
-                                        <x-nav-link href="{{ route('formulas.z-value') }}" :active="request()->routeIs('formulas.z-value')">
+                                        <x-nav-link class="text-sm" href="{{ route('formulas.z-value') }}" :active="request()->routeIs('formulas.z-value')">
                                             {{ __('Z Value') }}
                                         </x-nav-link>
                                     </li>
                                     <li class="mt-2 mb-0 text-left list-outside">
-                                        <x-nav-link href="{{ route('formulas.welding-speed') }}" :active="request()->routeIs('formulas.welding-speed')">
+                                        <x-nav-link class="text-sm" href="{{ route('formulas.welding-speed') }}" :active="request()->routeIs('formulas.welding-speed')">
                                             {{ __('Welding speed pr. heat input') }}
                                         </x-nav-link>
                                     </li>
                                 </ul>
                             </li>
-                        @endcan
-                        @can('viewAny', App\Models\Project::class)
                             <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('project.index') }}" :active="request()->routeIs('project.*')">
-                                    <x-icon.project class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('Projects') }}
-                                </x-nav-link>
+                                <hr class="border-t border-gray-200">
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\WeldingCoordination::class)
-                            <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('welding-coordination.index') }}" :active="request()->routeIs('welding-coordination.*')">
-                                    <x-icon.project class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('Welding Coordination') }}
-                                </x-nav-link>
-                            </li>
-                        @endcan
-                        @can('viewAny', App\Models\MachineMaintenance::class)
-                            <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('machine-maintenance.index') }}" :active="request()->routeIs('machine-maintenance.*')">
-                                    <x-icon.project class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('Maintenance') }}
-                                </x-nav-link>
-                            </li>
-                        @endcan
+
                         @can('viewAny', App\Models\User::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
@@ -135,6 +167,16 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+
+                        @can('viewAny', App\Models\Welder::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('welder.index') }}" :active="request()->routeIs('welder.*')">
+                                    <x-icon.welder class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Welders') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
+
                     </ul>
                 @endif
 
