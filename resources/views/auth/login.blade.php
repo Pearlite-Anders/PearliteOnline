@@ -5,17 +5,7 @@
         </x-slot>
 
 
-        <div class="hidden w-2/3 leading-6 text-black lg:flex">
-            <img
-            class="block h-auto max-w-full leading-6 text-black align-middle rounded-l-lg"
-            src="https://picsum.photos/600/800"
-
-            alt="login image"
-            />
-        </div>
-
-
-        <div class="w-full p-6 leading-6 text-black lg:px-16 lg:py-0 sm:p-8">
+        <div class="w-full p-6 leading-6 text-black lg:px-16 sm:p-8">
 
             <x-validation-errors class="mb-4" />
 

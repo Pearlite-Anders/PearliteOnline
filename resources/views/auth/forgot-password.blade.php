@@ -4,16 +4,7 @@
             <x-authentication-card-logo />
         </x-slot>
 
-        <div class="hidden w-2/3 leading-6 text-black lg:flex">
-            <img
-                class="block h-auto max-w-full leading-6 text-black align-middle rounded-l-lg"
-                src="https://picsum.photos/600/800"
-
-                alt="login image"
-                />
-        </div>
-
-        <div class="w-full p-6 leading-6 text-black lg:px-16 lg:py-0 sm:p-8">
+        <div class="w-full p-6 leading-6 text-black lg:px-16 sm:p-8">
 
             <div class="mb-4 text-sm text-gray-600">
                 {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
