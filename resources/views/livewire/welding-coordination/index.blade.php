@@ -4,7 +4,7 @@
 
     <x-index-header :compressed_header="$compressed_header">
         <x-slot name="heading">
-            <x-icon.truck class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+            <x-icon.welding-coordination class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
             {{ __('Welding Coordination') }}
         </x-slot>
         <x-slot name="search">
@@ -35,12 +35,14 @@
                     {{ __('Add Welding Coordination') }}
                 </x-button.link>
 
-                <livewire:attach-project
-                    :model="App\Models\WeldingCoordination::class"
-                    :project_id="$project_id"
-                    :name="__('Welding Coordination')"
-                    name_field="purpose"
-                />
+                @if($project_id)
+                    <livewire:attach-project
+                        :model="App\Models\WeldingCoordination::class"
+                        :project_id="$project_id"
+                        :name="__('Welding Coordination')"
+                        name_field="purpose"
+                    />
+                @endif
             @endcan
         </x-slot>
     </x-index-header>

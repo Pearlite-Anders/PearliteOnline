@@ -4,7 +4,7 @@
 
     <x-index-header>
         <x-slot name="heading">
-            <x-icon.welding-certificate class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+            <x-icon.maintenance class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
             {{ __('Maintenances') }}
         </x-slot>
         <x-slot name="search">

@@ -1,3 +1,4 @@
-<svg {{ $attributes->merge(['class' => 'block']) }} xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 15 15" stroke="currentColor" stroke-width=".5">
-    <path  d="M9.5 14.5H9a.5.5 0 0 0 .8.4l-.3-.4Zm2-1.5.3-.4a.5.5 0 0 0-.6 0l.3.4Zm2 1.5-.3.4a.5.5 0 0 0 .8-.4h-.5Zm-2-3.5A2.5 2.5 0 0 1 9 8.5H8a3.5 3.5 0 0 0 3.5 3.5v-1ZM14 8.5a2.5 2.5 0 0 1-2.5 2.5v1A3.5 3.5 0 0 0 15 8.5h-1ZM11.5 6A2.5 2.5 0 0 1 14 8.5h1A3.5 3.5 0 0 0 11.5 5v1Zm0-1A3.5 3.5 0 0 0 8 8.5h1A2.5 2.5 0 0 1 11.5 6V5ZM9 10.5v4h1v-4H9Zm.8 4.4 2-1.5-.6-.8-2 1.5.6.8Zm1.4-1.5 2 1.5.6-.8-2-1.5-.6.8Zm2.8 1.1v-4h-1v4h1ZM15 5V1.5h-1V5h1Zm-1.5-5h-12v1h12V0ZM0 1.5v12h1v-12H0ZM1.5 15H8v-1H1.5v1ZM0 13.5A1.5 1.5 0 0 0 1.5 15v-1a.5.5 0 0 1-.5-.5H0ZM1.5 0A1.5 1.5 0 0 0 0 1.5h1a.5.5 0 0 1 .5-.5V0ZM15 1.5A1.5 1.5 0 0 0 13.5 0v1a.5.5 0 0 1 .5.5h1ZM3 5h5V4H3v1Zm0 3h3V7H3v1Z"/>
+<svg {{ $attributes->merge(['class' => 'block']) }} width="64" height="64" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg ">
+    <path fill="currentColor" d="M2 6h2v20H2zm4-2h2v24H6zm8 18h12v2H14zm0-6h12v2H14z"/>
+    <path fill="currentColor" d="m29.7 9.3l-7-7c-.2-.2-.4-.3-.7-.3H12c-1.1 0-2 .9-2 2v24c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V10c0-.3-.1-.5-.3-.7M22 4.4l5.6 5.6H22zM28 28H12V4h8v6c0 1.1.9 2 2 2h6z"/>
 </svg>
