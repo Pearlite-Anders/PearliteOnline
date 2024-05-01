@@ -90,10 +90,10 @@
             <tr>
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Resistance to fire') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                    @if($form->data->fire_resistance)
-                        {{ $form->data->fire_resistance }}
+                    @if($form->data->behavior_in_fire)
+                        {{ $form->data->behavior_in_fire }}
                     @else
-                        {{ App\Models\Ce::getColumn('fire_resistance')->default }}
+                        {{ App\Models\Ce::getColumn('behavior_in_fire')->default }}
                     @endif
                 </td>
             </tr>

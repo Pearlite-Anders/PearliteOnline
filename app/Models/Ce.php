@@ -60,15 +60,6 @@ class Ce extends Model
             'filter' => 'select',
             'help' => 'Specify the execution class, for example, EXC2',
         ],
-        'execution_class' => [
-            'type' => 'select',
-            'multiple' => false,
-            'label' => 'Execution class',
-            'options' => 'ce_execution_classes',
-            'placeholder' => 'Select - Example: EXC 2',
-            'filter' => 'select',
-            'help' => 'Specify the execution standard, for example, EN 1090-2',
-        ],
         'standard' => [
             'type' => 'select',
             'label' => 'Standard',
@@ -78,6 +69,16 @@ class Ce extends Model
             'filter' => 'select',
             'help' => 'Execution standard',
         ],
+        'execution_class' => [
+            'type' => 'select',
+            'multiple' => false,
+            'label' => 'Execution class',
+            'options' => 'ce_execution_classes',
+            'placeholder' => 'Select - Example: EXC 2',
+            'filter' => 'select',
+            'help' => 'Specify the execution standard, for example, EN 1090-2',
+        ],
+
         'scope' => [
             'type' => 'text',
             'label' => 'Scope',
@@ -105,7 +106,7 @@ class Ce extends Model
         ],
         'behavior_in_fire' => [
             'type' => 'select',
-            'label' => 'Behavior in Fire',
+            'label' => 'Reaction to fire',
             'multiple' => false,
             'options' => 'ce_behavior_in_fires',
             'placeholder' => 'Select - Example: A1',
@@ -155,7 +156,7 @@ class Ce extends Model
         ],
         'machining_quality' => [
             'type' => 'select',
-            'label' => 'Machining Quality',
+            'label' => 'Prepration grade',
             'multiple' => false,
             'options' => [
                 'P1' => 'P1',
@@ -169,15 +170,9 @@ class Ce extends Model
                 'surface' => ['paint', 'galvanization'],
             ],
         ],
-        'dimensioning' => [
-            'type' => 'text',
-            'label' => 'Dimensioning',
-            'placeholder' => '',
-            'filter' => 'search',
-        ],
         'load_bearing_capacity' => [
             'type' => 'system_text',
-            'default' => 'Dette er en default værdi',
+            'default' => 'NPD',
             'npd_button' => true,
             'label' => 'Load Bearing Capacity',
             'placeholder' => 'Projektering ifølge EN 1990',
@@ -185,7 +180,7 @@ class Ce extends Model
         ],
         'deformation_serviceability_limit_state' => [
             'type' => 'system_text',
-            'default' => 'Dette er en default værdi',
+            'default' => 'NPD',
             'npd_button' => true,
             'label' => 'Deformation at Serviceability Limit State',
             'placeholder' => '',
@@ -193,17 +188,9 @@ class Ce extends Model
         ],
         'fatigue_strength' => [
             'type' => 'system_text',
-            'default' => 'Dette er en default værdi',
+            'default' => 'NPD',
             'npd_button' => true,
             'label' => 'Fatigue Strength',
-            'placeholder' => '',
-            'filter' => 'search',
-        ],
-        'fire_resistance' => [
-            'type' => 'system_text',
-            'default' => 'Dette er en default værdi',
-            'npd_button' => true,
-            'label' => 'Resistance to Fire',
             'placeholder' => '',
             'filter' => 'search',
         ],

@@ -29,7 +29,7 @@
             type="button"
             class="absolute top-[11px] right-0 px-3"
             @click="picker.clear()"
-            x-show="value.length"
+            x-show="value && value.length"
         >
             <x-icon.x class="w-4 h-4" />
         </button>

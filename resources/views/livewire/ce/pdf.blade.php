@@ -42,7 +42,7 @@
             @endif
         </div>
         <div style="font-weight:bold;margin-top:10px;">
-            {{__('Behavior in Fire: Material Classification: Class')}}
+            {{__('Reaction to fire: Material Classification: Class')}}
             {{ optional($ce->data)['behavior_in_fire'] }}
 
         </div>
@@ -121,10 +121,10 @@
             @if(in_array(optional($ce->data)['method'], ['Method 2', 'Method 3b']))
                 <div>
                     <span style="text-decoration:underline">{{ __('Resistance to fire') }}:</span>
-                    @if(optional($ce->data)['fire_resistance'])
-                        {{ optional($ce->data)['fire_resistance'] }}
+                    @if(optional($ce->data)['behavior_in_fire'])
+                        {{ optional($ce->data)['behavior_in_fire'] }}
                     @else
-                        {{ App\Models\Ce::getColumn('fire_resistance')->default }}
+                        {{ App\Models\Ce::getColumn('behavior_in_fire')->default }}
                     @endif
                 </div>
             @endif

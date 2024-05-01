@@ -61,9 +61,9 @@
                 @endif
             </div>
             <div style="font-weight:bold;margin-top:10px;">
-                {{__('Behavior in Fire: Material Classification: Class')}}
+                {{__('Reaction to fire: Material Classification: Class')}}
                 <x-tooltip-word
-                    :tooltip="__('Behavior in Fire')"
+                    :tooltip="__('Reaction to fire')"
                 >{{ $form->data->behavior_in_fire }}</x-tooltip-word>
 
             </div>
@@ -153,10 +153,10 @@
                     <div>
                         <span style="text-decoration:underline">{{ __('Resistance to fire') }}:</span>
                         <x-tooltip-word :tooltip="__('Deformation at serviceability limit state')">
-                            @if($form->data->fire_resistance)
-                                {{ $form->data->fire_resistance }}
+                            @if($form->data->behavior_in_fire)
+                                {{ $form->data->behavior_in_fire }}
                             @else
-                                {{ App\Models\Ce::getColumn('fire_resistance')->default }}
+                                {{ App\Models\Ce::getColumn('behavior_in_fire')->default }}
                             @endif
                         </x-tooltip-word>
                     </div>

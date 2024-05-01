@@ -107,7 +107,10 @@
             rows="5"
         />
     @elseif($column['type'] == 'system_text')
-        <div x-data="{readonly: true}">
+        <div
+            x-data="{readonly: true}"
+            x-effect="readonly = $wire.form.data.{{$key}} && $wire.form.data.{{$key}}.length > 0 ? false : true"
+        >
             <div x-show="readonly" class="relative">
                 @php($class = 'block w-full leading-tight border-gray-300 rounded-md shadow-sm bg-gray-50 placeholder:text-gray-400 placeholder:text-sm placeholder:italic focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50')
                 @if(optional($column)['prefix'])

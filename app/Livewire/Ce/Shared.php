@@ -93,5 +93,28 @@ trait Shared
                 );
             }
         }
+
+        if($property == 'form.data.method') {
+            if($value == 'Method 2') {
+                $this->form->data->load_bearing_capacity = 'EN 1990';
+                $this->form->data->deformation_serviceability_limit_state = 'EN 1990';
+            }
+
+            if($value == 'Method 1') {
+                $this->form->data->load_bearing_capacity = '';
+                $this->form->data->deformation_serviceability_limit_state = '';
+            }
+
+            if($value == 'Method 3a') {
+                $this->form->data->load_bearing_capacity = 'EN 1990, National Annex';
+                $this->form->data->deformation_serviceability_limit_state = 'EN 1990, National Annex';
+            }
+
+            if($value == 'Method 3b') {
+                $this->form->data->load_bearing_capacity = '';
+                $this->form->data->deformation_serviceability_limit_state = '';
+            }
+
+        }
     }
 }
