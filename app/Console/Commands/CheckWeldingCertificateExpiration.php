@@ -33,7 +33,7 @@ class CheckWeldingCertificateExpiration extends Command
         $this->info('Check Welding Certificate Expiration');
 
         Company::all()->each(function ($company) {
-            $this->info('Company: ' . $company->name);
+            $this->info('Company: ' . $company->data['name']);
             $notification_before_expiration = Setting::get('welding_certificate_notification_before_expiration', null, $company->id);
 
             $weldingCertificates = WeldingCertificate::query()
@@ -44,7 +44,7 @@ class CheckWeldingCertificateExpiration extends Command
                         now()
                             ->addDays($notification_before_expiration)
                             ->subYears(3)
-                            ->format('Y-m-d')
+                            ->format('Y.m.d')
                     );
                     $query->where(
                         'data->type',
@@ -57,7 +57,7 @@ class CheckWeldingCertificateExpiration extends Command
                         now()
                             ->addDays($notification_before_expiration)
                             ->subYears(6)
-                            ->format('Y-m-d')
+                            ->format('Y.m.d')
                     );
                     $query->where(
                         'data->type',
@@ -70,13 +70,15 @@ class CheckWeldingCertificateExpiration extends Command
 
             if ($weldingCertificates->count() > 0) {
                 $this->info('Welding Certificates: ' . $weldingCertificates->count());
-                $mails = Setting::get('welding_certificate_notification_email', null, $weldingCertificates->first()->company_id);
-                $mails = explode(',', $mails);
-                $mails = array_map('trim', $mails);
-                foreach ($mails as $mail) {
-                    $this->info('Mail: ' . $mail);
-                    Notification::route('mail', $mail)->notify(new Expiration($weldingCertificates, $notification_before_expiration));
-                }
+                $company->notify(new Expiration($weldingCertificates->pluck('id'), $notification_before_expiration));
+
+                // $mails = Setting::get('welding_certificate_notification_email', null, $weldingCertificates->first()->company_id);
+                // $mails = explode(',', $mails);
+                // $mails = array_map('trim', $mails);
+                // foreach ($mails as $mail) {
+                //     $this->info('Mail: ' . $mail);
+                //     Notification::route('mail', $mail)->notify(new Expiration($weldingCertificates, $notification_before_expiration));
+                // }
             }
         });
     }

@@ -12,7 +12,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('backup:clean')->daily()->at('01:00');
+
+
+        $schedule->command('app:check-welding-certificate-expiration')->daily()->at('09:00')->timezone('Europe/Copenhagen');
+        $schedule->command('app:check-welding-certificate-verification')->daily()->at('09:00')->timezone('Europe/Copenhagen');
+        $schedule->command('app:send-welding-notifications')->daily()->at('09:30')->timezone('Europe/Copenhagen');
+
         $schedule->command('backup:run')->daily()->at('01:30');
         $schedule->command('backup:monitor')->daily()->at('03:00');
 

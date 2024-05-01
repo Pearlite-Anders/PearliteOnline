@@ -33,7 +33,7 @@ class CheckWeldingCertificateVerification extends Command
         $this->info('Check Welding Certificate Verification');
 
         Company::all()->each(function ($company) {
-            $this->info('Company: ' . $company->name);
+            $this->info('Company: ' . $company->data['name']);
             $notification_before_verification = Setting::get('welding_certificate_notification_before_verification', null, $company->id);
 
             $weldingCertificates = WeldingCertificate::query()
@@ -43,21 +43,21 @@ class CheckWeldingCertificateVerification extends Command
                     now()
                         ->addDays($notification_before_verification)
                         ->subMonths(6)
-                        ->format('Y-m-d')
+                        ->format('Y.m.d')
                 )
                 ->get();
 
-            $this->info('Welding Certificates: ' . $weldingCertificates->count());
-
             if ($weldingCertificates->count() > 0) {
                 $this->info('Welding Certificates: ' . $weldingCertificates->count());
-                $mails = Setting::get('welding_certificate_notification_email', null, $weldingCertificates->first()->company_id);
-                $mails = explode(',', $mails);
-                $mails = array_map('trim', $mails);
-                foreach ($mails as $mail) {
-                    $this->info('Mail: ' . $mail);
-                    Notification::route('mail', $mail)->notify(new Verification($weldingCertificates, $notification_before_verification));
-                }
+                $company->notify(new Verification($weldingCertificates->pluck('id'), $notification_before_verification));
+
+                // $mails = Setting::get('welding_certificate_notification_email', null, $weldingCertificates->first()->company_id);
+                // $mails = explode(',', $mails);
+                // $mails = array_map('trim', $mails);
+                // foreach ($mails as $mail) {
+                //     $this->info('Mail: ' . $mail);
+                //     Notification::route('mail', $mail)->notify(new Verification($weldingCertificates, $notification_before_verification));
+                // }
             }
         });
     }

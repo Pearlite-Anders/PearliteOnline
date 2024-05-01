@@ -30,7 +30,7 @@ class Expiration extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -46,6 +46,7 @@ class Expiration extends Notification
                     ]);
     }
 
+
     /**
      * Get the array representation of the notification.
      *
@@ -54,7 +55,8 @@ class Expiration extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'weldingCertificates' => $this->weldingCertificates,
+            'notification_before_expiration' => $this->notification_before_expiration,
         ];
     }
 }

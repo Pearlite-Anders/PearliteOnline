@@ -30,7 +30,7 @@ class Verification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -54,7 +54,8 @@ class Verification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'weldingCertificates' => $this->weldingCertificates,
+            'notification_before_verification' => $this->notification_before_verification,
         ];
     }
 }
