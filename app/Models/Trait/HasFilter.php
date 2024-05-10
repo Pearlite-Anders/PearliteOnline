@@ -3,6 +3,7 @@
 namespace App\Models\Trait;
 
 use App\Models\File;
+use App\Models\InternalOrder;
 use Illuminate\Support\Carbon;
 
 trait HasFilter
@@ -100,6 +101,10 @@ trait HasFilter
                     $value = $this->{$column->relationship} ? $this->{$column->relationship}->{ $column->class::LABEL_KEY } : '';
                 }
             }
+        } elseif($column->type == 'dynamic_relationship') {
+            if($column->class == InternalOrder::class) {
+                $value = $this->internalorder->data['name'];
+            }
         } elseif($column->type == 'calculated') {
             $value = optional($this)->{$column_key};
         } elseif($column->type == 'select') {
@@ -117,6 +122,12 @@ trait HasFilter
         } elseif($column->type == 'radios') {
             if(is_array($column->options) && optional($this->data)[$column_key]) {
                 $value = optional($column->options)[optional($this->data)[$column_key]];
+            }
+        } elseif($column->type == 'checkbox') {
+            if(optional($this->data)[$column_key]) {
+                $value = __('Yes');
+            } else {
+                $value = __('No');
             }
         } elseif($column->type == 'date') {
             if(preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($this->data)[$column_key])) {

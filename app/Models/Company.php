@@ -121,10 +121,25 @@ class Company extends Model
         return $this->hasMany(MachineMaintenance::class);
     }
 
+    public function internalorders($view = null)
+    {
+        if($view == 'index') {
+            return InternalOrder::query();
+        }
+
+        return $this->hasMany(InternalOrder::class);
+    }
+
     public function timeregistrations()
     {
-        return TimeRegistration::query();
+        $query = TimeRegistration::query();
+        if(auth()->user()->isAdmin()) {
+            return $query;
+        }
+
+        return $query->where('user_id', auth()->user()->id);
     }
+
 
     public static function get_choices()
     {

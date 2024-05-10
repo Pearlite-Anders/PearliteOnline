@@ -196,7 +196,13 @@ class User extends Authenticatable
 
     public static function get_choices()
     {
-        return auth()->user()->currentCompany->users()->where('role', self::USER_ROLE)->get()->pluck('name', 'id')->toArray();
+        return auth()
+                ->user()
+                ->currentCompany->users()
+                ->where('role', self::USER_ROLE)
+                ->get()
+                ->pluck('name', 'id')
+                ->toArray();
     }
 
     public function humanRole()

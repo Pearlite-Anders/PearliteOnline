@@ -22,10 +22,10 @@ class Edit extends Component
                 ->with('flash.banner', __('TimeRegistration updated.'));
     }
 
-    public function mount(TimeRegistration $registration)
+    public function mount(TimeRegistration $timeRegistration)
     {
-        $this->registration = $registration;
-        $this->form->setFields($registration);
+        $this->registration = $timeRegistration;
+        $this->form->setFields($timeRegistration);
     }
 
     public function render()

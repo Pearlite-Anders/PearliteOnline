@@ -26,32 +26,12 @@ class DynamicRelationshipField extends Component
         $this->checksum = md5($this->value);
     }
 
-    public function render()
-    {
-
-        if(
-            $this->checksum !== md5($this->value) &&
-            $this->relation &&
-            $this->lastRelation !== $this->relation
-        ) {
-            $this->value = '';
-            $this->lastRelation = $this->relation;
-            $this->dispatch(
-                'refreshChoices',
-                $this->getChoices(),
-                $this->value,
-                $this->column['key']
-            );
-        }
-
-
-        return view('livewire.dynamic-relationship-field')->with([
-            'choices' => []
-        ]);
-    }
-
     public function getChoices()
     {
+        if(!$this->relation) {
+            return [];
+        }
+
         $model = Str::remove('_id', $this->column['relationship']);
         $model = 'App\Models\\' . Str::ucfirst($model);
         $model = $model::find($this->relation);
@@ -70,5 +50,28 @@ class DynamicRelationshipField extends Component
             })->toArray();
         }
         return $collection->pluck($this->column['class']::LABEL_KEY, 'id')->toArray();
+    }
+
+    public function render()
+    {
+
+        if(
+            $this->checksum !== md5($this->value) &&
+            $this->relation &&
+            $this->lastRelation !== $this->relation
+        ) {
+            $this->value = '';
+            $this->lastRelation = $this->relation;
+            $this->dispatch(
+                'refreshChoices',
+                $this->getChoices(),
+                $this->value,
+                $this->column['key']
+            );
+        }
+
+        return view('livewire.dynamic-relationship-field')->with([
+            'choices' => $this->getChoices()
+        ]);
     }
 }

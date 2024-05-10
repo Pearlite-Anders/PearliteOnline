@@ -93,7 +93,11 @@ Route::middleware([
     Route::get('/time-registration', \App\Livewire\TimeRegistration\Index::class)->name('time-registration.index');
     Route::get('/time-registration/settings', \App\Livewire\TimeRegistration\Settings::class)->name('time-registration.settings');
     Route::get('/time-registration/create', \App\Livewire\TimeRegistration\Create::class)->name('time-registration.create');
-    Route::get('/time-registration/{time-registration}/edit', \App\Livewire\TimeRegistration\Edit::class)->name('time-registration.edit');
+    Route::get('/time-registration/{timeRegistration}/edit', \App\Livewire\TimeRegistration\Edit::class)->name('time-registration.edit');
+
+    Route::get('/internal-order', \App\Livewire\InternalOrder\Index::class)->name('internal-order.index');
+    Route::get('/internal-order/create', \App\Livewire\InternalOrder\Create::class)->name('internal-order.create');
+    Route::get('/internal-order/{internalOrder}/edit', \App\Livewire\InternalOrder\Edit::class)->name('internal-order.edit');
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
 

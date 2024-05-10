@@ -14,7 +14,7 @@ trait WithTable
             $this->filters = $this->preset_filters;
         }
 
-        $query = auth()->user()->currentCompany->{$relation}()
+        $query = auth()->user()->currentCompany->{$relation}('index')
                     ->when($this->search, fn ($query, $term) => $this->applySearch($query, $term))
                     ->when($this->filters, fn ($query, $filters) => $this->applyFilters($query, $filters));
 

@@ -4,8 +4,8 @@
 
     <x-index-header>
         <x-slot name="heading">
-            <x-icon.time-registration class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-            {{ __('Time registration') }}
+            <x-icon.truck class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+            {{ __('Internal Order') }}
         </x-slot>
         <x-slot name="search">
             <div class="grid w-full grid-cols-1 gap-4 pr-16 md:grid-cols-8">
@@ -21,16 +21,11 @@
             </div>
         </x-slot>
         <x-slot name="buttons">
-            @if(auth()->user()->isAdmin())
-                <x-button.link href="{{ route('time-registration.settings') }}" class="inline-flex items-center justify-center text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-gray-800">
-                    <x-icon.settings class="block w-6 h-6 text-gray-500 align-middle" />
-                </x-button.link>
-            @endif
             <livewire:table-columns :columns="$columns" />
-            @can('create', App\Models\TimeRegistration::class)
-                <x-button.link href="{{ route('time-registration.create') }}" class="inline-flex items-center justify-center whitespace-nowrap">
+            @can('create', App\Models\InternalOrder::class)
+                <x-button.link href="{{ route('internal-order.create') }}" class="inline-flex items-center justify-center whitespace-nowrap">
                     <x-icon.plus class="mr-2 -ml-1 align-middle" />
-                    {{ __('Add Time Registration') }}
+                    {{ __('Add Internal Order') }}
                 </x-button.link>
             @endcan
         </x-slot>
@@ -44,47 +39,47 @@
                     @foreach($columns as $column)
                         @continue($column->visible === false)
                         @if(
-                            App\Models\TimeRegistration::SYSTEM_COLUMNS[$column->key]['type'] == 'relationship' ||
-                            App\Models\TimeRegistration::SYSTEM_COLUMNS[$column->key]['type'] == 'calculated'
+                            App\Models\InternalOrder::SYSTEM_COLUMNS[$column->key]['type'] == 'relationship' ||
+                            App\Models\InternalOrder::SYSTEM_COLUMNS[$column->key]['type'] == 'calculated'
                         )
-                            <x-table.heading wire:click="sortBy('{{ $column->key }}' )" sortable :multiColumn="false" :direction="$sorts['{{ $column->key }}'] ?? null">{{ App\Models\TimeRegistration::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                            <x-table.heading wire:click="sortBy('{{ $column->key }}' )" sortable :multiColumn="false" :direction="$sorts['{{ $column->key }}'] ?? null">{{ App\Models\InternalOrder::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
                         @else
-                            <x-table.heading wire:click="sortBy('data->{{ $column->key }}')" sortable :multiColumn="false" :direction="$sorts['data->{{ $column->key }}'] ?? null">{{ App\Models\TimeRegistration::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                            <x-table.heading wire:click="sortBy('data->{{ $column->key }}')" sortable :multiColumn="false" :direction="$sorts['data->{{ $column->key }}'] ?? null">{{ App\Models\InternalOrder::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
                         @endif
                     @endforeach
                     <x-table.heading />
                 </x-slot>
                 <x-slot name="body">
-                    @foreach($registrations as $regstration)
+                    @foreach($internalOrders as $internalOrder)
                         <x-table.row
-                            :edit_link="route('time-registration.edit', $regstration)"
-                            :can_edit="auth()->user()->can('update', $regstration)"
+                            :edit_link="route('internal-order.edit', $internalOrder)"
+                            :can_edit="auth()->user()->can('update', $internalOrder)"
                             class="cursor-pointer hover:bg-gray-50"
                         >
                             @foreach($columns as $column)
                                 @continue($column->visible === false)
                                 <x-table.model-value-cell
                                     :key="$column->key"
-                                    :column="App\Models\TimeRegistration::SYSTEM_COLUMNS[$column->key]"
-                                    :model="$regstration"
+                                    :column="App\Models\InternalOrder::SYSTEM_COLUMNS[$column->key]"
+                                    :model="$internalOrder"
                                 />
                             @endforeach
 
                             <x-table.cell class="text-right">
                                 <div class="flex">
-                                    @can('update', $regstration)
+                                    @can('update', $internalOrder)
                                         <x-button.link
-                                            href="{{ route('time-registration.edit', $regstration) }}"
+                                            href="{{ route('internal-order.edit', $internalOrder) }}"
                                             class="text-gray-600 bg-transparent hover:bg-gray-100 hover:text-gray-900"
                                         >
                                             <x-icon.pencil class="w-4 h-4 text-gray-800" />
                                         </x-button.link>
                                     @endcan
-                                    @can('delete', $regstration)
+                                    @can('delete', $internalOrder)
                                         <div class="flex" x-data @click.prevent.stop="console.log('stop')">
-                                            @if($confirming == $regstration->id)
+                                            @if($confirming == $internalOrder->id)
                                                 <x-button
-                                                    wire:click="delete({{ $regstration->id }})"
+                                                    wire:click="delete({{ $internalOrder->id }})"
                                                     class="bg-red-700 hover:bg-red-800"
                                                 >
                                                     <x-icon.check class="w-4 h-4 text-white" />
@@ -97,7 +92,7 @@
                                                 </x-button>
                                             @else
                                                 <x-button
-                                                    wire:click="confirmDelete({{ $regstration->id }})"
+                                                    wire:click="confirmDelete({{ $internalOrder->id }})"
                                                     class="bg-transparent hover:bg-gray-100 hover:text-gray-900"
                                                 >
                                                     <x-icon.trash class="w-4 h-4 text-red-600" />
@@ -113,9 +108,9 @@
             </x-table>
             <div class="overflow-hidden">
             </div>
-            @if ($registrations->hasPages())
+            @if ($internalOrders->hasPages())
                 <div class="px-6 py-4 bg-white border-t">
-                    {{ $registrations->links() }}
+                    {{ $internalOrders->links() }}
                 </div>
             @endif
         </div>

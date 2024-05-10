@@ -1,3 +1,36 @@
+<?php
+    /**
+     * Attributes
+     * - $column: array
+     *  - type: string
+     *  - label: string
+     *  - dependencies: array
+     *  - create_popup: boolean
+     *  - help: string
+     *  - class: string
+     *  - relationship: string
+     *  - placeholder: string
+     *  - default: string
+     *  - options: string
+     *  - multiple: boolean
+     *  - select_first: boolean
+     *  - prefix: string
+     *  - postfix: string
+     *  - npd_button: boolean
+     *  - info: string
+     *  - restrictions: array
+     *   - view: array
+     *   - edit: array
+     * - $form: object
+     */
+?>
+
+@if(isset($column['restrictions']) && !in_array(auth()->user()->role, $column['restrictions']['view']))
+    @php
+        return;
+    @endphp
+@endif
+
 <div
     class="
         @if(in_array($column['type'], ['textarea', 'rich_text'])) md:col-span-3 @endif
@@ -93,6 +126,11 @@
             :options="is_array($column['options']) ? $column['options'] : App\Models\Setting::get($column['options'])"
             :selected="optional($form->data)->{$key} ?? ($column['default'] ?? '' )"
         />
+    @elseif($column['type'] == 'checkbox')
+        <x-input.toggle
+            wire:model="form.data.{{ $key }}"
+            :initial_value="optional($form->data)->{$key}"
+        />
     @elseif($column['type'] == 'rich_text')
         <x-input.rich-text
             wire:model="form.data.{{$key}}"
@@ -171,5 +209,10 @@
             postfix="{{ __($column['postfix'] ?? '') }}"
             prefix="{{ __($column['prefix'] ?? '') }}"
         />
+    @endif
+
+    <!-- has help -->
+    @if(optional($column)['info'])
+        <p class="mt-1 text-sm text-gray-500">{{ __($column['info']) }}</p>
     @endif
 </div>

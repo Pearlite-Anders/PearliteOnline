@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Data\CompanyData;
+use App\Data\InternalOrderData;
 use App\Data\ProjectData;
 use App\Models\Trait\HasFilter;
 use App\Models\Trait\HasCompany;
@@ -23,6 +24,20 @@ class TimeRegistration extends Model
     public const LABEL_KEY = ['data.name'];
 
     public const SYSTEM_COLUMNS = [
+        'user_id' => [
+            'type' => 'relationship',
+            'relationship' => 'user',
+            'class' => SystemUser::class,
+            'label' => 'User',
+            'placeholder' => 'Choose user',
+            'filter' => 'relationship',
+            'create_popup' => false,
+            'multiple' => false,
+            'restrictions' => [
+                'view' => [User::ADMIN_ROLE],
+                'edit' => [User::ADMIN_ROLE],
+            ]
+        ],
         'company_id' => [
             'type' => 'relationship',
             'relationship' => 'company',
@@ -34,15 +49,15 @@ class TimeRegistration extends Model
             'data_class' => CompanyData::class,
             'multiple' => false,
         ],
-        'project_id' => [
+        'internal_order_id' => [
             'type' => 'dynamic_relationship',
             'relationship' => 'company_id',
-            'class' => Project::class,
-            'label' => 'Project',
+            'class' => InternalOrder::class,
+            'label' => 'Order',
             'placeholder' => 'Choose project',
             'filter' => 'relationship',
             'create_popup' => false,
-            'data_class' => ProjectData::class,
+            'data_class' => InternalOrderData::class,
             'multiple' => false,
         ],
         'tasks' => [
@@ -73,7 +88,7 @@ class TimeRegistration extends Model
             'required' => false,
             'placeholder' => '',
             'filter' => 'search',
-            'postfix' => 'DKK'
+            'postfix' => 'km'
         ],
         'expenses' => [
             'type' => 'number',
@@ -81,7 +96,22 @@ class TimeRegistration extends Model
             'required' => false,
             'placeholder' => '',
             'filter' => 'search',
-            'postfix' => 'DKK'
+            'postfix' => 'DKK',
+            'info' => 'f.eks. storebæltsbro eller overnatning',
+        ],
+        'paid' => [
+            'type' => 'checkbox',
+            'label' => 'Paid',
+            'required' => false,
+            'placeholder' => '',
+            'filter' => 'search'
+        ],
+        'invoiced' => [
+            'type' => 'checkbox',
+            'label' => 'Invoiced',
+            'required' => false,
+            'placeholder' => '',
+            'filter' => 'search'
         ],
         'remarks' => [
             'type' => 'textarea',
@@ -102,8 +132,13 @@ class TimeRegistration extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function project()
+    public function user()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function internalorder()
+    {
+        return $this->belongsTo(InternalOrder::class, 'internal_order_id');
     }
 }

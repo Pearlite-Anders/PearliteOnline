@@ -12,23 +12,30 @@ class Form extends LivewireForm
 {
     public $data;
     public $company_id;
-    public $project_id;
+    public $internal_order_id;
+    public $user_id;
 
     public function setFields(TimeRegistration $registration)
     {
         $this->data = TimeRegistrationData::from($registration->data);
         $this->company_id = $registration->company_id;
-        $this->project_id = $registration->project_id;
+        $this->internal_order_id = $registration->internal_order_id;
+        $this->user_id = $registration->user_id;
     }
 
     public function create()
     {
         $registration = TimeRegistration::create(array_merge([
-            'company_id' => auth()->user()->currentCompany->id,
         ], $this->transformedData()));
 
-        $registration->project()->associate($this->project_id);
+        if(auth()->user()->isAdmin()) {
+            $registration->user()->associate($this->user_id);
+        } else {
+            $registration->user()->associate(auth()->user()->id);
+        }
+        $registration->internalOrder()->associate($this->internal_order_id);
         $registration->company()->associate($this->company_id);
+        $registration->save();
 
         return $this->handleUploads($registration);
     }
@@ -36,7 +43,13 @@ class Form extends LivewireForm
     public function update($registration)
     {
         $registration->update($this->transformedData());
-        $registration->project()->associate($this->project_id);
+
+        if(auth()->user()->isAdmin()) {
+            $registration->user()->associate($this->user_id);
+        } else {
+            $registration->user()->associate(auth()->user()->id);
+        }
+        $registration->internalOrder()->associate($this->internal_order_id);
         $registration->company()->associate($this->company_id);
 
         return $this->handleUploads($registration);
@@ -45,10 +58,9 @@ class Form extends LivewireForm
     public function transformedData()
     {
         $data = array_merge([
-            'company_id' => auth()->user()->currentCompany->id,
         ], $this->except([
             'company_id',
-            'project_id',
+            'internal_order_id',
         ]));
 
         return $data;

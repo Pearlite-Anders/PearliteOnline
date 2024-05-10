@@ -91,6 +91,7 @@
     <div class="grid grid-cols-2 gap-6 mb-6">
         <div></div>
         <div class="font-bold">{{ __('Access') }}</div>
+
         <div class="text-lg font-bold">{{ __('Time & driving registration') }}</div>
         <div
             x-data="{ value: $wire.get('form.can_see_time_registration') }"
@@ -99,6 +100,28 @@
             <button
                 x-ref="toggle"
                 @click="value = ! value; $wire.set('form.can_see_time_registration', value)"
+                type="button"
+                role="switch"
+                :aria-checked="value"
+                :class="value ? 'bg-cyan-600' : 'bg-slate-300'"
+                class="relative inline-flex py-1 transition rounded-full w-14"
+            >
+                <span
+                    :class="value ? 'translate-x-7' : 'translate-x-1'"
+                    class="w-6 h-6 transition bg-white rounded-full shadow-md"
+                    aria-hidden="true"
+                ></span>
+            </button>
+        </div>
+
+        <div class="text-lg font-bold">{{ __('Ordre') }}</div>
+        <div
+            x-data="{ value: $wire.get('form.internal_order') }"
+            class="flex items-center space-x-4 md:space-x-0"
+        >
+            <button
+                x-ref="toggle"
+                @click="value = ! value; $wire.set('form.internal_order', value)"
                 type="button"
                 role="switch"
                 :aria-checked="value"

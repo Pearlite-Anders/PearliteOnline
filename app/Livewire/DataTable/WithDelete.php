@@ -2,7 +2,8 @@
 
 namespace App\Livewire\DataTable;
 
-trait WithDelete {
+trait WithDelete
+{
 
     public $confirming;
 
