@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('time_registrations', function (Blueprint $table) {
-        //     $table->dropForeign(['project_id']);
-        //     $table->dropColumn('project_id');
-        //     $table->foreignId('internal_order_id')->nullable()->after('company_id')->constrained();
-        // });
+        Schema::table('time_registrations', function (Blueprint $table) {
+            $table->dropForeign(['project_id']);
+            $table->dropColumn('project_id');
+            $table->foreignId('internal_order_id')->nullable()->after('company_id')->constrained();
+        });
 
         Schema::table('time_registrations', function (Blueprint $table) {
             $table->foreignId('user_id')->nullable()->after('internal_order_id')->constrained();
