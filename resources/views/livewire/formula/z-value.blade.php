@@ -8,6 +8,7 @@
             <div class="grid grid-cols-1 gap-2 mb-6 md:gap-6 md:grid-cols-5">
                 <div>
                     <x-label for="c" :value="__('Shape and Placement')" class="!mb-0 mt-2" />
+                    <p class="text-xs text-gray-500">{{ __('Shape and position of welds in T- and cruciform- and corner- connections.') }}</p>
                 </div>
                 <div class="md:col-span-4">
                     <fieldset class="flex flex-wrap mt-2 md:mt-0">
@@ -39,7 +40,7 @@
                                 value="-5"
                                 class="w-4 h-4 mr-1 border-gray-300 text-cyan-600 focus:ring-cyan-600 active:ring-2 active:ring-offset-2 active:ring-cyan-600"
                             >
-                            <span>{{ __('-5 Buttering - Single bevel fillet weld') }}</span>
+                            <span>{{ __('-5 Single run fillet welds') }}</span>
                         </label>
                         <label class="has-[:checked]:ring-cyan-400 m-2 cursor-pointer text-sm has-[:checked]:text-semibold has-[:checked]:bg-slate-50  items-center rounded-lg px-4 py-2 ring-gray-300 ring-1 hover:bg-slate-100">
                             <input
@@ -49,7 +50,7 @@
                                 value="0"
                                 class="w-4 h-4 mr-1 border-gray-300 text-cyan-600 focus:ring-cyan-600 active:ring-2 active:ring-offset-2 active:ring-cyan-600"
                             >
-                            <span>{{ __('0 Multi-pass fillet weld') }}</span>
+                            <span>{{ __('0 Multi run fillet welds') }}</span>
                         </label>
                         <label class="has-[:checked]:ring-cyan-400 m-2 cursor-pointer text-sm has-[:checked]:text-semibold has-[:checked]:bg-slate-50  items-center rounded-lg px-4 py-2 ring-gray-300 ring-1 hover:bg-slate-100">
                             <input
@@ -79,12 +80,13 @@
                                 value="8"
                                 class="w-4 h-4 mr-1 border-gray-300 text-cyan-600 focus:ring-cyan-600 active:ring-2 active:ring-offset-2 active:ring-cyan-600"
                             >
-                            <span>{{ __('8 Corner assembly') }}</span>
+                            <span>{{ __('8 Corner joints') }}</span>
                         </label>
                     </fieldset>
                 </div>
                 <div>
                     <x-label :value="__('Shrinkage Control')" class="!mb-0 mt-2" />
+                    <p class="text-xs text-gray-500">{{ __('Remote restraint of shrinkage after welding by other portions of the structure.') }}</p>
                 </div>
                 <div class="md:col-span-4">
                     <fieldset class="flex flex-wrap mt-2 md:mt-0">
@@ -122,6 +124,7 @@
                 </div>
                 <div>
                     <x-label :value="__('Preheating')" class="!mb-0 mt-2" />
+                    <p class="text-xs text-gray-500">{{ __('Influence of preheating.') }}</p>
                 </div>
                 <div class="md:col-span-4">
                     <fieldset class="flex flex-wrap mt-2 md:mt-0">
