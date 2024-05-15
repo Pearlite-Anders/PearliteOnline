@@ -15,12 +15,13 @@ use App\Livewire\DataTable\WithFilters;
 use App\Livewire\DataTable\WithSorting;
 use App\Livewire\DataTable\WithClickableRow;
 use App\Livewire\DataTable\WithPerPagePagination;
+use App\Livewire\DataTable\WithProject;
 use App\Livewire\DataTable\WithTable;
 use App\Models\Welder;
 
 class Index extends Component
 {
-    use WithTable, WithPerPagePagination, WithSorting, WithColumns, WithFilters, WithDelete, WithSearch, WithClickableRow;
+    use WithTable, WithPerPagePagination, WithSorting, WithColumns, WithFilters, WithDelete, WithSearch, WithClickableRow, WithProject;
 
     public $model = WeldingCertificate::class;
     public $compressed_header = false;

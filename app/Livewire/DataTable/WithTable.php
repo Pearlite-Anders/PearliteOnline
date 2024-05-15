@@ -3,9 +3,18 @@
 namespace App\Livewire\DataTable;
 
 use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 
 trait WithTable
 {
+    public $selected = [];
+
+    #[On('clearSelected')]
+    public function clearSelected()
+    {
+        $this->selected = [];
+    }
+
     public function getRowsQueryProperty()
     {
         $relation = Str::plural(Str::lower(Str::replace('App\Models\\', '', $this->model)));

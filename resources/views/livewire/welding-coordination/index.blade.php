@@ -36,12 +36,29 @@
                 </x-button.link>
 
                 @if($project_id)
-                    <livewire:attach-project
-                        :model="App\Models\WeldingCoordination::class"
-                        :project_id="$project_id"
-                        :name="__('Welding Coordination')"
-                        name_field="purpose"
-                    />
+                    @if($selected)
+                        <x-button.secondary
+                            class="flex items-center"
+                            wire:click="detachFromProject"
+                        >
+                            <x-icon.minus class="mr-2 -ml-1 align-middle" />
+                            {{ __('Detach from project') }}
+                        </x-button.secondary>
+                    @else
+                        <livewire:attach-from-project
+                            :model="App\Models\WeldingCoordination::class"
+                            :project_id="$project_id"
+                            :name="__('Welding Coordination')"
+                            name_field="purpose"
+                        />
+                    @endif
+                @else
+                    @if($selected)
+                        <livewire:attach-to-project
+                            :model="App\Models\WeldingCoordination::class"
+                            :selected="$selected"
+                        />
+                    @endif
                 @endif
             @endcan
         </x-slot>
@@ -54,6 +71,7 @@
         <div class="overflow-x-auto">
             <x-table>
                 <x-slot name="head">
+                    <x-table.heading />
                     @foreach($columns as $column)
                         @continue($column->visible === false)
                         @if(
@@ -74,6 +92,17 @@
                             :can_edit="auth()->user()->can('update', $weldingCoordination)"
                             class="cursor-pointer hover:bg-gray-50"
                         >
+                            <x-table.cell>
+                                <div x-data @click.stop="console.log('stop')" class="flex items-center justify-center -mx-6 -my-1">
+                                    <input
+                                        type="checkbox"
+                                        wire:model.live="selected"
+                                        value="{{ $weldingCoordination->id }}"
+                                        class="border-gray-300 rounded text-cyan-600 focus:ring-cyan-500"
+                                    />
+                                </div>
+                            </x-table.cell>
+
                             @foreach($columns as $column)
                                 @continue($column->visible === false)
                                 <x-table.model-value-cell

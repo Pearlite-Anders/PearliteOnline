@@ -35,12 +35,34 @@
                     {{ __('Add WPS') }}
                 </x-button.link>
 
-                <livewire:attach-project
-                    :model="App\Models\Wps::class"
-                    :project_id="$project_id"
-                    :name="__('Wps')"
-                    name_field="number"
-                />
+
+
+                @if($project_id)
+                    @if($selected)
+                        <x-button.secondary
+                            class="flex items-center"
+                            wire:click="detachFromProject"
+                        >
+                            <x-icon.minus class="mr-2 -ml-1 align-middle" />
+                            {{ __('Detach from project') }}
+                        </x-button.secondary>
+                    @else
+                        <livewire:attach-from-project
+                            :model="App\Models\Wps::class"
+                            :project_id="$project_id"
+                            :name="__('Wps')"
+                            name_field="number"
+                        />
+                    @endif
+                @else
+                    @if($selected)
+                        <livewire:attach-to-project
+                            :model="App\Models\Wps::class"
+                            :selected="$selected"
+                        />
+                    @endif
+                @endif
+
             @endcan
         </x-slot>
     </x-index-header>
@@ -54,6 +76,7 @@
                 <x-slot name="head">
                     @foreach($columns as $column)
                         @continue($column->visible === false)
+                        <x-table.heading></x-table.heading>
                         @if(
                             App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'relationship' ||
                             App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'calculated'
@@ -72,6 +95,16 @@
                             :can_edit="auth()->user()->can('update', $wps)"
                             class="cursor-pointer hover:bg-gray-50"
                         >
+                            <x-table.cell>
+                                <div x-data @click.stop="console.log('stop')" class="flex items-center justify-center -mx-6 -my-1">
+                                    <input
+                                        type="checkbox"
+                                        wire:model.live="selected"
+                                        value="{{ $wps->id }}"
+                                        class="border-gray-300 rounded text-cyan-600 focus:ring-cyan-500"
+                                    />
+                                </div>
+                            </x-table.cell>
 
                             @foreach($columns as $column)
                                 @continue($column->visible === false)

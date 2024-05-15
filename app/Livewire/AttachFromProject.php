@@ -6,7 +6,7 @@ use App\Models\Project;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
-class AttachProject extends Component
+class AttachFromProject extends Component
 {
     public $model;
     public $project_id;
@@ -45,7 +45,7 @@ class AttachProject extends Component
             $models = auth()->user()->currentCompany->{$relation}()->whereNotIn('id', $project->{$relation}->pluck('id'))->get();
 
         }
-        return view('livewire.attach-project')->with([
+        return view('livewire.attach-from-project')->with([
             'models' => $models
         ]);
     }
