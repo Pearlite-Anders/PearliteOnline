@@ -103,7 +103,7 @@ trait HasFilter
             }
         } elseif($column->type == 'dynamic_relationship') {
             if($column->class == InternalOrder::class) {
-                $value = $this->internalorder->data['name'];
+                $value = optional(optional($this->internalorder)->data)['name'];
             }
         } elseif($column->type == 'calculated') {
             $value = optional($this)->{$column_key};
