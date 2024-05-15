@@ -74,9 +74,9 @@
         <div class="overflow-x-auto overflow-y-visible">
             <x-table>
                 <x-slot name="head">
+                    <x-table.heading />
                     @foreach($columns as $column)
                         @continue($column->visible === false)
-                        <x-table.heading></x-table.heading>
                         @if(
                             App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'relationship' ||
                             App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'calculated'
