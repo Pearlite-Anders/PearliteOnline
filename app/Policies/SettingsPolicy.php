@@ -9,7 +9,7 @@ class SettingsPolicy
 
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('settings.view') || $user->isPartner();
+        return $user->hasPermissionTo('settings.view') || $user->hasPermissionTo('settings.edit') || $user->isPartner();
     }
 
     public function update(User $user)

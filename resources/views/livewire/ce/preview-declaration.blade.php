@@ -142,7 +142,7 @@
 
         <div style="margin-top:18px;">{{ __('Signed for and on behalf of the manufacturer by:') }}</div>
         <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
-            <div>{{ auth()->user()->name }} - {{ auth()->user()->data['title'] }}</div>
+            <div>{{ auth()->user()->name }} - {{ optional(auth()->user()->data)['title'] }}</div>
             <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
             <div style="font-style:italic;margin-top:5px;">{{ __('Name and function') }}</div>
         </div>

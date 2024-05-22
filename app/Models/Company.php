@@ -232,7 +232,7 @@ class Company extends Model
                     'edit' => __('Edit'),
                 ]
             ],
-            'welding-coordination' => (object)[
+            'welding_coordination' => (object)[
                 'name' => __('Welding Coordinations'),
                 'class' => \App\Models\WeldingCoordination::class,
                 'permissions' => [
