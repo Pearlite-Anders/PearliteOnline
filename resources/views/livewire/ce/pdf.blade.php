@@ -8,6 +8,7 @@
         <div style="height:50px;"></div>
     </div>
     <div style="text-align:center;border-bottom: 1px solid #000;padding: 5px 0;">
+        {!! setting('ce_company') !!}<br>
         {!! setting('ce_company_address') !!}, {!! setting('ce_company_zip') !!} {!! setting('ce_company_city') !!}
         <div style="margin-top: 25px;font-weight:bold;height:20px;">
             {{ now()->format('y') }}
@@ -225,16 +226,6 @@
                     {{ optional($ce->data)['fatigue_strength'] }}
                 @else
                     {{ App\Models\Ce::getColumn('fatigue_strength')->default }}
-                @endif
-            </td>
-        </tr>
-        <tr>
-            <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Resistance to fire') }}</td>
-            <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                @if(optional($ce->data)['fire_resistance'])
-                    {{ optional($ce->data)['fire_resistance'] }}
-                @else
-                    {{ App\Models\Ce::getColumn('fire_resistance')->default }}
                 @endif
             </td>
         </tr>

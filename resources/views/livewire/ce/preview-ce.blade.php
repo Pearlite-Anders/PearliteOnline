@@ -10,6 +10,7 @@
             <div style="height:50px;"></div>
         </div>
         <div style="text-align:center;border-bottom: 1px solid #000;padding: 5px 0;">
+            <x-tooltip-word :tooltip="__('Manufacturer')">{!! setting('ce_company') !!}</x-tooltip-word><br>
             <x-tooltip-word :tooltip="__('Manufacturer\'s address')">{!! setting('ce_company_address') !!}, {!! setting('ce_company_zip') !!} {!! setting('ce_company_city') !!}</x-tooltip-word>
             <div style="margin-top: 25px;font-weight:bold;height:20px;">
                 <x-tooltip-word

@@ -27,6 +27,15 @@
                     />
                 </div>
                 <div>
+                    <x-label for="ce.company" :value="__('Company')" />
+                    <x-input
+                        id="ce.company"
+                        class="block w-full"
+                        wire:model="settings.ce_company"
+                        placeholder="Smedemester ApS"
+                    />
+                </div>
+                <div>
                     <x-label for="ce.company_address" :value="__('Company adress')" />
                     <x-input
                         id="ce.company_address"
