@@ -1,6 +1,6 @@
 <div class="flex justify-center">
 
-    <div style="border: 1px solid #000;max-width: 423px;width:100%;font-size:12px;line-height:1.2;font-family:Arial;transform:scale(0.8)">
+    <div id="ce-zoom-box" style="border: 1px solid #000; background-color: #fff; max-width: 600px;width:100%;font-size:12px;line-height:1.2;font-family:Arial;zoom:0.6;">
         <div style="text-align:center;border-bottom: 1px solid #000;">
             <div style="height:50px;"></div>
             <img src="{{ asset('images/ce-mark.png') }}" alt="CE" style="width:auto;height:40px;margin:0 auto 35px;display:block;">
@@ -42,23 +42,24 @@
                 >{{ $form->data->tolerance_class }}</x-tooltip-word>
             </div>
             <div style="font-weight:bold;margin-top:10px;">
-                {{__('Weldability')}}:
-                @if(optional($form->data)->weldability_group)
-                    <x-tooltip-word :tooltip="__('Weldability')">
-                            {{ setting('ce_weldability_group')[$form->data->weldability_group][0] }}
-                    </x-tooltip-word>
-                    {{__('according to')}}
-                        <x-tooltip-word :tooltip="__('Technical Delivery Conditions')" >
-                        {{ setting('ce_weldability_group')[$form->data->weldability_group][1] }}
-                    </x-tooltip-word>
-                @endif
-            </div>
-            <div style="font-weight:bold;margin-top:10px;">
-                {{__('Fracture toughness')}}:
-                @if(optional($form->data)->weldability_group)
-                    <x-tooltip-word :tooltip="__('Fracture Toughness')">
-                    {{ setting('ce_weldability_group')[$form->data->weldability_group][2] }}
-                    </x-tooltip-word>
+
+                <div style="display:flex;">
+                    <div style="flex:1;">{{__('Weldability')}}:</div>
+                    <div style="flex:1;">{{__('Facture toughness')}}:</div>
+                </div>
+                @if(is_array($form->data->weldability_group))
+                    @foreach($form->data->weldability_group as $key => $value)
+                        <div style="display:flex;">
+                            <div style="flex:1;display:flex;">
+                                @if(isset(setting('ce_weldability_group')[optional($value)['weldability']]))
+                                    <div >{{ setting('ce_weldability_group')[optional($value)['weldability']][0] }}</div>
+                                    <div style="margin: 0 3px;">{{ __('acc.') }}</div>
+                                    <div >{{ setting('ce_weldability_group')[optional($value)['weldability']][1] }}</div>
+                                @endif
+                            </div>
+                            <div style="flex:1;">{{ optional($value)['fracture_toughness'] }}</div>
+                        </div>
+                    @endforeach
                 @endif
             </div>
             <div style="font-weight:bold;margin-top:10px;">
@@ -82,28 +83,25 @@
 
             </div>
             <div style="font-weight:bold;margin-top:10px;">
-                {{__('Durability')}}:
-                @if(
-                    preg_match('/^P/i', $form->data->machining_quality) ||
-                    $form->data->surface == 'untreated' ||
-                    $form->data->surface == 'galvanization'
-                )
-                    @if($form->data->surface != 'untreated' && $form->data->machining_quality != 'npd')
-                        {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} <x-tooltip-word :tooltip="__('Machining Quality')">{{ $form->data->machining_quality }}</x-tooltip-word>.
-                    @endif
+                <div style="text-decoration:underline;">{{__('Durability')}}:</div>
+                <div style="display:flex;">
+                    <div style="flex:1;font-size:12px;">{{__('Surface treatment') }}:</div>
+                    <div style="flex:1;font-size:12px;">{{__('Corrosivity category') }}:</div>
+                    <div style="flex:1;font-size:12px;">{{__('Expected durability') }}:</div>
+                    <div style="flex:1;font-size:12px;">{{__('Prepration grade') }}:</div>
+                </div>
 
-                    @if($form->data->surface == 'paint')
-                        {{ __('Surface painted according to EN ISO 12944-5')}}
-                    @elseif($form->data->surface == 'galvanization')
-                        {{ __('Surface galvanized according to EN ISO 1461')}}
-                    @elseif($form->data->surface == 'untreated')
-                        {{ __('Surface untreated')}}
-                    @endif
-                    @if($form->data->surface != 'untreated' && $form->data->durability != 'npd')
-                        , <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
-                    @endif
-                @else
-                    {{ $form->data->machining_quality }}.
+                @if(is_array($form->data->durability_group))
+                    @foreach($form->data->durability_group as $key => $value)
+                        <div style="display:flex;">
+                            <div style="flex:1;font-size:10px;">
+                                {{ setting('ce_surface')[optional($value)['surface']] }}
+                            </div>
+                            <div style="flex:1;">{{ optional($value)['corrosivity_category'] }}</div>
+                            <div style="flex:1;">{{ optional($value)['expected_durability'] }}</div>
+                            <div style="flex:1;">{{ optional($value)['prepration_grade'] }}</div>
+                        </div>
+                    @endforeach
                 @endif
             </div>
             <div style="margin-top:10px;font-weight:bold;">

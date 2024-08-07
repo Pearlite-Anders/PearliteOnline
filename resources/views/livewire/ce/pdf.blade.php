@@ -29,17 +29,22 @@
             {{ optional($ce->data)['tolerance_class'] }}
         </div>
         <div style="font-weight:bold;margin-top:10px;">
-            {{__('Weldability')}}:
-            @if(optional($ce->data)['weldability_group'])
-                {{ setting('ce_weldability_group')[$ce->data['weldability_group']][0] }}
-                {{__('according to')}}
-                {{ setting('ce_weldability_group')[$ce->data['weldability_group']][1] }}
-            @endif
-        </div>
-        <div style="font-weight:bold;margin-top:10px;">
-            {{__('Fracture toughness')}}:
-            @if(optional($ce->data)['weldability_group'])
-                {{ setting('ce_weldability_group')[$ce->data['weldability_group']][2] }}
+            <div style="display:flex;">
+                <div style="flex:1;">{{__('Weldability')}}:</div>
+                <div style="flex:1;">{{__('Facture toughness')}}:</div>
+            </div>
+            @if(is_array(optional($ce->data)['weldability_group']))
+                @foreach(optional($ce->data)['weldability_group'] as $key => $value)
+                    <div style="display:flex;">
+                        <div style="flex:1;">
+                            @if(isset(setting('ce_weldability_group')[optional($value)['weldability']]))
+                                {{ setting('ce_weldability_group')[optional($value)['weldability']][0] }} -
+                                {{ setting('ce_weldability_group')[optional($value)['weldability']][1] }}
+                            @endif
+                        </div>
+                        <div style="flex:1;">{{ optional($value)['fracture_toughness'] }}</div>
+                    </div>
+                @endforeach
             @endif
         </div>
         <div style="font-weight:bold;margin-top:10px;">
@@ -54,31 +59,25 @@
         <div style="font-weight:bold;margin-top:10px;">
             {{__('Emission of Radioactivity')}}:
             {{ setting('ce_emission_of_radioactivity') }}
-
         </div>
         <div style="font-weight:bold;margin-top:10px;">
-            {{__('Durability')}}:
-            @if(
-                preg_match('/^P/i', $ce->data['machining_quality']) ||
-                $ce->data['surface'] == 'untreated' ||
-                $ce->data['surface'] == 'galvanization'
-            )
-                @if($ce->data['surface'] != 'untreated' && $ce->data['machining_quality'] != 'npd')
-                    {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ $ce->data['machining_quality'] }}.
-                @endif
+            <div style="text-decoration:underline;">{{__('Durability')}}:</div>
+            <div style="display:flex;">
+                <div style="flex:1;font-size:12px;">{{__('Surface treatment') }}:</div>
+                <div style="flex:1;font-size:12px;">{{__('Corrosivity category') }}:</div>
+                <div style="flex:1;font-size:12px;">{{__('Expected durability') }}:</div>
+                <div style="flex:1;font-size:12px;">{{__('Prepration grade') }}:</div>
+            </div>
 
-                @if($ce->data['surface'] == 'paint')
-                    {{ __('Surface painted according to EN ISO 12944-5')}}
-                @elseif($ce->data['surface'] == 'galvanization')
-                    {{ __('Surface galvanized according to EN ISO 1461')}}
-                @elseif($ce->data['surface'] == 'untreated')
-                    {{ __('Surface untreated')}}
-                @endif
-                @if($ce->data['surface'] != 'untreated' && $ce->data['durability'] != 'npd')
-                    , {{ $ce->data['durability'] }}.
-                @endif
-            @else
-                {{ $ce->data['machining_quality'] }}.
+            @if(is_array(optional($ce->data)['durability_group']))
+                @foreach(optional($ce->data)['durability_group'] as $key => $value)
+                    <div style="display:flex;">
+                        <div style="flex:1;font-size:10px;">{{ optional($value)['surface'] }}</div>
+                        <div style="flex:1;">{{ optional($value)['corrosivity_category'] }}</div>
+                        <div style="flex:1;">{{ optional($value)['expected_durability'] }}</div>
+                        <div style="flex:1;">{{ optional($value)['prepration_grade'] }}</div>
+                    </div>
+                @endforeach
             @endif
         </div>
         <div style="margin-top:10px;font-weight:bold;">

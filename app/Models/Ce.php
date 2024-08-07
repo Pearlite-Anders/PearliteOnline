@@ -79,22 +79,6 @@ class Ce extends Model
             'help' => 'Specify the execution standard, for example, EN 1090-2',
         ],
 
-        'scope' => [
-            'type' => 'text',
-            'label' => 'Scope',
-            'placeholder' => 'Opsvejst stålbjælke',
-            'filter' => 'search',
-            'help' => 'Describe what the CE mark includes'
-        ],
-        'weldability_group' => [
-            'type' => 'select',
-            'label' => 'Weldability',
-            'multiple' => false,
-            'options' => 'ce_weldability_group',
-            'placeholder' => 'Select',
-            'filter' => 'select',
-            'help' => 'Specify the types of steel used',
-        ],
         'tolerance_class' => [
             'type' => 'select',
             'label' => 'Tolerance Class',
@@ -104,6 +88,40 @@ class Ce extends Model
             'filter' => 'select',
             'help' => 'Specify tolerance class'
         ],
+
+        'scope' => [
+            'type' => 'text',
+            'label' => 'Scope',
+            'placeholder' => 'Opsvejst stålbjælke',
+            'filter' => 'search',
+            'help' => 'Describe what the CE mark includes'
+        ],
+        'weldability_group' => [
+            'type' => 'group',
+            'label' => 'Weldability',
+            'multiple' => true,
+            'fields' => [
+                'weldability' => [
+                    'type' => 'select',
+                    'label' => 'Weldability',
+                    'multiple' => false,
+                    'options' => 'ce_weldability_group',
+                    'placeholder' => 'Select',
+                    'filter' => 'select',
+                ],
+                'fracture_toughness' => [
+                    'type' => 'select',
+                    'label' => 'Facture toughness',
+                    'multiple' => false,
+                    'options' => 'ce_facture_toughness',
+                    'placeholder' => 'Select - Example: S235',
+                    'filter' => 'select'
+                ],
+            ],
+            'filter' => 'search',
+            'help' => 'Specify the types of steel used',
+        ],
+
         'behavior_in_fire' => [
             'type' => 'select',
             'label' => 'Reaction to fire',
@@ -113,63 +131,66 @@ class Ce extends Model
             'filter' => 'select',
             'help' => 'Specify the Material Classification, for example, class “A1”',
         ],
-        'surface' => [
-            'type' => 'select',
-            'label' => 'Surface',
-            'multiple' => false,
-            'options' => [
-                'paint' => 'Paint (EN 12944)',
-                'galvanization' => 'Galvanizing (EN 1461)',
-                'untreated' => 'Untreated',
-            ],
-            'placeholder' => 'Select',
-            'filter' => 'select',
-        ],
-        'durability' => [
-            'type' => 'select',
+
+        'durability_group' => [
+            'type' => 'group',
             'label' => 'Durability',
-            'multiple' => false,
-            'options' => [
-                'C1 Lav' => 'C1 Lav',
-                'C1 Middel' => 'C1 Middel',
-                'C1 Høj' => 'C1 Høj',
-                'C2 Lav' => 'C2 Lav',
-                'C2 Middel' => 'C2 Middel',
-                'C2 Høj' => 'C2 Høj',
-                'C3 Lav' => 'C3 Lav',
-                'C3 Middel' => 'C3 Middel',
-                'C3 Høj' => 'C3 Høj',
-                'C4 Lav' => 'C4 Lav',
-                'C4 Middel' => 'C4 Middel',
-                'C4 Høj' => 'C4 Høj',
-                'C5 Lav' => 'C5 Lav',
-                'C5 Middel' => 'C5 Middel',
-                'C5 Høj' => 'C5 Høj',
-                'npd' => 'NPD',
+            'multiple' => true,
+            'fields' => [
+                'surface' => [
+                    'type' => 'select',
+                    'label' => 'Surface treatment',
+                    'multiple' => false,
+                    'options' => 'ce_surface',
+                    'placeholder' => 'Surface treatment',
+                    'filter' => 'select',
+                ],
+                'corrosivity_category' => [
+                    'type' => 'select',
+                    'label' => 'Corrosivity category',
+                    'multiple' => false,
+                    'options' => [
+                        'C1' => 'C1',
+                        'C2' => 'C2',
+                        'C3' => 'C3',
+                        'C4' => 'C4',
+                        'C5' => 'C5',
+                        'npd' => 'NPD'
+                    ],
+                    'placeholder' => 'Corrosivity category',
+                    'filter' => 'select',
+                ],
+                'expected_durability' => [
+                    'type' => 'select',
+                    'label' => 'Expected durability',
+                    'multiple' => false,
+                    'options' => [
+                        'Low' => 'Low',
+                        'Medium' => 'Medium',
+                        'High' => 'High',
+                        'NPD' => 'NPD'
+                    ],
+                    'placeholder' => 'Expected durability',
+                    'filter' => 'select',
+                ],
+                'prepration_grade' => [
+                    'type' => 'select',
+                    'label' => 'Prepration grade',
+                    'multiple' => false,
+                    'options' => [
+                        'P1' => 'P1',
+                        'P2' => 'P2',
+                        'P3' => 'P3',
+                        'NPD' => 'NPD',
+                    ],
+                    'placeholder' => 'Prepration grade',
+                    'filter' => 'select',
+                ],
             ],
-            'placeholder' => 'Select - Example: C3 Middel',
-            'filter' => 'select',
-            'help' => 'Pre-treatment level is the pre-treatment before surface treatment, for example, before painting.',
-            'dependencies' => [
-                'surface' => ['paint', 'galvanization'],
-            ],
+            'filter' => 'search',
+            'help' => 'Specify the types of steel used',
         ],
-        'machining_quality' => [
-            'type' => 'select',
-            'label' => 'Prepration grade',
-            'multiple' => false,
-            'options' => [
-                'P1' => 'P1',
-                'P2' => 'P2',
-                'P3' => 'P3',
-                'npd' => 'NPD',
-            ],
-            'placeholder' => 'Select - Example: P2',
-            'filter' => 'select',
-            'dependencies' => [
-                'surface' => ['paint', 'galvanization'],
-            ],
-        ],
+
         'load_bearing_capacity' => [
             'type' => 'system_text',
             'default' => 'NPD',

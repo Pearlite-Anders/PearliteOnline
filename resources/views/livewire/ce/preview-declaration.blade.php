@@ -43,9 +43,6 @@
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                     @if(optional($form->data)->weldability_group)
-                        {{ setting('ce_weldability_group')[$form->data->weldability_group][0] }}
-                        {{__('according to')}}
-                        {{ setting('ce_weldability_group')[$form->data->weldability_group][1] }}
                     @endif
                 </td>
             </tr>
@@ -53,7 +50,6 @@
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
                     @if(optional($form->data)->weldability_group)
-                        {{ setting('ce_weldability_group')[$form->data->weldability_group][2] }}
                     @endif
                 </td>
             </tr>

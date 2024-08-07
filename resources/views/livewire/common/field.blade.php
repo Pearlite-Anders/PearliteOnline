@@ -45,9 +45,11 @@
             @endforeach
         @endif
     "
-    :key="$key"
 >
-    @unless(optional($column)['create_popup'])
+    @unless(
+        optional($column)['create_popup'] ||
+        $column['type'] == 'group'
+    )
         <div class="flex mb-2 item-center">
             <x-label for="{{ $key }}" :value="__($column['label'])" class="!mb-0" />
             @if(optional($column)['help'])
@@ -74,6 +76,12 @@
             :$column
             :relation="$form->{$column['relationship']}"
             wire:model.live="form.{{$key}}"
+        />
+    @elseif($column['type'] == 'group')
+        <livewire:group-field
+            :$column
+            wire:model.live="form.data.{{$key}}"
+            wire:key="{{ $key }}"
         />
     @elseif($column['type'] == 'calculated')
         <x-input

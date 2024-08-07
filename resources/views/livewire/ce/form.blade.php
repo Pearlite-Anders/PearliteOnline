@@ -5,6 +5,6 @@
         {{ __('Component data') }}
     </h3>
     @foreach(App\Models\Ce::getColumns()->except(['project_id', 'method', 'date', 'execution_class', 'tolerance_class', 'file']) as $key => $column)
-        @include('livewire.common.field', ['live' => true])
+        @include('livewire.common.field', ['live' => true, 'key' => $key, 'column' => $column])
     @endforeach
 </div>

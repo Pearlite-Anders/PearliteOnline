@@ -149,7 +149,13 @@ trait HasFilter
         }
 
         if(is_array($value)) {
-            $value = __(implode(' - ', $value));
+            if(is_array($value[0])) {
+                $value = collect($value)->map(function ($item) {
+                    return implode(' - ', $item);
+                })->implode(', ');
+            } else {
+                $value = implode(', ', $value);
+            }
         } else {
             $value = __($value);
         }

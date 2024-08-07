@@ -5,8 +5,7 @@ import Choices from 'choices.js';
 window.Choices = Choices;
 import 'choices.js/public/assets/styles/choices.min.css';
 
-// Trix
-import Trix from "trix"
+import './trix';
 
 // Flatpickr
 import flatpickr from 'flatpickr';

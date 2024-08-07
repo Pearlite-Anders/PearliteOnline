@@ -9,7 +9,7 @@
 
     <x-slot name="form">
         <!-- Profile Photo -->
-        <div x-data="{photoName: null, photoPreview: null}" class="hidden col-span-6 sm:col-span-4">
+        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
             <!-- Profile Photo File Input -->
             <input type="file" class="hidden"
                         wire:model.live="photo"
@@ -34,8 +34,9 @@
 
             <!-- New Profile Photo Preview -->
             <div class="mt-2" x-show="photoPreview" style="display: none;">
-                <span class="block w-auto h-12 bg-center bg-no-repeat bg-cover"
-                        x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
+                <span
+                    class="block w-auto h-12 bg-no-repeat bg-contain bg-left-center"
+                    x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
                 </span>
             </div>
 
@@ -95,7 +96,7 @@
             {{ __('Saved.') }}
         </x-action-message>
 
-        <x-button.primary wire:loading.attr="disabled" wire:target="photo">
+        <x-button.primary type="submit" wire:loading.attr="disabled" wire:target="photo">
             {{ __('Save') }}
         </x-button.primary>
     </x-slot>

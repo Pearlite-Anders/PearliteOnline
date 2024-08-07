@@ -15,6 +15,7 @@
         @trix-attachment-add="uploadImage($event)"
         @trix-file-accept="acceptFile($event)"
         @trix-attachment-remove="removeImage($event)"
+        @dblclick="maybeEditDrawio($event)"
         x-ref="trix"
         input="x"
         placeholder="{{ $attributes->get('placeholder', '') }}"
@@ -23,6 +24,10 @@
 
     <script>
         function uploadImage(event) {
+            if(!event.attachment.file) {
+                return;
+            }
+
             const attachment = event.attachment;
             @this.upload('trix_files', attachment.file, (uploadedFilename) => {
                 const eventName = `trix-attachment-add:${btoa(uploadedFilename)}`;
@@ -57,6 +62,17 @@
 
         function removeImage(event) {
             @this.call('removeTrixUpload', event.attachment.attachment.previewURL);
+        }
+
+        function maybeEditDrawio(event) {
+            if (event.target.closest('[data-type="drawio-element"]')) {
+                window.dispatchEvent(new CustomEvent('edit-drawio-element', {
+                    detail: {
+                        trixElement: event.target.closest('[data-type="drawio-element"]')
+                    }
+                }));
+
+            }
         }
     </script>
 </div>

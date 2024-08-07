@@ -27,6 +27,20 @@ class Create extends Component
             'standard' => 'EN 1090-1:2009 + A1:2011',
             'behavior_in_fire' => 'A1',
             'tolerance_class' => 'Klasse 1',
+            'weldability_group' => [
+                [
+                    'weldability' => '',
+                    'fracture_toughness' => '',
+                ],
+            ],
+            'durability_group' => [
+                [
+                    'surface' => '',
+                    'corrosivity_category' => '',
+                    'expected_durability' => '',
+                    'prepration_grade' => '',
+                ]
+            ],
         ]);
     }
 

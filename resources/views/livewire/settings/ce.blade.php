@@ -100,6 +100,7 @@
                         placeholder="NPD"
                     />
                 </div>
+                <div></div>
             </div>
         </x-slot>
     </x-setting-section>
@@ -117,30 +118,27 @@
                     <div class="flex w-full space-x-2">
                         <div class="flex-1 text-sm">{{ __('Weldability') }}</div>
                         <div class="flex-1 text-sm">{{ __('Technical delivery conditions') }}</div>
-                        <div class="flex-1 text-sm">{{ __('Fracture toughness') }}</div>
                     </div>
             </div>
             @foreach($settings['ce_weldability_group'] as $key => $process)
                 <div class="col-span-5">
                     <div class="flex w-full space-x-2">
-                        <x-input
-                            id="ce_weldability_group.{{ $key }}[0]"
-                            type="text"
-                            class="block w-full"
-                            wire:model="settings.ce_weldability_group.{{ $key }}.0"
-                        />
-                        <x-input
-                            id="ce_weldability_group.{{ $key }}[1]"
-                            type="text"
-                            class="block w-full"
-                            wire:model="settings.ce_weldability_group.{{ $key }}.1"
-                        />
-                        <x-input
-                            id="ce_weldability_group.{{ $key }}[2]"
-                            type="text"
-                            class="block w-full"
-                            wire:model="settings.ce_weldability_group.{{ $key }}.2"
-                        />
+                        <div class="flex-1">
+                            <x-input
+                                id="ce_weldability_group.{{ $key }}[0]"
+                                type="text"
+                                class="block w-full"
+                                wire:model="settings.ce_weldability_group.{{ $key }}.0"
+                            />
+                        </div>
+                        <div class="flex-1">
+                            <x-input
+                                id="ce_weldability_group.{{ $key }}[1]"
+                                type="text"
+                                class="block w-full"
+                                wire:model="settings.ce_weldability_group.{{ $key }}.1"
+                            />
+                        </div>
                     </div>
                     <x-input-error for="ce_weldability_group.{{ $key }}.0" class="mt-2" />
                 </div>
@@ -180,6 +178,8 @@
     </x-setting-section>
 
     @php($arraySections = [
+        'ce_surface' => __('Surface'),
+        'ce_facture_toughness' => __('Facture toughness'),
         'ce_standards' => __('Standards'),
         'ce_tolerance_classes' => __('Tolerance classes'),
         'ce_behavior_in_fires' => __('Fire resistance'),
