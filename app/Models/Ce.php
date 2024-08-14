@@ -203,6 +203,13 @@ class Ce extends Model
             'placeholder' => '',
             'filter' => 'search',
         ],
+        'signature' => [
+            'type' => 'select',
+            'label' => 'Signature',
+            'multiple' => false,
+            'options' => 'signature_group',
+            'filter' => 'search'
+        ]
     ];
 
     public function loadAll()
