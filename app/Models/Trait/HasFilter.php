@@ -115,7 +115,13 @@ trait HasFilter
                     $value[$key] = optional($options)[$val];
                 }
 
-                $value = implode(', ', $value);
+                if(is_array($value[0])) {
+                    $value = collect($value)->map(function ($item) {
+                        return implode(' - ', $item);
+                    })->implode(', ');
+                } else {
+                    $value = implode(', ', $value);
+                }
             } elseif(optional($this->data)[$column_key]) {
                 $value = optional($options)[$this->data[$column_key]];
             }

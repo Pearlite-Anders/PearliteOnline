@@ -15,7 +15,7 @@
             <div style="margin-top: 25px;font-weight:bold;height:20px;">
                 <x-tooltip-word
                     :tooltip="__('Last two digits of the year of the year in which the marking is applied')"
-                >{{ now()->format('y') }}</x-tooltip-word>
+                >{{ $form->data->year }}</x-tooltip-word>
             </div>
             <div style="height:20px;margin-top:10px;">
                 <x-tooltip-word
@@ -49,15 +49,16 @@
                 </div>
                 @if(is_array($form->data->weldability_group))
                     @foreach($form->data->weldability_group as $key => $value)
+                        @php
+                            $row = setting('ce_weldability_group')[$value];
+                        @endphp
                         <div style="display:flex;">
                             <div style="flex:1;display:flex;">
-                                @if(isset(setting('ce_weldability_group')[optional($value)['weldability']]))
-                                    <div >{{ setting('ce_weldability_group')[optional($value)['weldability']][0] }}</div>
-                                    <div style="margin: 0 3px;">{{ __('acc.') }}</div>
-                                    <div >{{ setting('ce_weldability_group')[optional($value)['weldability']][1] }}</div>
-                                @endif
+                                <div >{{ $row[0] }}</div>
+                                <div style="margin: 0 3px;">{{ __('acc.') }}</div>
+                                <div >{{ $row[1] }}</div>
                             </div>
-                            <div style="flex:1;">{{ optional($value)['fracture_toughness'] }}</div>
+                            <div style="flex:1;">{{ $row[2] }}</div>
                         </div>
                     @endforeach
                 @endif
@@ -95,7 +96,9 @@
                     @foreach($form->data->durability_group as $key => $value)
                         <div style="display:flex;">
                             <div style="flex:1;font-size:10px;">
-                                {{ setting('ce_surface')[optional($value)['surface']] }}
+                                @if($value['surface'])
+                                    {{ setting('ce_surface')[optional($value)['surface']] }}
+                                @endif
                             </div>
                             <div style="flex:1;">{{ optional($value)['corrosivity_category'] }}</div>
                             <div style="flex:1;">{{ optional($value)['expected_durability'] }}</div>

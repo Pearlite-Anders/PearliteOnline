@@ -1,28 +1,28 @@
 <?php
-    /**
-     * Attributes
-     * - $column: array
-     *  - type: string
-     *  - label: string
-     *  - dependencies: array
-     *  - create_popup: boolean
-     *  - help: string
-     *  - class: string
-     *  - relationship: string
-     *  - placeholder: string
-     *  - default: string
-     *  - options: string
-     *  - multiple: boolean
-     *  - select_first: boolean
-     *  - prefix: string
-     *  - postfix: string
-     *  - npd_button: boolean
-     *  - info: string
-     *  - restrictions: array
-     *   - view: array
-     *   - edit: array
-     * - $form: object
-     */
+/**
+ * Attributes
+ * - $column: array
+ *  - type: string
+ *  - label: string
+ *  - dependencies: array
+ *  - create_popup: boolean
+ *  - help: string
+ *  - class: string
+ *  - relationship: string
+ *  - placeholder: string
+ *  - default: string
+ *  - options: string
+ *  - multiple: boolean
+ *  - select_first: boolean
+ *  - prefix: string
+ *  - postfix: string
+ *  - npd_button: boolean
+ *  - info: string
+ *  - restrictions: array
+ *   - view: array
+ *   - edit: array
+ * - $form: object
+ */
 ?>
 
 @if(isset($column['restrictions']) && !in_array(auth()->user()->role, $column['restrictions']['view']))

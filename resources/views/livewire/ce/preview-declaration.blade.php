@@ -42,14 +42,30 @@
             <tr>
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                    @if(optional($form->data)->weldability_group)
+                    @if(optional($form->data)->weldability_group && is_array($form->data->weldability_group))
+                        @foreach($form->data->weldability_group as $value)
+                            @php($row = setting('ce_weldability_group')[$value])
+
+                            {{ sprintf('%s according to %s', $row[0], $row[1]) }}
+                            @if(!$loop->last)
+                                ,
+                            @endif
+                        @endforeach
                     @endif
                 </td>
             </tr>
             <tr>
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                    @if(optional($form->data)->weldability_group)
+                @if(optional($form->data)->weldability_group && is_array($form->data->weldability_group))
+                        @foreach($form->data->weldability_group as $value)
+                            @php($row = setting('ce_weldability_group')[$value])
+
+                            {{ $row[2] }}
+                            @if(!$loop->last)
+                                ,
+                            @endif
+                        @endforeach
                     @endif
                 </td>
             </tr>
@@ -108,28 +124,16 @@
             <tr>
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Durability') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                    @if(
-                        preg_match('/^P/i', $form->data->machining_quality) ||
-                        $form->data->surface == 'untreated' ||
-                        $form->data->surface == 'galvanization'
-                    )
-                        @if($form->data->surface != 'untreated' && $form->data->machining_quality != 'npd')
-                            {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} <x-tooltip-word :tooltip="__('Machining Quality')">{{ $form->data->machining_quality }}</x-tooltip-word>.
-                        @endif
-
-                        @if($form->data->surface == 'paint')
-                            {{ __('Surface painted according to EN ISO 12944-5')}}
-                        @elseif($form->data->surface == 'galvanization')
-                            {{ __('Surface galvanized according to EN ISO 1461')}}
-                        @elseif($form->data->surface == 'untreated')
-                            {{ __('Surface untreated')}}
-                        @endif
-                        @if($form->data->surface != 'untreated' && $form->data->durability != 'npd')
-                            , <x-tooltip-word :tooltip="__('Durability')">{{ $form->data->durability }}</x-tooltip-word>.
-                        @endif
-                    @else
-                        {{ $form->data->machining_quality }}.
+                    @if($form->data->durability_group && is_array($form->data->durability_group))
+                        @foreach($form->data->durability_group as $value)
+                            {{ sprintf('Surface preparation %s, Preparation grade %s', $value['surface'], $value['prepration_grade']) }}
+                            @if(!$loop->last)
+                                ;
+                            @endif
+                        @endforeach
                     @endif
+
+
                 </td>
             </tr>
         </table>
