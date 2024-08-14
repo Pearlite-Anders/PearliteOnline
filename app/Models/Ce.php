@@ -45,6 +45,12 @@ class Ce extends Model
             ],
             'filter' => 'radios'
         ],
+        'year' => [
+            'type' => 'text',
+            'label' => 'Year',
+            'placeholder' => 'Year',
+            'filter' => 'search',
+        ],
         'date' => [
             'type' => 'date',
             'label' => 'Date',
@@ -97,31 +103,13 @@ class Ce extends Model
             'help' => 'Describe what the CE mark includes'
         ],
         'weldability_group' => [
-            'type' => 'group',
+            'type' => 'select',
             'label' => 'Weldability',
             'multiple' => true,
-            'fields' => [
-                'weldability' => [
-                    'type' => 'select',
-                    'label' => 'Weldability',
-                    'multiple' => false,
-                    'options' => 'ce_weldability_group',
-                    'placeholder' => 'Select',
-                    'filter' => 'select',
-                ],
-                'fracture_toughness' => [
-                    'type' => 'select',
-                    'label' => 'Facture toughness',
-                    'multiple' => false,
-                    'options' => 'ce_facture_toughness',
-                    'placeholder' => 'Select - Example: S235',
-                    'filter' => 'select'
-                ],
-            ],
+            'options' => 'ce_weldability_group',
             'filter' => 'search',
             'help' => 'Specify the types of steel used',
         ],
-
         'behavior_in_fire' => [
             'type' => 'select',
             'label' => 'Reaction to fire',

@@ -12,6 +12,8 @@ class CeData extends Data implements Wireable
     use WireableData;
 
     public function __construct(
+        public ?string $year,
+        public ?string $date,
         public ?string $method,
         public ?string $execution_standard,
         public ?string $execution_class,

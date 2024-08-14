@@ -11,7 +11,7 @@
         {!! setting('ce_company') !!}<br>
         {!! setting('ce_company_address') !!}, {!! setting('ce_company_zip') !!} {!! setting('ce_company_city') !!}
         <div style="margin-top: 25px;font-weight:bold;height:20px;">
-            {{ now()->format('y') }}
+            {{ $ce->data['year'] }}
         </div>
         <div style="height:20px;margin-top:10px;">
             {{ setting('ce_certificate_number') }}
@@ -33,16 +33,30 @@
                 <div style="flex:1;">{{__('Weldability')}}:</div>
                 <div style="flex:1;">{{__('Facture toughness')}}:</div>
             </div>
+
+            @if(is_array($ce->data['weldability_group']))
+                    @foreach($ce->data['weldability_group'] as $key => $value)
+                        @php($row = setting('ce_weldability_group')[$value])
+                        <div style="display:flex;">
+                            <div style="flex:1;display:flex;">
+                                <div >{{ $row[0] }}</div>
+                                <div style="margin: 0 3px;">{{ __('acc.') }}</div>
+                                <div >{{ $row[1] }}</div>
+                            </div>
+                            <div style="flex:1;">{{ $row[2] }}</div>
+                        </div>
+                    @endforeach
+                @endif
             @if(is_array(optional($ce->data)['weldability_group']))
                 @foreach(optional($ce->data)['weldability_group'] as $key => $value)
+                    @php($row = setting('ce_weldability_group')[$value])
                     <div style="display:flex;">
                         <div style="flex:1;">
-                            @if(isset(setting('ce_weldability_group')[optional($value)['weldability']]))
-                                {{ setting('ce_weldability_group')[optional($value)['weldability']][0] }} -
-                                {{ setting('ce_weldability_group')[optional($value)['weldability']][1] }}
-                            @endif
+                            <div >{{ $row[0] }}</div>
+                            <div style="margin: 0 3px;">{{ __('acc.') }}</div>
+                            <div >{{ $row[1] }}</div>
                         </div>
-                        <div style="flex:1;">{{ optional($value)['fracture_toughness'] }}</div>
+                        <div style="flex:1;">{{ $row[2] }}</div>
                     </div>
                 @endforeach
             @endif
@@ -183,18 +197,29 @@
         <tr>
             <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Weldability') }}</td>
             <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                @if(optional($ce->data)['weldability_group'])
-                    {{ setting('ce_weldability_group')[$ce->data['weldability_group']][0] }}
-                    {{__('according to')}}
-                    {{ setting('ce_weldability_group')[$ce->data['weldability_group']][1] }}
+                @if($ce->data['weldability_group'] && is_array($ce->data['weldability_group']))
+                    @foreach($ce->data['weldability_group'] as $value)
+                        @php($row = setting('ce_weldability_group')[$value])
+
+                        {{ sprintf('%s according to %s', $row[0], $row[1]) }}
+                        @if(!$loop->last)
+                            ,
+                        @endif
+                    @endforeach
                 @endif
             </td>
         </tr>
         <tr>
             <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Fracture toughness') }}</td>
             <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">
-                @if(optional($ce->data)['weldability_group'])
-                    {{ setting('ce_weldability_group')[$ce->data['weldability_group']][2] }}
+                @if($ce->data['weldability_group'] && is_array($ce->data['weldability_group']))
+                    @foreach($ce->data['weldability_group'] as $value)
+                        @php($row = setting('ce_weldability_group')[$value])
+                        {{ $row[2] }}
+                        @if(!$loop->last)
+                            ,
+                        @endif
+                    @endforeach
                 @endif
             </td>
         </tr>
@@ -243,27 +268,13 @@
         <tr>
             <td style="border-right: 1px solid #333;padding: 3px 2px;">{{ __('Durability') }}</td>
             <td style="padding: 3px 2px;font-weight:bold;">
-                @if(
-                    preg_match('/^P/i', $ce->data['machining_quality']) ||
-                    $ce->data['surface'] == 'untreated' ||
-                    $ce->data['surface'] == 'galvanization'
-                )
-                    @if($ce->data['surface'] != 'untreated' && $ce->data['machining_quality'] != 'npd')
-                        {{ __('Surface preparation according to EN 1090-2, Preparation grade') }} {{ $ce->data['machining_quality'] }}.
-                    @endif
-
-                    @if($ce->data['surface'] == 'paint')
-                        {{ __('Surface painted according to EN ISO 12944-5')}}
-                    @elseif($ce->data['surface'] == 'galvanization')
-                        {{ __('Surface galvanized according to EN ISO 1461')}}
-                    @elseif($ce->data['surface'] == 'untreated')
-                        {{ __('Surface untreated')}}
-                    @endif
-                    @if($ce->data['surface'] != 'untreated' && $ce->data['durability'] != 'npd')
-                        , {{ $ce->data['durability'] }}.
-                    @endif
-                @else
-                    {{ $ce->data['machining_quality'] }}.
+                @if($ce->data['durability_group'] && is_array($ce->data['durability_group']))
+                    @foreach($ce->data['durability_group'] as $value)
+                        {{ sprintf('Surface preparation %s, Preparation grade %s', $value['surface'], $value['prepration_grade']) }}
+                        @if(!$loop->last)
+                            ;
+                        @endif
+                    @endforeach
                 @endif
             </td>
         </tr>
