@@ -247,6 +247,7 @@ class Setting extends Model
             'machine_maintenance_types' => [
                 'placeholder' => 'Placeholder',
             ],
+            'time_registration_tasks' => [],
             'signature_group' => [],
         ]);
     }
