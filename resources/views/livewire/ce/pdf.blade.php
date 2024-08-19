@@ -35,23 +35,10 @@
             </div>
 
             @if(is_array($ce->data['weldability_group']))
-                    @foreach($ce->data['weldability_group'] as $key => $value)
-                        @php($row = setting('ce_weldability_group')[$value])
-                        <div style="display:flex;">
-                            <div style="flex:1;display:flex;">
-                                <div >{{ $row[0] }}</div>
-                                <div style="margin: 0 3px;">{{ __('acc.') }}</div>
-                                <div >{{ $row[1] }}</div>
-                            </div>
-                            <div style="flex:1;">{{ $row[2] }}</div>
-                        </div>
-                    @endforeach
-                @endif
-            @if(is_array(optional($ce->data)['weldability_group']))
-                @foreach(optional($ce->data)['weldability_group'] as $key => $value)
+                @foreach($ce->data['weldability_group'] as $key => $value)
                     @php($row = setting('ce_weldability_group')[$value])
                     <div style="display:flex;">
-                        <div style="flex:1;">
+                        <div style="flex:1;display:flex;">
                             <div >{{ $row[0] }}</div>
                             <div style="margin: 0 3px;">{{ __('acc.') }}</div>
                             <div >{{ $row[1] }}</div>
