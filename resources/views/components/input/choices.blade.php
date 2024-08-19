@@ -117,7 +117,7 @@
             @if($attributes['placeholder'] && !isset($attributes['multiple'])
                 <option value="">{{ $attributes['placeholder'] }}</option>
             @endif
-            @if(count($attributes['options'])>0)
+            @if(is_array($attributes['options']) && count($attributes['options'])>0)
                 @foreach($attributes['options'] as $key=>$option)
                     <option value="{{$key}}">{{ __(is_array($option) ? implode(' - ', $option) : $option) }}</option>
                 @endforeach
