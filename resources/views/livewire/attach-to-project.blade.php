@@ -21,6 +21,9 @@
                                 wire:click="attachModel({{$project->id}})"
                                 class="flex items-center px-1 py-1 transition-all duration-300 cursor-pointer hover:bg-gray-100"
                             >
+                                @if(isset($project->data['number']))
+                                    ({{ $project->data['number'] }})
+                                @endif
                                 {{ $project->data['name'] }}
                             </div>
                         @empty
