@@ -100,6 +100,7 @@ Route::middleware([
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
     Route::get('/documents', \App\Livewire\Document\Index::class)->name('documents.index');
+    Route::get('/documents/{document}', \App\Livewire\Document\Show::class)->name('documents.show')->middleware('can:view,document');
 
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;
