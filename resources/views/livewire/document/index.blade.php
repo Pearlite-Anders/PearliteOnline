@@ -40,8 +40,9 @@
                         <div class="-mt-px flex divide-x divide-gray-200">
                             <div class="flex w-0 flex-1">
                             <a
-                                href="#"
+                                href="{{ route('documents.show', ['document' => $document->id]) }}"
                                 class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                wire:navigate
                             >
                                 <x-icon.eye class="h-5 w-5 text-gray-400" />
                                 {{ __('Read') }}
