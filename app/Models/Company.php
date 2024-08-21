@@ -130,6 +130,11 @@ class Company extends Model
         return $this->hasMany(InternalOrder::class);
     }
 
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
     public function timeregistrations()
     {
         $query = TimeRegistration::query();
