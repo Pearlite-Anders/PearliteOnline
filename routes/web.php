@@ -100,7 +100,7 @@ Route::middleware([
     Route::get('/internal-order/{internalOrder}/edit', \App\Livewire\InternalOrder\Edit::class)->name('internal-order.edit');
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
-
+    Route::get('/documents', \App\Livewire\Document\Index::class)->name('documents.index');
 
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;
