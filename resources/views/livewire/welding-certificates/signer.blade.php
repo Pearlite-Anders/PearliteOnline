@@ -12,7 +12,14 @@
                     <h3 class="text-lg font-medium text-gray-900">
                         {{ __('Sign certificate') }}
                     </h3>
-
+                    @if(isset($welding_certificate->data['last_signature']))
+                        <div class="mt-2">
+                            <div class="flex items-center space-x-2">
+                                <span>{{ __('Last signed') }}:</span>
+                                <span class="font-semibold">{{ $welding_certificate->data['last_signature'] }}</span>
+                            </div>
+                        </div>
+                    @endif
                     @if($errors->any())
                         <div class="p-4 mt-2 rounded-md bg-red-50">
                             <div class="flex">
