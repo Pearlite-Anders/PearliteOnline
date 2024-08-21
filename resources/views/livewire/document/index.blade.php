@@ -16,16 +16,10 @@
                         />
                     </div>
                 @endunless
-
+                @unless($hide_filters)
+                    <x-table-filters :filters="$filters" :model="$model" :filter_columns="$filter_columns" :show_modal="$showFilterSettingsModal" />
+                @endunless
             </div>
-        </x-slot>
-        <x-slot name="buttons">
-            @can('create', App\Models\Document::class)
-                <x-button.link href="{{ route('documents.create') }}" class="inline-flex items-center justify-center">
-                    <x-icon.plus class="mr-2 -ml-1 align-middle" />
-                    {{ __('Add Document') }}
-                </x-button.link>
-            @endcan
         </x-slot>
     </x-index-header>
     <div class="flex flex-col leading-6 text-black">
@@ -36,35 +30,30 @@
                         <div class="flex items-center justify-between w-full p-6 space-x-6">
                             <div class="flex-1 truncate">
                                 <div class="flex items-center space-x-3">
-                                    <h3 class="font-medium text-gray-900 truncate text-md"> {{ $document->currentRevision->data["title"] ?? "" }}</h3>
+                                    <h3 class="text-sm font-medium text-gray-900 truncate"> {{ $document->data["title"] ?? "" }}</h3>
 
                                 </div>
-                                <div class="mt-1 text-sm text-gray-500 truncate">{{ $document->currentRevision->data["introduction"] ?? "&nbsp;" }}</div>
+                                <p class="mt-1 text-sm text-gray-500 truncate">{{ $document->data["introduction"] ?? "" }}</p>
                             </div>
                         </div>
                         <div>
-                            <div class="flex -mt-px divide-x divide-gray-200">
-                                <div class="flex flex-1 w-0">
-                                    <a
-                                        href="{{ route('documents.show', ['document' => $document->id]) }}"
-                                        class="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-semibold text-gray-900 border border-transparent rounded-bl-lg gap-x-3"
-                                    >
-                                        <x-icon.eye class="w-5 h-5 text-gray-400" />
-                                        {{ __('Read') }}
-                                    </a>
-                                </div>
-                                @if (auth()->user()->can('update', $document))
-                                    <div class="flex flex-1 w-0 -ml-px">
-                                        <a
-                                            href="{{ route('documents.edit', ['document' => $document->id]) }}"
-                                            class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3"
-                                        >
-                                            <x-icon.pencil class="w-5 h-5 text-gray-400" />
-                                            {{ __('Edit') }}
-                                        </a>
-                                    </div>
-                                @endif
+                        <div class="flex -mt-px divide-x divide-gray-200">
+                            <div class="flex flex-1 w-0">
+                            <a
+                                href="#"
+                                class="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-semibold text-gray-900 border border-transparent rounded-bl-lg gap-x-3"
+                            >
+                                <x-icon.eye class="w-5 h-5 text-gray-400" />
+                                {{ __('Read') }}
+                            </a>
                             </div>
+                            <div class="flex flex-1 w-0 -ml-px">
+                            <a href="#" class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
+                                <x-icon.pencil class="w-5 h-5 text-gray-400" />
+                                {{ __('Edit') }}
+                            </a>
+                            </div>
+                        </div>
                         </div>
                     </li>
                     @endforeach
