@@ -14,7 +14,6 @@ class DocumentData extends Data implements Wireable
         public ?string $title,
         public ?string $introduction,
         public ?string $content,
-        public ?bool $default_view,
-        public ?bool $default_edit,
-    ) { }
+    ) {
+    }
 }

@@ -27,17 +27,17 @@ class Document extends Model
             'filter' => 'search'
         ],
         'introduction' => [
-            'type' => 'text',
+            'type' => 'rich_text',
             'label' => 'Introduction',
             'required' => false,
-            'placeholder' => '',
+            'placeholder' => 'A short introduction to the document',
             'filter' => 'search'
         ],
         'content' => [
-            'type' => 'text',
+            'type' => 'rich_text',
             'label' => 'Content',
             'required' => false,
-            'placeholder' => '',
+            'placeholder' => 'The content of this document',
             'filter' => 'search'
         ],
     ];
