@@ -1,14 +1,17 @@
 <div>
-    <x-form-header backlink="{{ route('welder.index') }}">
+    <x-form-header backlink="{{ route('documents.index') }}">
         <x-slot name="title">{{ __('View document') }}</x-slot>
     </x-form-header>
-    <div class="bottom-0 right-0 px-4 pt-8 pb-4 leading-6 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0">
-        <div class="md:flex">
-            <div class="container p-4 mb-4 leading-6 text-black bg-white rounded-lg shadow xl:p-8 sm:p-6">
-                {{ $document->data["content"] }}
+    <div class="bottom-0 right-0 px-4 pt-8 pb-4 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0">
+        <div class="lg:flex">
+            <div class="max-w-5xl px-4 py-2 mb-4 leading-7 bg-white rounded-lg shadow xl:px-10 xl:py-8 sm:px-8 sm:py-6">
+                <h1 class="mb-4 text-3xl font-medium tracking-tight">{{ $document->data["title"] }}</h1>
+                <div class="text-base">
+                    {!! $document->data["content"] !!}
+                </div>
             </div>
-            <div class="flex justify-center grow">
-                <div>
+            <div class="flex grow lg:justify-center text-nowrap">
+                <div class="px-4">
                     <div class="mb-6">
                         <h2 class="mb-2 text-lg text-gray-900">{{ __('Details') }}</h2>
                         <ul class="text-gray-900 list-none">
@@ -27,7 +30,10 @@
                         <h2 class="mb-2 text-lg text-gray-900">{{ __('Actions') }}</h2>
                         <ul class="text-gray-900 list-none">
                             <li>
-                                <a href="#" class="flex items-center gap-x-4">
+                                <a
+                                   href="{{ route('documents.edit', ['document' => $document->id]) }}"
+                                   class="flex items-center gap-x-4"
+                                >
                                     <x-icon.pencil class="w-4 h-4" />
                                     <span>Edit</span>
                                 </a>
