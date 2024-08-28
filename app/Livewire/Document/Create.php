@@ -23,6 +23,7 @@ class Create extends Component
 
     public function mount()
     {
+        abort_unless(auth()->user()->can('viewAny', Document::class), 403);
         $this->form->data = DocumentData::from(['title' => '']);
     }
 
