@@ -15,7 +15,8 @@ class Document extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'data' => 'array'
+        'data' => 'array',
+        'files' => 'array',
     ];
 
     public const SYSTEM_COLUMNS = [
@@ -27,7 +28,7 @@ class Document extends Model
             'filter' => 'search'
         ],
         'introduction' => [
-            'type' => 'rich_text',
+            'type' => 'textarea',
             'label' => 'Introduction',
             'required' => false,
             'placeholder' => 'A short introduction to the document',
