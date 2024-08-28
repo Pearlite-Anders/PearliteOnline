@@ -21,7 +21,7 @@ class BasePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user): bool
+    public function view(User $user, $model): bool
     {
         if($user->isPartner()) {
             return true;
@@ -45,7 +45,7 @@ class BasePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user): bool
+    public function update(User $user, $model): bool
     {
         if($user->isPartner()) {
             return true;
@@ -57,7 +57,7 @@ class BasePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user, $model): bool
     {
         if($user->isPartner()) {
             return true;

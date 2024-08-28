@@ -253,6 +253,14 @@ class Company extends Model
                     'edit' => __('Edit'),
                 ]
             ],
+            'document' => (object)[
+                'name' => __('Documents'),
+                'class' => \App\Models\Document::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
         ];
     }
 }

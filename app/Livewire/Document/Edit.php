@@ -31,6 +31,7 @@ class Edit extends Component
 
     public function mount(Document $document)
     {
+        abort_unless(auth()->user()->can('edit', $document), 403);
         $this->$document = $document;
         $this->form->setFields($document);
     }
