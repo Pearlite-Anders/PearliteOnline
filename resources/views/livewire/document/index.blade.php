@@ -39,7 +39,7 @@
                                     <h3 class="truncate text-md font-medium text-gray-900"> {{ $document->data["title"] ?? "" }}</h3>
 
                                 </div>
-                                <div class="mt-1 truncate text-sm text-gray-500">{!! $document->data["introduction"] ?? "&nbsp" !!}</div>
+                                <div class="mt-1 truncate text-sm text-gray-500">{{ $document->data["introduction"] ?? "&nbsp" }}</div>
                             </div>
                         </div>
                         <div>
