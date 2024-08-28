@@ -4,12 +4,13 @@ namespace App\Livewire\Document;
 
 use Livewire\Component;
 
+use Livewire\WithFileUploads;
 use App\Livewire\WithTrixUploads;
 use App\Models\Document;
 
 class Edit extends Component
 {
-    use WithTrixUploads;
+    use WithFileUploads, WithTrixUploads;
 
     public Form $form;
     public Document $document;
