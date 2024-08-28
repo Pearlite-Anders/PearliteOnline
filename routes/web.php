@@ -101,6 +101,7 @@ Route::middleware([
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
     Route::get('/documents', \App\Livewire\Document\Index::class)->name('documents.index');
+    Route::get('/documents/create', \App\Livewire\Document\Create::class)->name('documents.create')->middleware('can:create,document');
     Route::get('/documents/{document}', \App\Livewire\Document\Show::class)->name('documents.show')->middleware('can:view,document');
     Route::get('/documents/{document}/edit', \App\Livewire\Document\Edit::class)->name('documents.edit')->middleware('can:edit,document');
 

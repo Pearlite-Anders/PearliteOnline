@@ -4,7 +4,7 @@
     </x-form-header>
     <div class="bottom-0 right-0 px-4 pt-8 pb-4 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0">
         <div class="lg:flex">
-            <div class="max-w-5xl px-4 py-2 mb-4 leading-7 bg-white rounded-lg shadow xl:px-10 xl:py-8 sm:px-8 sm:py-6">
+            <div class="w-6/12 px-4 py-2 mb-4 leading-7 bg-white rounded-lg shadow xl:px-10 xl:py-8 sm:px-8 sm:py-6">
                 <h1 class="text-3xl font-medium mb-4 tracking-tight">{{ $document->data["title"] }}</h1>
                 <div class="text-base">
                     {!! $document->data["content"] !!}

@@ -23,7 +23,7 @@ class Form extends LivewireForm
             'company_id' => auth()->user()->currentCompany->id,
         ], $this->transformedData()));
 
-        return $weldingCoordination;
+        return $document;
     }
 
     public function update(Document $document)
