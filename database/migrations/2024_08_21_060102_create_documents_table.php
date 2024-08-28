@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->json('data');
-
+            $table->json('files')->nullable();
             $table->foreignId('company_id')->nullable()->constrained();
 
             $table->softDeletes();

@@ -4,11 +4,12 @@ namespace App\Livewire\Document;
 
 use App\Data\DocumentData;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use App\Livewire\WithTrixUploads;
 
 class Create extends Component
 {
-    use WithTrixUploads;
+    use WithFileUploads, WithTrixUploads;
 
     public Form $form;
 
