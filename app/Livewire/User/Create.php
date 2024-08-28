@@ -22,6 +22,7 @@ class Create extends Component
         if(!$user) {
             $user = User::create(array_merge($this->form->toArray(), [
                 'current_company_id' => auth()->user()->currentCompany->id,
+                'password' => bcrypt($this->form->password),
             ]));
         } else {
             if(!$user->trashed()) {
