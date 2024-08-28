@@ -55,6 +55,9 @@
             @if(optional($column)['help'])
                 <x-tooltip-question-mark :tooltip="$column['help']" class="h-4 ml-1 mt-[2px]" />
             @endif
+            @if(optional($column)['required'])
+                <span class="text-red-400">*</span>
+            @endif
         </div>
     @endunless
     @if($column['type'] == 'relationship' && optional($column)['create_popup'])
@@ -216,6 +219,7 @@
             placeholder="{{ __($column['placeholder'] ?? '') }}"
             postfix="{{ __($column['postfix'] ?? '') }}"
             prefix="{{ __($column['prefix'] ?? '') }}"
+            required="$column['prefix'] ?? false"
         />
     @endif
 
