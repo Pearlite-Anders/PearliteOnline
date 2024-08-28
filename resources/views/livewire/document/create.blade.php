@@ -1,12 +1,6 @@
 <div>
     <x-form-header backlink="{{ route('documents.index') }}">
-        <x-slot name="title">
-            @if ($parentDocument)
-                {{ __('Create document under') }} {{ $parentDocument->currentRevision->data["title"] }}
-            @else
-                {{ __('Create document') }}
-            @endif
-        </x-slot>
+        <x-slot name="title">{{ __('Create document') }}</x-slot>
     </x-form-header>
     <form
         class="px-4 pt-8 pb-4 leading-6 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0"
