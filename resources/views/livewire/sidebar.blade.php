@@ -176,6 +176,14 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+                        @can('viewAny', App\Models\Document::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('documents.index') }}" :active="request()->routeIs('documents.*')">
+                                    <x-icon.book class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Documents') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
 
                     </ul>
                 @endif
@@ -200,14 +208,7 @@
                         @endcan
                     </ul>
                 @endif
-                <ul class="px-0 pt-0 pb-2 m-0 text-black list-none border-t">
-                    <li class="mt-2 mb-0 text-left list-outside">
-                        <x-nav-link href="{{ route('documents.index') }}" :active="request()->routeIs('documents.*')">
-                            <x-icon.book class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                            {{ __('Documents') }}
-                        </x-nav-link>
-                    </li>
-                </ul>
+
             </div>
         </div>
     </div>

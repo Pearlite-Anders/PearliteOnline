@@ -22,6 +22,12 @@ class Index extends Component
     public $compressed_header = false;
     public $attach_project = false;
 
+    public function mount()
+    {
+        abort_unless(auth()->user()->can('viewAny', Document::class), 403);
+    }
+
+
     public function render()
     {
         return view('livewire.document.index')->with([
