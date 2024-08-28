@@ -21,6 +21,12 @@
                 @endunless
             </div>
         </x-slot>
+        <x-slot name="buttons">
+            <x-button.link href="{{ route('documents.create') }}" class="inline-flex items-center justify-center">
+                <x-icon.plus class="mr-2 -ml-1 align-middle" />
+                {{ __('Add Document') }}
+            </x-button.link>
+        </x-slot>
     </x-index-header>
     <div class="flex flex-col leading-6 text-black">
         <div class="overflow-x-auto">
@@ -33,30 +39,30 @@
                                     <h3 class="truncate text-md font-medium text-gray-900"> {{ $document->data["title"] ?? "" }}</h3>
 
                                 </div>
-                                <div class="mt-1 truncate text-sm text-gray-500">{!! $document->data["introduction"] ?? "" !!}</div>
+                                <div class="mt-1 truncate text-sm text-gray-500">{!! $document->data["introduction"] ?? "&nbsp" !!}</div>
                             </div>
                         </div>
                         <div>
-                        <div class="-mt-px flex divide-x divide-gray-200">
-                            <div class="flex w-0 flex-1">
-                            <a
-                                href="{{ route('documents.show', ['document' => $document->id]) }}"
-                                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-                            >
-                                <x-icon.eye class="h-5 w-5 text-gray-400" />
-                                {{ __('Read') }}
-                            </a>
+                            <div class="-mt-px flex divide-x divide-gray-200">
+                                <div class="flex w-0 flex-1">
+                                <a
+                                    href="{{ route('documents.show', ['document' => $document->id]) }}"
+                                    class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                >
+                                    <x-icon.eye class="h-5 w-5 text-gray-400" />
+                                    {{ __('Read') }}
+                                </a>
+                                </div>
+                                <div class="-ml-px flex w-0 flex-1">
+                                <a
+                                    href="{{ route('documents.edit', ['document' => $document->id]) }}"
+                                    class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                >
+                                    <x-icon.pencil class="h-5 w-5 text-gray-400" />
+                                    {{ __('Edit') }}
+                                </a>
+                                </div>
                             </div>
-                            <div class="-ml-px flex w-0 flex-1">
-                            <a
-                                href="{{ route('documents.edit', ['document' => $document->id]) }}"
-                                class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-                            >
-                                <x-icon.pencil class="h-5 w-5 text-gray-400" />
-                                {{ __('Edit') }}
-                            </a>
-                            </div>
-                        </div>
                         </div>
                     </li>
                     @endforeach
