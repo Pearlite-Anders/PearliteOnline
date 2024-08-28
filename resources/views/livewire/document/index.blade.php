@@ -22,10 +22,12 @@
             </div>
         </x-slot>
         <x-slot name="buttons">
-            <x-button.link href="{{ route('documents.create') }}" class="inline-flex items-center justify-center">
-                <x-icon.plus class="mr-2 -ml-1 align-middle" />
-                {{ __('Add Document') }}
-            </x-button.link>
+            @can('create', App\Models\Document::class)
+                <x-button.link href="{{ route('documents.create') }}" class="inline-flex items-center justify-center">
+                    <x-icon.plus class="mr-2 -ml-1 align-middle" />
+                    {{ __('Add Document') }}
+                </x-button.link>
+            @endcan
         </x-slot>
     </x-index-header>
     <div class="flex flex-col leading-6 text-black">

@@ -13,6 +13,7 @@ class Show extends Component
 
     public function mount(Document $document)
     {
+        abort_unless(auth()->user()->can('view', $document), 403);
         $this->$document = $document;
     }
 

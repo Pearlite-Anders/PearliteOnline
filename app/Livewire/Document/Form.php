@@ -27,6 +27,7 @@ class Form extends LivewireForm
     {
         $document = Document::create(array_merge([
             'company_id' => auth()->user()->currentCompany->id,
+            'owner_id' => auth()->user()->id,
         ], $this->transformedData()));
 
         return $document;
