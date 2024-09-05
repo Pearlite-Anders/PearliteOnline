@@ -27,11 +27,25 @@ class Index extends Component
         abort_unless(auth()->user()->can('viewAny', Document::class), 403);
     }
 
-
     public function render()
     {
         return view('livewire.document.index')->with([
             'documents' => $this->rows
         ]);;
+    }
+
+    public function getRowsQueryProperty()
+    {
+        $user = auth()->user();
+
+        if($this->preset_filters) {
+            $this->filters = $this->preset_filters;
+        }
+
+        $query = $user->documents()->where('company_id', '=', $user->currentCompany->id)
+                    ->when($this->search, fn ($query, $term) => $this->applySearch($query, $term))
+                    ->when($this->filters, fn ($query, $filters) => $this->applyFilters($query, $filters));
+
+        return $this->applySorting($query);
     }
 }
