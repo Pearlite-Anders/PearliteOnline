@@ -108,6 +108,31 @@ class User extends Authenticatable
         return $this->belongsTo(Company::class, 'current_company_id');
     }
 
+    public function documentsWithPermissons()
+    {
+        return $this->belongsToMany(Document::class)->withPivot('view', 'edit')->withTimestamps();
+    }
+
+    public function ownedDocuments()
+    {
+        return $this->hasMany(Document::class, 'owner_id');
+    }
+
+    public function documents()
+    {
+        if ($this->isAdmin()) {
+            return Document::query();
+        }
+
+        return Document::whereJsonContains('data', ['default_view' => true])
+            ->orWhere('owner_id', $this->id)
+            ->orWhereHas('users', function ($query) {
+                $query->where('user_id', $this->id)->where(function($permisionQuery) {
+                    $permisionQuery->where('view', true)->orWhere('edit', true);
+                });
+            });
+    }
+
     public function isAdmin()
     {
         return $this->role === self::ADMIN_ROLE;
