@@ -47,23 +47,25 @@
                         <div>
                             <div class="flex -mt-px divide-x divide-gray-200">
                                 <div class="flex flex-1 w-0">
-                                <a
-                                    href="{{ route('documents.show', ['document' => $document->id]) }}"
-                                    class="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-semibold text-gray-900 border border-transparent rounded-bl-lg gap-x-3"
-                                >
-                                    <x-icon.eye class="w-5 h-5 text-gray-400" />
-                                    {{ __('Read') }}
-                                </a>
+                                    <a
+                                        href="{{ route('documents.show', ['document' => $document->id]) }}"
+                                        class="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-semibold text-gray-900 border border-transparent rounded-bl-lg gap-x-3"
+                                    >
+                                        <x-icon.eye class="w-5 h-5 text-gray-400" />
+                                        {{ __('Read') }}
+                                    </a>
                                 </div>
-                                <div class="flex flex-1 w-0 -ml-px">
-                                <a
-                                    href="{{ route('documents.edit', ['document' => $document->id]) }}"
-                                    class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3"
-                                >
-                                    <x-icon.pencil class="w-5 h-5 text-gray-400" />
-                                    {{ __('Edit') }}
-                                </a>
-                                </div>
+                                @if (auth()->user()->can('update', $document))
+                                    <div class="flex flex-1 w-0 -ml-px">
+                                        <a
+                                            href="{{ route('documents.edit', ['document' => $document->id]) }}"
+                                            class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3"
+                                        >
+                                            <x-icon.pencil class="w-5 h-5 text-gray-400" />
+                                            {{ __('Edit') }}
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </li>

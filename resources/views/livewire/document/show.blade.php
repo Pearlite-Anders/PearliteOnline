@@ -29,45 +29,49 @@
                     <div>
                         <h2 class="mb-2 text-lg text-gray-900">{{ __('Actions') }}</h2>
                         <ul class="text-gray-900 list-none hover:text-black">
-                            <li>
-                                <a
-                                   href="{{ route('documents.edit', ['document' => $document->id]) }}"
-                                   class="flex items-center gap-x-4"
-                                >
-                                    <x-icon.pencil class="w-4 h-4" />
-                                    <span>Edit</span>
-                                </a>
-                            </li>
-                            <li>
-                                <div class="flex" x-data @click.prevent.stop="console.log('stop')">
-                                    @if($confirming == true)
-                                        <x-button
-                                            wire:click="delete()"
-                                            class="px-1 bg-red-600 hover:bg-red-800"
-                                        >
-                                            <x-icon.check class="w-4 h-4 text-white" />
-                                        </x-button>
-                                        <x-button
-                                            wire:click="cancelConfirmDelete"
-                                            class="bg-cyan-600 hover:bg-cyan-700"
-                                        >
-                                            <x-icon.x class="w-4 h-4 text-white" />
-                                        </x-button>
-                                    @else
-                                        <button
-                                            wire:click="confirmDelete()"
-                                            class="flex items-center text-red-600 bg-transparent gap-x-4 hover:text-red-800"
-                                        >
-                                            <x-icon.trash class="w-4 h-4" />
-                                            <span>Delete</span>
-                                        </button>
-                                    @endif
-                                </div>
-                                <!-- <a href="#" class="flex items-center text-red-600 gap-x-4">
-                                    <x-icon.trash class="w-4 h-4" />
-                                    <span>Delete</span>
-                                </a> -->
-                            </li>
+                            @if (auth()->user()->can('update', $document))
+                                <li>
+                                    <a
+                                    href="{{ route('documents.edit', ['document' => $document->id]) }}"
+                                    class="flex items-center gap-x-4"
+                                    >
+                                        <x-icon.pencil class="w-4 h-4" />
+                                        <span>Edit</span>
+                                    </a>
+                                </li>
+                            @endif
+                            @if (auth()->user()->can('update', $document))
+                                <li>
+                                    <div class="flex" x-data @click.prevent.stop="console.log('stop')">
+                                        @if($confirming == true)
+                                            <x-button
+                                                wire:click="delete()"
+                                                class="px-1 bg-red-600 hover:bg-red-800"
+                                            >
+                                                <x-icon.check class="w-4 h-4 text-white" />
+                                            </x-button>
+                                            <x-button
+                                                wire:click="cancelConfirmDelete"
+                                                class="bg-cyan-600 hover:bg-cyan-700"
+                                            >
+                                                <x-icon.x class="w-4 h-4 text-white" />
+                                            </x-button>
+                                        @else
+                                            <button
+                                                wire:click="confirmDelete()"
+                                                class="flex items-center text-red-600 bg-transparent gap-x-4 hover:text-red-800"
+                                            >
+                                                <x-icon.trash class="w-4 h-4" />
+                                                <span>Delete</span>
+                                            </button>
+                                        @endif
+                                    </div>
+                                    <!-- <a href="#" class="flex items-center text-red-600 gap-x-4">
+                                        <x-icon.trash class="w-4 h-4" />
+                                        <span>Delete</span>
+                                    </a> -->
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
