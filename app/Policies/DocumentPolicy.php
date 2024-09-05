@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Document;
 use App\Models\User;
+use App\Data\DocumentData;
 use Illuminate\Auth\Access\Response;
 
 class DocumentPolicy extends BasePolicy
@@ -15,11 +16,31 @@ class DocumentPolicy extends BasePolicy
      */
     public function view(User $user, $document): bool
     {
+        if ($user->isPartner()) {
+            return true;
+        }
+
         if ($document->owner_id == $user->id) {
             return true;
         }
 
-        return parent::view($user, $document);
+        if (!($user->can($this->type .'.view') || $user->can($this->type .'.edit'))) {
+            return false;
+        };
+
+        $data = DocumentData::from($document->data);
+
+        if ($data->default_view || $data->default_edit) {
+            return true;
+        }
+
+        $user = $document->users()->find($user->id);
+
+        if (!$user) {
+            return false;
+        }
+
+        return $user->pivot->view || $user->pivot->edit;
     }
 
     /**
@@ -27,11 +48,31 @@ class DocumentPolicy extends BasePolicy
      */
     public function update(User $user, $document): bool
     {
+        if ($user->isPartner()) {
+            return true;
+        }
+
         if ($document->owner_id == $user->id) {
             return true;
         }
 
-        return parent::update($user);
+        if (!$user->can($this->type .'.edit')) {
+            return false;
+        };
+
+        $data = DocumentData::from($document->data);
+
+        if ($data->default_edit) {
+            return true;
+        }
+
+        $user = $document->users()->find($user->id);
+
+        if (!$user) {
+            return false;
+        }
+
+        return $user->pivot->edit;
     }
 
     /**
@@ -39,11 +80,7 @@ class DocumentPolicy extends BasePolicy
      */
     public function delete(User $user, $document): bool
     {
-        if ($document->owner_id == $user->id) {
-            return true;
-        }
-
-        return parent::delete($user);
+        return this->update($user, $document);
     }
 
 }

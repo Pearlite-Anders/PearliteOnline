@@ -48,4 +48,14 @@ class Document extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot('view', 'edit')->withTimestamps();
+    }
 }
