@@ -3,7 +3,7 @@
         {{ __('Document') }}
     </h3>
     <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-3">
-        @foreach(App\Models\Document::getColumns() as $key => $column)
+        @foreach(App\Models\DocumentRevision::getColumns() as $key => $column)
             @include('livewire.common.field')
         @endforeach
     </div>

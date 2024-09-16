@@ -187,7 +187,7 @@
                         @endcan
                         @can('viewAny', App\Models\Document::class)
                             <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('documents.index') }}" :active="request()->routeIs('documents.*')">
+                                <x-nav-link href="{{ route('documents.index') }}" :active="request()->routeIs('documents.*') || request()->routeIs('document_revisions.*')">
                                     <x-icon.book class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
                                     {{ __('Documents') }}
                                 </x-nav-link>

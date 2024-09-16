@@ -19,7 +19,7 @@ class Form extends LivewireForm
 
     public function setFields(Document $document)
     {
-        $this->data = DocumentData::from($document->data);
+        $this->data = DocumentData::from($document->currentRevision->data);
         $this->current_files = collect($document->files)->map(function($file) {
             return File::find($file);
         });
@@ -37,10 +37,12 @@ class Form extends LivewireForm
         });
 
         $document = DB::transaction(function () use ($user, $data, $permissions) {
-            $document = Document::create(array_merge([
+            $document = Document::create([
                 'company_id' => $user->currentCompany->id,
                 'owner_id' => $user->id,
-            ], $data));
+            ]);
+
+            $revision = $document->revisions()->create($data);
 
             $document->users()->sync($permissions);
 
@@ -60,14 +62,18 @@ class Form extends LivewireForm
             ]];
         });
 
-        $document = DB::transaction(function () use ($document, $data, $permissions) {
-            $document->update($data);
+        $revision = DB::transaction(function () use ($document, $data, $permissions) {
+            $revision = $document->revisions()->create($data);
             $document->users()->sync($permissions);
 
-            return $document;
+            return $revision;
         });
 
-        return $this->handleUploads($document);
+        $revision = $this->handleUploads($revision);
+
+        $document->removeOldRevision();
+
+        return $revision;
     }
 
     public function transformedData()
