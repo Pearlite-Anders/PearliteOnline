@@ -6,42 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Trait\HasFilter;
+
 use App\Models\Trait\HasCompany;
 
 class Document extends Model
 {
-    use HasFactory, HasFilter, HasCompany;
+    use HasFactory, HasCompany;
 
     protected $guarded = [];
 
     protected $casts = [
         'data' => 'array',
         'files' => 'array',
-    ];
-
-    public const SYSTEM_COLUMNS = [
-        'title' => [
-            'type' => 'text',
-            'label' => 'Title',
-            'required' => true,
-            'placeholder' => '',
-            'filter' => 'search'
-        ],
-        'introduction' => [
-            'type' => 'textarea',
-            'label' => 'Introduction',
-            'required' => false,
-            'placeholder' => 'A short introduction to the document',
-            'filter' => 'search'
-        ],
-        'content' => [
-            'type' => 'rich_text',
-            'label' => 'Content',
-            'required' => false,
-            'placeholder' => 'The content of this document',
-            'filter' => 'search'
-        ],
     ];
 
     public function owner(): BelongsTo
@@ -57,5 +33,24 @@ class Document extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('view', 'edit')->withTimestamps();
+    }
+
+    public function revisions()
+    {
+        return $this->hasMany(DocumentRevision::class);
+    }
+
+    public function currentRevision()
+    {
+        return $this->hasOne(DocumentRevision::class)->latestOfMany();
+    }
+
+    public function removeOldRevision()
+    {
+        // Remove the oldest 10 revisions. The limit is nessary for MySQL
+        $oldRevisions = $this->revisions()->latest()->skip(10)->limit(9)->get();
+        foreach($oldRevisions as $oldRevision) {
+            $oldRevision->delete();
+        }
     }
 }
