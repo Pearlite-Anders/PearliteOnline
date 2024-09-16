@@ -154,18 +154,20 @@
 
         <div style="display:flex;justify-content: space-around;margin-top:10px;">
             <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
-                <div>{!! setting('ce_company_city') !!} - {{ now()->format('Y-m-d') }}</div>
+                <div style="@if($form->data->signature) margin-top:41px; @endif">{!! setting('ce_company_city') !!} - {{ now()->format('Y-m-d') }}</div>
                 <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
                 <div style="font-style:italic;margin-top:5px;">{{ __('Place and date of issue') }}</div>
             </div>
             <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
-                <div>&nbsp;</div>
+                @if($form->data->signature)
+                    @php($row = setting('signature_group')[$form->data->signature])
+                    <img src="{{ \App\Helpers\DigitalSignature::image(name: $row[0], base64: true, hide_time: true, hide_date: true, width: 200, height: 50) }}"/>
+                @else
+                    <span>&nbsp;</span>
+                @endif
                 <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
                 <div style="font-style:italic;margin-top:5px;">{{ __('Signature') }}</div>
             </div>
-
         </div>
     </div>
-
-
 </div>

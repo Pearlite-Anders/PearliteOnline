@@ -272,19 +272,25 @@
 
     <div style="margin-top:18px;">{{ __('Signed for and on behalf of the manufacturer by:') }}</div>
     <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
-        <div>{{ auth()->user()->name }} - {{ optional(auth()->user()->data)['title'] }}</div>
+        @if($signature)
+           {{ $signature["name"] }} - {{ $signature["function"] }}
+        @endif
         <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
         <div style="font-style:italic;margin-top:5px;">{{ __('Name and function') }}</div>
     </div>
 
     <div style="display:flex;justify-content: space-around;margin-top:10px;">
         <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
-            <div>{!! setting('ce_company_city') !!} - {{ now()->format('Y-m-d') }}</div>
+            <div style="@if($signature) margin-top:41px; @endif">{!! setting('ce_company_city') !!} - {{ now()->format('Y-m-d') }}</div>
             <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
             <div style="font-style:italic;margin-top:5px;">{{ __('Place and date of issue') }}</div>
         </div>
         <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
-            <div>&nbsp;</div>
+            @if($signature)
+               <img src="{{ $signature['image'] }}"/>
+            @else
+                <span>&nbsp;</span>
+            @endif
             <div style="border-top: 1px dotted #333;width:200px;margin-top:5px;"></div>
             <div style="font-style:italic;margin-top:5px;">{{ __('Signature') }}</div>
         </div>
