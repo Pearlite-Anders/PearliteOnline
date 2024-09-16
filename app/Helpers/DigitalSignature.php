@@ -2,9 +2,8 @@
 
 namespace App\Helpers;
 
-use Intervention\Image\ImageManager;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\ImageManager;
 
 class DigitalSignature
 {
@@ -14,21 +13,20 @@ class DigitalSignature
         $base64 = false,
         $hide_time = false,
         $hide_date = false,
-        $width = 302
-    ): string {
+        $width = 302,
+        $height = 72
+    ): string
+    {
         $date = now()->setTimezone('Europe/Copenhagen');
-        $originalWidth = 302;
-        $originalHeight = 72;
-
 
         // create new manager instance with desired driver
         $manager = new ImageManager(Driver::class);
-        $image = $manager->create($originalWidth, $originalHeight);
+        $image = $manager->create($width, $height);
 
-        $image->text($header, 5, 15, function ($font) {
+        $image->text($header, 5, 22, function ($font) {
             $font->filename(resource_path('fonts/Roboto-Bold.ttf'));
-            $font->size(12);
-            $font->color('#0891b2');
+            $font->size(22);
+            $font->color('#000');
         });
 
         $image->text($name, 5, 45, function ($font) {
@@ -45,23 +43,11 @@ class DigitalSignature
             });
         }
 
-        // Add a border to the image
-        $image->drawRectangle(0, 0, function ($draw) use ($originalWidth, $originalHeight) {
-            $draw->size($originalWidth - 1, $originalHeight - 1);
-            $draw->border('#0891b2', 2);
-        });
-
-        // if originalWidth is not equal to width
-        if ($originalWidth !== $width) {
-            $image->scaleDown($width);
-        }
-
         if ($base64) {
             return (string) $image->toPng()->toDataUri();
         } else {
-            $unique = uniqid();
-            $image->save(Storage::disk('local')->path('livewire-tmp/'.$unique.'.png'));
-            return Storage::disk('local')->path('livewire-tmp/'.$unique.'.png');
+            $image->save(Storage::disk('local')->path('livewire-tmp/'.uniqid().'.png'));
+            return Storage::disk('local')->path('livewire-tmp/'.uniqid().'.png');
         }
     }
 }
