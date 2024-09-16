@@ -16,9 +16,7 @@
                         />
                     </div>
                 @endunless
-                @unless($hide_filters)
-                    <x-table-filters :filters="$filters" :model="$model" :filter_columns="$filter_columns" :show_modal="$showFilterSettingsModal" />
-                @endunless
+
             </div>
         </x-slot>
         <x-slot name="buttons">
@@ -38,10 +36,10 @@
                         <div class="flex w-full items-center justify-between space-x-6 p-6">
                             <div class="flex-1 truncate">
                                 <div class="flex items-center space-x-3">
-                                    <h3 class="truncate text-md font-medium text-gray-900"> {{ $document->data["title"] ?? "" }}</h3>
+                                    <h3 class="truncate text-md font-medium text-gray-900"> {{ $document->currentRevision->data["title"] ?? "" }}</h3>
 
                                 </div>
-                                <div class="mt-1 truncate text-sm text-gray-500">{{ $document->data["introduction"] ?? "&nbsp" }}</div>
+                                <div class="mt-1 truncate text-sm text-gray-500">{{ $document->currentRevision->data["introduction"] ?? "&nbsp;" }}</div>
                             </div>
                         </div>
                         <div>

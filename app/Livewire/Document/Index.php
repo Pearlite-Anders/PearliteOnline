@@ -7,16 +7,11 @@ use App\Models\Document;
 use App\Livewire\DataTable\WithTable;
 use App\Livewire\DataTable\WithDelete;
 use App\Livewire\DataTable\WithSearch;
-use App\Livewire\DataTable\WithColumns;
-use App\Livewire\DataTable\WithFilters;
-use App\Livewire\DataTable\WithSorting;
-// use App\Livewire\DataTable\WithClickableRow;
 use App\Livewire\DataTable\WithPerPagePagination;
-// use App\Livewire\DataTable\WithProject;
 
 class Index extends Component
 {
-    use WithTable, WithPerPagePagination, WithSorting, WithColumns, WithFilters, WithDelete, WithSearch;
+    use WithTable, WithPerPagePagination, WithDelete, WithSearch;
 
     public $model = Document::class;
     public $compressed_header = false;
@@ -34,18 +29,21 @@ class Index extends Component
         ]);;
     }
 
+    public function applySearch($query, $term)
+    {
+        $query->whereHas('currentRevision', function ($query) use ($term) {
+            $query->where('data->title', 'like', '%'.$term.'%');
+        });
+    }
+
     public function getRowsQueryProperty()
     {
         $user = auth()->user();
 
-        if($this->preset_filters) {
-            $this->filters = $this->preset_filters;
-        }
-
         $query = $user->documents()->where('company_id', '=', $user->currentCompany->id)
                     ->when($this->search, fn ($query, $term) => $this->applySearch($query, $term))
-                    ->when($this->filters, fn ($query, $filters) => $this->applyFilters($query, $filters));
+                    ->with('currentRevision');
 
-        return $this->applySorting($query);
+        return $query;
     }
 }

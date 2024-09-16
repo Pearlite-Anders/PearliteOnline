@@ -15,7 +15,7 @@ return new class extends Migration
             $table->boolean('view');
             $table->boolean('edit');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('document_id')->constrained();
+            $table->foreignId('document_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -104,6 +104,7 @@ Route::middleware([
     Route::get('/documents/create', \App\Livewire\Document\Create::class)->name('documents.create');
     Route::get('/documents/{document}', \App\Livewire\Document\Show::class)->name('documents.show');
     Route::get('/documents/{document}/edit', \App\Livewire\Document\Edit::class)->name('documents.edit');
+    Route::get('/documents/{document}/revisions', \App\Livewire\DocumentRevision\Index::class)->name('document_revisions.index');
 
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;
