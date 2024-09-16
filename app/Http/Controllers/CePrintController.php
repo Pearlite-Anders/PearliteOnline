@@ -19,11 +19,12 @@ class CePrintController extends Controller
                 "name" => $setting[0],
                 "function" => $setting[1],
                 "image" => \App\Helpers\DigitalSignature::image(
-                    name: implode(' - ', $setting),
+                    name: $setting[0],
                     base64: true,
                     hide_time: true,
                     hide_date: true,
-                    width: 200
+                    width: 200,
+                    height: 50
                 )
             ];
         }
