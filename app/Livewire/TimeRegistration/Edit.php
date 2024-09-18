@@ -30,6 +30,7 @@ class Edit extends Component
 
     public function render()
     {
+        $this->form->setDrivingFromCompany();
         return view('livewire.time-registration.edit');
     }
 }

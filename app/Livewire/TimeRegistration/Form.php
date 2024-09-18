@@ -2,6 +2,7 @@
 
 namespace App\Livewire\TimeRegistration;
 
+use App\Data\CompanyData;
 use App\Models\File;
 use App\Models\TimeRegistration;
 use App\Data\TimeRegistrationData;
@@ -21,6 +22,15 @@ class Form extends LivewireForm
         $this->company_id = $registration->company_id;
         $this->internal_order_id = $registration->internal_order_id;
         $this->user_id = $registration->user_id;
+    }
+
+    public function setDrivingFromCompany()
+    {
+        if ($this->company_id && !$this->data->driving) {
+            $company = auth()->user()->companies()->findOrFail($this->company_id);
+            $companyData = CompanyData::from($company->data);
+            $this->data->driving = $companyData->driving;
+        }
     }
 
     public function create()
