@@ -51,7 +51,8 @@ class Wps extends Model
             'create_popup' => true,
             'data_class' => ProjectData::class,
             'multiple' => true,
-            'hidden' => true
+            'hidden' => true,
+            'sortable' => false,
         ],
         'standard' => [
             'type' => 'select',

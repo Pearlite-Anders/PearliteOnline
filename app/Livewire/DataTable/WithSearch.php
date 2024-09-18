@@ -35,12 +35,18 @@ trait WithSearch
 
                 if($column->type == 'relationship') {
                     $query->orWhereHas($column->relationship, function ($query) use ($term, $column) {
-                        if(preg_match('/\./', $column->class::LABEL_KEY)) {
-                            $relation_column = str_replace('.', '->', $column->class::LABEL_KEY);
-                            $query->where($relation_column, 'like', '%'.$term.'%');
-                        } else {
-                            $query->where($column->class::LABEL_KEY, 'like', '%'.$term.'%');
-                        }
+                        $label_keys = is_array($column->class::LABEL_KEY) ? $column->class::LABEL_KEY : [$column->class::LABEL_KEY];
+                        $query->where(function ($query) use ($term, $label_keys) {
+                            foreach($label_keys as $label_key) {
+                                if(preg_match('/\./', $label_key)) {
+                                    $relation_column = str_replace('.', '->', $label_key);
+                                    $query->orWhere($relation_column, 'like', '%'.$term.'%');
+                                } else {
+                                    $query->orWhere($label_key, 'like', '%'.$term.'%');
+                                }
+                            }
+
+                        });
                     });
                     continue;
                 }
