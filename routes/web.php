@@ -91,7 +91,6 @@ Route::middleware([
     Route::get('/formulas/welding-speed', \App\Livewire\Formula\WeldingSpeed::class)->name('formulas.welding-speed');
 
     Route::get('/time-registration', \App\Livewire\TimeRegistration\Index::class)->name('time-registration.index');
-    Route::get('/time-registration/settings', \App\Livewire\TimeRegistration\Settings::class)->name('time-registration.settings');
     Route::get('/time-registration/create', \App\Livewire\TimeRegistration\Create::class)->name('time-registration.create');
     Route::get('/time-registration/{timeRegistration}/edit', \App\Livewire\TimeRegistration\Edit::class)->name('time-registration.edit');
 

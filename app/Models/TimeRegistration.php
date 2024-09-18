@@ -60,14 +60,6 @@ class TimeRegistration extends Model
             'data_class' => InternalOrderData::class,
             'multiple' => false,
         ],
-        'tasks' => [
-            'type' => 'select',
-            'multiple' => true,
-            'label' => 'Tasks',
-            'options' => 'time_registration_tasks',
-            'placeholder' => 'Choose',
-            'filter' => 'select',
-        ],
         'date' => [
             'type' => 'date',
             'label' => 'Date',

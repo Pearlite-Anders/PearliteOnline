@@ -47,10 +47,6 @@ class Setting extends Model
             $company_id = auth()->user()->currentCompany->id;
         }
 
-        if(in_array($key, ['time_registration_tasks'])) {
-            $company_id = 0;
-        }
-
         $database_value = self::whereCompanyId($company_id)->where('key', $key)->first();
         if($database_value) {
             return $database_value->value;
@@ -251,7 +247,6 @@ class Setting extends Model
             'machine_maintenance_types' => [
                 'placeholder' => 'Placeholder',
             ],
-            'time_registration_tasks' => [],
             'signature_group' => [],
         ]);
     }
