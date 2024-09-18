@@ -57,6 +57,14 @@ class Company extends Model
             'placeholder' => '',
             'filter' => 'search'
         ],
+        'driving' => [
+            'type' => 'number',
+            'label' => 'Kørsel',
+            'required' => false,
+            'placeholder' => '',
+            'postfix' => 'km',
+            'hidden' => false
+        ],
         'remarks' => [
             'type' => 'textarea',
             'label' => 'Remarks',

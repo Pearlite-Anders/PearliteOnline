@@ -89,7 +89,7 @@ class TimeRegistration extends Model
             'required' => false,
             'placeholder' => '',
             'filter' => 'search',
-            'postfix' => 'km'
+            'postfix' => 'km',
         ],
         'expenses' => [
             'type' => 'number',
