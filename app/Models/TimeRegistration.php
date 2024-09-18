@@ -75,12 +75,21 @@ class TimeRegistration extends Model
             'placeholder' => '',
             'filter' => 'date'
         ],
+
+        'start' => [
+            'type' => 'time',
+            'label' => 'Start time',
+            'required' => true
+        ],
+        'end' => [
+            'type' => 'time',
+            'label' => 'End time',
+            'required' => true
+        ],
         'hours' => [
-            'type' => 'number',
+            'type' => 'system_text',
             'label' => 'Timer',
-            'required' => true,
-            'placeholder' => '',
-            'filter' => 'search'
+            'default' => 0,
         ],
         'driving' => [
             'type' => 'number',

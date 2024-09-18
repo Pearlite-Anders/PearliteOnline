@@ -20,6 +20,11 @@ import * as FilePond from 'filepond';
 window.FilePond = FilePond;
 import 'filepond/dist/filepond.min.css';
 
+// MDTimePicker
+import '@dmuy/timepicker/dist/mdtimepicker.css';
+import mdtimepicker from '@dmuy/timepicker';
+window.mdtimepicker = mdtimepicker;
+
 import ui from '@alpinejs/ui';
 import focus from '@alpinejs/focus';
 Alpine.plugin(ui);
