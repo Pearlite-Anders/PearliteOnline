@@ -77,13 +77,17 @@
                     <x-table.heading />
                     @foreach($columns as $column)
                         @continue($column->visible === false)
-                        @if(
-                            App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'relationship' ||
-                            App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'calculated'
-                        )
-                            <x-table.heading wire:click="sortBy('{{ $column->key }}' )" sortable :multiColumn="false" :direction="$sorts['{{ $column->key }}'] ?? null">{{ App\Models\Wps::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                        @if(isset(App\Models\Wps::SYSTEM_COLUMNS[$column->key]['sortable']) && App\Models\Wps::SYSTEM_COLUMNS[$column->key]['sortable'] == false)
+                            <x-table.heading class="px-6 py-3 bg-gray-50 whitespace-nowrap text-left">{{ App\Models\Wps::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
                         @else
-                            <x-table.heading wire:click="sortBy('data->{{ $column->key }}')" sortable :multiColumn="false" :direction="$sorts['data->{{ $column->key }}'] ?? null">{{ App\Models\Wps::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                            @if(
+                                App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'relationship' ||
+                                App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'calculated'
+                            )
+                                <x-table.heading wire:click="sortBy('{{ $column->key }}' )" sortable :multiColumn="false" :direction="$sorts['{{ $column->key }}'] ?? null">{{ App\Models\Wps::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                            @else
+                                <x-table.heading wire:click="sortBy('data->{{ $column->key }}')" sortable :multiColumn="false" :direction="$sorts['data->{{ $column->key }}'] ?? null">{{ App\Models\Wps::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                            @endif
                         @endif
                     @endforeach
                     <x-table.heading />
