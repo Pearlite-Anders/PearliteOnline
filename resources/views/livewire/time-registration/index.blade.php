@@ -21,11 +21,6 @@
             </div>
         </x-slot>
         <x-slot name="buttons">
-            @if(auth()->user()->isAdmin())
-                <x-button.link href="{{ route('time-registration.settings') }}" class="inline-flex items-center justify-center text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-gray-800">
-                    <x-icon.settings class="block w-6 h-6 text-gray-500 align-middle" />
-                </x-button.link>
-            @endif
             <livewire:table-columns :columns="$columns" />
             @can('create', App\Models\TimeRegistration::class)
                 <x-button.link href="{{ route('time-registration.create') }}" class="inline-flex items-center justify-center whitespace-nowrap">
