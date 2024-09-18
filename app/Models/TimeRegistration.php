@@ -93,7 +93,7 @@ class TimeRegistration extends Model
         ],
         'paid' => [
             'type' => 'checkbox',
-            'label' => 'Paid',
+            'label' => 'Billable',
             'required' => false,
             'placeholder' => '',
             'filter' => 'search'
