@@ -20,6 +20,9 @@ class TimeRegistrationData extends Data implements Wireable
         public ?string $type,
         public ?bool $invoiced,
         public ?bool $paid,
+        public ?array $tasks,
+        public ?string $start,
+        public ?string $end
     ) {
     }
 }
