@@ -74,6 +74,12 @@
             prettyname="{{ $key }}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
         />
+    @elseif($column['type'] == 'dynamic_relationship' && optional($column)['create_popup'])
+        <livewire:dynamic-relationship-field-with-create
+            :$column
+            :relation="$form->{$column['relationship']}"
+            wire:model.live="form.{{$key}}"
+        />
     @elseif($column['type'] == 'dynamic_relationship')
         <livewire:dynamic-relationship-field
             :$column
