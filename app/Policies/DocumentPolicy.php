@@ -80,7 +80,7 @@ class DocumentPolicy extends BasePolicy
      */
     public function delete(User $user, $document): bool
     {
-        return this->update($user, $document);
+        return $this->update($user, $document);
     }
 
 }
