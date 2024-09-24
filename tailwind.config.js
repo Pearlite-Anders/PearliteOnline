@@ -10,6 +10,13 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
+    safelist: [
+        'pl-3',
+        'pl-6',
+        'pl-9',
+        'pl-12',
+        'pl-15',
+    ],
 
     theme: {
         extend: {

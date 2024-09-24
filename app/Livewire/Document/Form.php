@@ -25,7 +25,7 @@ class Form extends LivewireForm
         });
     }
 
-    public function create()
+    public function create(?Document $parent = null)
     {
         $user = auth()->user();
         $data = $this->transformedData();
@@ -36,11 +36,11 @@ class Form extends LivewireForm
             ]];
         });
 
-        $document = DB::transaction(function () use ($user, $data, $permissions) {
+        $document = DB::transaction(function () use ($user, $data, $permissions, $parent) {
             $document = Document::create([
                 'company_id' => $user->currentCompany->id,
                 'owner_id' => $user->id,
-            ]);
+            ], $parent);
 
             $revision = $document->revisions()->create($data);
 
