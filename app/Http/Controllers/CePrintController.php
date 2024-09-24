@@ -23,8 +23,7 @@ class CePrintController extends Controller
                     base64: true,
                     hide_time: true,
                     hide_date: true,
-                    width: 200,
-                    height: 50
+                    width: 200
                 )
             ];
         }
