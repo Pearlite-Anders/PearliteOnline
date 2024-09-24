@@ -122,13 +122,17 @@ class User extends Authenticatable
             return Document::query();
         }
 
-        return Document::whereJsonContains('data', ['default_view' => true])
+        return Document::where(function($q) {
+            return $q->whereHas('currentRevision', function($query) {
+                $query->whereJsonContains('data', ['default_view' => true]);
+            })
             ->orWhere('owner_id', $this->id)
             ->orWhereHas('users', function ($query) {
                 $query->where('user_id', $this->id)->where(function($permisionQuery) {
                     $permisionQuery->where('view', true)->orWhere('edit', true);
                 });
             });
+        });
     }
 
     public function isAdmin()
