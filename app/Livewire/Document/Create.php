@@ -5,6 +5,8 @@ namespace App\Livewire\Document;
 use App\Data\DocumentData;
 use App\Data\PermissionData;
 use App\Models\User;
+use App\Models\Document;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Livewire\WithTrixUploads;
@@ -16,6 +18,10 @@ class Create extends Component
 
     public Form $form;
     public Collection $users;
+    public ?Document $parentDocument = null;
+
+    #[Url]
+    public $parent = null;
 
     public function mount()
     {
@@ -35,6 +41,11 @@ class Create extends Component
                 'edit' => false,
             ]];
         })->toArray();
+
+        if ($this->parent) {
+            $this->parentDocument = Document::find($this->parent);
+        }
+
     }
 
     public function render()
@@ -44,7 +55,7 @@ class Create extends Component
 
     public function create()
     {
-        $document = $this->form->create();
+        $document = $this->form->create($this->parentDocument);
 
         return redirect()->route('documents.show', ['document' => $document->id])
             ->with('flash.banner', __('Document created.'));

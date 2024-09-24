@@ -28,7 +28,7 @@ class DocumentPolicy extends BasePolicy
             return false;
         };
 
-        $data = DocumentData::from($document->data);
+        $data = DocumentData::from($document->currentRevision->data);
 
         if ($data->default_view || $data->default_edit) {
             return true;
@@ -60,7 +60,7 @@ class DocumentPolicy extends BasePolicy
             return false;
         };
 
-        $data = DocumentData::from($document->data);
+        $data = DocumentData::from($document->currentRevision->data);
 
         if ($data->default_edit) {
             return true;

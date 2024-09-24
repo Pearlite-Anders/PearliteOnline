@@ -42,7 +42,8 @@ class Index extends Component
 
         $query = $user->documents()->where('company_id', '=', $user->currentCompany->id)
                     ->when($this->search, fn ($query, $term) => $this->applySearch($query, $term))
-                    ->with('currentRevision');
+                    ->with('currentRevision')
+                    ->whereIsRoot();
 
         return $query;
     }
