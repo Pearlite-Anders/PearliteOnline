@@ -6,19 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Kalnoy\Nestedset\NodeTrait;
 
 use App\Models\Trait\HasCompany;
 
 class Document extends Model
 {
-    use HasFactory, HasCompany;
+    use HasFactory, HasCompany, NodeTrait;
 
     protected $guarded = [];
-
-    protected $casts = [
-        'data' => 'array',
-        'files' => 'array',
-    ];
 
     public function owner(): BelongsTo
     {
@@ -52,5 +48,10 @@ class Document extends Model
         foreach($oldRevisions as $oldRevision) {
             $oldRevision->delete();
         }
+    }
+
+    protected function getScopeAttributes()
+    {
+        return ['company_id'];
     }
 }
