@@ -59,8 +59,9 @@ class DigitalSignature
         if ($base64) {
             return (string) $image->toPng()->toDataUri();
         } else {
-            $image->save(Storage::disk('local')->path('livewire-tmp/'.uniqid().'.png'));
-            return Storage::disk('local')->path('livewire-tmp/'.uniqid().'.png');
+            $unique = uniqid();
+            $image->save(Storage::disk('local')->path('livewire-tmp/'.$unique.'.png'));
+            return Storage::disk('local')->path('livewire-tmp/'.$unique.'.png');
         }
     }
 }
