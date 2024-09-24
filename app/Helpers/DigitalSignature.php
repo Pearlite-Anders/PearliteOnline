@@ -25,9 +25,9 @@ class DigitalSignature
         $manager = new ImageManager(Driver::class);
         $image = $manager->create($originalWidth, $originalHeight);
 
-        $image->text($header, 5, 15, function ($font) {
+        $image->text($header, 5, 22, function ($font) {
             $font->filename(resource_path('fonts/Roboto-Bold.ttf'));
-            $font->size(12);
+            $font->size(18);
             $font->color('#0891b2');
         });
 
