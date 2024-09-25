@@ -21,6 +21,8 @@
  *  - restrictions: array
  *   - view: array
  *   - edit: array
+ *  - container: array
+*   - class: string
  * - $form: object
  */
 ?>
@@ -30,7 +32,9 @@
         return;
     @endphp
 @endif
-
+@if (isset($column['container']))
+    <div class="{{ $column['container']['class'] }}">
+@endif
 <div
     class="
         @if(in_array($column['type'], ['textarea', 'rich_text'])) md:col-span-3 @endif
@@ -44,6 +48,7 @@
                 @endif
             @endforeach
         @endif
+        md:col-span-1
     "
 >
     @unless(
@@ -228,3 +233,6 @@
         <p class="mt-1 text-sm text-gray-500">{{ __($column['info']) }}</p>
     @endif
 </div>
+@if (isset($column['container']))
+    </div>
+@endif
