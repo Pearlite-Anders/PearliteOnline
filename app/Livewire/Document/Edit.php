@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
 
 class Edit extends Component
 {
-    use WithFileUploads, WithTrixUploads;
+    use WithFileUploads, WithTrixUploads, NextReviewDate;
 
     public Form $form;
     public Document $document;
