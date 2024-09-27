@@ -35,8 +35,14 @@ class SendUserSummaryNotifications extends Command
                     $this->info('User: ' . $user->name);
 
                     $supplierAssessmentsNotification = $user->unreadNotifications->where('type', 'App\Notifications\Supplier\Assessment')->last();
+                    $machineMaintenanceNotication = $user->unreadNotifications->where('type', 'App\Notifications\MachineMaintenance\Maintenance')->last();
 
-                    $user->notify(new UserSummary($supplierAssessmentsNotification));
+                    $user->notify(
+                        new UserSummary(
+                            $supplierAssessmentsNotification,
+                            $machineMaintenanceNotication
+                        )
+                    );
                     $user->unreadNotifications->markAsRead();
                 }
             }

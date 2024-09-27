@@ -13,13 +13,18 @@ class UserSummary extends Notification
     use Queueable;
 
     protected ?DatabaseNotification $supplierAssessmentsNotification;
+    protected ?DatabaseNotification $machineMaintenanceNotification;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(?DatabaseNotification $supplierAssessmentsNotification)
+    public function __construct(
+        ?DatabaseNotification $supplierAssessmentsNotification,
+        ?DatabaseNotification $machineMaintenanceNotification
+    )
     {
         $this->supplierAssessmentsNotification = $supplierAssessmentsNotification;
+        $this->machineMaintenanceNotification = $machineMaintenanceNotification;
     }
 
     /**
@@ -38,15 +43,21 @@ class UserSummary extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $supplierAssessmentsData = null;
+        $machineMaintenanceData = null;
 
         if ($this->supplierAssessmentsNotification) {
             $supplierAssessmentsData = $this->supplierAssessmentsNotification->data;
+        }
+
+        if ($this->machineMaintenanceNotification) {
+            $machineMaintenanceData = $this->machineMaintenanceNotification->data;
         }
 
         return (new MailMessage)
                 ->subject(__('I need a good subjet!'))
                 ->markdown('mail.user-summary', [
                     'supplier_assessments_data' => $supplierAssessmentsData,
+                    'machine_maintenance_data' => $machineMaintenanceData,
                     'user' => $notifiable
                 ]);
     }
