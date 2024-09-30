@@ -73,20 +73,29 @@
                                 @endif
                                 @if (auth()->user()->can('update', $document))
                                     <li>
-                                        <div class="flex" x-data @click.prevent.stop="console.log('stop')">
+                                        <div class="flex flex-col" x-data @click.prevent.stop="console.log('stop')">
                                             @if($confirming == true)
-                                                <x-button
-                                                    wire:click="delete()"
-                                                    class="bg-red-600 hover:bg-red-800 px-1"
-                                                >
-                                                    <x-icon.check class="w-4 h-4 text-white" />
-                                                </x-button>
-                                                <x-button
-                                                    wire:click="cancelConfirmDelete"
-                                                    class="bg-cyan-600 hover:bg-cyan-700"
-                                                >
-                                                    <x-icon.x class="w-4 h-4 text-white" />
-                                                </x-button>
+                                                <p class="text-red-600">
+                                                    This will delete this document. <br />
+                                                    @if($document->descendants()->count() > 0)
+                                                        And all {{ $document->descendants()->count() }} sub documents. <br />
+                                                    @endif
+                                                    Are you sure?
+                                                </p>
+                                                <div class="flex flex-row">
+                                                    <x-button
+                                                        wire:click="delete()"
+                                                        class="bg-red-600 hover:bg-red-800 px-1"
+                                                    >
+                                                        <x-icon.check class="w-4 h-4 text-white" />
+                                                    </x-button>
+                                                    <x-button
+                                                        wire:click="cancelConfirmDelete"
+                                                        class="bg-cyan-600 hover:bg-cyan-700"
+                                                    >
+                                                        <x-icon.x class="w-4 h-4 text-white" />
+                                                    </x-button>
+                                                </div>
                                             @else
                                                 <button
                                                     wire:click="confirmDelete()"
