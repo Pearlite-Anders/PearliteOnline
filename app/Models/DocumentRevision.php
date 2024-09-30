@@ -23,7 +23,33 @@ class DocumentRevision extends Model
             'label' => 'Title',
             'required' => true,
             'placeholder' => '',
+            'filter' => 'search',
+            'container' => [
+                'class' => 'grid gap-6 mb-6 md:grid-cols-3 md:col-span-3'
+            ]
+        ],
+        'review_interval' => [
+            'type' => 'radios',
+            'label' => 'Review Interval',
+            'options' => [
+                '3' => '3 Months',
+                '6' => '6 Months',
+                '12' => '12 Months',
+                '18' => '18 Months',
+                '24' => '24 Months',
+                '36' => '36 Months',
+            ],
             'filter' => 'search'
+        ],
+        'lastest_review_date' => [
+            'type' => 'date',
+            'label' => 'Lastest Review Date',
+            'filter' => 'date'
+        ],
+        'next_review_date' => [
+            'type' => 'date',
+            'label' => 'Next Review Date',
+            'filter' => 'date'
         ],
         'introduction' => [
             'type' => 'textarea',
