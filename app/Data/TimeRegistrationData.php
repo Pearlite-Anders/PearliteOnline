@@ -13,7 +13,7 @@ class TimeRegistrationData extends Data implements Wireable
 
     public function __construct(
         public ?string $date,
-        public ?int $hours,
+        public ?string $hours,
         public ?int $driving,
         public ?int $expenses,
         public ?string $remarks,
