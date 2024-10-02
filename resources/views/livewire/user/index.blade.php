@@ -24,6 +24,7 @@
                     <x-slot name="head">
                         <x-table.heading sortable>{{ __('Name') }}</x-table.heading>
                         <x-table.heading sortable>{{ __('Role') }}</x-table.heading>
+                        <x-table.heading sortable>{{ __('Active') }}</x-table.heading>
                         <x-table.heading />
                     </x-slot>
                     <x-slot name="body">
@@ -31,6 +32,13 @@
                             <x-table.row>
                                 <x-table.cell>{{ $user->name }}</x-table.cell>
                                 <x-table.cell>{{ $user->humanRole() }}</x-table.cell>
+                                <x-table.cell>
+                                    @if ($user->active)
+                                        <x-icon.check class="w-5 h-5 text-green-500" />
+                                    @else
+                                        <x-icon.x class="w-5 h-5 text-red-500" />
+                                    @endif
+                                </x-table.cell>
 
                                 <x-table.cell class="text-right">
                                     @can('update', $user)
