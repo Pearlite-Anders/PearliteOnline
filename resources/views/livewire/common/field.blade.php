@@ -209,6 +209,12 @@
                 />
             </div>
         </div>
+    @elseif($column['type'] == 'time')
+        <x-input.time
+            wire:model="form.data.{{ $key }}"
+            placeholder="{{ __($column['placeholder'] ?? '') }}"
+            :value="optional($form->data)->{$key}"
+        />
     @else
         <x-input
             :live="isset($live)"
