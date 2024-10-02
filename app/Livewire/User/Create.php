@@ -8,6 +8,7 @@ use Livewire\Component;
 class Create extends Component
 {
     public Form $form;
+    public bool $canChangeStatus = true;
 
     public function create()
     {
