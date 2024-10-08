@@ -5,11 +5,6 @@
     @endunless
 >
     <x-settings-page>
-        <x-slot name="heading">
-            <x-icon.ce class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-            {{ __('CE') }}
-        </x-slot>
-
         @php($arraySections = [
             'supplier_assessment_frequencies' => __('Assessment frequency (in months)'),
         ])

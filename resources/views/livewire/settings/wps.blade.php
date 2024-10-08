@@ -5,11 +5,6 @@
     @endunless
 >
     <x-settings-page>
-        <x-slot name="heading">
-            <x-icon.wps class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-            {{ __('WPS') }}
-        </x-slot>
-
         @php($arraySections = [
             'wps_standards' => __('Standards'),
         ])

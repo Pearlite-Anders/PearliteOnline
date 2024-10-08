@@ -5,10 +5,6 @@
     @endunless
 >
     <x-settings-page>
-        <x-slot name="heading">
-            <x-icon.maintenance class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-            {{ __('Maintenance') }}
-        </x-slot>
         @php($arraySections = [
             'machine_maintenance_types' => __('Types'),
         ])

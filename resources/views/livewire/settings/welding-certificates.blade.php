@@ -5,11 +5,6 @@
     @endunless
 >
     <x-settings-page>
-        <x-slot name="heading">
-            <x-icon.welding-certificate class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-            {{ __('Welding Certificates') }}
-        </x-slot>
-
         <x-setting-section class="mb-4">
             <x-slot name="title">
                 {{ __('Notifications') }}

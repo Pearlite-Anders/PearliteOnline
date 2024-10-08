@@ -1,15 +1,14 @@
 <div>
     <div class="flex h-full">
-        @include('livewire.settings.sections')
-        <div class="w-full lg:pl-64">
-            <div class="block lg:hidden">
+        <div class="w-full">
+            <div class="block ">
                 <x-index-header :hide_search_on_mobile="false">
                     <x-slot name="heading">
                         <x-icon.settings class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
                         {{ __('Settings') }}
                     </x-slot>
                     <x-slot name="search">
-                        <ul role="list" class="flex flex-none min-w-full text-sm font-semibold leading-6 text-gray-400 gap-x-4">
+                        <ul role="list" class="flex flex-none min-w-full text-sm font-semibold leading-6 text-gray-400 gap-x-4 lg:hidden">
                             <li>
                                 <button
                                     @if($section == 'welding-certificates')
@@ -77,13 +76,16 @@
                     </x-slot>
                 </x-index-header>
             </div>
-            @include('livewire.settings.welding-certificates')
-            @include('livewire.settings.wpqr')
-            @include('livewire.settings.maintenance')
-            @include('livewire.settings.wps')
-            @include('livewire.settings.ce')
-            @include('livewire.settings.supplier')
-            @include('livewire.settings.multiple-choice')
+            <div class="flex">
+                @include('livewire.settings.sections')
+                @include('livewire.settings.welding-certificates')
+                @include('livewire.settings.wpqr')
+                @include('livewire.settings.maintenance')
+                @include('livewire.settings.wps')
+                @include('livewire.settings.ce')
+                @include('livewire.settings.supplier')
+                @include('livewire.settings.multiple-choice')
+            </div>
         </div>
     </div>
 
