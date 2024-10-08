@@ -16,5 +16,8 @@ class Form extends LivewireForm
     #[Rule('min:4')]
     public $password = '';
 
+    #[Rule('boolean')]
+    public $active = true;
+
     public $permissions = [];
 }

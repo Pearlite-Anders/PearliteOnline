@@ -30,6 +30,14 @@
             />
             <x-input-error for="form.password" class="mt-2" />
         </div>
+
+        <div>
+            <x-label for="form.active" :value="__('Active')" />
+            <div class="flex items-center">
+                <x-input.toggle wire:model="form.active" :initial_value="$form->active" />
+                <x-input-error for="form.active" class="mt-2" />
+            </div>
+        </div>
     </div>
 </div>
 

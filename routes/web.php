@@ -42,6 +42,7 @@ Route::middleware([
     Route::get('/users', \App\Livewire\User\Index::class)->name('users.index');
     Route::get('/users/create', \App\Livewire\User\Create::class)->name('users.create');
     Route::get('/users/{user}/edit', \App\Livewire\User\Edit::class)->name('users.edit');
+    Route::get('/users/{user}/dependencies', \App\Livewire\User\Dependencies\Page::class)->name('users.dependencies');
 
     Route::get('/system-users', \App\Livewire\SystemUser\Index::class)->name('system-users.index');
     Route::get('/system-users/create', \App\Livewire\SystemUser\Create::class)->name('system-users.create');

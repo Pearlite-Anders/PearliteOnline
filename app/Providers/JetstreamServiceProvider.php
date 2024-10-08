@@ -13,6 +13,10 @@ use App\Actions\Jetstream\UpdateTeamName;
 use App\Actions\Jetstream\InviteTeamMember;
 use App\Actions\Jetstream\RemoveTeamMember;
 use App\Livewire\Profile\UpdateProfileInformation;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Fortify;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -30,6 +34,7 @@ class JetstreamServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configurePermissions();
+        $this->authenticateUsing();
 
         Jetstream::createTeamsUsing(CreateTeam::class);
         Jetstream::updateTeamNamesUsing(UpdateTeamName::class);
@@ -40,6 +45,7 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::deleteUsersUsing(DeleteUser::class);
 
         Livewire::component('profile.update-profile-information', UpdateProfileInformation::class);
+
     }
 
     /**
@@ -61,5 +67,19 @@ class JetstreamServiceProvider extends ServiceProvider
             'create',
             'update',
         ])->description('Editor users have the ability to read, create, and update.');
+    }
+
+    protected function authenticateUsing(): void
+    {
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = User::where('email', '=', $request->email)
+                ->where('active', '=', true)
+                ->first();
+
+            if ($user &&
+                Hash::check($request->password, $user->password)) {
+                return $user;
+            }
+        });
     }
 }

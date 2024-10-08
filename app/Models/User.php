@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Intervention\Image\Interfaces\EncoderInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -32,13 +33,20 @@ class User extends Authenticatable
     public const PARTNER_ROLE = 'partner';
     public const USER_ROLE = 'user';
 
+    public const DEPENDENCIES = [
+        'suppliers' => [
+            'class' => Supplier::class,
+            'foreign_key' => 'responsible_user_id'
+        ]
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'current_company_id', 'role',
+        'name', 'email', 'password', 'current_company_id', 'role', 'active',
     ];
 
     /**
@@ -335,5 +343,65 @@ class User extends Authenticatable
             $image->save(Storage::disk('local')->path('livewire-tmp/'.$this->id.'.png'));
             return Storage::disk('local')->path('livewire-tmp/'.$this->id.'.png');
         }
+    }
+
+    /**
+     * The a list of all dependencies for this user.
+     */
+    public function dependencies()
+    {
+        $dependencies = collect([]);
+        foreach(array_keys(self::DEPENDENCIES) as $dependency) {
+            $dependencies = $dependencies->merge($this->$dependency);
+        }
+
+        return $dependencies;
+    }
+
+    /**
+     * The a list of how many dependecies this user has, including a total.
+     */
+    public function dependenciesCount()
+    {
+        $dependencies = collect(['total' => 0]);
+        foreach(array_keys(self::DEPENDENCIES) as $dependency) {
+            $count = $this->$dependency()->count();
+            $dependencies = $dependencies->merge([$dependency => $count]);
+            $dependencies['total'] += $count;
+        }
+
+        return $dependencies;
+    }
+
+    public function hasDependencies()
+    {
+        return $this->dependenciesCount()->first(fn($dep, $key) => $key != 'total' && $dep > 0) != null;
+    }
+
+    /**
+     * A small helper to get the the dependencies of the model from DEPENDENCIES, instead of setting it up the function manually
+     */
+    public function __get($name)
+    {
+        if (in_array($name, array_keys(self::DEPENDENCIES))) {
+            return $this->$name()->get();
+        }
+
+        return parent::__get($name);
+    }
+
+    /**
+     * A small helper to get the the dependencies of the model from DEPENDENCIES, instead of setting it up the function manually
+     */
+    public function __call($name, $arg)
+    {
+        if (in_array($name, array_keys(self::DEPENDENCIES))) {
+            return $this->hasMany(
+                self::DEPENDENCIES[$name]['class'],
+                (self::DEPENDENCIES[$name]['foreign_key'] ?? Str::singular($name) . '_id')
+            );
+        }
+
+        return parent::__call($name, $arg);
     }
 }
