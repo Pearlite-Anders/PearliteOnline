@@ -13,19 +13,32 @@ class Index extends Component
     use WithPagination;
 
     public $confirming;
+    public $hasDependencies;
 
-    public function confirmDelete($id)
+    public function confirmDelete(User $user)
     {
-        $this->confirming = $id;
+        $dependecies = $user->dependenciesCount();
+        $this->hasDependencies = $user->hasDependencies();
+        $this->confirming = $user->id;
     }
 
     public function cancelConfirmDelete()
     {
         $this->confirming = null;
+        $this->hasDependencies = null;
     }
 
     public function delete(User $user)
     {
+        if ($user->hasDependencies()) {
+            $this->dispatch(
+                'banner-message',
+                style: 'error',
+                message: __('User still has dependecies')
+            );
+            return;
+        }
+
         $this->authorize('delete', $user);
 
         if(auth()->user()->currentCompany) {
