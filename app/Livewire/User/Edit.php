@@ -63,10 +63,6 @@ class Edit extends Component
         }
 
         $this->form->permissions = $permissions;
-
-        // Dependencies
-        $this->dependecies = $user->dependenciesCount();
-        $this->canChangeStatus = $this->dependecies->first(fn($dep, $key) => $key != 'total' && $dep > 0) == null;
     }
 
     public function render()

@@ -33,28 +33,9 @@
 
         <div>
             <x-label for="form.active" :value="__('Active')" />
-            <div class="flex items-center"
-                @if ($canChangeStatus)
-                    <x-input.toggle wire:model="form.active" :initial_value="$form->active" />
-                    <x-input-error for="form.active" class="mt-2" />
-                @else
-                    <button
-                        x-ref="toggle"
-                        type="button"
-                        role="switch"
-                        aria-checked="true"
-                        class="relative inline-flex py-1 transition rounded-full w-14 border border-slate-300 bg-slate-100"
-                    >
-                        <span
-                            class="w-6 h-6 transition bg-slate-300 rounded-full shadow-sm translate-x-7"
-                            aria-hidden="true"
-                        ></span>
-                    </button>
-                    <x-tooltip-question-mark
-                        class="ml-2 text-slate-600"
-                        tooltip="{{ __('You cannot change the status of this user because it has dependencies') }}"
-                    />
-                @endif
+            <div class="flex items-center">
+                <x-input.toggle wire:model="form.active" :initial_value="$form->active" />
+                <x-input-error for="form.active" class="mt-2" />
             </div>
         </div>
     </div>

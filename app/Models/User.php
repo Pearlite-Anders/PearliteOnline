@@ -316,6 +316,9 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * The a list of all dependencies for this user.
+     */
     public function dependencies()
     {
         $dependencies = collect([]);
@@ -326,6 +329,9 @@ class User extends Authenticatable
         return $dependencies;
     }
 
+    /**
+     * The a list of how many dependecies this user has, including a total.
+     */
     public function dependenciesCount()
     {
         $dependencies = collect(['total' => 0]);
@@ -336,6 +342,11 @@ class User extends Authenticatable
         }
 
         return $dependencies;
+    }
+
+    public function hasDependencies()
+    {
+        return $this->dependenciesCount()->first(fn($dep, $key) => $key != 'total' && $dep > 0) != null;
     }
 
     /**
