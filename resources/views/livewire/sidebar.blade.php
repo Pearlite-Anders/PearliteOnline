@@ -212,7 +212,7 @@
         </div>
     </div>
 
-    <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 leading-6 text-black bg-white lg:flex">
+    <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 leading-6 text-black bg-white lg:flex border-r">
         @if(Auth::user()->isAdmin() || Auth::user()->isPartner())
             <a
                 href="{{ route('companies.index') }}"

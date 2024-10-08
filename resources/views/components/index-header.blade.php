@@ -3,6 +3,7 @@
     'buttons',
     'search',
     'compressed_header' => false,
+    'hide_search_on_mobile' => true,
 ])
 
 <div class="items-center justify-between block p-4 bg-white border-t-0 border-b border-gray-200 border-solid sm:flex border-x-0">
@@ -14,7 +15,7 @@
 
         </div>
         <div class="relative items-start sm:flex sm:space-x-2">
-            <div class="items-center flex-grow hidden mb-3 sm:mb-0 sm:flex">
+            <div class="items-center flex-grow @if($hide_search_on_mobile) mb-3 hidden sm:mb-0 sm:flex @else flex mb-0 @endif">
                 @if(isset($search))
                     {{ $search }}
                 @endif
