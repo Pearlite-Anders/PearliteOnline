@@ -21,6 +21,8 @@
  *  - restrictions: array
  *   - view: array
  *   - edit: array
+ *  - container: array
+*   - class: string
  * - $form: object
  */
 ?>

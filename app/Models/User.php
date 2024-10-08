@@ -373,4 +373,64 @@ class User extends Authenticatable
 
         return parent::__call($name, $arg);
     }
+
+    /**
+     * The a list of all dependencies for this user.
+     */
+    public function dependencies()
+    {
+        $dependencies = collect([]);
+        foreach(array_keys(self::DEPENDENCIES) as $dependency) {
+            $dependencies = $dependencies->merge($this->$dependency);
+        }
+
+        return $dependencies;
+    }
+
+    /**
+     * The a list of how many dependecies this user has, including a total.
+     */
+    public function dependenciesCount()
+    {
+        $dependencies = collect(['total' => 0]);
+        foreach(array_keys(self::DEPENDENCIES) as $dependency) {
+            $count = $this->$dependency()->count();
+            $dependencies = $dependencies->merge([$dependency => $count]);
+            $dependencies['total'] += $count;
+        }
+
+        return $dependencies;
+    }
+
+    public function hasDependencies()
+    {
+        return $this->dependenciesCount()->first(fn($dep, $key) => $key != 'total' && $dep > 0) != null;
+    }
+
+    /**
+     * A small helper to get the the dependencies of the model from DEPENDENCIES, instead of setting it up the function manually
+     */
+    public function __get($name)
+    {
+        if (in_array($name, array_keys(self::DEPENDENCIES))) {
+            return $this->$name()->get();
+        }
+
+        return parent::__get($name);
+    }
+
+    /**
+     * A small helper to get the the dependencies of the model from DEPENDENCIES, instead of setting it up the function manually
+     */
+    public function __call($name, $arg)
+    {
+        if (in_array($name, array_keys(self::DEPENDENCIES))) {
+            return $this->hasMany(
+                self::DEPENDENCIES[$name]['class'],
+                (self::DEPENDENCIES[$name]['foreign_key'] ?? Str::singular($name) . '_id')
+            );
+        }
+
+        return parent::__call($name, $arg);
+    }
 }

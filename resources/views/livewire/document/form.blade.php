@@ -6,6 +6,18 @@
         @foreach(App\Models\DocumentRevision::getColumns() as $key => $column)
             @include('livewire.common.field')
         @endforeach
+        @include('livewire.common.field', [
+            'column' => [
+                'type' => 'relationship',
+                'relationship' => 'owner',
+                'class' => App\Models\User::class,
+                'label' => __('Document manager'),
+                'placeholder' => 'Choose user',
+                'filter' => 'relationship'
+            ],
+            'key' => 'owner_id'
+        ])
+
     </div>
 </div>
 
@@ -19,7 +31,7 @@
         <div class="hidden font-bold md:block">{{ __('View') }}</div>
         <div class="hidden font-bold md:block">{{ __('Edit') }}</div>
 
-        <div class="text-lg font-bold italic">{{ __('Everyone') }}</div>
+        <div class="text-lg italic font-bold">{{ __('Everyone') }}</div>
 
         <div class="flex items-center space-x-4 md:space-x-0">
             <label class="w-24 md:hidden">{{ __('View') }}</label>
@@ -67,10 +79,10 @@
                             type="button"
                             role="switch"
                             aria-checked="true"
-                            class="relative inline-flex py-1 transition rounded-full w-14 border border-slate-300 bg-slate-100"
+                            class="relative inline-flex py-1 transition border rounded-full w-14 border-slate-300 bg-slate-100"
                         >
                             <span
-                                class="w-6 h-6 transition bg-slate-300 rounded-full shadow-sm translate-x-7"
+                                class="w-6 h-6 transition rounded-full shadow-sm bg-slate-300 translate-x-7"
                                 aria-hidden="true"
                             ></span>
                         </button>
@@ -101,10 +113,10 @@
                             type="button"
                             role="switch"
                             aria-checked="true"
-                            class="relative inline-flex py-1 transition rounded-full w-14 border border-slate-300 bg-slate-100"
+                            class="relative inline-flex py-1 transition border rounded-full w-14 border-slate-300 bg-slate-100"
                         >
                             <span
-                                class="w-6 h-6 transition bg-slate-300 rounded-full shadow-sm translate-x-7"
+                                class="w-6 h-6 transition rounded-full shadow-sm bg-slate-300 translate-x-7"
                                 aria-hidden="true"
                             ></span>
                         </button>
