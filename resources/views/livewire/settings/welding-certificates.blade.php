@@ -2,6 +2,8 @@
     id="welding-certificates"
     @unless($section == 'welding-certificates')
         class="hidden"
+    @else
+        class="w-full"
     @endunless
 >
     <x-settings-page>

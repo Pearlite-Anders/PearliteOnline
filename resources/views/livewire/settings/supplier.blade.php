@@ -2,6 +2,8 @@
     id="multiple-choice"
     @unless($section == 'supplier')
         class="hidden"
+    @else
+        class="w-full"
     @endunless
 >
     <x-settings-page>

@@ -1,6 +1,6 @@
 
 
-<aside class="hidden border-b border-gray-900/5 px-6 lg:block lg:w-80 lg:flex-none lg:border-0 pt-8"
+<aside class="hidden px-6 pt-8 border-b border-gray-900/5 lg:block lg:w-80 lg:flex-none lg:border-0">
     <nav class="flex-none px-4 sm:px-6 lg:px-0" aria-label="Sidebar">
         <ul role="list" class="-mx-2 space-y-1">
             <li class="mb-0 text-left list-outside">
