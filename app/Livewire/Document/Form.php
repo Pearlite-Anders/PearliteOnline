@@ -16,10 +16,12 @@ class Form extends LivewireForm
     public array $files = [];
     public Collection $current_files;
     public array $permissions;
+    public $owner_id = null;
 
     public function setFields(Document $document)
     {
         $this->data = DocumentData::from($document->currentRevision->data);
+        $this->owner_id = $document->owner_id;
         $this->current_files = collect($document->files)->map(function($file) {
             return File::find($file);
         });
@@ -39,7 +41,7 @@ class Form extends LivewireForm
         $document = DB::transaction(function () use ($user, $data, $permissions, $parent) {
             $document = Document::create([
                 'company_id' => $user->currentCompany->id,
-                'owner_id' => $user->id,
+                'owner_id' => $this->owner_id == "" ? null : $this->owner_id,
             ], $parent);
 
             $revision = $document->revisions()->create($data);
@@ -62,7 +64,10 @@ class Form extends LivewireForm
             ]];
         });
 
+
         $revision = DB::transaction(function () use ($document, $data, $permissions) {
+            $document->owner_id = $this->owner_id == "" ? null : $this->owner_id;
+            $document->save();
             $revision = $document->revisions()->create($data);
             $document->users()->sync($permissions);
 
@@ -82,7 +87,8 @@ class Form extends LivewireForm
         ], $this->except([
             'files',
             'current_files',
-            'permissions'
+            'permissions',
+            'owner_id'
         ]));
 
         return $data;

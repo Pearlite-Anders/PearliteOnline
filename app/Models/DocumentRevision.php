@@ -28,6 +28,20 @@ class DocumentRevision extends Model
                 'class' => 'grid gap-6 mb-6 md:grid-cols-3 md:col-span-3'
             ]
         ],
+        'introduction' => [
+            'type' => 'textarea',
+            'label' => 'Introduction',
+            'required' => false,
+            'placeholder' => 'A short introduction to the document',
+            'filter' => 'search'
+        ],
+        'content' => [
+            'type' => 'rich_text',
+            'label' => 'Content',
+            'required' => false,
+            'placeholder' => 'The content of this document',
+            'filter' => 'search'
+        ],
         'review_interval' => [
             'type' => 'radios',
             'label' => 'Review Interval',
@@ -50,21 +64,7 @@ class DocumentRevision extends Model
             'type' => 'date',
             'label' => 'Next Review Date',
             'filter' => 'date'
-        ],
-        'introduction' => [
-            'type' => 'textarea',
-            'label' => 'Introduction',
-            'required' => false,
-            'placeholder' => 'A short introduction to the document',
-            'filter' => 'search'
-        ],
-        'content' => [
-            'type' => 'rich_text',
-            'label' => 'Content',
-            'required' => false,
-            'placeholder' => 'The content of this document',
-            'filter' => 'search'
-        ],
+        ]
     ];
 
     public function document()

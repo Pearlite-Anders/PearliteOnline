@@ -6,6 +6,18 @@
         @foreach(App\Models\DocumentRevision::getColumns() as $key => $column)
             @include('livewire.common.field')
         @endforeach
+        @include('livewire.common.field', [
+            'column' => [
+                'type' => 'relationship',
+                'relationship' => 'owner',
+                'class' => App\Models\User::class,
+                'label' => __('Document manager'),
+                'placeholder' => 'Choose user',
+                'filter' => 'relationship'
+            ],
+            'key' => 'owner_id'
+        ])
+
     </div>
 </div>
 
