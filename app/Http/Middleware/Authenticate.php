@@ -14,4 +14,16 @@ class Authenticate extends Middleware
     {
         return $request->expectsJson() ? null : route('login');
     }
+
+    protected function authenticate($request, array $guards)
+    {
+        $result = parent::authenticate($request, $guards);
+        $user = $request->user();
+        if ($user && $user->active == false) {
+            \Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            return redirect('/login');
+        }
+        return $result;
+    }
 }
