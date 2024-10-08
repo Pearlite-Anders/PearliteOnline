@@ -57,7 +57,12 @@
                                     @endcan
 
                                     @can('delete', $user)
-                                        @if($confirming == $user->id)
+                                        @if($confirming == $user->id && $hasDependencies)
+                                            <x-tooltip-question-mark
+                                                class="inline-flex items-center px-4 py-2 text-slate-600"
+                                                tooltip="{{ __('You cannot delete this user because it has dependencies') }}"
+                                            />
+                                        @elseif($confirming == $user->id)
                                             <x-button
                                                 wire:click="delete({{ $user->id }})"
                                                 class="bg-red-700 hover:bg-red-800"
