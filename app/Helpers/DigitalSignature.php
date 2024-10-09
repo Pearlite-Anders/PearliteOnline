@@ -12,8 +12,7 @@ class DigitalSignature
         $name,
         $header = 'Digital Signatur',
         $base64 = false,
-        $hide_time = false,
-        $hide_date = false,
+        $extra_text = null,
         $width = 302,
         $color = '#991b1b'
     ): string {
@@ -38,8 +37,8 @@ class DigitalSignature
             $font->color('#000');
         });
 
-        if (!$hide_date) {
-            $image->text($date->format('Y.m.d'.($hide_time ? '' : ' - H:i')), 5, 65, function ($font) {
+        if ($extra_text) {
+            $image->text($extra_text, 5, 65, function ($font) {
                 $font->filename(resource_path('fonts/Roboto-Regular.ttf'));
                 $font->size(18);
                 $font->color('#000');
