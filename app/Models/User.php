@@ -272,8 +272,8 @@ class User extends Authenticatable
         });
     }
 
-    public function get_digital_signature($base64 = false, $hide_time = false)
+    public function get_digital_signature($base64 = false)
     {
-        return \App\Helpers\DigitalSignature::image($this->name, base64: $base64, hide_time: $hide_time);
+        return \App\Helpers\DigitalSignature::image($this->name, base64: $base64, extra_text: $this->data['title']);
     }
 }
