@@ -23,6 +23,7 @@ class SupplierData extends Data implements Wireable
         public ?string $assessment_frequency,
         public ?string $status,
         public ?string $remarks,
+        public ?string $latest_assessment_date,
     ) {
     }
 }
