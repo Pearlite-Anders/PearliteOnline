@@ -21,8 +21,6 @@ class CePrintController extends Controller
                 "image" => \App\Helpers\DigitalSignature::image(
                     name: implode(' - ', $setting),
                     base64: true,
-                    hide_time: true,
-                    hide_date: true,
                     width: 200
                 )
             ];

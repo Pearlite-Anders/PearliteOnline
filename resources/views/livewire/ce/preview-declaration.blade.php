@@ -161,7 +161,7 @@
             <div style="display:flex;align-items:center;flex-direction:column;margin-top:10px;">
                 @if($form->data->signature)
                     @php($row = setting('signature_group')[$form->data->signature])
-                    <img src="{{ \App\Helpers\DigitalSignature::image(name: implode(' - ', $row), base64: true, hide_time: true, hide_date: true, width: 200) }}"/>
+                    <img src="{{ \App\Helpers\DigitalSignature::image(name: implode(' - ', $row), base64: true, width: 200) }}"/>
                 @else
                     <span>&nbsp;</span>
                 @endif
