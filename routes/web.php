@@ -27,11 +27,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-
+    Route::get('/dashboard', App\Livewire\Dashboard\Page::class)->name('dashboard');
     Route::get('/companies', \App\Livewire\Company\Index::class)->name('companies.index');
     Route::get('/companies/create', \App\Livewire\Company\Create::class)->name('companies.create');
     Route::get('/companies/{company}', \App\Livewire\Company\Show::class)->name('companies.show');
