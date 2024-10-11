@@ -26,6 +26,7 @@ class Create extends Component
 
     public function render()
     {
+        $this->form->setDrivingFromCompany();
         return view('livewire.time-registration.create');
     }
 }

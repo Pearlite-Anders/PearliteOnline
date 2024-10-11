@@ -42,6 +42,7 @@ Route::middleware([
     Route::get('/users', \App\Livewire\User\Index::class)->name('users.index');
     Route::get('/users/create', \App\Livewire\User\Create::class)->name('users.create');
     Route::get('/users/{user}/edit', \App\Livewire\User\Edit::class)->name('users.edit');
+    Route::get('/users/{user}/dependencies', \App\Livewire\User\Dependencies\Page::class)->name('users.dependencies');
 
     Route::get('/system-users', \App\Livewire\SystemUser\Index::class)->name('system-users.index');
     Route::get('/system-users/create', \App\Livewire\SystemUser\Create::class)->name('system-users.create');
@@ -91,7 +92,6 @@ Route::middleware([
     Route::get('/formulas/welding-speed', \App\Livewire\Formula\WeldingSpeed::class)->name('formulas.welding-speed');
 
     Route::get('/time-registration', \App\Livewire\TimeRegistration\Index::class)->name('time-registration.index');
-    Route::get('/time-registration/settings', \App\Livewire\TimeRegistration\Settings::class)->name('time-registration.settings');
     Route::get('/time-registration/create', \App\Livewire\TimeRegistration\Create::class)->name('time-registration.create');
     Route::get('/time-registration/{timeRegistration}/edit', \App\Livewire\TimeRegistration\Edit::class)->name('time-registration.edit');
 
@@ -100,7 +100,11 @@ Route::middleware([
     Route::get('/internal-order/{internalOrder}/edit', \App\Livewire\InternalOrder\Edit::class)->name('internal-order.edit');
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
-
+    Route::get('/documents', \App\Livewire\Document\Index::class)->name('documents.index');
+    Route::get('/documents/create', \App\Livewire\Document\Create::class)->name('documents.create');
+    Route::get('/documents/{document}', \App\Livewire\Document\Show::class)->name('documents.show');
+    Route::get('/documents/{document}/edit', \App\Livewire\Document\Edit::class)->name('documents.edit');
+    Route::get('/documents/{document}/revisions', \App\Livewire\DocumentRevision\Index::class)->name('document_revisions.index');
 
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;

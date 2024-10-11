@@ -21,6 +21,8 @@
  *  - restrictions: array
  *   - view: array
  *   - edit: array
+ *  - container: array
+*   - class: string
  * - $form: object
  */
 ?>
@@ -30,7 +32,9 @@
         return;
     @endphp
 @endif
-
+@if (isset($column['container']))
+    <div class="{{ $column['container']['class'] }}">
+@endif
 <div
     class="
         @if(in_array($column['type'], ['textarea', 'rich_text'])) md:col-span-3 @endif
@@ -44,6 +48,7 @@
                 @endif
             @endforeach
         @endif
+        md:col-span-1
     "
 >
     @unless(
@@ -54,6 +59,9 @@
             <x-label for="{{ $key }}" :value="__($column['label'])" class="!mb-0" />
             @if(optional($column)['help'])
                 <x-tooltip-question-mark :tooltip="$column['help']" class="h-4 ml-1 mt-[2px]" />
+            @endif
+            @if(optional($column)['required'])
+                <span class="text-red-400">*</span>
             @endif
         </div>
     @endunless
@@ -70,6 +78,12 @@
             :options="$column['class']::get_choices()"
             prettyname="{{ $key }}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
+        />
+    @elseif($column['type'] == 'dynamic_relationship' && optional($column)['create_popup'])
+        <livewire:dynamic-relationship-field-with-create
+            :$column
+            :relation="$form->{$column['relationship']}"
+            wire:model.live="form.{{$key}}"
         />
     @elseif($column['type'] == 'dynamic_relationship')
         <livewire:dynamic-relationship-field
@@ -209,6 +223,12 @@
                 />
             </div>
         </div>
+    @elseif($column['type'] == 'time')
+        <x-input.time
+            wire:model="form.data.{{ $key }}"
+            placeholder="{{ __($column['placeholder'] ?? '') }}"
+            :value="optional($form->data)->{$key}"
+        />
     @else
         <x-input
             :live="isset($live)"
@@ -216,6 +236,7 @@
             placeholder="{{ __($column['placeholder'] ?? '') }}"
             postfix="{{ __($column['postfix'] ?? '') }}"
             prefix="{{ __($column['prefix'] ?? '') }}"
+            required="$column['prefix'] ?? false"
         />
     @endif
 
@@ -224,3 +245,6 @@
         <p class="mt-1 text-sm text-gray-500">{{ __($column['info']) }}</p>
     @endif
 </div>
+@if (isset($column['container']))
+    </div>
+@endif

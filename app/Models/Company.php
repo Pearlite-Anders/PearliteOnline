@@ -57,6 +57,14 @@ class Company extends Model
             'placeholder' => '',
             'filter' => 'search'
         ],
+        'driving' => [
+            'type' => 'number',
+            'label' => 'Kørsel',
+            'required' => false,
+            'placeholder' => '',
+            'postfix' => 'km',
+            'hidden' => false
+        ],
         'remarks' => [
             'type' => 'textarea',
             'label' => 'Remarks',
@@ -128,6 +136,11 @@ class Company extends Model
         }
 
         return $this->hasMany(InternalOrder::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
     }
 
     public function timeregistrations()
@@ -243,6 +256,14 @@ class Company extends Model
             'machine-maintenance' => (object)[
                 'name' => __('Machine Maintenances'),
                 'class' => \App\Models\MachineMaintenance::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'document' => (object)[
+                'name' => __('Documents'),
+                'class' => \App\Models\Document::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),

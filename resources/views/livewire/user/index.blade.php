@@ -24,6 +24,7 @@
                     <x-slot name="head">
                         <x-table.heading sortable>{{ __('Name') }}</x-table.heading>
                         <x-table.heading sortable>{{ __('Role') }}</x-table.heading>
+                        <x-table.heading sortable>{{ __('Active') }}</x-table.heading>
                         <x-table.heading />
                     </x-slot>
                     <x-slot name="body">
@@ -31,8 +32,21 @@
                             <x-table.row>
                                 <x-table.cell>{{ $user->name }}</x-table.cell>
                                 <x-table.cell>{{ $user->humanRole() }}</x-table.cell>
+                                <x-table.cell>
+                                    @if ($user->active)
+                                        <x-icon.check class="w-5 h-5 text-green-500" />
+                                    @else
+                                        <x-icon.x class="w-5 h-5 text-red-500" />
+                                    @endif
+                                </x-table.cell>
 
                                 <x-table.cell class="text-right">
+                                    <x-button.link
+                                        href="{{ route('users.dependencies', $user) }}"
+                                        class="text-gray-600 bg-transparent hover:bg-gray-100 hover:text-gray-900"
+                                    >
+                                        <x-icon.circle-stack class="w-4 h-4 text-gray-600" />
+                                    </x-button.link>
                                     @can('update', $user)
                                         <x-button.link
                                             href="{{ route('users.edit', $user) }}"
@@ -43,7 +57,12 @@
                                     @endcan
 
                                     @can('delete', $user)
-                                        @if($confirming == $user->id)
+                                        @if($confirming == $user->id && $hasDependencies)
+                                            <x-tooltip-question-mark
+                                                class="inline-flex items-center px-4 py-2 text-slate-600"
+                                                tooltip="{{ __('You cannot delete this user because it has dependencies') }}"
+                                            />
+                                        @elseif($confirming == $user->id)
                                             <x-button
                                                 wire:click="delete({{ $user->id }})"
                                                 class="bg-red-700 hover:bg-red-800"

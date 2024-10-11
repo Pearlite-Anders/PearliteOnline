@@ -54,19 +54,11 @@ class TimeRegistration extends Model
             'relationship' => 'company_id',
             'class' => InternalOrder::class,
             'label' => 'Order',
-            'placeholder' => 'Choose project',
+            'placeholder' => 'Choose order',
             'filter' => 'relationship',
-            'create_popup' => false,
+            'create_popup' => true,
             'data_class' => InternalOrderData::class,
             'multiple' => false,
-        ],
-        'tasks' => [
-            'type' => 'select',
-            'multiple' => true,
-            'label' => 'Tasks',
-            'options' => 'time_registration_tasks',
-            'placeholder' => 'Choose',
-            'filter' => 'select',
         ],
         'date' => [
             'type' => 'date',
@@ -75,12 +67,21 @@ class TimeRegistration extends Model
             'placeholder' => '',
             'filter' => 'date'
         ],
+
+        'start' => [
+            'type' => 'time',
+            'label' => 'Start time',
+            'required' => true
+        ],
+        'end' => [
+            'type' => 'time',
+            'label' => 'End time',
+            'required' => true
+        ],
         'hours' => [
-            'type' => 'number',
+            'type' => 'system_text',
             'label' => 'Timer',
-            'required' => true,
-            'placeholder' => '',
-            'filter' => 'search'
+            'default' => 0,
         ],
         'driving' => [
             'type' => 'number',
@@ -88,7 +89,7 @@ class TimeRegistration extends Model
             'required' => false,
             'placeholder' => '',
             'filter' => 'search',
-            'postfix' => 'km'
+            'postfix' => 'km',
         ],
         'expenses' => [
             'type' => 'number',
@@ -101,7 +102,7 @@ class TimeRegistration extends Model
         ],
         'paid' => [
             'type' => 'checkbox',
-            'label' => 'Paid',
+            'label' => 'Billable',
             'required' => false,
             'placeholder' => '',
             'filter' => 'search'

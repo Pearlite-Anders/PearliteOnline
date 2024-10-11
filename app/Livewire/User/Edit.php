@@ -4,12 +4,15 @@ namespace App\Livewire\User;
 
 use App\Models\User;
 use App\Models\Company;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class Edit extends Component
 {
     public Form $form;
     public User $user;
+    public bool $canChangeStatus = true;
+    public Collection $dependecies;
 
     public function update()
     {
@@ -28,6 +31,7 @@ class Edit extends Component
 
         $this->user->name = $this->form->name;
         $this->user->email = $this->form->email;
+        $this->user->active = $this->form->active;
 
         if($this->form->password) {
             $this->user->password = bcrypt($this->form->password);
@@ -47,6 +51,7 @@ class Edit extends Component
         $this->form->name = $user->name;
         $this->form->email = $user->email;
         $this->form->role = $user->role;
+        $this->form->active = $user->active;
 
 
         // Permissions
