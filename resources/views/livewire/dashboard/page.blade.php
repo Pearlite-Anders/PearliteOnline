@@ -48,13 +48,11 @@
             </div>
         </div>
         <div class="mt-8">
-            <h2 class="truncate text-lg text-gray-900 mb-4">{{ _('My tasks') }}</h2>
-            <livewire:dashboard.my-tasks :$filters lazy />
-
+            <livewire:dashboard.my-tasks :$filters :header="_('My tasks')" lazy />
         </div>
+
         <div class="mt-8">
-            <h2 class="truncate text-lg text-gray-900">{{ _('Company tasks') }}</h2>
-           <livewire:dashboard.company-tasks :$filters lazy />
+           <livewire:dashboard.company-tasks :$filters :header="_('Company tasks')" lazy />
         </div>
     </div>
 <div>
