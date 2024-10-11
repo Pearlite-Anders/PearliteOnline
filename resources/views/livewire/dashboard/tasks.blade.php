@@ -1,5 +1,5 @@
 <div>
-    <h2 class="truncate text-lg text-gray-900 mb-4">{{ $header }}</h2>
+    <h2 class="truncate text-lg text-gray-900 mb-4">{{ $header }} <span wire:loading.remove>({{ $totalTasks }})</span></h2>
     <div wire:loading>
         <x-loading>{{ _('Loading tasks...') }}</x-loading>
     </div>
