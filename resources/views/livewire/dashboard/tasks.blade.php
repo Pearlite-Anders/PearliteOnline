@@ -1,28 +1,35 @@
 <div>
+    <h2 class="truncate text-lg text-gray-900 mb-4">{{ $header }}</h2>
     <div wire:loading>
         <x-loading>{{ _('Loading tasks...') }}</x-loading>
     </div>
     <div wire:loading.remove>
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 max-w-7xl">
-            @forelse($tasks as $module => $moduleTasks)
-                @forelse($moduleTasks as $task)
-                    <a class="overflow-hidden rounded-lg bg-white shadow" href="{{ route($module . '.edit', [$module => $task->id]) }}">
-                        <div class="px-4 py-3 sm:px-6 sm:py-4">
-                            <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mb-3">{{ $module }}</span>
-                            <p>{{ __('Its time for assesment of') }}: {{ $task->data['name'] }}</p>
+            @if ($tasks->count() > 0 && $totalTasks == 0)
+                <p class="text-sm text-gray-500">
+                    {{ _('You haven’t any open tasks.') }} <br />
+                    {{ _('Good work!, keep it up.') }} {{ _('Or maybe you should check your filters') }}
+                </p>
+            @else
+                @forelse($tasks as $module => $moduleTasks)
+                    @foreach($moduleTasks as $task)
+                        <div class="overflow-hidden rounded-lg bg-white shadow" wire:key="{{$module}}-{{$task->id}}">
+                            @switch($module)
+                                @case(App\Livewire\Dashboard\Module::Supplier->value)
+                                    @include('livewire.dashboard._supplier_task')
+                                    @break
+                                @case(App\Livewire\Dashboard\Module::WeldingCertificate->value)
+                                    @include('livewire.dashboard._welding_certificate_task')
+                                    @break
+                            @endswitch
                         </div>
-                    </a>
+                    @endforeach
                 @empty
-                    <p class="my-4 text-sm text-gray-500">
-                        {{ _('You haven’t any open tasks.') }} <br />
-                        {{ _('Good work!, keep it up.') }} {{ _('Or maybe you should check your filters') }}
+                    <p class="text-sm text-gray-500">
+                        {{ _('You haven’t selected any modules.') }}
                     </p>
                 @endforelse
-            @empty
-                <p class="text-sm text-gray-500">
-                    {{ _('You haven’t selected any modules.') }}
-                </p>
-            @endforelse
+            @endif
         </div>
     </div>
 </div>
