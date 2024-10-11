@@ -7,8 +7,8 @@ use Illuminate\Support\Carbon;
 enum Interval: string
 {
     case Today = 'today';
-    case Next_14_Days = 'next14';
-    case Next_3_Months = 'next3months';
+    case Next_14_Days = '14days';
+    case Next_3_Months = '3months';
 
     public function label()
     {
