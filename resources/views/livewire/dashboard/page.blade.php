@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex items-center space-x-2">
                         @foreach(\App\Livewire\Dashboard\Interval::cases() as $interval)
-                            <label class="flex px-2 py-1 text-sm leading-none border rounded-md cursor-pointer focus:outline-none focus:ring-4 ring-cyan-300/25 @if($filters->interval->value == $interval->value) border-cyan-400 bg-slate-50 @else bg-white  border-gray-200 @endif">
+                            <label class="flex px-2 py-1 text-sm leading-none border rounded-md cursor-pointer focus:outline-none focus:ring-4 ring-cyan-300/25 @if($filters->interval == $interval->value) border-cyan-400 bg-slate-50 @else bg-white  border-gray-200 @endif">
                                 <input
                                     type="radio"
                                     wire:model.live="filters.interval"

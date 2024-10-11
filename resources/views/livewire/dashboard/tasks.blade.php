@@ -21,6 +21,9 @@
                                 @case(App\Livewire\Dashboard\Module::WeldingCertificate->value)
                                     @include('livewire.dashboard._welding_certificate_task')
                                     @break
+                                @case(App\Livewire\Dashboard\Module::MachineMaintenance->value)
+                                    @include('livewire.dashboard._machine_maintenance_task')
+                                    @break
                             @endswitch
                         </div>
                     @endforeach

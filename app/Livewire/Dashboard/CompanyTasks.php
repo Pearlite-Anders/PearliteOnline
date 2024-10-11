@@ -53,4 +53,13 @@ class CompanyTasks extends Component
 
         return $query->get();
     }
+
+    protected function machine_maintenance()
+    {
+        $user = \Auth::user();
+        $query = $user->currentCompany->machineMaintenances();
+        $query = $this->filters->apply($query, Module::MachineMaintenance);
+
+        return $query->get();
+    }
 }
