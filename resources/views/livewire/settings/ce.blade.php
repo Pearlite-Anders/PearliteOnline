@@ -257,14 +257,5 @@
             </x-setting-section>
         @endforeach
 
-        <div class="flex justify-end">
-            <x-button.primary
-                wire:click="save"
-                wire:loading.attr="disabled"
-                class="mt-4"
-            >
-                {{ __('Save') }}
-            </x-button>
-        </div>
     </x-settings-page>
 </div>

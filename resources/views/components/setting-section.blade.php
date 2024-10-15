@@ -10,6 +10,7 @@
         <div class="px-4 py-5 bg-white shadow sm:p-6 sm:rounded-md">
             <div class="grid grid-cols-6 gap-6">
                 {{ $form }}
+
             </div>
         </div>
     </div>
