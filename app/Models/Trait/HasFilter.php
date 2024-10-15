@@ -59,13 +59,13 @@ trait HasFilter
         $column = self::getColumn($column_key);
         $value = '';
 
-        if($column->type == 'relationship') {
-            if(isset($column->multiple) && $column->multiple) {
-                if(is_array($column->class::LABEL_KEY)) {
+        if ($column->type == 'relationship') {
+            if (isset($column->multiple) && $column->multiple) {
+                if (is_array($column->class::LABEL_KEY)) {
                     $relations = optional($this->{$column->relationship})->map(function ($relation) use ($column) {
                         $values = [];
-                        foreach($column->class::LABEL_KEY as $key) {
-                            if(preg_match('/\./', $key)) {
+                        foreach ($column->class::LABEL_KEY as $key) {
+                            if (preg_match('/\./', $key)) {
                                 $keys = explode('.', $key);
                                 $values[] = optional($relation->{$keys[0]})[$keys[1]];
                             } else {
@@ -75,7 +75,7 @@ trait HasFilter
                         return implode(' - ', $values);
                     });
                     $value = $relations->implode(', ');
-                } elseif(preg_match('/\./', $column->class::LABEL_KEY)) {
+                } elseif (preg_match('/\./', $column->class::LABEL_KEY)) {
                     $keys = explode('.', $column->class::LABEL_KEY);
                     $value = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
                 } else {
@@ -83,10 +83,10 @@ trait HasFilter
                 }
 
             } else {
-                if(is_array($column->class::LABEL_KEY)) {
+                if (is_array($column->class::LABEL_KEY)) {
                     $values = [];
-                    foreach($column->class::LABEL_KEY as $key) {
-                        if(preg_match('/\./', $key)) {
+                    foreach ($column->class::LABEL_KEY as $key) {
+                        if (preg_match('/\./', $key)) {
                             $keys = explode('.', $key);
                             $values[] = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
                         } else {
@@ -94,55 +94,55 @@ trait HasFilter
                         }
                     }
                     $value = implode(' - ', $values);
-                } elseif(preg_match('/\./', $column->class::LABEL_KEY)) {
+                } elseif (preg_match('/\./', $column->class::LABEL_KEY)) {
                     $keys = explode('.', $column->class::LABEL_KEY);
                     $value = optional(optional($this->{$column->relationship})->{$keys[0]})[$keys[1]];
                 } else {
                     $value = $this->{$column->relationship} ? $this->{$column->relationship}->{ $column->class::LABEL_KEY } : '';
                 }
             }
-        } elseif($column->type == 'dynamic_relationship') {
-            if($column->class == InternalOrder::class) {
+        } elseif ($column->type == 'dynamic_relationship') {
+            if ($column->class == InternalOrder::class) {
                 $value = optional(optional($this->internalorder)->data)['name'];
             }
-        } elseif($column->type == 'calculated') {
+        } elseif ($column->type == 'calculated') {
             $value = optional($this)->{$column_key};
-        } elseif($column->type == 'select') {
+        } elseif ($column->type == 'select') {
             $options = is_array($column->options) ? $column->options : \App\Models\Setting::get($column->options);
-            if(is_array(optional($this->data)[$column_key])) {
+            if (is_array(optional($this->data)[$column_key])) {
                 $value = [];
-                foreach($this->data[$column_key] as $key => $val) {
+                foreach ($this->data[$column_key] as $key => $val) {
                     $value[$key] = optional($options)[$val];
                 }
 
-                if(is_array($value[0])) {
+                if (is_array(optional($value)[0])) {
                     $value = collect($value)->map(function ($item) {
                         return implode(' - ', $item);
                     })->implode(', ');
                 } else {
                     $value = implode(', ', $value);
                 }
-            } elseif(optional($this->data)[$column_key]) {
+            } elseif (optional($this->data)[$column_key]) {
                 $value = optional($options)[$this->data[$column_key]];
             }
-        } elseif($column->type == 'radios') {
-            if(is_array($column->options) && optional($this->data)[$column_key]) {
+        } elseif ($column->type == 'radios') {
+            if (is_array($column->options) && optional($this->data)[$column_key]) {
                 $value = optional($column->options)[optional($this->data)[$column_key]];
             }
-        } elseif($column->type == 'checkbox') {
-            if(optional($this->data)[$column_key]) {
+        } elseif ($column->type == 'checkbox') {
+            if (optional($this->data)[$column_key]) {
                 $value = __('Yes');
             } else {
                 $value = __('No');
             }
-        } elseif($column->type == 'date') {
-            if(preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($this->data)[$column_key])) {
+        } elseif ($column->type == 'date') {
+            if (preg_match('/^\d{4}-\d{2}-\d{2}$/', optional($this->data)[$column_key])) {
                 $value = Carbon::parse(optional($this->data)[$column_key])->format('Y.m.d');
             } else {
                 $value = optional($this->data)[$column_key];
             }
-        } elseif($column->type == 'welding_certificate') {
-            if($this->current_file_id) {
+        } elseif ($column->type == 'welding_certificate') {
+            if ($this->current_file_id) {
                 $file = File::find($this->current_file_id);
                 $value = $file->temporary_url();
             }
@@ -150,12 +150,12 @@ trait HasFilter
             $value = optional($this->data)[$column_key];
         }
 
-        if(!$formatting) {
+        if (!$formatting) {
             return $value;
         }
 
-        if(is_array($value)) {
-            if(is_array($value[0])) {
+        if (is_array($value)) {
+            if (is_array($value[0])) {
                 $value = collect($value)->map(function ($item) {
                     return implode(' - ', $item);
                 })->implode(', ');
@@ -166,15 +166,15 @@ trait HasFilter
             $value = __($value);
         }
 
-        if(optional($column)->prefix && $value) {
+        if (optional($column)->prefix && $value) {
             $value = __($column->prefix) . $value;
         }
 
-        if(optional($column)->postfix && $value) {
+        if (optional($column)->postfix && $value) {
             $value = $value . __($column->postfix);
         }
 
-        if($column->type == 'welding_certificate' && $value) {
+        if ($column->type == 'welding_certificate' && $value) {
             return '<a href="' . $value . '" target="_blank">' . __('Download') . '</a>';
         }
 
