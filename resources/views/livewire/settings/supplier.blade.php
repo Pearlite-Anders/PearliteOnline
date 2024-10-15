@@ -66,6 +66,5 @@
                 </x-slot>
             </x-setting-section>
         @endforeach
-        </div>
     </x-settings-page>
 </div>
