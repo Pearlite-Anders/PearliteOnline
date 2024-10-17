@@ -7,7 +7,7 @@
     x-data="{ value: {{ $initial_value ? 'true' : 'false'}}}"
     class="flex items-center space-x-4 md:space-x-0"
 >
-    {{ $label ?? '' }}
+
     <button
         x-ref="toggle"
         @click="value = ! value; $wire.set('{{ $attributes['wire:model'] }}', value)"
