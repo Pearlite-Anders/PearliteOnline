@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:send-welding-notifications')->daily()->at('09:30')->timezone('Europe/Copenhagen');
 
         $schedule->command('backup:run')->daily()->at('01:30');
+        $schedule->command('backup:clean')->daily()->at('02:30');
         $schedule->command('backup:monitor')->daily()->at('03:00');
 
     }
