@@ -95,6 +95,13 @@ class Form extends LivewireForm
             $report->save();
         }
 
+        // Update the supplier's latest assessment date to keep easier to figure out when the next assement is due.
+        $supplier = Supplier::find($this->supplier_id);
+        $supplierData = $supplier->data;
+        $supplierData["latest_assessment_date"] = $this->new_assessment_date;
+        $supplier->data = $supplierData;
+        $supplier->save();
+
         return $report;
     }
 
