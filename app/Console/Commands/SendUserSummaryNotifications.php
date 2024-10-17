@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Notifications\UserSummary;
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Notification;
 
 class SendUserSummaryNotifications extends Command
 {
@@ -26,7 +25,7 @@ class SendUserSummaryNotifications extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('Send User Summary Notifications');
         User::with('unreadNotifications')->whereHas('unreadNotifications')->chunk(100, function($users) {
@@ -36,11 +35,13 @@ class SendUserSummaryNotifications extends Command
 
                     $supplierAssessmentsNotification = $user->unreadNotifications->where('type', 'App\Notifications\Supplier\Assessment')->last();
                     $machineMaintenanceNotication = $user->unreadNotifications->where('type', 'App\Notifications\MachineMaintenance\Maintenance')->last();
+                    $documentReviewNotication = $user->unreadNotifications->where('type', 'App\Notifications\Document\Review')->last();
 
                     $user->notify(
                         new UserSummary(
                             $supplierAssessmentsNotification,
-                            $machineMaintenanceNotication
+                            $machineMaintenanceNotication,
+                            $documentReviewNotication
                         )
                     );
                     $user->unreadNotifications->markAsRead();

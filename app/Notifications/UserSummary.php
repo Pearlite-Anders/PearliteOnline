@@ -14,17 +14,20 @@ class UserSummary extends Notification
 
     protected ?DatabaseNotification $supplierAssessmentsNotification;
     protected ?DatabaseNotification $machineMaintenanceNotification;
+    protected ?DatabaseNotification $documentReviewNotification;
 
     /**
      * Create a new notification instance.
      */
     public function __construct(
         ?DatabaseNotification $supplierAssessmentsNotification,
-        ?DatabaseNotification $machineMaintenanceNotification
+        ?DatabaseNotification $machineMaintenanceNotification,
+        ?DatabaseNotification $documentReviewNotification
     )
     {
         $this->supplierAssessmentsNotification = $supplierAssessmentsNotification;
         $this->machineMaintenanceNotification = $machineMaintenanceNotification;
+        $this->documentReviewNotification = $documentReviewNotification;
     }
 
     /**
@@ -44,6 +47,7 @@ class UserSummary extends Notification
     {
         $supplierAssessmentsData = null;
         $machineMaintenanceData = null;
+        $documentReviewData = null;
 
         if ($this->supplierAssessmentsNotification) {
             $supplierAssessmentsData = $this->supplierAssessmentsNotification->data;
@@ -53,11 +57,16 @@ class UserSummary extends Notification
             $machineMaintenanceData = $this->machineMaintenanceNotification->data;
         }
 
+        if ($this->documentReviewNotification) {
+            $documentReviewData = $this->documentReviewNotification->data;
+        }
+
         return (new MailMessage)
                 ->subject(__('I need a good subjet!'))
                 ->markdown('mail.user-summary', [
                     'supplier_assessments_data' => $supplierAssessmentsData,
                     'machine_maintenance_data' => $machineMaintenanceData,
+                    'document_review_data' => $documentReviewData,
                     'user' => $notifiable
                 ]);
     }
