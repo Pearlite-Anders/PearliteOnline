@@ -92,4 +92,9 @@ class MachineMaintenance extends Model
     {
         return $this;
     }
+
+    public function reports()
+    {
+        return $this->hasMany(MachineMaintenanceMaintenance::class)->orderBy('data->maintenance_date', 'asc');
+    }
 }

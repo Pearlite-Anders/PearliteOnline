@@ -35,7 +35,6 @@ class Edit extends Component
         return view('livewire.supplier.edit');
     }
 
-
     public function toggleAssessmentFormOpen()
     {
         $this->assessmentFormOpen = !$this->assessmentFormOpen;

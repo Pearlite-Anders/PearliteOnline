@@ -25,4 +25,12 @@ trait Shared
             $this->form->data->next_maintenance_date = $newDate->addMonths((int)$this->form->data->maintenance_interval)->format('Y.m.d');
         }
     }
+
+
+    public function createReport()
+        {
+            $this->form->createReport();
+
+            return redirect()->route('machine-maintenance.edit', $this->form->machine_maintenance_id)->with('flash.banner', __('Maintenance created.'));
+        }
 }

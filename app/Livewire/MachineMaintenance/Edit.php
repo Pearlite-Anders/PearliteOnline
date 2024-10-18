@@ -3,7 +3,6 @@
 namespace App\Livewire\MachineMaintenance;
 
 use Livewire\Component;
-use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
 use App\Models\MachineMaintenance;
 
@@ -12,6 +11,8 @@ class Edit extends Component
     use Shared, WithFileUploads;
     public Form $form;
     public MachineMaintenance $machineMaintenance;
+
+    public bool $maintenanceFormOpen = false;
 
     public function update()
     {
@@ -24,12 +25,17 @@ class Edit extends Component
 
     public function mount(MachineMaintenance $machineMaintenance)
     {
-        $this->welder = $machineMaintenance;
+        $this->machineMaintenance = $machineMaintenance;
         $this->form->setFields($machineMaintenance);
     }
 
     public function render()
     {
         return view('livewire.machine-maintenance.edit');
+    }
+
+    public function toggleMaintenanceFormOpen(): void
+    {
+        $this->maintenanceFormOpen = !$this->maintenanceFormOpen;
     }
 }

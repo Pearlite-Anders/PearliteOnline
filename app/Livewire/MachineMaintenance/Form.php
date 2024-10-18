@@ -5,6 +5,7 @@ namespace App\Livewire\MachineMaintenance;
 use App\Models\File;
 use App\Models\MachineMaintenance;
 use App\Data\MachineMaintenanceData;
+use App\Models\MachineMaintenanceMaintenance;
 use Illuminate\Support\Carbon;
 use Livewire\Form as LivewireForm;
 
@@ -13,11 +14,15 @@ class Form extends LivewireForm
     public $data;
     public $new_images = [];
     public $new_files = [];
+    public int $machine_maintenance_id;
+    public $new_maintenance_date;
+    public $new_maintenance_file;
 
 
     public function setFields(MachineMaintenance $machineMaintenance)
     {
         $this->data = MachineMaintenanceData::from($machineMaintenance->data);
+        $this->machine_maintenance_id = $machineMaintenance->id;
     }
 
     public function create()
@@ -74,6 +79,33 @@ class Form extends LivewireForm
         }
 
         return $machineMaintenance;
+    }
+
+    public function createReport()
+    {
+        $report = new MachineMaintenanceMaintenance();
+        $report->machine_maintenance_id = $this->machine_maintenance_id;
+        $report->user_id = auth()->user()->id;
+        $report->data = [
+            'maintenance_date' => $this->new_maintenance_date,
+        ];
+        $report->save();
+
+        if($this->new_maintenance_file) {
+            $file = File::fromTemporaryUpload($this->new_maintenance_file, $report, $report->machineMaintenance->company_id);
+            $report->current_file_id = $file->id;
+            $report->save();
+        }
+
+        $machineMaintenance = MachineMaintenance::find($this->machine_maintenance_id);
+
+        // Update the MachineMaintenance's latest maintenance date to keep easier to figure out when the next assement is due.
+        $machineMaintenanceData = $machineMaintenance->data;
+        $machineMaintenanceData["latest_assessment_date"] = $this->new_maintenance_date;
+        $machineMaintenance->data = $machineMaintenanceData;
+        $machineMaintenance->save();
+
+        return $report;
     }
 
 }
