@@ -5,7 +5,6 @@ namespace App\Livewire\MachineMaintenance;
 use App\Models\File;
 use App\Models\MachineMaintenance;
 use App\Data\MachineMaintenanceData;
-use Illuminate\Support\Carbon;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
@@ -13,11 +12,14 @@ class Form extends LivewireForm
     public $data;
     public $new_images = [];
     public $new_files = [];
+    public $responsible_user_id;
 
 
-    public function setFields(MachineMaintenance $machineMaintenance)
+    public function setFields(MachineMaintenance $machineMaintenance): void
     {
         $this->data = MachineMaintenanceData::from($machineMaintenance->data);
+
+        $this->responsible_user_id = $machineMaintenance->responsible_user_id;
     }
 
     public function create()

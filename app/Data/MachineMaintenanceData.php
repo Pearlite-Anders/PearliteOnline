@@ -4,7 +4,6 @@ namespace App\Data;
 
 use Livewire\Wireable;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Concerns\WireableData;
 
 class MachineMaintenanceData extends Data implements Wireable
@@ -21,6 +20,7 @@ class MachineMaintenanceData extends Data implements Wireable
         public ?string $last_maintenance_date,
         public ?string $next_maintenance_date,
         public ?string $status,
+        public ?string $brand
     ) {
     }
 }
