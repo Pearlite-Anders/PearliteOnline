@@ -25,7 +25,8 @@ trait WithTable
 
         $query = $this->resource()->{$relation}('index')
                     ->when($this->search, fn ($query, $term) => $this->applySearch($query, $term))
-                    ->when($this->filters, fn ($query, $filters) => $this->applyFilters($query, $filters));
+                    ->when($this->filters, fn ($query, $filters) => $this->applyFilters($query, $filters))
+                    ->when($this->with(), fn ($query, $with) => $query->with($with));
 
         return $this->applySorting($query);
     }
@@ -39,5 +40,10 @@ trait WithTable
     public function resource()
     {
         return auth()->user()->currentCompany;
+    }
+
+    public function with(): ?array
+    {
+        return null;
     }
 }
