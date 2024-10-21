@@ -51,8 +51,10 @@
             <livewire:dashboard.my-tasks :$filters :header="_('My tasks')" lazy />
         </div>
 
-        <div class="mt-8">
-           <livewire:dashboard.company-tasks :$filters :header="_('Company tasks')" lazy />
-        </div>
+        @can('company_task.view')
+            <div class="mt-8">
+                <livewire:dashboard.company-tasks :$filters :header="_('Company tasks')" lazy />
+            </div>
+        @endcan
     </div>
 <div>

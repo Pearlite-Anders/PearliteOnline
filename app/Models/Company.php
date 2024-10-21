@@ -269,6 +269,12 @@ class Company extends Model
                     'edit' => __('Edit'),
                 ]
             ],
+            'company_task' => (object)[
+                'name' => __('Company tasks'),
+                'permissions' => [
+                    'view' => __('View'),
+                ]
+            ],
         ];
     }
 }
