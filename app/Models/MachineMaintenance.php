@@ -65,11 +65,6 @@ class MachineMaintenance extends Model
             ],
             'filter' => 'search'
         ],
-        'last_maintenance_date' => [
-            'type' => 'date',
-            'label' => 'Last Maintenance Date',
-            'filter' => 'date'
-        ],
         'next_maintenance_date' => [
             'type' => 'date',
             'label' => 'Next Maintenance Date',

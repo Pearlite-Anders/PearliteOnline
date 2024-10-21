@@ -50,6 +50,9 @@ class Form extends LivewireForm
         ], $this->except([
             'new_images',
             'new_files',
+            'machine_maintenance_id',
+            'new_maintenance_date',
+            'new_maintenance_file'
         ]));
 
         return $data;
@@ -101,7 +104,7 @@ class Form extends LivewireForm
 
         // Update the MachineMaintenance's latest maintenance date to keep easier to figure out when the next assement is due.
         $machineMaintenanceData = $machineMaintenance->data;
-        $machineMaintenanceData["latest_assessment_date"] = $this->new_maintenance_date;
+        $machineMaintenanceData["lastest_maintenance_date"] = $this->new_maintenance_date;
         $machineMaintenance->data = $machineMaintenanceData;
         $machineMaintenance->save();
 
