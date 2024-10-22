@@ -2,19 +2,52 @@
 
 namespace App\Models;
 
+use App\Models\Trait\HasCompany;
+
+use App\Models\Trait\HasFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Kalnoy\Nestedset\NodeTrait;
 
-use App\Models\Trait\HasCompany;
-
 class Document extends Model
 {
-    use HasFactory, HasCompany, NodeTrait;
+    use HasFactory, HasCompany, HasFilter, NodeTrait;
 
     protected $guarded = [];
+
+    public const SYSTEM_COLUMNS = [
+        'title' => [
+            'type' => 'text',
+            'label' => 'Document title',
+            'required' => true,
+            'placeholder' => 'Title',
+            'filter' => 'search'
+        ],
+        'lastest_review_date' => [
+            'type' => 'date',
+            'label' => 'Latest review Date',
+            'filter' => 'date',
+        ],
+        'next_review_date' => [
+            'type' => 'date',
+            'label' => 'Next review Date',
+            'filter' => 'date',
+        ],
+        'review_interval' => [
+            'type' => 'radios',
+            'label' => 'Options Interval',
+            'options' => [
+                '3' => '3 Months',
+                '6' => '6 Months',
+                '12' => '12 Months',
+                '18' => '18 Months',
+                '24' => '24 Months',
+                '36' => '36 Months',
+            ],
+            'filter' => 'search'
+        ],
+    ];
 
     public function owner(): BelongsTo
     {
