@@ -13,6 +13,8 @@ class Edit extends Component
     public Form $form;
     public Supplier $supplier;
 
+    public bool $assessmentFormOpen = false;
+
     public function update()
     {
         $this->form->update($this->supplier);
@@ -31,5 +33,10 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.supplier.edit');
+    }
+
+    public function toggleAssessmentFormOpen()
+    {
+        $this->assessmentFormOpen = !$this->assessmentFormOpen;
     }
 }
