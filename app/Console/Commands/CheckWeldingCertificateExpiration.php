@@ -64,8 +64,9 @@ class CheckWeldingCertificateExpiration extends Command
                             'data->type',
                             'welding_operator_certificate'
                         );
-                    })
-                    ->get();
+                    });
+                })
+                ->get();
 
             $this->info('Welding Certificates: ' . $weldingCertificates->count());
 
