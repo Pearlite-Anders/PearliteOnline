@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
-use App\Models\Supplier;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
@@ -26,7 +26,7 @@ class CompanyTasks extends Component
         return view('livewire.dashboard.placeholder', compact('header'));
     }
 
-    protected function tasks()
+    protected function tasks(): Collection
     {
         $tasks = [];
         foreach($this->filters->modules as $module) {
@@ -36,16 +36,16 @@ class CompanyTasks extends Component
         return collect($tasks);
     }
 
-    protected function supplier()
+    protected function supplier(): Collection
     {
         $user = \Auth::user();
-        $query = $user->currentCompany->suppliers()->whereNull("responsible_user_id");
+        $query = $user->currentCompany->suppliers()->where("responsible_user_id", '!=', $user->id);
         $query = $this->filters->apply($query, Module::Supplier);
 
         return $query->get();
     }
 
-    protected function welding_certificate()
+    protected function welding_certificate(): Collection
     {
         $user = \Auth::user();
         $query = $user->currentCompany->weldingCertificates();
@@ -54,7 +54,7 @@ class CompanyTasks extends Component
         return $query->get();
     }
 
-    protected function machine_maintenance()
+    protected function machine_maintenance(): Collection
     {
         $user = \Auth::user();
         $query = $user->currentCompany->machineMaintenances();
