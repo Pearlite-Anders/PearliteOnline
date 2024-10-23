@@ -9,20 +9,11 @@ use Spatie\LaravelData\Optional;
 
 trait Shared
 {
-    public function updated($property)
+
+    public function createReport()
     {
-        if($property == 'form.data.last_maintenance_date' || $property == 'form.data.maintenance_interval') {
-            if(!$this->form->data->maintenance_interval || !$this->form->data->last_maintenance_date) {
-                return;
-            }
+        $this->form->createReport();
 
-            if(preg_match('/-/', $this->form->data->last_maintenance_date)) {
-                $newDate = Carbon::createFromFormat('Y-m-d', $this->form->data->last_maintenance_date);
-            } else {
-                $newDate = Carbon::createFromFormat('Y.m.d', $this->form->data->last_maintenance_date);
-            }
-
-            $this->form->data->next_maintenance_date = $newDate->addMonths((int)$this->form->data->maintenance_interval)->format('Y.m.d');
-        }
+        return redirect()->route('machine-maintenance.edit', $this->form->machine_maintenance_id)->with('flash.banner', __('Maintenance created.'));
     }
 }

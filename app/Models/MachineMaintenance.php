@@ -74,11 +74,6 @@ class MachineMaintenance extends Model
             ],
             'filter' => 'search'
         ],
-        'last_maintenance_date' => [
-            'type' => 'date',
-            'label' => 'Last Maintenance Date',
-            'filter' => 'date'
-        ],
         'next_maintenance_date' => [
             'type' => 'date',
             'label' => 'Next Maintenance Date',
@@ -100,6 +95,12 @@ class MachineMaintenance extends Model
     public function loadAll()
     {
         return $this;
+    }
+
+
+    public function reports()
+    {
+        return $this->hasMany(MachineMaintenanceMaintenance::class)->orderBy('data->maintenance_date', 'asc');
     }
 
     public function responsible_user(): BelongsTo

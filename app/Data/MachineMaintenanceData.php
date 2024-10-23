@@ -17,10 +17,10 @@ class MachineMaintenanceData extends Data implements Wireable
         public ?string $serial_number,
         public ?string $internal_number,
         public ?string $maintenance_interval,
-        public ?string $last_maintenance_date,
+        public ?string $lastest_maintenance_date,
         public ?string $next_maintenance_date,
         public ?string $status,
-        public ?string $brand
+        public ?string $brand,
     ) {
     }
 }
