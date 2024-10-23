@@ -38,32 +38,33 @@ class CheckWeldingCertificateExpiration extends Command
 
             $weldingCertificates = WeldingCertificate::query()
                 ->whereCompanyId($company->id)
-                ->where(function ($query) use ($notification_before_expiration) {
-                    $query->where(
-                        'data->date_examination',
-                        now()
-                            ->addDays($notification_before_expiration)
-                            ->subYears(3)
-                            ->format('Y.m.d')
-                    );
-                    $query->where(
-                        'data->type',
-                        'welding_certificate'
-                    );
-                })
-                ->orWhere(function($query) use ($notification_before_expiration) {
-                    $query->where(
-                        'data->date_examination',
-                        now()
-                            ->addDays($notification_before_expiration)
-                            ->subYears(6)
-                            ->format('Y.m.d')
-                    );
-                    $query->where(
-                        'data->type',
-                        'welding_operator_certificate'
-                    );
-                })
+                ->where(function ($dates) use ($notification_before_expiration) {
+                    $dates->where(function ($query) use ($notification_before_expiration) {
+                        $query->where(
+                            'data->date_examination',
+                            now()
+                                ->addDays($notification_before_expiration)
+                                ->subYears(3)
+                                ->format('Y.m.d')
+                        );
+                        $query->where(
+                            'data->type',
+                            'welding_certificate'
+                        );
+                    })
+                    ->orWhere(function($query) use ($notification_before_expiration) {
+                        $query->where(
+                            'data->date_examination',
+                            now()
+                                ->addDays($notification_before_expiration)
+                                ->subYears(6)
+                                ->format('Y.m.d')
+                        );
+                        $query->where(
+                            'data->type',
+                            'welding_operator_certificate'
+                        );
+                    });
                 ->get();
 
             $this->info('Welding Certificates: ' . $weldingCertificates->count());

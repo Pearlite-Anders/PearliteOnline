@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Trait\HasFilter;
 use App\Models\Trait\HasCompany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -52,6 +53,14 @@ class MachineMaintenance extends Model
             'label' => 'Internal Number',
             'filter' => 'search'
         ],
+        'responsible_user_id' => [
+            'type' => 'relationship',
+            'relationship' => 'responsible_user',
+            'class' => User::class,
+            'label' => 'Responsible user',
+            'placeholder' => 'Choose user',
+            'filter' => 'relationship'
+        ],
         'maintenance_interval' => [
             'type' => 'radios',
             'label' => 'Maintenance Interval',
@@ -88,8 +97,14 @@ class MachineMaintenance extends Model
         return $this;
     }
 
+
     public function reports()
     {
         return $this->hasMany(MachineMaintenanceMaintenance::class)->orderBy('data->maintenance_date', 'asc');
+    }
+
+    public function responsible_user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -35,6 +35,10 @@ class User extends Authenticatable
         'suppliers' => [
             'class' => Supplier::class,
             'foreign_key' => 'responsible_user_id'
+        ],
+        'ownedDocuments' => [
+            'class' => Document::class,
+            'foreign_key' => 'owner_id'
         ]
     ];
 
@@ -117,11 +121,6 @@ class User extends Authenticatable
     public function documentsWithPermissons()
     {
         return $this->belongsToMany(Document::class)->withPivot('view', 'edit')->withTimestamps();
-    }
-
-    public function ownedDocuments()
-    {
-        return $this->hasMany(Document::class, 'owner_id');
     }
 
     public function documents()

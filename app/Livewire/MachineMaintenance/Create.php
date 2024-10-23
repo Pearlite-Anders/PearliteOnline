@@ -17,7 +17,7 @@ class Create extends Component
         // $this->form->validate();
         $this->form->create();
 
-        return redirect()->route('machine-maintenance.index')->with('flash.banner', __('WPQR created.'));
+        return redirect()->route('machine-maintenance.index')->with('flash.banner', __('Maintenance created.'));
     }
 
     public function mount()
