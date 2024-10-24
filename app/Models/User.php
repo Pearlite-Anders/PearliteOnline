@@ -39,7 +39,11 @@ class User extends Authenticatable
         'ownedDocuments' => [
             'class' => Document::class,
             'foreign_key' => 'owner_id'
-        ]
+        ],
+        'machineMaintenances' => [
+            'class' => MachineMaintenance::class,
+            'foreign_key' => 'responsible_user_id'
+        ],
     ];
 
     /**

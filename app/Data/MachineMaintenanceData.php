@@ -20,7 +20,7 @@ class MachineMaintenanceData extends Data implements Wireable
         public ?string $lastest_maintenance_date,
         public ?string $next_maintenance_date,
         public ?string $status,
-        public ?string $brand
+        public ?string $brand,
     ) {
     }
 }

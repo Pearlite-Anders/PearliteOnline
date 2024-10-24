@@ -19,12 +19,9 @@ class Form extends LivewireForm
     public $new_maintenance_file;
     public $responsible_user_id;
 
-
-
     public function setFields(MachineMaintenance $machineMaintenance): void
     {
         $this->data = MachineMaintenanceData::from($machineMaintenance->data);
-
         $this->machine_maintenance_id = $machineMaintenance->id;
         $this->responsible_user_id = $machineMaintenance->responsible_user_id;
     }

@@ -52,7 +52,7 @@ class CheckWeldingCertificateExpiration extends Command
                             'welding_certificate'
                         );
                     })
-                    ->orWhere(function($query) use ($notification_before_expiration) {
+                    ->orWhere(function ($query) use ($notification_before_expiration) {
                         $query->where(
                             'data->date_examination',
                             now()
