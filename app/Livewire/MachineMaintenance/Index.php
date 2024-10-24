@@ -19,13 +19,17 @@ class Index extends Component
     use WithTable, WithPerPagePagination, WithSorting, WithColumns, WithFilters, WithDelete, WithSearch, WithClickableRow;
 
     public $model = MachineMaintenance::class;
+    public $company;
+
+    public function mount()
+    {
+        $this->company = \Auth::user()->currentCompany;
+    }
 
     public function render()
     {
         $this->authorize('viewAny', $this->model);
 
-        return view('livewire.machine-maintenance.index')->with([
-            'machineMaintenances' => $this->rows
-        ]);
+        return view('livewire.machine-maintenance.index');
     }
 }
