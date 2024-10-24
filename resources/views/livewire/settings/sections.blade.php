@@ -46,6 +46,14 @@
                     </x-nav-link>
                 </l>
             @endcan
+            @can('viewAny', App\Models\RoutineInspection::class)
+                <li class="mt-2 mb-0 text-left list-outside">
+                    <x-nav-link wire:click="setSection('routine-inspection')" :active="$section == 'routine-inspection'">
+                        <x-icon.calendar-date-range class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                        {{ __('Routine inspection') }}
+                    </x-nav-link>
+                </l>
+            @endcan
             <li class="mt-2 mb-0 text-left list-outside">
                 <x-nav-link wire:click="setSection('multiple-choice')" :active="$section == 'multiple-choice'">
                     <x-icon.adjustments-horizontal class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />

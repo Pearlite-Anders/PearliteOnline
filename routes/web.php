@@ -102,6 +102,10 @@ Route::middleware([
     Route::get('/documents/{document}/edit', \App\Livewire\Document\Edit::class)->name('documents.edit');
     Route::get('/documents/{document}/revisions', \App\Livewire\DocumentRevision\Index::class)->name('document_revisions.index');
 
+    Route::get('/routine-inspection', \App\Livewire\RoutineInspection\Index::class)->name('routine-inspection.index');
+    Route::get('/routine-inspection/create', \App\Livewire\RoutineInspection\Create::class)->name('routine-inspection.create');
+    Route::get('/routine-inspection/{routineInspection}/edit', \App\Livewire\RoutineInspection\Edit::class)->name('routine-inspection.edit');
+
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;
         auth()->user()->save();

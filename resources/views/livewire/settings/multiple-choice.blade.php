@@ -95,6 +95,7 @@
             'type_of_joints' => __('Type of joint'),
             'type_of_joint_preparations' => __('Type of joint preparation'),
             'layers' => __('Layers'),
+            'parent_materials' => __('Parent materials'),
         ])
 
         @foreach($arraySections as $arraySectionKey => $arraySectionName)

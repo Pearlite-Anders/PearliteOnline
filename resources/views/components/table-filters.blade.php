@@ -80,7 +80,7 @@
                 @if(optional($filter_column)->filter == 'radios' || optional($filter_column)->filter == 'select')
                     @php($options = is_array($filter_column->options) ? $filter_column->options : App\Models\Setting::get($filter_column->options))
 
-                    @if(optional($filter_column)->filter == 'radios' || count($options) <= 11)
+                    @if(optional($filter_column)->filter == 'radios' || count($options) <= ($filter_column?->filter_options['min_options_for_radio'] ?? 11))
                         <div class="relative">
                             <x-label :for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
                             <div class="flex flex-wrap -mx-2">

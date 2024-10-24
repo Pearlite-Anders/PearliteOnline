@@ -249,6 +249,8 @@ class Setting extends Model
             ],
             'time_registration_tasks' => [],
             'signature_group' => [],
+            'parent_materials' => [],
+            'routine_inspection_welding_equipment' => []
         ]);
     }
 
