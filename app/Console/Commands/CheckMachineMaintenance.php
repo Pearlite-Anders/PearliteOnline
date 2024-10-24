@@ -31,15 +31,16 @@ class CheckMachineMaintenance extends Command
     public function handle()
     {
         $this->info('Check if time for Maintenance');
-        $maintenances = MachineMaintenance::whereNotNull('data->last_maintenance_date')
+        $maintenances = MachineMaintenance::whereNotNull('data->lastest_maintenance_date')
             ->whereNotNull('data->maintenance_interval')
+            ->whereNotNull('responsible_user_id')
             ->whereRaw(
-                "CURDATE() > DATE_ADD(STR_TO_DATE(JSON_UNQUOTE(data->'$.last_maintenance_date'), '%Y.%m.%d'), INTERVAL JSON_UNQUOTE(data->'$.maintenance_interval') MONTH)"
+                "CURDATE() > DATE_ADD(STR_TO_DATE(JSON_UNQUOTE(data->'$.lastest_maintenance_date'), '%Y.%m.%d'), INTERVAL JSON_UNQUOTE(data->'$.maintenance_interval') MONTH)"
             )
             ->get();
 
         $users = $maintenances->groupBy(function($maintenance) {
-            return $maintenance->data['serial_number']; // TODO: This should be the the responsible person
+            return $maintenance->responsible_user_id;
         });
 
         if ($users->count() > 0) {
