@@ -19,7 +19,7 @@ class RoutineInspectionData extends Data implements Wireable
         public ?string $inspected_length,
         public ?string $inspected_scope,
         public ?array $parent_material,
-        public ?string $nail_type,
+        public ?string $stitch_type,
         public ?array $welding_equipment,
     ) {
     }

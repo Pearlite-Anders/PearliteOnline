@@ -89,10 +89,10 @@ class RoutineInspection extends Model
             'placeholder' => 'S235JR',
             'filter' => 'select'
         ],
-        'nail_type' => [
+        'stitch_type' => [
             'type' => 'select',
             'multiple' => false,
-            'label' => 'Nail type',
+            'label' => 'Stitch type',
             'options' => [
                 'Tværgående stumpsømme med delvis indtrængning i stumpsamlinger' => 'Tværgående stumpsømme med delvis indtrængning i stumpsamlinger',
                 'Tværgående stumpsømme med delvis indtrængning i krydssamlinger' => 'Tværgående stumpsømme med delvis indtrængning i krydssamlinger',
