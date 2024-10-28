@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class RoutineInspectionPolicyxtends BasePolicy
+class RoutineInspectionPolicy extends BasePolicy
 {
     public $type = 'routine-inspection';
 }

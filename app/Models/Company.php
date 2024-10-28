@@ -274,6 +274,14 @@ class Company extends Model
                     'edit' => __('Edit'),
                 ]
             ],
+            'routine-inspection' => (object)[
+                'name' => __('routine inspections'),
+                'class' => \App\Models\RoutineInspection::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
             'company_task' => (object)[
                 'name' => __('Company tasks'),
                 'permissions' => [

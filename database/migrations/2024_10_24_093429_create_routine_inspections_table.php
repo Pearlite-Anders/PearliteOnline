@@ -22,8 +22,8 @@ return new class extends Migration
             $table->timestamps();
 
             try {
-                Permission::create(['name' => 'routine_inspections.view']);
-                Permission::create(['name' => 'routine_inspections.edit']);
+                Permission::create(['name' => 'routine-inspection.view']);
+                Permission::create(['name' => 'routine-inspection.edit']);
             } catch (Spatie\Permission\Exceptions\PermissionAlreadyExists $e) {
                 // Permission allready exsists, so do nothing
             }
