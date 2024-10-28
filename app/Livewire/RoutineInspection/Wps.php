@@ -10,6 +10,11 @@ class Wps extends Component
     public function render()
     {
         $wpss = RoutineInspection::wpss()->get();
-        return view('livewire.routine-inspection.wps')->with('wpss', $wpss);
+        return view('livewire.routine-inspection.wps.page')->with('wpss', $wpss);
+    }
+
+    public function placeholder()
+    {
+        return view('livewire.routine-inspection.wps.placeholder');
     }
 }
