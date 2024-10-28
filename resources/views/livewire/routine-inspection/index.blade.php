@@ -114,6 +114,8 @@
             @endif
         </div>
     </div>
+
+    <livewire:routine-inspection.wps />
 </div>
 
 <script>

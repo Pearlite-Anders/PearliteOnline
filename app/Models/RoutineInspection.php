@@ -7,6 +7,7 @@ use App\Models\Trait\HasFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class RoutineInspection extends Model
 {
@@ -138,5 +139,12 @@ class RoutineInspection extends Model
     public function welder(): BelongsTo
     {
         return $this->belongsTo(Welder::class);
+    }
+
+    public static function wpss()
+    {
+        return Wps::join('routine_inspections', 'wps.id', '=', 'routine_inspections.wps_id')
+            ->select(['wps.id', 'wps.data', DB::raw('SUM(routine_inspections.data->>"$.weld_length") as total_length'), DB::raw('SUM(routine_inspections.data->>"$.inspected_length") as inspected_length')])
+            ->groupBy('wps.id');
     }
 }

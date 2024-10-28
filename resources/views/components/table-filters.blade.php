@@ -101,7 +101,7 @@
                         <div class="relative">
                             <x-label :for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
                             <select
-                                :id="$filter->key"
+                                id="{{ $filter->key }}"
                                 wire:model.live="filters.{{ $filter->key }}"
                                 class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                             >
