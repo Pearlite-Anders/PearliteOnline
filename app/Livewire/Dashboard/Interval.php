@@ -13,7 +13,7 @@ enum Interval: string
     public function label()
     {
         return match ($this) {
-            static::Today =>  __('Today'),
+            static::Today => __('Today'),
             static::Next_14_Days => __('Next 14 days'),
             static::Next_3_Months => __('Next 3 months'),
         };
