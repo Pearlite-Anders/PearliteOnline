@@ -27,10 +27,10 @@
                                 Revision: {{ $revision->created_at->format('Y-m-d H:i') }}
                             </li>
                             <li>
-                                {{ _('Created at') }}: {{ $document->created_at->format('Y-m-d') }}
+                                {{ __('Created at') }}: {{ $document->created_at->format('Y-m-d') }}
                             </li>
                             <li>
-                                {{ _('Updated at') }}: {{ $document->updated_at->format('Y-m-d') }}
+                                {{ __('Updated at') }}: {{ $document->updated_at->format('Y-m-d') }}
                             </li>
                         </ul>
                     </div>

@@ -9,7 +9,7 @@
             <div class="flex items-center justify-between py-3">
                 <div class="flex items-center space-x-4">
                     <div class="flex items-center space-x-2">
-                        <span class="text-sm font-medium text-gray-900">{{ _('Due date') }}</span>
+                        <span class="text-sm font-medium text-gray-900">{{ __('Due date') }}</span>
                     </div>
                     <div class="flex items-center space-x-2">
                         @foreach(\App\Livewire\Dashboard\Interval::cases() as $interval)
@@ -29,7 +29,7 @@
             <div class="flex items-center justify-between py-3">
                 <div class="flex items-center space-x-4">
                     <div class="flex items-center space-x-2">
-                        <span class="text-sm font-medium text-gray-900">{{ _('Modules') }}</span>
+                        <span class="text-sm font-medium text-gray-900">{{ __('Modules') }}</span>
                     </div>
                     <div class="flex items-center space-x-2">
                         @foreach(\App\Livewire\Dashboard\Module::cases() as $module)
@@ -48,12 +48,12 @@
             </div>
         </div>
         <div class="mt-8">
-            <livewire:dashboard.my-tasks :$filters :header="_('My tasks')" lazy />
+            <livewire:dashboard.my-tasks :$filters :header="__('My tasks')" lazy />
         </div>
 
         @can('company_task.view')
             <div class="mt-8">
-                <livewire:dashboard.company-tasks :$filters :header="_('Company tasks')" lazy />
+                <livewire:dashboard.company-tasks :$filters :header="__('Company tasks')" lazy />
             </div>
         @endcan
     </div>

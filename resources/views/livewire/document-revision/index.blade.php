@@ -36,7 +36,7 @@
 
                             @if($revision->id == $document->currentRevision->id)
                                 <x-table.cell class="text-left">
-                                    <span class="text-gray-600 px-4 py-2">{{ _('Current') }}</span>
+                                    <span class="text-gray-600 px-4 py-2">{{ __('Current') }}</span>
                                 </x-table.cell>
                             @else
                                 <x-table.cell class="text-right">
@@ -48,7 +48,7 @@
                                                 target="_blank"
                                             >
                                                 <span class="text-gray-800 leading-none">
-                                                    {{ _('Preview') }}
+                                                    {{ __('Preview') }}
                                                 </span>
                                             </x-button.link>
                                         @endcan
@@ -73,7 +73,7 @@
                                                         class="bg-transparent hover:bg-gray-100 hover:text-gray-900"
                                                     >
                                                         <span class="text-gray-800 leading-none">
-                                                            {{ _('Restore') }}
+                                                            {{ __('Restore') }}
                                                         </span>
                                                     </x-button>
                                                 @endif

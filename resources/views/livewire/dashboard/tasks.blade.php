@@ -1,14 +1,14 @@
 <div>
     <h2 class="truncate text-lg text-gray-900 mb-4">{{ $header }} <span wire:loading.remove>({{ $totalTasks }})</span></h2>
     <div wire:loading>
-        <x-loading>{{ _('Loading tasks...') }}</x-loading>
+        <x-loading>{{ __('Loading tasks...') }}</x-loading>
     </div>
     <div wire:loading.remove>
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 max-w-7xl">
             @if ($tasks->count() > 0 && $totalTasks == 0)
                 <p class="text-sm text-gray-500">
-                    {{ _('You haven’t any open tasks.') }} <br />
-                    {{ _('Good work!, keep it up.') }} {{ _('Or maybe you should check your filters') }}
+                    {{ __('You haven’t any open tasks.') }} <br />
+                    {{ __('Good work!, keep it up.') }} {{ __('Or maybe you should check your filters') }}
                 </p>
             @else
                 @forelse($tasks as $module => $moduleTasks)
@@ -29,7 +29,7 @@
                     @endforeach
                 @empty
                     <p class="text-sm text-gray-500">
-                        {{ _('You haven’t selected any modules.') }}
+                        {{ __('You haven’t selected any modules.') }}
                     </p>
                 @endforelse
             @endif

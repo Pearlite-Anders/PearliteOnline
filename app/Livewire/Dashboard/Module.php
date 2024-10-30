@@ -13,9 +13,9 @@ enum Module: string
     public function label()
     {
         return match ($this) {
-            static::Supplier => _('Supplier'),
-            static::WeldingCertificate => _('Welding Certificate'),
-            static::MachineMaintenance => _('Maintenance'),
+            static::Supplier => __('Supplier'),
+            static::WeldingCertificate => __('Welding Certificate'),
+            static::MachineMaintenance => __('Maintenance'),
         };
     }
 }
