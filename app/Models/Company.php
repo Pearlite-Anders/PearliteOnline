@@ -275,7 +275,7 @@ class Company extends Model
                 ]
             ],
             'routine-inspection' => (object)[
-                'name' => __('routine inspections'),
+                'name' => __('Routine inspections'),
                 'class' => \App\Models\RoutineInspection::class,
                 'permissions' => [
                     'view' => __('View'),
