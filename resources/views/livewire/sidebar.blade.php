@@ -55,11 +55,22 @@
                             </li>
                         @endcan
 
+                        @can('viewAny', App\Models\RoutineInspection::class)
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('routine-inspection.index') }}" :active="request()->routeIs('routine-inspection.*')">
+                                    <x-icon.calendar-date-range class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Routine inspection') }}
+                                </x-nav-link>
+                            </li>
+                        @endcan
+
                         @if(
                             auth()->user()->can('viewAny', App\Models\WeldingCertificate::class) ||
                             auth()->user()->can('viewAny', App\Models\Wps::class) ||
                             auth()->user()->can('viewAny', App\Models\Wpqr::class) ||
-                            auth()->user()->can('viewAny', App\Models\WeldingCoordination::class)
+                            auth()->user()->can('viewAny', App\Models\WeldingCoordination::class) ||
+                            auth()->user()->can('viewAny', App\Models\Document::class) ||
+                            auth()->user()->can('viewAny', App\Models\RoutineInspection::class)
                         )
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <hr class="border-t border-gray-200">
@@ -187,16 +198,6 @@
                         @endcan
 
                     </ul>
-                    @can('viewAny', App\Models\RoutineInspection::class)
-                        <ul class="px-0 pt-0 pb-2 m-0 text-black list-none border-t">
-                            <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('routine-inspection.index') }}" :active="request()->routeIs('routine-inspection.*')">
-                                    <x-icon.calendar-date-range class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('Routine inspection') }}
-                                </x-nav-link>
-                            </li>
-                        </ul>
-                     @endcan
                 @endif
 
                 @if(auth()->user()->isAdmin() || auth()->user()->isPartner())
@@ -223,7 +224,7 @@
         </div>
     </div>
 
-    <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 leading-6 text-black bg-white lg:flex border-r">
+    <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 leading-6 text-black bg-white border-r lg:flex">
         @if(Auth::user()->isAdmin() || Auth::user()->isPartner())
             <a
                 href="{{ route('companies.index') }}"
