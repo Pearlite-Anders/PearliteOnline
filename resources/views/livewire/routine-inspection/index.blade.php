@@ -32,6 +32,10 @@
     </x-index-header>
 
     <livewire:routine-inspection.wps lazy />
+    <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-6 mx-6 my-5">
+        <livewire:routine-inspection.welder />
+        <livewire:routine-inspection.welding-equipment />
+    </div>
     <livewire:routine-inspection.table :columns="$columns" :filters="$filters" :filter_columns="$filter_columns" :search="$search" lazy />
 </div>
 

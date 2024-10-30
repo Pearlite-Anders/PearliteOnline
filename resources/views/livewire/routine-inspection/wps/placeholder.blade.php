@@ -1,5 +1,5 @@
 <div>
-    <div class="grid grid-cols-1 gap-6 mx-6 my-5 sm:grid-cols-3 lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-6 mx-6 my-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         @foreach([[], [], [], []] as $dummy)
             <div class="grid grid-cols-2 rounded-lg bg-white p-8">
                 <div>
@@ -45,7 +45,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         @endforeach
     </div>

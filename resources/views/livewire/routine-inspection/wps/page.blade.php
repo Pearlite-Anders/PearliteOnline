@@ -1,5 +1,5 @@
 <div>
-    <div class="grid grid-cols-1 gap-6 mx-6 my-5 sm:grid-cols-3 lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-6 mx-6 my-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         @foreach($wpss as $wps)
             <div class="grid grid-cols-2 rounded-lg bg-white p-8">
                 <div>
@@ -55,7 +55,7 @@
                 </div>
                 <div
                     x-data="routine_inspection_wps_chart(['{{ _('Inspected') }}', '{{ _('Not Inspected') }}'], [{{ $wps->total_length == 0 ? 1 : $wps->total_length  }}, {{ $wps->total_length - $wps->inspected_length < 0 ? 0 : $wps->total_length - $wps->inspected_length }} ])"
-                    class="w-full"
+                    class="w-full flex justify-end align-middle items-center max-h-48"
                 >
                     <canvas x-ref="canvas"></canvas>
                 </div>

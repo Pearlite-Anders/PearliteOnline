@@ -144,7 +144,34 @@ class RoutineInspection extends Model
     public static function wpss()
     {
         return Wps::join('routine_inspections', 'wps.id', '=', 'routine_inspections.wps_id')
-            ->select(['wps.id', 'wps.data', DB::raw('SUM(routine_inspections.data->>"$.weld_length") as total_length'), DB::raw('SUM(routine_inspections.data->>"$.inspected_length") as inspected_length')])
+            ->select([
+                'wps.id',
+                'wps.data',
+                DB::raw('SUM(routine_inspections.data->>"$.weld_length") as total_length'),
+                DB::raw('SUM(routine_inspections.data->>"$.inspected_length") as inspected_length')
+            ])
             ->groupBy('wps.id');
+    }
+
+    public static function welders()
+    {
+        return Welder::join('routine_inspections', 'welders.id', '=', 'routine_inspections.welder_id')
+            ->select([
+                'welders.id',
+                'welders.data',
+                DB::raw("MAX(JSON_UNQUOTE(JSON_EXTRACT(routine_inspections.data, '$.date'))) AS latest_inspect_date")
+            ])
+            ->groupBy('welders.id');
+    }
+
+    public static function weldingEquipment()
+    {
+        return DB::table(DB::raw("routine_inspections, JSON_TABLE(routine_inspections.data, '$.welding_equipment[*]' COLUMNS (value VARCHAR(255) PATH '$')) AS equipment"))
+            ->select([
+                DB::raw('equipment.value AS id'),
+                DB::raw("MAX(JSON_UNQUOTE(JSON_EXTRACT(routine_inspections.data, '$.date'))) AS latest_inspect_date")
+            ])
+            ->groupBy('equipment.value')
+            ->orderBy('equipment.value');
     }
 }
