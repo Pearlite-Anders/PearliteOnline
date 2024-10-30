@@ -25,6 +25,9 @@ import '@dmuy/timepicker/dist/mdtimepicker.css';
 import mdtimepicker from '@dmuy/timepicker';
 window.mdtimepicker = mdtimepicker;
 
+// charts
+import './charts.js';
+
 import ui from '@alpinejs/ui';
 import focus from '@alpinejs/focus';
 Alpine.plugin(ui);

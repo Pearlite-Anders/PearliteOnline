@@ -153,6 +153,11 @@ class Company extends Model
         return $query->where('user_id', auth()->user()->id);
     }
 
+    public function routineInspections()
+    {
+        return $this->hasMany(RoutineInspection::class);
+    }
+
 
     public static function get_choices()
     {
@@ -264,6 +269,14 @@ class Company extends Model
             'document' => (object)[
                 'name' => __('Documents'),
                 'class' => \App\Models\Document::class,
+                'permissions' => [
+                    'view' => __('View'),
+                    'edit' => __('Edit'),
+                ]
+            ],
+            'routine-inspection' => (object)[
+                'name' => __('routine inspections'),
+                'class' => \App\Models\RoutineInspection::class,
                 'permissions' => [
                     'view' => __('View'),
                     'edit' => __('Edit'),

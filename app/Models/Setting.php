@@ -248,6 +248,8 @@ class Setting extends Model
                 'placeholder' => 'Placeholder',
             ],
             'signature_group' => [],
+            'parent_materials' => [],
+            'routine_inspection_welding_equipment' => []
         ]);
     }
 

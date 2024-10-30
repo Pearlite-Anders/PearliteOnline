@@ -8,6 +8,7 @@ use App\Models\Trait\HasCompany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Wps extends Model
 {
@@ -227,5 +228,10 @@ class Wps extends Model
     public function loadAll()
     {
         return $this->load(['company', 'wpqr']);
+    }
+
+    public function routineInspections(): HasMany
+    {
+        return $this->hasMany(RoutineInspection::class);
     }
 }

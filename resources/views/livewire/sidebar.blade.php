@@ -185,7 +185,18 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+
                     </ul>
+                    @can('viewAny', App\Models\RoutineInspection::class)
+                        <ul class="px-0 pt-0 pb-2 m-0 text-black list-none border-t">
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('routine-inspection.index') }}" :active="request()->routeIs('routine-inspection.*')">
+                                    <x-icon.calendar-date-range class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Routine inspection') }}
+                                </x-nav-link>
+                            </li>
+                        </ul>
+                     @endcan
                 @endif
 
                 @if(auth()->user()->isAdmin() || auth()->user()->isPartner())

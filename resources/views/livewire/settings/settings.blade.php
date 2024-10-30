@@ -64,6 +64,15 @@
                         </li>
                         <li>
                             <button
+                                @if($section == 'routine-inspection')
+                                    aria-current="page"
+                                    class="text-cyan-500"
+                                @endif
+                                wire:click="setSection('routine-inspection')"
+                            >{{ __('Routine inspection') }}</button>
+                        </li>
+                        <li>
+                            <button
                                 @if($section == 'multiple-choice')
                                     aria-current="page"
                                     class="text-cyan-500"
@@ -85,6 +94,7 @@
             @include('livewire.settings.ce')
             @include('livewire.settings.supplier')
             @include('livewire.settings.multiple-choice')
+            @include('livewire.settings.routine-inspection')
 
             <div class="fixed bottom-0 bg-gray-100 w-full">
                 <div class="flex justify-start">
