@@ -1,6 +1,6 @@
 <div>
     <div class="rounded-lg bg-white py-8 h-full">
-        <h2 class="font-medium text-gray-900 truncate text-md px-8 mb-4">{{ _('Welders') }}</h2>
+        <h2 class="font-medium text-gray-900 truncate text-md px-8 mb-4">{{ __('Welders') }}</h2>
 
         <ul role="list" class="divide-y divide-gray-100">
             @foreach ($welders as $welder)

@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div
-                    x-data="routine_inspection_wps_chart(['{{ _('Inspected') }}', '{{ _('Not Inspected') }}'], [{{ $wps->total_length == 0 ? 1 : $wps->total_length  }}, {{ $wps->total_length - $wps->inspected_length < 0 ? 0 : $wps->total_length - $wps->inspected_length }} ])"
+                    x-data="routine_inspection_wps_chart(['{{ __('Inspected') }}', '{{ __('Not Inspected') }}'], [{{ $wps->total_length == 0 ? 1 : $wps->total_length  }}, {{ $wps->total_length - $wps->inspected_length < 0 ? 0 : $wps->total_length - $wps->inspected_length }} ])"
                     class="w-full flex justify-end align-middle items-center max-h-48"
                 >
                     <canvas x-ref="canvas"></canvas>
