@@ -124,5 +124,8 @@ Route::middleware([
     })->name('locale');
 
 
+    Route::name('backoffice.')->prefix('backoffice')->middleware('can:access-backoffice')->group(function () {
+        Route::get('/', \App\Livewire\Backoffice\Dashboard::class)->name('dashboard');
+    });
 
 });

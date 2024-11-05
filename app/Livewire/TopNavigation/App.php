@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\TopNavigation;
 
 use Livewire\Component;
 
-class TopNavigation extends Component
+class App extends Component
 {
     /**
      * The component's listeners.
@@ -17,6 +17,6 @@ class TopNavigation extends Component
 
     public function render()
     {
-        return view('livewire.top-navigation');
+        return view('livewire.top-navigation.app');
     }
 }

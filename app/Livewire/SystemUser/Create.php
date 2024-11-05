@@ -47,7 +47,7 @@ class Create extends Component
             $permssions[] = 'time_registration.view';
         }
 
-        $this->user->syncPermissions($permssions);
+        $user->syncPermissions($permssions);
 
         return redirect()->route('system-users.index')->with('flash.banner', 'User created.');
     }
