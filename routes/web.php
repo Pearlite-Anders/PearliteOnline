@@ -110,7 +110,7 @@ Route::middleware([
             return redirect(request('redirect'));
         }
 
-        return redirect()->route('companies.index');
+        return redirect()->back();
     })->name('switch-company');
 
     Route::get('lang/{locale}', function ($locale) {
