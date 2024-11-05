@@ -12,9 +12,41 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <!-- Show users current company name as pill -->
-                @if(auth()->user()->currentCompany)
-                    <span class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">{{ auth()->user()->currentCompany->data['name'] }}</span>
+                @if(auth()->user()->isPartner() || auth()->user()->isAdmin())
+                    <!-- Show users current company and a dropdown for them to switch -->
+                    <div class="relative ml-3">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md">
+                                    <button type="button" class="inline-flex items-center rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                                        @if(auth()->user()->currentCompany)
+                                            {{ auth()->user()->currentCompany->data['name'] }}
+                                        @else
+                                            {{ __('Select company') }}
+                                        @endif
+
+                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            </x-slot>
+                            <x-slot name="content">
+                                @foreach(auth()->user()->companies as $company)
+                                    <x-dropdown-link href="{{ route('switch-company', $company) }}">
+                                        {{ $company->data['name'] }}
+                                    </x-dropdown-link>
+                                @endforeach
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                @else
+                    <!-- Show users current company name as pill -->
+                    @if(auth()->user()->currentCompany)
+                        <span class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                            {{ auth()->user()->currentCompany->data['name'] }}
+                        </span>
+                    @endif
                 @endif
 
                 <!-- Settings Dropdown -->
