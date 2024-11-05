@@ -54,6 +54,14 @@
                                 </x-dropdown-link>
                             @endif
 
+                            @can('access-backoffice')
+                                <div class="border-t border-gray-200"></div>
+
+                                <x-dropdown-link href="{{ route('backoffice.dashboard') }}">
+                                    {{ __('Backoffice') }}
+                                </x-dropdown-link>
+                            @endcan
+
                             <div class="border-t border-gray-200"></div>
 
                             <!-- Authentication -->
