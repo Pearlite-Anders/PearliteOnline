@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
         $this->userNotifications($schedule);
         $this->companyNotifications($schedule);
 
-        $schedule->command('app:send-user-summary-notifications')->everyMinute()->timezone('Europe/Copenhagen');
+        $schedule->command('app:send-user-summary-notifications')->everyThirtyMinutes()->timezone('Europe/Copenhagen');
         $schedule->command('app:send-welding-notifications')->daily()->at('09:30')->timezone('Europe/Copenhagen');
 
         $schedule->command('backup:run')->daily()->at('01:30');
