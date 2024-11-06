@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Data\InternalOrderData;
-use App\Livewire\InternalOrder\Form as InternalOrderForm;
+use App\Livewire\Backoffice\InternalOrder\Form as InternalOrderForm;
 
 use Livewire\Component;
 use Illuminate\Support\Str;
