@@ -28,21 +28,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', App\Livewire\Dashboard\Page::class)->name('dashboard');
-    Route::get('/companies', \App\Livewire\Company\Index::class)->name('companies.index');
-    Route::get('/companies/create', \App\Livewire\Company\Create::class)->name('companies.create');
-    Route::get('/companies/{company}', \App\Livewire\Company\Show::class)->name('companies.show');
-    Route::get('/companies/{company}/edit', \App\Livewire\Company\Edit::class)->name('companies.edit');
-    Route::get('/companies/{company}/contact-person/create', \App\Livewire\ContactPerson\Create::class)->name('contact-person.create');
-    Route::get('/companies/{company}/contact-person/{contactPerson}/edit', \App\Livewire\ContactPerson\Edit::class)->name('contact-person.edit');
 
     Route::get('/users', \App\Livewire\User\Index::class)->name('users.index');
     Route::get('/users/create', \App\Livewire\User\Create::class)->name('users.create');
     Route::get('/users/{user}/edit', \App\Livewire\User\Edit::class)->name('users.edit');
     Route::get('/users/{user}/dependencies', \App\Livewire\User\Dependencies\Page::class)->name('users.dependencies');
-
-    Route::get('/system-users', \App\Livewire\SystemUser\Index::class)->name('system-users.index');
-    Route::get('/system-users/create', \App\Livewire\SystemUser\Create::class)->name('system-users.create');
-    Route::get('/system-users/{user}/edit', \App\Livewire\SystemUser\Edit::class)->name('system-users.edit');
 
     Route::get('/welding-certificate', \App\Livewire\WeldingCertificates\Index::class)->name('welding-certificates.index');
     Route::get('/welding-certificate/create', \App\Livewire\WeldingCertificates\Create::class)->name('welding-certificates.create');
@@ -87,13 +77,7 @@ Route::middleware([
     Route::get('/formulas/z-value', \App\Livewire\Formula\ZValue::class)->name('formulas.z-value');
     Route::get('/formulas/welding-speed', \App\Livewire\Formula\WeldingSpeed::class)->name('formulas.welding-speed');
 
-    Route::get('/time-registration', \App\Livewire\TimeRegistration\Index::class)->name('time-registration.index');
-    Route::get('/time-registration/create', \App\Livewire\TimeRegistration\Create::class)->name('time-registration.create');
-    Route::get('/time-registration/{timeRegistration}/edit', \App\Livewire\TimeRegistration\Edit::class)->name('time-registration.edit');
 
-    Route::get('/internal-order', \App\Livewire\InternalOrder\Index::class)->name('internal-order.index');
-    Route::get('/internal-order/create', \App\Livewire\InternalOrder\Create::class)->name('internal-order.create');
-    Route::get('/internal-order/{internalOrder}/edit', \App\Livewire\InternalOrder\Edit::class)->name('internal-order.edit');
 
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
     Route::get('/documents', \App\Livewire\Document\Index::class)->name('documents.index');
@@ -126,6 +110,25 @@ Route::middleware([
 
     Route::name('backoffice.')->prefix('backoffice')->middleware('can:access-backoffice')->group(function () {
         Route::get('/', \App\Livewire\Backoffice\Dashboard::class)->name('dashboard');
+
+        Route::get('/companies', \App\Livewire\Backoffice\Company\Index::class)->name('companies.index');
+        Route::get('/companies/create', \App\Livewire\Backoffice\Company\Create::class)->name('companies.create');
+        Route::get('/companies/{company}', \App\Livewire\Backoffice\Company\Show::class)->name('companies.show');
+        Route::get('/companies/{company}/edit', \App\Livewire\Backoffice\Company\Edit::class)->name('companies.edit');
+        Route::get('/companies/{company}/contact-person/create', \App\Livewire\Backoffice\ContactPerson\Create::class)->name('contact-person.create');
+        Route::get('/companies/{company}/contact-person/{contactPerson}/edit', \App\Livewire\Backoffice\ContactPerson\Edit::class)->name('contact-person.edit');
+
+        Route::get('/internal-order', \App\Livewire\Backoffice\InternalOrder\Index::class)->name('internal-order.index');
+        Route::get('/internal-order/create', \App\Livewire\Backoffice\InternalOrder\Create::class)->name('internal-order.create');
+        Route::get('/internal-order/{internalOrder}/edit', \App\Livewire\Backoffice\InternalOrder\Edit::class)->name('internal-order.edit');
+
+        Route::get('/system-users', \App\Livewire\Backoffice\SystemUser\Index::class)->name('system-users.index');
+        Route::get('/system-users/create', \App\Livewire\Backoffice\SystemUser\Create::class)->name('system-users.create');
+        Route::get('/system-users/{user}/edit', \App\Livewire\Backoffice\SystemUser\Edit::class)->name('system-users.edit');
+
+        Route::get('/time-registration', \App\Livewire\Backoffice\TimeRegistration\Index::class)->name('time-registration.index');
+        Route::get('/time-registration/create', \App\Livewire\Backoffice\TimeRegistration\Create::class)->name('time-registration.create');
+        Route::get('/time-registration/{timeRegistration}/edit', \App\Livewire\Backoffice\TimeRegistration\Edit::class)->name('time-registration.edit');
     });
 
 });

@@ -34,7 +34,7 @@
                     <ul class="px-0 pt-0 pb-2 m-0 text-black list-none border-t">
                         @can('viewAny', App\Models\TimeRegistration::class)
                             <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('time-registration.index') }}" :active="request()->routeIs('time-registration.*')">
+                                <x-nav-link href="{{ route('backoffice.time-registration.index') }}" :active="request()->routeIs('backoffice.time-registration.*')">
                                     <x-icon.time-registration class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
                                     {{ __('Time registration') }}
                                 </x-nav-link>
@@ -42,7 +42,7 @@
                         @endcan
                         @can('viewAny', App\Models\TimeRegistration::class)
                             <li class="mt-2 mb-0 text-left list-outside">
-                                <x-nav-link href="{{ route('internal-order.index') }}" :active="request()->routeIs('internal-order.*')">
+                                <x-nav-link href="{{ route('backoffice.internal-order.index') }}" :active="request()->routeIs('backoffice.internal-order.*')">
                                     <x-icon.order class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
                                     {{ __('Order') }}
                                 </x-nav-link>
@@ -53,7 +53,7 @@
 
                 <ul class="px-0 pt-0 pb-2 m-0 text-black list-none border-t">
                     <li class="mt-2 mb-0 text-left list-outside">
-                        <x-nav-link href="{{ route('companies.index') }}" :active="request()->routeIs('companies.*')">
+                        <x-nav-link href="{{ route('backoffice.companies.index') }}" :active="request()->routeIs('backoffice.companies.*')">
                             <x-icon.companies class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
                             {{ __('Companies') }}
                         </x-nav-link>
@@ -61,18 +61,12 @@
 
                     @if(Auth::user()->isAdmin())
                         <li class="mt-2 mb-0 text-left list-outside">
-                            <x-nav-link href="{{ route('system-users.index') }}" :active="request()->routeIs('system-users.*')">
+                            <x-nav-link href="{{ route('backoffice.system-users.index') }}" :active="request()->routeIs('backoffice.system-users.*')">
                                 <x-icon.users class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
                                 {{ __('System users') }}
                             </x-nav-link>
                         </li>
                     @endif
-                    <li class="mt-2 mb-0 text-left list-outside">
-                        <x-nav-link href="{{ route('settings') }}" :active="request()->routeIs('settings')">
-                            <x-icon.settings class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                            {{ __('Settings') }}
-                        </x-nav-link>
-                    </li>
                 </ul>
             </div>
         </div>
