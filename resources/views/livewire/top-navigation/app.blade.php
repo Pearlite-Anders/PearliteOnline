@@ -80,6 +80,23 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            @if (Lang::locale() == 'en')
+                                <x-dropdown-link href="{{ route('locale', 'da') }}">
+                                    <div class="flex items-center w-full justify-between">
+                                        {{ __('Switch to Danish') }}
+                                        <x-icon.da class="block w-3 h-3 mr-2 align-middle rounded-full" />
+                                    </div>
+
+                                </x-dropdown-link>
+                            @else
+                                <x-dropdown-link href="{{ route('locale', 'en') }}">
+                                    <div class="flex items-center w-full justify-between">
+                                        {{ __('Switch to English') }}
+                                        <x-icon.en class="block w-3 h-3 mr-2 align-middle rounded-full" />
+                                    </div>
+                                </x-dropdown-link>
+                            @endif
+
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}
