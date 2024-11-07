@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="fixed z-30 w-full bg-blue-400 border-b border-blue-500">
+<nav x-data="{ open: false }" class="fixed z-30 w-full bg-cyan-50 border-b border-cyan-100">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -22,7 +22,7 @@
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-blue-400 border border-transparent rounded-md hover:text-gray-700 focus:outline-none focus:bg-blue-500 active:bg-blue-500">
+                                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-cyan-50 border border-transparent rounded-md hover:text-gray-700 focus:outline-none focus:bg-cyan-100 active:bg-cyan-100">
                                         {{ Auth::user()->name }}
 
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -43,6 +43,23 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            @if (Lang::locale() == 'en')
+                                <x-dropdown-link href="{{ route('locale', 'da') }}">
+                                    <div class="flex items-center w-full justify-between">
+                                        {{ __('Switch to Danish') }}
+                                        <x-icon.da class="block w-3 h-3 mr-2 align-middle rounded-full" />
+                                    </div>
+
+                                </x-dropdown-link>
+                            @else
+                                <x-dropdown-link href="{{ route('locale', 'en') }}">
+                                    <div class="flex items-center w-full justify-between">
+                                        {{ __('Switch to English') }}
+                                        <x-icon.en class="block w-3 h-3 mr-2 align-middle rounded-full" />
+                                    </div>
+                                </x-dropdown-link>
+                            @endif
+
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}
@@ -52,7 +69,7 @@
                             <div class="border-t border-gray-200"></div>
 
                             <x-dropdown-link href="{{ route('dashboard') }}">
-                                {{ __('App') }}
+                                {{ __('Frontend') }}
                             </x-dropdown-link>
 
                             <div class="border-t border-gray-200"></div>

@@ -185,6 +185,19 @@
                                 </x-nav-link>
                             </li>
                         @endcan
+
+                        @if(auth()->user()->currentCompany && auth()->user()->can('viewAny', App\Models\Settings::class))
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <hr class="border-t border-gray-200">
+                            </li>
+                            <li class="mt-2 mb-0 text-left list-outside">
+                                <x-nav-link href="{{ route('settings') }}" :active="request()->routeIs('settings')">
+
+                                    <x-icon.settings class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                    {{ __('Settings') }}
+                                </x-nav-link>
+                            </li>
+                        @endif
                     </ul>
                 @endif
             </div>
@@ -192,48 +205,7 @@
     </div>
 
     <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 leading-6 text-black bg-white lg:flex border-r">
-        @if(auth()->user()->currentCompany && auth()->user()->can('viewAny', App\Models\Settings::class))
-            <a
-                href="{{ route('settings') }}"
-                class="inline-flex justify-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-100 hover:text-gray-900"
-            >
-                <x-icon.settings class="block w-6 h-6 text-gray-500 align-middle" />
-            </a>
-        @endif
 
-
-        <x-dropdown align="bottom" width="48">
-            <x-slot name="trigger">
-                <button
-                    type="button"
-                    data-dropdown-toggle="language-dropdown"
-                    class="inline-flex justify-center p-2 my-0 text-center text-gray-500 normal-case bg-transparent rounded cursor-pointer bg-none hover:bg-gray-100 hover:text-gray-900"
-                >
-                    <x-flag/>
-                </button>
-            </x-slot>
-
-            <x-slot name="content">
-                <ul class="px-0 py-1 m-0 text-black" role="none" style="list-style: none;">
-                    <li class="text-left" style="list-style: outside none none;">
-                        <a href="{{ route('locale', 'en') }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 cursor-pointer hover:bg-gray-100" role="menuitem" style="list-style: outside none none;">
-                            <div class="inline-flex items-center" style="list-style: outside none none;">
-                                <x-icon.en class="block w-3 h-3 mr-2 align-middle rounded-full" />
-                                {{ __('English') }}
-                            </div>
-                        </a>
-                    </li>
-                    <li class="text-left" style="list-style: outside none none;">
-                        <a href="{{ route('locale', 'da') }}" class="block px-4 py-2 text-sm leading-5 text-gray-700 cursor-pointer hover:bg-gray-100" role="menuitem" style="list-style: outside none none;">
-                            <div class="inline-flex items-center" style="list-style: outside none none;">
-                                <x-icon.da class="block w-3 h-3 mr-2 align-middle rounded-full" />
-                                {{ __('Danish') }}
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </x-slot>
-        </x-dropdown>
     </div>
 
 
