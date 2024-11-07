@@ -130,6 +130,9 @@ Route::middleware([
         Route::get('/time-registration/create', \App\Livewire\Backoffice\TimeRegistration\Create::class)->name('time-registration.create');
         Route::get('/time-registration/{timeRegistration}/edit', \App\Livewire\Backoffice\TimeRegistration\Edit::class)->name('time-registration.edit');
 
+        Route::get('/wpqr', \App\Livewire\Backoffice\Wpqr\Index::class)->name('wpqr.index');
+        Route::get('/wpqr/{wpqr}/edit', \App\Livewire\Backoffice\Wpqr\Edit::class)->name('wpqr.edit');
+
         Route::get('/wps', \App\Livewire\Backoffice\Wps\Index::class)->name('wps.index');
         Route::get('/wps/{wps}/edit', \App\Livewire\Backoffice\Wps\Edit::class)->name('wps.edit');
     });

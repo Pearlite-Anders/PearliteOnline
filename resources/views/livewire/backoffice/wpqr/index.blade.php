@@ -4,7 +4,7 @@
 
     <x-index-header :compressed_header="$compressed_header">
         <x-slot name="heading">
-            <x-icon.wpqr class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+            <x-icon.wps class="w-6 h-6 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
             {{ __('WPQR') }}
         </x-slot>
         <x-slot name="search">
@@ -26,35 +26,7 @@
         </x-slot>
         <x-slot name="buttons">
             <livewire:table-columns :columns="$columns" />
-            @can('create', App\Models\Wpqr::class)
-                <x-button.link href="{{ route('wpqr.create').( $project_id ? '?project_id='. $project_id : '') }}" class="inline-flex items-center justify-center whitespace-nowrap">
-                    <x-icon.plus class="mr-2 -ml-1 align-middle" />
-                    {{ __('Add WPQR') }}
-                </x-button.link>
 
-                @if($project_id)
-                    @if($selected)
-                        <x-button.secondary class="flex items-center" wire:click="detachFromProject">
-                            <x-icon.minus class="mr-2 -ml-1 align-middle" />
-                            {{ __('Detach from project') }}
-                        </x-button.secondary>
-                    @else
-                        <livewire:attach-from-project
-                            :model="App\Models\Wpqr::class"
-                            :project_id="$project_id"
-                            :name="__('Wpqr')"
-                            name_field="name"
-                        />
-                    @endif
-                @else
-                    @if($selected)
-                        <livewire:attach-to-project
-                            :model="App\Models\Wpqr::class"
-                            :selected="$selected"
-                        />
-                    @endif
-                @endif
-            @endcan
         </x-slot>
     </x-index-header>
 
@@ -62,7 +34,7 @@
         @unless($hide_filters)
             <x-filter-status :filters="$filters" />
         @endunless
-        <livewire:wpqr.table :resource="$company" :columns="$columns" :filters="$filters" :search="$search"/>
+        <livewire:wpqr.table resource="all" :columns="$columns" :filters="$filters" :search="$search" edit-route="backoffice.wpqr.edit"/>
     </div>
 </div>
 
