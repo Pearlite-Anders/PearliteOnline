@@ -21,6 +21,10 @@ class TimeRegistrationPolicy
      */
     public function view(User $user, TimeRegistration $timeRegistration): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($timeRegistration->company_id)) {
+            return false;
+        }
+
         return $user->hasPermissionTo('time_registration.view');
     }
 
@@ -37,6 +41,10 @@ class TimeRegistrationPolicy
      */
     public function update(User $user, TimeRegistration $timeRegistration): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($timeRegistration->company_id)) {
+            return false;
+        }
+
         return $user->hasPermissionTo('time_registration.view');
     }
 
@@ -45,6 +53,10 @@ class TimeRegistrationPolicy
      */
     public function delete(User $user, TimeRegistration $timeRegistration): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($timeRegistration->company_id)) {
+            return false;
+        }
+
         return $user->hasPermissionTo('time_registration.view');
     }
 
@@ -53,6 +65,10 @@ class TimeRegistrationPolicy
      */
     public function restore(User $user, TimeRegistration $timeRegistration): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($timeRegistration->company_id)) {
+            return false;
+        }
+
         return $user->hasPermissionTo('time_registration.view');
     }
 
@@ -61,6 +77,10 @@ class TimeRegistrationPolicy
      */
     public function forceDelete(User $user, TimeRegistration $timeRegistration): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($timeRegistration->company_id)) {
+            return false;
+        }
+
         return $user->hasPermissionTo('time_registration.view');
     }
 }

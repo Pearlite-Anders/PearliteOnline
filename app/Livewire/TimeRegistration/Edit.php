@@ -24,6 +24,7 @@ class Edit extends Component
 
     public function mount(TimeRegistration $timeRegistration)
     {
+        $this->authorize('update', $timeRegistration);
         $this->registration = $timeRegistration;
         $this->form->setFields($timeRegistration);
     }

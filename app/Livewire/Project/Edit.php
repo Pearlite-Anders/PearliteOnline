@@ -24,6 +24,7 @@ class Edit extends Component
 
     public function mount(Project $project)
     {
+        $this->authorize('update', $project);
         $this->project = $project;
         $this->form->setFields($project);
     }

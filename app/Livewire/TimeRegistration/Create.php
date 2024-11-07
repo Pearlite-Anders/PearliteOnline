@@ -3,6 +3,7 @@
 namespace App\Livewire\TimeRegistration;
 
 use App\Data\TimeRegistrationData;
+use App\Models\TimeRegistration;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -21,6 +22,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new TimeRegistration());
         $this->form->data = TimeRegistrationData::from([]);
     }
 

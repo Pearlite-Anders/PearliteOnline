@@ -25,6 +25,7 @@ class Edit extends Component
 
     public function mount(WeldingCoordination $weldingCoordination)
     {
+        $this->authorize('update', $weldingCoordination);
         $this->welding_coordination = $weldingCoordination;
         $this->form->setFields($weldingCoordination);
     }

@@ -3,6 +3,7 @@
 namespace App\Livewire\Ce;
 
 use App\Data\CeData;
+use App\Models\Ce;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -22,6 +23,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new Ce());
         $this->form->data = CeData::from([
             'year' => now()->format('y'),
             'name' => '',

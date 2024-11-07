@@ -21,6 +21,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new Company());
         $this->form->data = CompanyData::from(['name' => '']);
     }
 
