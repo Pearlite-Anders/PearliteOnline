@@ -20,7 +20,7 @@
                         </x-nav-link>
                     </li>
                     <li class="mt-2 mb-0 text-left list-outside">
-                        <x-nav-link href="{{ route('wpqr.index') }}" :active="request()->routeIs('wpqr.*')">
+                        <x-nav-link href="{{ route('backoffice.wpqr.index') }}" :active="request()->routeIs('backoffice.wpqr.*')">
                             <x-icon.wpqr class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
                             {{ __('WPQR') }}
                         </x-nav-link>
