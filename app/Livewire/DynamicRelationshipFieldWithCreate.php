@@ -70,7 +70,7 @@ class DynamicRelationshipFieldWithCreate extends Component
         $this->form ->data = InternalOrderData::from(['name' => '', 'status' => 'active']);
         $this->showCreatePopup = false;
 
-        $choices = $this->column['class']::get_choices();
+        $choices = $this->column['class']::get_choices([auth()->user()->currentCompany->id]);
         $this->dispatch(
             'refreshChoices',
             $choices,

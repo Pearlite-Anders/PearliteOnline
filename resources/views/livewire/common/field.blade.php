@@ -75,7 +75,7 @@
             class="block w-full mt-1"
             :selected="$form->{$key}"
             wire:model="form.{{$key}}"
-            :options="$column['class']::get_choices()"
+            :options="$column['class']::get_choices([auth()->user()->currentCompany->id])"
             prettyname="{{ $key }}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
         />

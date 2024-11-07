@@ -1,3 +1,5 @@
+@props(['companyIds' => [auth()->user()->currentCompany->id], 'model', 'filters', 'filterColumns' , 'showModal'])
+
 <div x-data="{ open: false }" class="col-span-6">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-3 ">
 
@@ -18,7 +20,7 @@
                         class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                     >
                         <option value="">{{ __($filter_column->label) }}</option>
-                        @foreach($filter_column->class::get_choices() as $key => $option)
+                        @foreach($filter_column->class::get_choices($companyIds) as $key => $option)
                             <option value="{{ $key }}">{{ __($option) }}</option>
                         @endforeach
                     </select>
@@ -71,7 +73,7 @@
                             class="block w-full p-2 m-0 text-base text-gray-900 border border-gray-300 border-solid rounded-lg appearance-none bg-gray-50 cursor-text sm:text-sm sm:leading-5 focus:border-cyan-600 focus:outline-offset-2"
                         >
                             <option value="">{{ __($filter_column->label) }}</option>
-                            @foreach($filter_column->class::get_choices() as $key => $option)
+                            @foreach($filter_column->class::get_choices($companyIds) as $key => $option)
                                 <option value="{{ $key }}">{{ __($option) }}</option>
                             @endforeach
                         </select>

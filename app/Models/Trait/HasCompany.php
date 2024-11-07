@@ -12,10 +12,9 @@ trait HasCompany
         return $this->belongsTo(Company::class);
     }
 
-    public static function get_choices()
+    public static function get_choices(array $companyIds)
     {
-        $plural_modal = Str::plural(Str::lower(Str::replace('App\Models\\', '', self::class)));
-        $collection = auth()->user()->currentCompany->{$plural_modal};
+        $collection = self::whereIn('company_id', $companyIds)->get();
         if(is_array(self::LABEL_KEY)) {
             return $collection->mapWithKeys(function($item) {
                 $array = array_map(function($key) use ($item) {
