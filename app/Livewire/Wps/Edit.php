@@ -25,6 +25,7 @@ class Edit extends Component
 
     public function mount(Wps $wps)
     {
+        $this->authorize('update', $wps);
         $this->wps = $wps;
         $this->form->setFields($wps);
     }

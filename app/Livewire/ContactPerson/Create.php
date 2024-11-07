@@ -3,6 +3,7 @@
 namespace App\Livewire\ContactPerson;
 
 use App\Models\Company;
+use App\Models\ContactPerson;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Data\ContactPersonData;
@@ -24,6 +25,7 @@ class Create extends Component
 
     public function mount(Company $company)
     {
+        $this->authorize('create', new ContactPerson());
         $this->company = $company;
 
         $this->form->company = $company;

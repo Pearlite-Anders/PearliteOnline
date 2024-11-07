@@ -23,6 +23,7 @@ class Edit extends Component
 
     public function mount(InternalOrder $internalOrder)
     {
+        $this->authorize('update', $internalOrder);
         $this->form->setFields($internalOrder);
     }
 

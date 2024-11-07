@@ -26,6 +26,7 @@ class Edit extends Component
 
     public function mount(MachineMaintenance $machineMaintenance)
     {
+        $this->authorize('update', $machineMaintenance);
         $this->machineMaintenance = $machineMaintenance;
         $this->form->setFields($machineMaintenance);
     }

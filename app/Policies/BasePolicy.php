@@ -23,6 +23,10 @@ class BasePolicy
      */
     public function view(User $user, $model): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($model->company_id)) {
+            return false;
+        }
+
         if($user->isPartner()) {
             return true;
         }
@@ -47,6 +51,11 @@ class BasePolicy
      */
     public function update(User $user, $model): bool
     {
+
+        if (!$user->companies()->pluck('companies.id')->contains($model->company_id)) {
+            return false;
+        }
+
         if($user->isPartner()) {
             return true;
         }
@@ -59,6 +68,10 @@ class BasePolicy
      */
     public function delete(User $user, $model): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($model->company_id)) {
+            return false;
+        }
+
         if($user->isPartner()) {
             return true;
         }
@@ -71,6 +84,10 @@ class BasePolicy
      */
     public function restore(User $user): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($model->company_id)) {
+            return false;
+        }
+
         if($user->isPartner()) {
             return true;
         }
@@ -83,6 +100,10 @@ class BasePolicy
      */
     public function forceDelete(User $user): bool
     {
+        if (!$user->companies()->pluck('companies.id')->contains($model->company_id)) {
+            return false;
+        }
+
         if($user->isPartner()) {
             return true;
         }
