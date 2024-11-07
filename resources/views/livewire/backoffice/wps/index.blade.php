@@ -26,44 +26,7 @@
         </x-slot>
         <x-slot name="buttons">
             <livewire:table-columns :columns="$columns" />
-            @can('create', App\Models\Wps::class)
-                <x-button.link
-                    :href="route('wps.create') .( $project_id ? '?project_id='. $project_id : '')"
-                    class="inline-flex items-center justify-center whitespace-nowrap"
-                >
-                    <x-icon.plus class="mr-2 -ml-1 align-middle" />
-                    {{ __('Add WPS') }}
-                </x-button.link>
 
-
-
-                @if($project_id)
-                    @if($selected)
-                        <x-button.secondary
-                            class="flex items-center"
-                            wire:click="detachFromProject"
-                        >
-                            <x-icon.minus class="mr-2 -ml-1 align-middle" />
-                            {{ __('Detach from project') }}
-                        </x-button.secondary>
-                    @else
-                        <livewire:attach-from-project
-                            :model="App\Models\Wps::class"
-                            :project_id="$project_id"
-                            :name="__('Wps')"
-                            name_field="number"
-                        />
-                    @endif
-                @else
-                    @if($selected)
-                        <livewire:attach-to-project
-                            :model="App\Models\Wps::class"
-                            :selected="$selected"
-                        />
-                    @endif
-                @endif
-
-            @endcan
         </x-slot>
     </x-index-header>
 
@@ -71,7 +34,7 @@
         @unless($hide_filters)
             <x-filter-status :filters="$filters" />
         @endunless
-        <livewire:wps.table :resource="$company" :columns="$columns" :filters="$filters" :search="$search"/>
+        <livewire:wps.table resource="all" :columns="$columns" :filters="$filters" :search="$search" edit-route="backoffice.wps.edit"/>
     </div>
 </div>
 

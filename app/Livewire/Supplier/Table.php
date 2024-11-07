@@ -37,6 +37,6 @@ class Table extends Component
 
     public function resource()
     {
-        return $this->resource;
+        return $this->resource->suppliers('index');
     }
 }
