@@ -33,6 +33,7 @@ class Edit extends Component
 
     public function mount(WeldingCertificate $weldingCertificate)
     {
+        $this->authorize('update', $weldingCertificate);
         $this->weldingCertificate = $weldingCertificate;
         $this->form->setFields($weldingCertificate);
     }

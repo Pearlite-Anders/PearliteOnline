@@ -3,6 +3,7 @@
 namespace App\Livewire\Wpqr;
 
 use App\Data\WpqrData;
+use App\Models\Wpqr;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -22,6 +23,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new Wpqr());
         $this->form->data = WpqrData::from(['name' => '', 'status' => 'active']);
         $this->form->project_id = request('project_id');
     }

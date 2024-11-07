@@ -26,6 +26,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new InternalOrder());
         $this->form->data = InternalOrderData::from(['name' => '', 'status' => 'active']);
         $this->supplier = new InternalOrder();
 

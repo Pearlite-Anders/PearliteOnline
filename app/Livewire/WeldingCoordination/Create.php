@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Livewire\WithTrixUploads;
 use App\Data\WeldingCoordinationData;
+use App\Models\WeldingCoordination;
 
 class Create extends Component
 {
@@ -23,6 +24,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new WeldingCoordination());
         $this->form->data = WeldingCoordinationData::from([]);
         $this->form->project_id = request('project_id');
     }

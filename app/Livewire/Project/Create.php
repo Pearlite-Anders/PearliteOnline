@@ -3,6 +3,7 @@
 namespace App\Livewire\Project;
 
 use App\Data\ProjectData;
+use App\Models\Project;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -22,6 +23,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new Project());
         $this->form->data = ProjectData::from(['name' => '', 'status' => 'active']);
     }
 

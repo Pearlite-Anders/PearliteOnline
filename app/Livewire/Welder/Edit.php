@@ -24,6 +24,7 @@ class Edit extends Component
 
     public function mount(Welder $welder)
     {
+        $this->authorize('update', $welder);
         $this->welder = $welder;
         $this->form->setFields($welder);
     }

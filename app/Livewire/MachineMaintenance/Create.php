@@ -3,6 +3,7 @@
 namespace App\Livewire\MachineMaintenance;
 
 use App\Data\MachineMaintenanceData;
+use App\Models\MachineMaintenance;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -22,6 +23,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new MachineMaintenance());
         $this->form->data = MachineMaintenanceData::from(['name' => '', 'status' => 'active']);
     }
 

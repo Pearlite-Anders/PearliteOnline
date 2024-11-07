@@ -26,6 +26,7 @@ class Edit extends Component
 
     public function mount(Supplier $supplier)
     {
+        $this->authorize('update', $supplier);
         $this->supplier = $supplier;
         $this->form->setFields($supplier);
     }

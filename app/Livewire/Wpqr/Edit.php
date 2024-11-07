@@ -24,6 +24,7 @@ class Edit extends Component
 
     public function mount(Wpqr $wpqr)
     {
+        $this->authorize('update', $wpqr);
         $this->wpqr = $wpqr;
         $this->form->setFields($wpqr);
     }

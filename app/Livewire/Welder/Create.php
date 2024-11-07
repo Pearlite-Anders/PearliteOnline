@@ -3,6 +3,7 @@
 namespace App\Livewire\Welder;
 
 use App\Data\WelderData;
+use App\Models\Welder;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -22,6 +23,7 @@ class Create extends Component
 
     public function mount()
     {
+        $this->authorize('create', new Welder());
         $this->form->data = WelderData::from(['name' => '', 'status' => 'active']);
         $this->form->project_id = request('project_id');
     }
