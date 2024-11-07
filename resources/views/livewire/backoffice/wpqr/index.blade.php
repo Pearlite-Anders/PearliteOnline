@@ -20,7 +20,13 @@
                     </div>
                 @endunless
                 @unless($hide_filters)
-                    <x-table-filters :filters="$filters" :model="$model" :filter_columns="$filter_columns" :show_modal="$showFilterSettingsModal" />
+                    <x-table-filters
+                        :filters="$filters"
+                        :model="$model"
+                        :filter_columns="$filter_columns"
+                        :show_modal="$showFilterSettingsModal"
+                        :company-ids="auth()->user()->companies()->pluck('id')->toArray()"
+                    />
                 @endunless
             </div>
         </x-slot>

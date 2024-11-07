@@ -27,7 +27,7 @@ class RelationshipFieldWithCreate extends Component
         ];
         $this->showCreatePopup = false;
 
-        $choices = $this->column['class']::get_choices();
+        $choices = $this->column['class']::get_choices([auth()->user()->currentCompany->id]);
         $this->dispatch(
             'refreshChoices',
             $choices,
@@ -49,7 +49,7 @@ class RelationshipFieldWithCreate extends Component
     public function render()
     {
         return view('livewire.relationship-field-with-create')->with([
-            'choices' => $this->column['class']::get_choices()
+            'choices' => $this->column['class']::get_choices([auth()->user()->currentCompany->id])
         ]);
     }
 }
