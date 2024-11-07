@@ -36,5 +36,9 @@ class AppServiceProvider extends ServiceProvider
 
         Livewire::propertySynthesizer(DataObjectSynth::class);
 
+        Gate::define('access-backoffice', function (User $user) {
+            return $user->role === User::ADMIN_ROLE || $user->role === User::PARTNER_ROLE;
+        });
+
     }
 }

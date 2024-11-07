@@ -24,12 +24,16 @@ class Index extends Component
     public $attach_project = false;
     public $project_id;
 
+    public $company;
+
+    public function mount()
+    {
+        $this->company = \Auth::user()->currentCompany;
+    }
+
     public function render()
     {
         $this->authorize('viewAny', $this->model);
-
-        return view('livewire.wpqr.index')->with([
-            'wpqrs' => $this->rows
-        ]);
+        return view('livewire.wpqr.index');
     }
 }

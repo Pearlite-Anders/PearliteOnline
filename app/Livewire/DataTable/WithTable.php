@@ -23,7 +23,7 @@ trait WithTable
             $this->filters = $this->preset_filters;
         }
 
-        $query = $this->resource()->{$relation}('index')
+        $query = $this->resource()
                     ->when($this->search, fn ($query, $term) => $this->applySearch($query, $term))
                     ->when($this->filters, fn ($query, $filters) => $this->applyFilters($query, $filters))
                     ->when($this->with(), fn ($query, $with) => $query->with($with));
@@ -39,7 +39,9 @@ trait WithTable
 
     public function resource()
     {
-        return auth()->user()->currentCompany;
+        $relation = Str::plural(Str::lower(Str::replace('App\Models\\', '', $this->model)));
+
+        return auth()->user()->currentCompany->{$relation}('index');
     }
 
     public function with(): ?array

@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Data\InternalOrderData;
-use App\Livewire\InternalOrder\Form as InternalOrderForm;
+use App\Livewire\Backoffice\InternalOrder\Form as InternalOrderForm;
 
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -70,7 +70,7 @@ class DynamicRelationshipFieldWithCreate extends Component
         $this->form ->data = InternalOrderData::from(['name' => '', 'status' => 'active']);
         $this->showCreatePopup = false;
 
-        $choices = $this->column['class']::get_choices();
+        $choices = $this->column['class']::get_choices([auth()->user()->currentCompany->id]);
         $this->dispatch(
             'refreshChoices',
             $choices,
