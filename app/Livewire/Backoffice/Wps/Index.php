@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Livewire\Wps;
+namespace App\Livewire\Backoffice\Wps;
 
 use App\Models\Wps;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Layout;
 use App\Models\WeldingCertificate;
 use App\Livewire\DataTable\WithTable;
 use App\Livewire\DataTable\WithDelete;
@@ -16,6 +17,7 @@ use App\Livewire\DataTable\WithSorting;
 use App\Livewire\DataTable\WithClickableRow;
 use App\Livewire\DataTable\WithPerPagePagination;
 
+#[Layout('layouts.backoffice')]
 class Index extends Component
 {
     use WithTable, WithPerPagePagination, WithSorting, WithColumns, WithFilters, WithDelete, WithSearch, WithClickableRow, WithProject;
@@ -26,16 +28,9 @@ class Index extends Component
     public $attach_project = false;
     public $project_id;
 
-    public $company;
-
-    public function mount()
-    {
-        $this->company = \Auth::user()->currentCompany;
-    }
-
     public function render()
     {
         $this->authorize('viewAny', $this->model);
-        return view('livewire.wps.index');
+        return view('livewire.backoffice.wps.index');
     }
 }
