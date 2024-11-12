@@ -71,7 +71,7 @@
         @unless($hide_filters)
             <x-filter-status :filters="$filters" />
         @endunless
-        <livewire:wps.table :resource="$company" :columns="$columns" :filters="$filters" :search="$search"/>
+        <livewire:wps.table :resource="$company" :columns="$columns" :filters="$filters" :search="$search" :project_id="$project_id"/>
     </div>
 </div>
 
