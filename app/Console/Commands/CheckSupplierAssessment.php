@@ -50,7 +50,6 @@ class CheckSupplierAssessment extends Command
 
                 $days = Setting::get('supplier_notification_before_next_assessment', 0, $supplier->responsible_user->currentCompany?->id);
                 if ($nextAssessmentDate->subDays($days)->isFuture()) {
-                    $this->info($nextAssessmentDate->format('Y-m-d'));
                     continue;
                 }
 
