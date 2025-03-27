@@ -62,7 +62,7 @@ class UserSummary extends Notification
         }
 
         return (new MailMessage)
-                ->subject(__('I need a good subjet!'))
+                ->subject(__('Tasks assigned need your attention'))
                 ->markdown('mail.user-summary', [
                     'supplier_assessments_data' => $supplierAssessmentsData,
                     'machine_maintenance_data' => $machineMaintenanceData,

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Document;
+use App\Models\Setting;
 use Illuminate\Console\Command;
 use App\Notifications\Document\Review;
 
@@ -40,7 +41,12 @@ class CheckDocumentReview extends Command
                 }
 
                 $nextReviewDate = $document->nextReviewDate();
-                if (!$nextReviewDate || $nextReviewDate->isFuture()) {
+                if (!$nextReviewDate) {
+                    continue;
+                }
+
+                $days = Setting::get('document_notification_before_next_review', 0, $document->owner->currentCompany?->id);
+                if ($nextReviewDate->subDays($days)->isFuture()) {
                     continue;
                 }
 

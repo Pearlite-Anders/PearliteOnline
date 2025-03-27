@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Trait\HasFilter;
 use App\Models\Trait\HasCompany;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -106,5 +107,16 @@ class MachineMaintenance extends Model
     public function responsible_user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function nextMaintenanceDate()
+    {
+        if (empty($this->data["lastest_maintenance_date"]) || empty($this->data["maintenance_interval"])) {
+            return null;
+        }
+
+        $date = Carbon::createFromFormat('Y.m.d', $this->data['lastest_maintenance_date']);
+
+        return $date->addMonths($this->data['maintenance_interval']);
     }
 }

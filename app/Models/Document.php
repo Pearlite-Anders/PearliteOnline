@@ -100,12 +100,11 @@ class Document extends Model
             return null;
         }
 
-        if (empty($this->currentRevision->data["lastest_review_date"]) || empty($this->currentRevision->data["review_interval"])) {
+        if (empty($this->currentRevision->data["next_review_date"])) {
             return null;
         }
 
-        $date = Carbon::createFromFormat('Y.m.d', $this->currentRevision->data['lastest_review_date']);
-        return $date->addMonths($this->currentRevision->data['review_interval']);
+        return Carbon::createFromFormat('Y.m.d', $this->currentRevision->data['next_review_date']);
     }
 
     public static function getDefaultFilters(): array

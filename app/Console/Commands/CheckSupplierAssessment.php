@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Supplier;
 use Illuminate\Console\Command;
+use App\Models\Setting;
 use App\Models\WeldingCertificate;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Supplier\Assessment;
@@ -34,11 +35,22 @@ class CheckSupplierAssessment extends Command
         $users = [];
         Supplier::with('responsible_user')->chunk(100, function($suppliers) use (&$users) {
             foreach($suppliers as $supplier) {
-                if (!($supplier->data["needs_assessment"] ?? true) || $supplier->nextAssessment()->isFuture()) {
+                if (($supplier->data["needs_assessment"] ?? true) == "no" ) {
                     continue;
                 }
 
                 if (!$supplier->responsible_user) {
+                    continue;
+                }
+
+                $nextAssessmentDate = $supplier->nextAssessment();
+                if (!$nextAssessmentDate) {
+                    continue;
+                }
+
+                $days = Setting::get('supplier_notification_before_next_assessment', 0, $supplier->responsible_user->currentCompany?->id);
+                if ($nextAssessmentDate->subDays($days)->isFuture()) {
+                    $this->info($nextAssessmentDate->format('Y-m-d'));
                     continue;
                 }
 

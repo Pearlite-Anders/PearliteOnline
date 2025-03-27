@@ -7,6 +7,29 @@
     @endunless
 >
     <x-settings-page>
+        <x-setting-section class="mb-4">
+            <x-slot name="title">
+                {{ __('Notifications') }}
+            </x-slot>
+
+            <x-slot name="description">
+            </x-slot>
+
+            <x-slot name="form">
+                <div class="col-span-5 space-y-4">
+                    <div>
+                        <x-label for="maintenance.maintenance_notification_before_next_maintenance" :value="__('Notify days before next maintenance')" />
+                        <x-input
+                            id="maintenance.maintenance_notification_before_next_maintenance"
+                            type="number"
+                            class="block w-full"
+                            wire:model="settings.maintenance_notification_before_next_maintenance"
+                        />
+                        <x-input-error for="" class="mt-2" />
+                    </div>
+                </div>
+            </x-slot>
+        </x-setting-section>
         @php($arraySections = [
             'machine_maintenance_types' => __('Types'),
         ])

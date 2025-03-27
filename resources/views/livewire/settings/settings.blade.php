@@ -64,6 +64,15 @@
                         </li>
                         <li>
                             <button
+                                @if($section == 'document')
+                                    aria-current="page"
+                                    class="text-cyan-500"
+                                @endif
+                                wire:click="setSection('document')"
+                            >{{ __('Document') }}</button>
+                        </li>
+                        <li>
+                            <button
                                 @if($section == 'multiple-choice')
                                     aria-current="page"
                                     class="text-cyan-500"
@@ -84,6 +93,7 @@
             @include('livewire.settings.wps')
             @include('livewire.settings.ce')
             @include('livewire.settings.supplier')
+            @include('livewire.settings.document')
             @include('livewire.settings.multiple-choice')
 
             <div class="fixed bottom-0 bg-gray-100 w-full">
