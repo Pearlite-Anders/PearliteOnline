@@ -28,6 +28,11 @@ class Index extends Component
     public $attach_project = false;
     public $project_id;
 
+    public function mount()
+    {
+        $this->backendColumns = true;
+    }
+
     public function render()
     {
         $this->authorize('viewAny', $this->model);

@@ -212,6 +212,10 @@ class Wps extends Model
             'label' => 'Remarks',
             'filter' => 'search'
         ],
+        'company' => [
+            'type' => 'company',
+            'label' => 'Company',
+        ],
     ];
 
     public function wpqr()

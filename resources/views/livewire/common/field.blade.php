@@ -32,6 +32,11 @@
         return;
     @endphp
 @endif
+@if($column['type'] == 'company')
+    @php
+        return;
+    @endphp
+@endif
 @if (isset($column['container']))
     <div class="{{ $column['container']['class'] }}">
 @endif

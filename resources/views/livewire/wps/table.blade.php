@@ -12,6 +12,8 @@
                         App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'calculated'
                     )
                         <x-table.heading wire:click="sortBy('{{ $column->key }}' )" sortable :multiColumn="false" :direction="$sorts['{{ $column->key }}'] ?? null">{{ App\Models\Wps::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
+                    @elseif(App\Models\Wps::SYSTEM_COLUMNS[$column->key]['type'] == 'company')
+                        <x-table.heading>{{ App\Models\Wpqr::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
                     @else
                         <x-table.heading wire:click="sortBy('data->{{ $column->key }}')" sortable :multiColumn="false" :direction="$sorts['data->{{ $column->key }}'] ?? null">{{ App\Models\Wps::SYSTEM_COLUMNS[$column->key]['label'] }}</x-table.heading>
                     @endif

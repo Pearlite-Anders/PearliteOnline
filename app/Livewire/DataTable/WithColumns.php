@@ -4,12 +4,20 @@ namespace App\Livewire\DataTable;
 
 trait WithColumns
 {
-
+    protected bool $backendColumns = false;
     public $columns = [];
 
     public function mountWithColumns()
     {
-        $this->columns = auth()->user()->getColumns($this->model)->map(function ($column) {
+        $columns = auth()->user()->getColumns($this->model);
+
+        if (!$this->backendColumns) {
+            $columns = $columns->filter(function ($column) {
+                return $column->key !== 'company';
+            });
+        }
+
+        $this->columns = $columns->map(function ($column) {
             $column->label = __($column->label);
             return $column;
         });

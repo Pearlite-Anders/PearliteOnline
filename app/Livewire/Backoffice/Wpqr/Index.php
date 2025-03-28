@@ -27,6 +27,11 @@ class Index extends Component
     public $compressed_header = false;
     public $attach_project = false;
 
+    public function mount()
+    {
+        $this->backendColumns = true;
+    }
+
     public function render()
     {
         $this->authorize('viewAny', $this->model);
