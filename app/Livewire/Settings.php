@@ -44,7 +44,7 @@ class Settings extends Component
 
     public function save()
     {
-        foreach($this->settings as $key => $value) {
+        foreach ($this->settings as $key => $value) {
             Setting::updateOrCreate([
                 'company_id' => auth()->user()->currentCompany->id,
                 'key' => $key,
@@ -56,7 +56,13 @@ class Settings extends Component
 
     public function mount()
     {
-        $this->settings = Setting::all()->toArray();
+        $settings = Setting::all()->toArray();
+        foreach ($settings as $key => $value) {
+            if (is_string($value) && json_decode($value, true) !== null) {
+                $settings[$key] = json_decode($value, true);
+            }
+        }
+        $this->settings = $settings;
         $this->section = request()->get('section', 'welding-certificates');
     }
 
