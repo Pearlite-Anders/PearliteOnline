@@ -71,12 +71,12 @@
             >
                 @if($file->isPDF())
                     <iframe
-                        src="{{ $file->temporary_url() }}#navpanes=0"
+                        src="{{ $file->temporary_url_new() }}#navpanes=0"
                         frameborder="0"
                         class="w-full aspect-[1/1.4]"
                     ></iframe>
                 @elseif($file->isImage())
-                    <img src="{{ $file->temporary_url() }}" alt="{{ $file->name }}" />
+                    <img src="{{ $file->temporary_url_new() }}" alt="{{ $file->name }}" />
                 @endif
             </div>
         </div>

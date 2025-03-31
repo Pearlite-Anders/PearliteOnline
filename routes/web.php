@@ -102,6 +102,8 @@ Route::middleware([
     Route::get('/documents/{document}/edit', \App\Livewire\Document\Edit::class)->name('documents.edit');
     Route::get('/documents/{document}/revisions', \App\Livewire\DocumentRevision\Index::class)->name('document_revisions.index');
 
+    Route::get('/file/{file}', \App\Http\Controllers\FileController::class)->name('file');
+
     Route::get('/switch-company/{company}', function (\App\Models\Company $company) {
         auth()->user()->current_company_id = $company->id;
         auth()->user()->save();
