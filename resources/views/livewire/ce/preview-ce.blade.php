@@ -25,9 +25,12 @@
         </div>
         <div style="padding: 25px 10px;text-align:left;">
             <div style="text-align:center;font-weight:bold;">
+                @php
+                    $options = App\Models\Setting::get('ce_standards');
+                @endphp
                 <x-tooltip-word
                     :tooltip="__('Standard of execution')"
-                >{{ $form->data->standard }}</x-tooltip-word>
+                >{{ optional($options)[$form->data->standard] }}</x-tooltip-word>
             </div>
             <div style="text-align:center;margin-top:10px;">
                 <x-tooltip-word

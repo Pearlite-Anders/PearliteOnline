@@ -2,10 +2,9 @@
 
 namespace App\Livewire\Ce;
 
-use Livewire\Component;
-use Livewire\Attributes\On;
-use Livewire\WithFileUploads;
 use App\Models\Ce;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Edit extends Component
 {

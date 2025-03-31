@@ -19,7 +19,8 @@
     </div>
     <div style="padding: 25px 10px;text-align:left;">
         <div style="text-align:center;font-weight:bold;">
-            {{ optional($ce->data)['standard'] }}
+            @php($options = App\Models\Setting::get('ce_standards'))
+            {{ optional($options)[optional($ce->data)['standard']] }}
         </div>
         <div style="text-align:center;margin-top:10px;">
             {{ optional($ce->data)['scope'] }}
@@ -179,7 +180,8 @@
             <td style="border-bottom: 1px solid #333;border-right: 1px solid #333;padding: 3px 2px;">{{ __('Dimensions- and tolerances') }}</td>
             <td style="border-bottom: 1px solid #333;padding: 3px 2px;font-weight:bold;">{{ optional($ce->data)['tolerance_class'] }}</td>
             <td style="border-left: 1px solid #333;padding: 3px 2px;font-weight:bold;text-align:center;" rowspan="10">
-                {{ optional($ce->data)['standard'] }}
+                @php($options = App\Models\Setting::get('ce_standards'))
+                {{ optional($options)[optional($ce->data)['standard']] }}
             </td>
         </tr>
         <tr>

@@ -36,7 +36,8 @@
                 <td style="border: 1px solid #333;padding: 3px 2px;">{{ __('Dimensions- and tolerances') }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;">{{ $form->data->tolerance_class }}</td>
                 <td style="border: 1px solid #333;padding: 3px 2px;font-weight:bold;text-align:center;margin-top:5px;" rowspan="10">
-                    {{ $form->data->standard }}
+                    @php($options = App\Models\Setting::get('ce_standards'))
+                    {{ optional($options)[$form->data->standard] }}
                 </td>
             </tr>
             <tr>
