@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -9,6 +10,7 @@ class AttachToProject extends Component
 {
     public $model;
     public $showModal = false;
+    #[Reactive]
     public $selected = [];
 
     public function attachModel($project_id)

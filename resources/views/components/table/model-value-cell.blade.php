@@ -55,6 +55,14 @@
             </p>
         </div>
     </x-table.cell>
+@elseif($column['type'] == 'company')
+    <x-table.cell>
+        <div class="w-20 max-w-full ">
+            <p class="truncate">
+                {{ $model->company?->data['name'] ?? '' }}
+            </p>
+        </div>
+    </x-table.cell>
 @else
     <x-table.cell class="whitespace-nowrap">{{ $model->getColumnValue($key) }}</x-table.cell>
 @endif

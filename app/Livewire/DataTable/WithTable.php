@@ -15,6 +15,17 @@ trait WithTable
         $this->selected = [];
     }
 
+    #[On('selectedUpdated')]
+    public function selectedUpdated($selected)
+    {
+        $this->selected = $selected;
+    }
+
+    public function updatedSelected()
+    {
+        $this->dispatch('selectedUpdated', $this->selected);
+    }
+
     public function getRowsQueryProperty()
     {
         $relation = Str::plural(Str::lower(Str::replace('App\Models\\', '', $this->model)));
@@ -23,10 +34,11 @@ trait WithTable
             $this->filters = $this->preset_filters;
         }
 
-        $query = $this->resource()->{$relation}('index')
+        $query = $this->resource()
                     ->when($this->search, fn ($query, $term) => $this->applySearch($query, $term))
                     ->when($this->filters, fn ($query, $filters) => $this->applyFilters($query, $filters))
-                    ->when($this->with(), fn ($query, $with) => $query->with($with));
+                    ->when($this->with(), fn ($query, $with) => $query->with($with))
+                    ->when(isset($this->project_id), fn ($query) => $this->applyProject($query));
 
         return $this->applySorting($query);
     }
@@ -39,11 +51,18 @@ trait WithTable
 
     public function resource()
     {
-        return auth()->user()->currentCompany;
+        $relation = Str::plural(Str::lower(Str::replace('App\Models\\', '', $this->model)));
+
+        return auth()->user()->currentCompany->{$relation}('index');
     }
 
     public function with(): ?array
     {
         return null;
+    }
+
+    protected function applyProject($query)
+    {
+        return $query->whereHas('projects', (fn ($query) => $query->where('id', '=',$this->project_id)));
     }
 }

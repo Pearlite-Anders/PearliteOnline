@@ -21,9 +21,9 @@
         <x-banner />
 
         <div class="flex min-h-screen bg-gray-100">
-            @livewire('top-navigation')
+            @livewire('top-navigation.app')
 
-            @livewire('sidebar')
+            @livewire('sidebar.app')
 
             <!-- Page Content -->
             <main class="relative w-full min-h-screen pt-16 overflow-y-auto md:ml-64">

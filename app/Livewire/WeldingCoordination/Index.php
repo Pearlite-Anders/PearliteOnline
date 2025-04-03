@@ -33,4 +33,9 @@ class Index extends Component
             'weldingCoordinations' => $this->rows
         ]);
     }
+
+    protected function applyProject($query)
+    {
+        return $query->where('project_id', '=', $this->project_id);
+    }
 }
