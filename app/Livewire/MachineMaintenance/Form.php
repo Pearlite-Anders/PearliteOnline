@@ -106,7 +106,13 @@ class Form extends LivewireForm
 
         // Update the MachineMaintenance's latest maintenance date to keep easier to figure out when the next assement is due.
         $machineMaintenanceData = $machineMaintenance->data;
+
         $machineMaintenanceData["lastest_maintenance_date"] = $this->new_maintenance_date;
+
+        if ($machineMaintenanceData["maintenance_interval"]) {
+            $date = Carbon::createFromFormat('Y.m.d', $this->new_maintenance_date);
+            $machineMaintenanceData["next_maintenance_date"] = $date->addMonths($machineMaintenanceData["maintenance_interval"])->format('Y-m-d');
+        }
         $machineMaintenance->data = $machineMaintenanceData;
         $machineMaintenance->save();
 
