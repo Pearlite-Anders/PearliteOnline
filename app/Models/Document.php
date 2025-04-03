@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use App\Models\Trait\HasCompany;
-
 use App\Models\Trait\HasFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Kalnoy\Nestedset\NodeTrait;
 
 class Document extends Model
 {
-    use HasFactory, HasCompany, HasFilter, NodeTrait;
+    use HasFactory, HasFilter, HasCompany, NodeTrait;
 
     protected $guarded = [];
 
@@ -86,5 +87,33 @@ class Document extends Model
     protected function getScopeAttributes()
     {
         return ['company_id'];
+    }
+
+    public function getNextReviewDateAttribute(): string
+    {
+        return $this->nextReviewDate()->format('Y.m.d');
+    }
+
+    public function nextReviewDate(): ?Carbon
+    {
+        if(!$this->currentRevision) {
+            return null;
+        }
+
+        if (empty($this->currentRevision->data["next_review_date"])) {
+            return null;
+        }
+
+        return Carbon::createFromFormat('Y.m.d', $this->currentRevision->data['next_review_date']);
+    }
+
+    public static function getDefaultFilters(): array
+    {
+        return [];
+    }
+
+    public static function getDefaultColumns(): array
+    {
+        return [];
     }
 }

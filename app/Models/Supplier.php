@@ -142,6 +142,11 @@ class Supplier extends Model
 
     public function getNextAssessmentAttribute()
     {
+        return $this->nextAssessment()->format('Y.m.d');
+    }
+
+    public function nextAssessment()
+    {
         if(!$this->reports->count()) {
             return null;
         }
@@ -149,6 +154,6 @@ class Supplier extends Model
         $last_report = $this->reports->last();
         $date = Carbon::createFromFormat('Y.m.d', $last_report->data['assessment_date']);
 
-        return $date->addMonths($this->data['assessment_frequency'])->format('Y.m.d');
+        return $date->addMonths($this->data['assessment_frequency']);
     }
 }

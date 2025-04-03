@@ -7,6 +7,30 @@
     @endunless
 >
     <x-settings-page>
+        <x-setting-section class="mb-4">
+            <x-slot name="title">
+                {{ __('Notifications') }}
+            </x-slot>
+
+            <x-slot name="description">
+            </x-slot>
+
+            <x-slot name="form">
+                <div class="col-span-5 space-y-4">
+                    <div>
+                        <x-label for="supplier.supplier_notification_before_next_assessment" :value="__('Notify days before next assessment')" />
+                        <x-input
+                            id="supplier.supplier_notification_before_next_assessment"
+                            type="number"
+                            class="block w-full"
+                            wire:model="settings.supplier_notification_before_next_assessment"
+                        />
+                        <x-input-error for="" class="mt-2" />
+                    </div>
+                </div>
+            </x-slot>
+        </x-setting-section>
+
         @php($arraySections = [
             'supplier_assessment_frequencies' => __('Assessment frequency (in months)'),
         ])
