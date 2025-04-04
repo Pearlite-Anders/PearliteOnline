@@ -119,4 +119,9 @@ class MachineMaintenance extends Model
 
         return $date->addMonths($this->data['maintenance_interval']);
     }
+
+    public function edit_url()
+    {
+        return route('machine-maintenance.edit', ['machineMaintenance' => $this->id]);
+    }
 }

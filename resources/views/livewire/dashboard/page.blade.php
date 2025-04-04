@@ -5,7 +5,7 @@
         </x-slot>
     </x-index-header>
     <div class="bottom-0 right-0 px-4 pt-8 pb-4 leading-6">
-        <div class="flex justify-between">
+        <div class="flex justify-between max-w-7xl">
             <div class="flex items-center justify-between py-3">
                 <div class="flex items-center space-x-4">
                     <div class="flex items-center space-x-2">

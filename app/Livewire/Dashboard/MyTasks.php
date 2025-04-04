@@ -3,11 +3,14 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Supplier;
+use App\Livewire\DataTable\WithClickableRow;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class MyTasks extends Component
 {
+    use WithClickableRow;
+
     #[Reactive]
     public Filters $filters;
 

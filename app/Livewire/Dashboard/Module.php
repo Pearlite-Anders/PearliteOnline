@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 enum Module: string
 {
