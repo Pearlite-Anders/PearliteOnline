@@ -15,4 +15,6 @@
             </div>
         </div>
     </form>
+
+    <livewire:backoffice.internal-order.time-registration :internal-order="$internalOrder" />
 </div>

@@ -64,4 +64,9 @@ class InternalOrder extends Model
     {
         return $this;
     }
+
+    public function timeRegistrations()
+    {
+        return $this->hasMany(TimeRegistration::class, 'internal_order_id');
+    }
 }

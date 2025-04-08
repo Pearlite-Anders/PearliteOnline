@@ -8,4 +8,12 @@
     <tbody class="leading-6 text-black bg-white border-t border-b-0 border-collapse border-gray-200 border-solid border-x-0">
         {{ $body }}
     </tbody>
+
+    @if(isset($foot) && !$foot->isEmpty())
+        <tfoot class="bg-gray-100">
+            <tr>
+                {{ $foot }}
+            </tr>
+        </tfoot>
+    @endif
 </table>

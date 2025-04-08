@@ -181,6 +181,12 @@ trait HasFilter
         return $value;
     }
 
+    public function getColumnSum($column_key)
+    {
+        $column = self::getColumn($column_key);
+        dd($column);
+    }
+
     public function toArray()
     {
         return collect(self::getDefaultColumns())->mapWithKeys(function ($column) {

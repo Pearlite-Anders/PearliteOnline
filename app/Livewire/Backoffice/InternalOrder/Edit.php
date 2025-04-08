@@ -13,6 +13,7 @@ class Edit extends Component
 {
     use Shared, WithFileUploads;
     public Form $form;
+    public InternalOrder $internalOrder;
 
     public function update()
     {
@@ -27,6 +28,7 @@ class Edit extends Component
     {
         $this->authorize('update', $internalOrder);
         $this->form->setFields($internalOrder);
+        $this->internalOrder = $internalOrder;
     }
 
     public function render()
