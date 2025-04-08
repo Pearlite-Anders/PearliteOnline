@@ -13,7 +13,8 @@ class InternalOrderData extends Data implements Wireable
 
     public function __construct(
         public ?string $name,
-        public ?string $number
+        public ?string $number,
+        public ?string $status,
     ) {
     }
 }

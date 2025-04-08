@@ -47,6 +47,17 @@ class InternalOrder extends Model
             'required' => true,
             'filter' => 'search'
         ],
+        'status' => [
+            'type' => 'radios',
+            'multiple' => false,
+            'label' => 'Active/Inactive',
+            'options' => [
+                'active' => 'Active',
+                'inactive' => 'Inactive',
+            ],
+            'filter' => 'radios',
+            'default' => 'active'
+        ],
     ];
 
     public function loadAll()
