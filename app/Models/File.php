@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\URL;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class File extends Model
@@ -72,6 +73,11 @@ class File extends Model
     public function temporary_url()
     {
         return Storage::disk(self::$default_disk)->temporaryUrl($this->path, now()->addMinutes(60));
+    }
+
+    public function temporary_url_new()
+    {
+        return URL::temporarySignedRoute('file', now()->addMinutes(60), ['file' => $this->id]);
     }
 
     public function temporary_download($return = '')
