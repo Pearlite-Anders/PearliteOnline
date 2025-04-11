@@ -26,6 +26,7 @@ class Create extends Component
     {
         $this->authorize('create', new TimeRegistration());
         $this->form->data = TimeRegistrationData::from([]);
+        $this->form->user_id = auth()->user()->id;
     }
 
     public function render()
