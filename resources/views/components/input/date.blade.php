@@ -12,7 +12,9 @@
                     onChange: (date, dateString) => {
                         this.value = date;
                         $wire.set('{{ $attributes['wire:model'] }}', dateString)
-
+                    },
+                    locale: {
+                        firstDayOfWeek: 1
                     }
                 });
 
