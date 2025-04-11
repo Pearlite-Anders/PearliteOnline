@@ -16,5 +16,7 @@
         </div>
     </form>
 
-    <livewire:backoffice.internal-order.time-registration :internal-order="$internalOrder" />
+    <div class="px-4 pt-8 pb-4 leading-6 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0">
+        <livewire:backoffice.internal-order.time-registration :internal-order="$internalOrder" />
+    </div>
 </div>
