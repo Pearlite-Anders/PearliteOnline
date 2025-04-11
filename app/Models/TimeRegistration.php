@@ -108,14 +108,14 @@ class TimeRegistration extends Model
             'label' => 'Billable',
             'required' => false,
             'placeholder' => '',
-            'filter' => 'search'
+            'filter' => 'checkbox',
         ],
         'invoiced' => [
             'type' => 'checkbox',
             'label' => 'Invoiced',
             'required' => false,
             'placeholder' => '',
-            'filter' => 'search'
+            'filter' => 'checkbox',
         ],
         'remarks' => [
             'type' => 'textarea',

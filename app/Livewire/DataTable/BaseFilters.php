@@ -47,6 +47,16 @@ trait BaseFilters
             } elseif ($column->filter == 'radios') {
                 $query->where('data->' . $key, $value);
                 continue;
+            } elseif ($column->filter == 'checkbox') {
+                $booleanValue = $value == "false" ? false : (bool)$value;
+                if ($booleanValue === true) {
+                    $query->where('data->' . $key, true);
+                } else {
+                    $query->where(function($query) use ($key) {
+                        $query->where('data->' . $key, false)->orWhereNull('data->' . $key);
+                    });
+                }
+                continue;
             } elseif ($column->filter == 'date') {
                 if(optional($value)['min'] && optional($value)['max']) {
                     if(optional($value)['min'] == optional($value)['max']) {
