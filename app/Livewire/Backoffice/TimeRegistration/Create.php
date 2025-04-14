@@ -15,6 +15,11 @@ class Create extends Component
 
     public Form $form;
 
+    public $duplicate_id;
+    public ?TimeRegistration $registration;
+
+    protected $queryString = ['duplicate_id'];
+
     public function create()
     {
         $this->form->create();
@@ -25,8 +30,14 @@ class Create extends Component
     public function mount()
     {
         $this->authorize('create', new TimeRegistration());
-        $this->form->data = TimeRegistrationData::from([]);
-        $this->form->user_id = auth()->user()->id;
+        if ($this->duplicate_id) {
+            $timeRegistration = TimeRegistration::find($this->duplicate_id);
+            $this->registration = $timeRegistration->replicate();
+            $this->form->setFields($this->registration);
+        } else {
+            $this->form->data = TimeRegistrationData::from([]);
+            $this->form->user_id = auth()->user()->id;
+        }
     }
 
     public function render()

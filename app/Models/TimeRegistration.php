@@ -51,8 +51,10 @@ class TimeRegistration extends Model
         ],
         'internal_order_id' => [
             'type' => 'dynamic_relationship',
-            'relationship' => 'company_id',
+            'relationship' => 'internalOrder',
+            'foreign_key' => 'company_id',
             'class' => InternalOrder::class,
+            'through_class' => Company::class,
             'label' => 'Order',
             'placeholder' => 'Choose order',
             'filter' => 'relationship',

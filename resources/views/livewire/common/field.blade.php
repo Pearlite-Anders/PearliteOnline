@@ -87,7 +87,7 @@
     @elseif($column['type'] == 'dynamic_relationship' && optional($column)['create_popup'])
         <livewire:dynamic-relationship-field-with-create
             :$column
-            :relation="$form->{$column['relationship']}"
+            :foreign_key="$form->{$column['foreign_key']}"
             wire:model.live="form.{{$key}}"
         />
     @elseif($column['type'] == 'dynamic_relationship')
@@ -237,7 +237,7 @@
     @else
         <x-input
             :live="isset($live)"
-            wire:model="form.data.{{$key}}"
+            wire:model.live="form.data.{{$key}}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
             postfix="{{ __($column['postfix'] ?? '') }}"
             prefix="{{ __($column['prefix'] ?? '') }}"

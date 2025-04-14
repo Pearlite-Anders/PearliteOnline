@@ -52,15 +52,17 @@ class Form extends LivewireForm
 
     public function update($registration)
     {
-        $registration->update($this->transformedData());
+        $registration->fill($this->transformedData());
 
         if(auth()->user()->isAdmin()) {
             $registration->user()->associate($this->user_id);
         } else {
             $registration->user()->associate(auth()->user()->id);
         }
+
         $registration->internalOrder()->associate($this->internal_order_id);
         $registration->company()->associate($this->company_id);
+        $registration->save();
 
         return $this->handleUploads($registration);
     }

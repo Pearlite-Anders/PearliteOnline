@@ -75,6 +75,14 @@
                                             <x-icon.pencil class="w-4 h-4 text-gray-800" />
                                         </x-button.link>
                                     @endcan
+                                    @can('create', App\Models\TimeRegistration::class)
+                                        <x-button.link
+                                            href="{{ route('backoffice.time-registration.create', ['duplicate_id' => $regstration->id]) }}"
+                                            class="text-gray-600 bg-transparent hover:bg-gray-100 hover:text-gray-900"
+                                        >
+                                            <x-icon.document-duplicate class="w-4 h-4 text-gray-800" />
+                                        </x-button.link>
+                                    @endcan
                                     @can('delete', $regstration)
                                         <div class="flex" x-data @click.prevent.stop="console.log('stop')">
                                             @if($confirming == $regstration->id)
