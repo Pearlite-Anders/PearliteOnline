@@ -35,7 +35,6 @@ class DynamicRelationshipFieldWithCreate extends Component
 
     public function getChoices()
     {
-
         if(!$this->foreign_key) {
             return [];
         }
