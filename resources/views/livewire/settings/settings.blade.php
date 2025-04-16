@@ -73,6 +73,15 @@
                         </li>
                         <li>
                             <button
+                                @if($section == 'time-registration')
+                                    aria-current="page"
+                                    class="text-cyan-500"
+                                @endif
+                                wire:click="setSection('time-registration')"
+                            >{{ __('Time registration') }}</button>
+                        </li>
+                        <li>
+                            <button
                                 @if($section == 'multiple-choice')
                                     aria-current="page"
                                     class="text-cyan-500"
@@ -95,6 +104,7 @@
             @include('livewire.settings.supplier')
             @include('livewire.settings.document')
             @include('livewire.settings.multiple-choice')
+            @include('livewire.settings.time-registration')
 
             <div class="fixed bottom-0 bg-gray-100 w-full">
                 <div class="flex justify-start">
