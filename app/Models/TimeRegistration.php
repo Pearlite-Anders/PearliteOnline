@@ -119,6 +119,23 @@ class TimeRegistration extends Model
             'placeholder' => '',
             'filter' => 'checkbox',
         ],
+        'break' => [
+            'type' => 'checkbox',
+            'label' => 'Break',
+            'required' => false,
+            'placeholder' => '',
+            'filter' => 'checkbox',
+        ],
+        'break_time' => [
+            'type' => 'number',
+            'label' => 'Break Time',
+            'required' => false,
+            'placeholder' => '',
+            'filter' => 'search',
+            'postfix' => 'min',
+            'disabled_by' => 'break',
+            'live' => true,
+        ],
         'remarks' => [
             'type' => 'textarea',
             'label' => 'Remarks',
@@ -126,6 +143,7 @@ class TimeRegistration extends Model
             'placeholder' => '',
             'filter' => 'search'
         ],
+
     ];
 
     public function loadAll()

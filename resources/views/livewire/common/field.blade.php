@@ -236,12 +236,13 @@
         />
     @else
         <x-input
-            :live="isset($live)"
-            wire:model.live="form.data.{{$key}}"
+            :live="isset($column['live']) && $column['live']"
+            wire:model="form.data.{{$key}}"
             placeholder="{{ __($column['placeholder'] ?? '') }}"
             postfix="{{ __($column['postfix'] ?? '') }}"
             prefix="{{ __($column['prefix'] ?? '') }}"
             required="$column['prefix'] ?? false"
+            :disabled="isset($column['disabled_by']) && !($form->data->toArray()[$column['disabled_by']] ?? false)"
         />
     @endif
 

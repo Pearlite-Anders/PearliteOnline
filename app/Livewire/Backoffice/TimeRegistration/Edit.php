@@ -7,6 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
 use App\Models\TimeRegistration;
+use App\Models\Setting;
 
 #[Layout('layouts.backoffice')]
 class Edit extends Component
@@ -29,6 +30,10 @@ class Edit extends Component
         $this->authorize('update', $timeRegistration);
         $this->registration = $timeRegistration;
         $this->form->setFields($timeRegistration);
+
+        if ($this->form->data->break_time == null) {
+            $this->form->data->break_time = Setting::get('time_registration_default_break_duration', 0);
+        }
     }
 
     public function render()

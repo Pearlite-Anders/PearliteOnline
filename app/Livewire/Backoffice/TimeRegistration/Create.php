@@ -4,6 +4,7 @@ namespace App\Livewire\Backoffice\TimeRegistration;
 
 use App\Data\TimeRegistrationData;
 use App\Models\TimeRegistration;
+use App\Models\Setting;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -37,6 +38,10 @@ class Create extends Component
         } else {
             $this->form->data = TimeRegistrationData::from([]);
             $this->form->user_id = auth()->user()->id;
+        }
+
+        if ($this->form->data->break_time == null) {
+            $this->form->data->break_time = Setting::get('time_registration_default_break_duration', 0);
         }
     }
 
