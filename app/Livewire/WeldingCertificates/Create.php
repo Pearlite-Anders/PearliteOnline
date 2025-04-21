@@ -23,7 +23,7 @@ class Create extends Component
 
     public function mount()
     {
-        $this->authorize('create', new WeldingCertificateData());
+        $this->authorize('create', WeldingCertificate::class);
         $this->form->data = WeldingCertificateData::from([
             'number' => '',
             'status' => 'active',
