@@ -47,10 +47,26 @@ class InternalOrder extends Model
             'required' => true,
             'filter' => 'search'
         ],
+        'status' => [
+            'type' => 'radios',
+            'multiple' => false,
+            'label' => 'Active/Inactive',
+            'options' => [
+                'active' => 'Active',
+                'inactive' => 'Inactive',
+            ],
+            'filter' => 'radios',
+            'default' => 'active'
+        ],
     ];
 
     public function loadAll()
     {
         return $this;
+    }
+
+    public function timeRegistrations()
+    {
+        return $this->hasMany(TimeRegistration::class, 'internal_order_id');
     }
 }

@@ -1,6 +1,6 @@
 <div>
     <x-form-header backlink="{{ route('backoffice.time-registration.index') }}">
-        <x-slot name="title">{{ __('Edit Supplier') }}</x-slot>
+        <x-slot name="title">{{ __('Edit Time Registration') }}</x-slot>
     </x-form-header>
     <form
         class="px-4 pt-8 pb-4 leading-6 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0"

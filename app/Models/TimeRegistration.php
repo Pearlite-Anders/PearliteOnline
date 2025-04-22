@@ -82,6 +82,7 @@ class TimeRegistration extends Model
             'type' => 'system_text',
             'label' => 'Timer',
             'default' => 0,
+            'sum' => true
         ],
         'driving' => [
             'type' => 'number',
@@ -90,6 +91,7 @@ class TimeRegistration extends Model
             'placeholder' => '',
             'filter' => 'search',
             'postfix' => 'km',
+            'sum' => true
         ],
         'expenses' => [
             'type' => 'number',
@@ -99,6 +101,7 @@ class TimeRegistration extends Model
             'filter' => 'search',
             'postfix' => 'DKK',
             'info' => 'f.eks. storebæltsbro eller overnatning',
+            'sum' => true
         ],
         'paid' => [
             'type' => 'checkbox',
