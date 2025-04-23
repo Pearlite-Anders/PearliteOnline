@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Enums\Module;
 use Livewire\Component;
 
 class Page extends Component

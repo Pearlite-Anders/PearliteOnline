@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Livewire\Dashboard;
+namespace App\Enums;
 
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
 enum Module: string
 {

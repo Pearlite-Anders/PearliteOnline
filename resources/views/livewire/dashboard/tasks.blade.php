@@ -24,7 +24,7 @@
                                     :can_edit="true"
                                     class="cursor-pointer hover:bg-gray-50"
                                 >
-                                    <x-table.cell class="py-4">{{ \App\Livewire\Dashboard\Module::from($module)->label() }}</x-table.cell>
+                                    <x-table.cell class="py-4">{{ \App\Enums\Module::from($module)->label() }}</x-table.cell>
                                     <x-table.cell class="py-4">{{ $task->data['name'] ?? '' }}</x-table.cell>
                                 </x-table.row>
                             @endforeach

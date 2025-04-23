@@ -38,8 +38,8 @@
                             </button>
                         </label>
 
-                        @foreach(\App\Livewire\Dashboard\Module::cases() as $module)
-                            <label class="flex px-2 py-1 text-sm leading-none border rounded-md cursor-pointer focus:outline-none focus:ring-4 ring-cyan-300/25 @if(!$filters->isAllModulesSelected() && in_array($module->value, $filters->modules)) border-cyan-400 bg-slate-50 @else bg-white border-gray-200 @endif">
+                        @foreach(\App\Enums\Module::cases() as $module)
+                            <label class="flex px-2 py-1 text-sm leading-none border rounded-md cursor-pointer focus:outline-none focus:ring-4 ring-cyan-300/25 @if(in_array($module->value, $filters->modules)) border-cyan-400 bg-slate-50 @else bg-white  border-gray-200 @endif">
                                 <button type="button" wire:click="selectSingleModule('{{ $module->value }}')" class="focus:outline-none">
                                     <span>{{ $module->label() }}</span>
                                 </button>
