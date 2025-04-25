@@ -36,7 +36,7 @@ class Create extends Component
             $this->registration = $timeRegistration->replicate();
             $this->form->setFields($this->registration);
         } else {
-            $this->form->data = TimeRegistrationData::from([]);
+            $this->form->data = TimeRegistrationData::from(['paid' => true]);
             $this->form->user_id = auth()->user()->id;
         }
 
