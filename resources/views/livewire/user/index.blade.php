@@ -55,6 +55,14 @@
                                             <x-icon.pencil class="w-4 h-4 text-gray-600" />
                                         </x-button.link>
                                     @endcan
+                                    @can('impersonate', $user)
+                                        <x-button.link
+                                            href="{{ route('impersonate', $user) }}"
+                                            class="text-gray-600 bg-transparent hover:bg-gray-100 hover:text-gray-900"
+                                        >
+                                            <x-icon.lock class="w-4 h-4 text-gray-600" />
+                                        </x-button.link>
+                                    @endcan
 
                                     @can('delete', $user)
                                         @if($confirming == $user->id && $hasDependencies)
