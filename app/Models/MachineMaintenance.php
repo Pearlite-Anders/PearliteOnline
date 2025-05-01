@@ -78,7 +78,8 @@ class MachineMaintenance extends Model
         'next_maintenance_date' => [
             'type' => 'date',
             'label' => 'Next Maintenance Date',
-            'filter' => 'date'
+            'filter' => 'date',
+            'indicator' => true
         ],
         'status' => [
             'type' => 'radios',
@@ -123,5 +124,10 @@ class MachineMaintenance extends Model
     public function edit_url()
     {
         return route('machine-maintenance.edit', ['machineMaintenance' => $this->id]);
+    }
+
+    public function getNeedsReviewAttribute()
+    {
+        return isset($this->data['status']) && $this->data['status'] == 'active';
     }
 }

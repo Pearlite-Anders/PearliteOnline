@@ -63,11 +63,11 @@
             </p>
         </div>
     </x-table.cell>
-@elseif($column['type'] == 'calculated')
+@elseif($column['type'] == 'calculated' || $column['type'] == 'date')
     <x-table.cell class="whitespace-nowrap">
         <div class="flex items-center">
             {{ $model->getColumnValue($key) }}
-            @if (isset($column['indicator']) && $column['indicator'] == true && $column['filter'] == 'date' && $model->needsReview)
+            @if (isset($column['indicator']) && $column['indicator'] == true && $column['filter'] == 'date' && $model->needsReview && $model->getColumnTimeDiff($key) !== null)
                 @if ($model->getColumnTimeDiff($key) <= 0)
                     <span class="inline-block ml-2 h-2 w-2 bg-red-700 rounded-xl">&nbsp;</span>
                 @elseif($model->getColumnTimeDiff($key) <= 14)

@@ -33,6 +33,8 @@ class SidebarEntryNotifications extends Component
     {
         return match ($this->module) {
             Module::Supplier => $this->suppliers(),
+            Module::MachineMaintenance => $this->machineMaintenance(),
+            Module::WeldingCertificate => $this->weldingCertificates(),
             default => collect()
         };
     }
@@ -48,6 +50,28 @@ class SidebarEntryNotifications extends Component
         );
 
         $query = $query->where('data->needs_assessment', '!=', "no");
+        return $query->get();
+    }
+
+    private function machineMaintenance()
+    {
+        $user = \Auth::user();
+        $query = $user->currentCompany->machineMaintenances();
+
+        $query = $query->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.next_maintenance_date'))) <= ?", [now()->format('Y-m-d')]);
+
+        $query = $query->where('data->status', '!=', "no");
+        return $query->get();
+    }
+
+    private function weldingCertificates()
+    {
+        $user = \Auth::user();
+        $query = $user->currentCompany->weldingCertificates();
+
+        $query->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.date_next_signature'))) <= ?", [now()->format('Y-m-d')]);
+
+        $query = $query->where('data->status', '!=', "no");
         return $query->get();
     }
 

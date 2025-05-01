@@ -202,8 +202,12 @@ trait HasFilter
         $column = self::getColumn($column_key);
         $value = $this->getColumnValue($column->key);
 
-        $valueAsDate = Carbon::createFromFormat('Y.m.d', $value);
-        $diff = $time->diffInDays($valueAsDate, false);
+        try {
+            $valueAsDate = Carbon::createFromFormat('Y.m.d', $value);
+            $diff = $time->diffInDays($valueAsDate, false);
+        } catch (\Carbon\Exceptions\InvalidFormatException $e) {
+            $diff = null;
+        }
 
         return $diff;
     }

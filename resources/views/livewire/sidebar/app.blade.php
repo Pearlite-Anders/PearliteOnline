@@ -16,8 +16,13 @@
                         @can('viewAny', App\Models\WeldingCertificate::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('welding-certificates.index') }}" :active="request()->routeIs('welding-certificates.*')">
-                                    <x-icon.welding-certificate class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('Welding Certificates') }}
+                                    <div class="flex-1 flex items-center">
+                                        <x-icon.welding-certificate class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                        {{ __('Welding Certificates') }}
+                                    </div>
+                                    <div class="flex-0 flex items-center">
+                                        <x-sidebar-entry-notifications module="{{ App\Enums\Module::WeldingCertificate->value }}" />
+                                    </div>
                                 </x-nav-link>
                             </li>
                         @endcan
@@ -68,8 +73,13 @@
                         @can('viewAny', App\Models\MachineMaintenance::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('machine-maintenance.index') }}" :active="request()->routeIs('machine-maintenance.*')">
-                                    <x-icon.maintenance class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('Maintenance') }}
+                                    <div class="flex-1 flex items-center">
+                                        <x-icon.maintenance class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                        {{ __('Maintenance') }}
+                                    </div>
+                                    <div class="flex-0 flex items-center">
+                                        <x-sidebar-entry-notifications module="{{ App\Enums\Module::MachineMaintenance->value }}" />
+                                    </div>
                                 </x-nav-link>
                             </li>
                         @endcan
