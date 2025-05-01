@@ -82,6 +82,8 @@ trait BaseFilters
             }
         }
 
+        // $this->dispatch('clearSelected');
+
         return $query;
     }
 
