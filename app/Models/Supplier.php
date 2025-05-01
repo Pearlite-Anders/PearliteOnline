@@ -114,7 +114,8 @@ class Supplier extends Model
         'next_assessment' => [
             'type' => 'calculated',
             'label' => 'Next assessment',
-            'filter' => 'date'
+            'filter' => 'date',
+            'indicator' => true
         ],
         'remarks' => [
             'type' => 'textarea',
@@ -160,5 +161,10 @@ class Supplier extends Model
     public function edit_url()
     {
         return route('supplier.edit', ['supplier' => $this->id]);
+    }
+
+    public function getNeedsReviewAttribute()
+    {
+        return isset($this->data['needs_assessment']) && $this->data['needs_assessment'] == 'yes';
     }
 }

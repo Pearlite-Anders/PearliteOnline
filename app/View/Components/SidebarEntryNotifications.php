@@ -39,7 +39,9 @@ class SidebarEntryNotifications extends Component
 
     private function suppliers()
     {
-        $query = Supplier::where('responsible_user_id', '=', auth()->user()->id);
+        $user = \Auth::user();
+        $query = $user->currentCompany->suppliers();
+
         $query = $query->whereRaw(
             "DATE_ADD(JSON_UNQUOTE(JSON_EXTRACT(data, '$.latest_assessment_date')), INTERVAL JSON_UNQUOTE(JSON_EXTRACT(data, '$.assessment_frequency')) MONTH) <= ?",
             [now()->format('Y-m-d')]
