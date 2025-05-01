@@ -42,7 +42,11 @@ class SidebarEntryNotifications extends Component
     private function suppliers()
     {
         $user = \Auth::user();
-        $query = $user->currentCompany->suppliers();
+        if ($user->can('company_task.view')) {
+            $query = $user->currentCompany->suppliers();
+        } else {
+            $query = Supplier::where("responsible_user_id", "=", $user->id);
+        }
 
         $query = $query->whereRaw(
             "DATE_ADD(JSON_UNQUOTE(JSON_EXTRACT(data, '$.latest_assessment_date')), INTERVAL JSON_UNQUOTE(JSON_EXTRACT(data, '$.assessment_frequency')) MONTH) <= ?",
@@ -56,6 +60,11 @@ class SidebarEntryNotifications extends Component
     private function machineMaintenance()
     {
         $user = \Auth::user();
+
+        if (!$user->can('company_task.view')) {
+            return collect();
+        }
+
         $query = $user->currentCompany->machineMaintenances();
 
         $query = $query->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.next_maintenance_date'))) <= ?", [now()->format('Y-m-d')]);
@@ -67,6 +76,10 @@ class SidebarEntryNotifications extends Component
     private function weldingCertificates()
     {
         $user = \Auth::user();
+
+        if (!$user->can('company_task.view')) {
+            return collect();
+        }
         $query = $user->currentCompany->weldingCertificates();
 
         $query->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.date_next_signature'))) <= ?", [now()->format('Y-m-d')]);
