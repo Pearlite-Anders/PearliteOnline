@@ -19,7 +19,7 @@
                     @endif
                 </x-table.cell>
                 <x-table.cell>
-                    {{ $report->data['maintenance_date'] }}
+                    {{ $report->data['maintenance_date'] ?? '' }}
                 </x-table.cell>
                 <x-table.cell>
                     <span>{{ $report->user->name }}</span>

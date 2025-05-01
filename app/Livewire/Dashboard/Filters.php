@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Enums\Module;
 use Livewire\Attributes\Url;
 use Livewire\Form;
 
@@ -16,8 +17,16 @@ class Filters extends Form
     public function init()
     {
         if (empty($this->modules)) {
-            $this->modules = array_map(fn($module) => $module->value, Module::cases());
+            $this->modules = array_map(fn ($module) => $module->value, Module::cases());
         }
+    }
+
+    public function isAllModulesSelected(): bool
+    {
+        $allModules = array_map(fn ($module) => $module->value, Module::cases());
+        sort($allModules);
+        sort($this->modules);
+        return $this->modules == $allModules;
     }
 
     public function apply($query, Module $module)

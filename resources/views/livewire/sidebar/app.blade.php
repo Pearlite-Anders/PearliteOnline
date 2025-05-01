@@ -76,8 +76,13 @@
                         @can('viewAny', App\Models\Supplier::class)
                             <li class="mt-2 mb-0 text-left list-outside">
                                 <x-nav-link href="{{ route('supplier.index') }}" :active="request()->routeIs('supplier.*')">
-                                    <x-icon.truck class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
-                                    {{ __('Supplier') }}
+                                    <div class="flex-1 flex items-center">
+                                        <x-icon.truck class="w-5 h-5 mr-2 text-gray-500 align-middle duration-75 ease-in-out" />
+                                        {{ __('Supplier') }}
+                                    </div>
+                                    <div class="flex-0 flex items-center">
+                                        <x-sidebar-entry-notifications module="{{ App\Enums\Module::Supplier->value }}" />
+                                    </div>
                                 </x-nav-link>
                             </li>
                         @endcan

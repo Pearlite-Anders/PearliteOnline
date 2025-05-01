@@ -234,4 +234,9 @@ class WeldingCertificate extends Model
         return $this->load(['company', 'welder']);
     }
 
+    public function edit_url()
+    {
+        return route('welding-certificates.edit', ['weldingCertificate' => $this->id]);
+    }
+
 }

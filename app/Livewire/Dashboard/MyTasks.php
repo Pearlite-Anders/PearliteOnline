@@ -2,12 +2,16 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Enums\Module;
 use App\Models\Supplier;
+use App\Livewire\DataTable\WithClickableRow;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class MyTasks extends Component
 {
+    use WithClickableRow;
+
     #[Reactive]
     public Filters $filters;
 

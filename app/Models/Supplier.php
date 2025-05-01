@@ -142,7 +142,7 @@ class Supplier extends Model
 
     public function getNextAssessmentAttribute()
     {
-        return $this->nextAssessment()->format('Y.m.d');
+        return $this->nextAssessment()?->format('Y.m.d');
     }
 
     public function nextAssessment()
@@ -155,5 +155,10 @@ class Supplier extends Model
         $date = Carbon::createFromFormat('Y.m.d', $last_report->data['assessment_date']);
 
         return $date->addMonths($this->data['assessment_frequency']);
+    }
+
+    public function edit_url()
+    {
+        return route('supplier.edit', ['supplier' => $this->id]);
     }
 }
