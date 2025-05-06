@@ -10,8 +10,6 @@ use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
 {
-    public $new_file;
-    public $current_file;
     public $supplier_id;
     public $data;
     public $responsible_user_id;
@@ -21,10 +19,6 @@ class Form extends LivewireForm
     public function setFields(Supplier $supplier)
     {
         $this->data = SupplierData::from($supplier->data);
-
-        if($supplier->current_file_id) {
-            $this->current_file = File::find($supplier->current_file_id);
-        }
 
         $this->responsible_user_id = $supplier->responsible_user_id;
         $this->supplier_id = $supplier->id;
@@ -52,30 +46,12 @@ class Form extends LivewireForm
     {
         $data = array_merge([
         ], $this->except([
-            'new_file',
-            'current_file',
             'supplier_id',
             'new_assessment_date',
             'new_assessment_file',
         ]));
 
         return $data;
-    }
-
-    public function handleUploads(Supplier $supplier)
-    {
-        if($this->new_file) {
-            if($supplier->current_file_id) {
-                $file = File::find($supplier->current_file_id);
-                $file->delete();
-            }
-
-            $file = File::fromTemporaryUpload($this->new_file, $supplier);
-            $supplier->current_file_id = $file->id;
-            $supplier->save();
-        }
-
-        return $supplier;
     }
 
     public function createReport()
