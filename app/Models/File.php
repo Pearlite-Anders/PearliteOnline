@@ -15,6 +15,11 @@ class File extends Model
 
     public static $default_disk = 's3';
 
+    public function fileable()
+    {
+        return $this->morphTo();
+    }
+
     public static function fromTemporaryUpload(TemporaryUploadedFile $uploaded_file, $model, $company_id = '')
     {
         if(empty($company_id)) {

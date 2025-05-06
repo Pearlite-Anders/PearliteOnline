@@ -157,4 +157,9 @@ class Supplier extends Model
 
         return $date->addMonths($this->data['assessment_frequency']);
     }
+
+    public function documents()
+    {
+        return $this->hasMany(SupplierDocument::class);
+    }
 }
