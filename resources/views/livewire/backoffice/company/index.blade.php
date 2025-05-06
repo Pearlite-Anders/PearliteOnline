@@ -19,12 +19,18 @@
             <div class="overflow-hidden">
                 <x-table>
                     <x-slot name="head">
+                        <x-table.heading sortable>{{ __('Number') }}</x-table.heading>
                         <x-table.heading sortable>{{ __('Name') }}</x-table.heading>
                         <x-table.heading />
                     </x-slot>
                     <x-slot name="body">
                         @foreach($companies as $company)
                             <x-table.row class="hover:bg-gray-50">
+                                <x-table.cell>
+                                    <a href="{{ route('backoffice.companies.show', $company) }}" class="text-gray-900 hover:text-gray-600">
+                                        {{ optional($company->data)['number'] }}
+                                    </a>
+                                </x-table.cell>
                                 <x-table.cell>
                                     <a href="{{ route('backoffice.companies.show', $company) }}" class="text-gray-900 hover:text-gray-600">
                                         {{ $company->data['name'] }}
