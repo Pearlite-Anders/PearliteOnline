@@ -78,12 +78,6 @@ class Company extends Model
             'placeholder' => '',
             'filter' => 'search'
         ],
-        'number' => [
-            'type' => 'text',
-            'label' => 'Number',
-            'required' => true,
-            'filter' => 'search'
-        ],
     ];
 
     public function users()
