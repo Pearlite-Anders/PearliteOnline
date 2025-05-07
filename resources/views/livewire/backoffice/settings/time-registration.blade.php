@@ -1,5 +1,5 @@
 <div
-    id="multiple-choice"
+    id="time-registration"
     @unless($section == 'time-registration')
         class="hidden"
     @else

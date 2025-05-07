@@ -137,6 +137,7 @@ Route::middleware([
 
         Route::get('/wps', \App\Livewire\Backoffice\Wps\Index::class)->name('wps.index');
         Route::get('/wps/{wps}/edit', \App\Livewire\Backoffice\Wps\Edit::class)->name('wps.edit');
+        Route::get('/settings', \App\Livewire\Backoffice\Settings::class)->name('settings');
     });
 
 });
