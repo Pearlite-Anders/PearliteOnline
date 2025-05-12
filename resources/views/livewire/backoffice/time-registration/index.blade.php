@@ -32,13 +32,13 @@
     </x-index-header>
 
     <div class="flex flex-col leading-6 text-black">
-        <div class="flex items-center gap-x-4 bg-white border-b justify-between">
+        <div class="flex items-center justify-between bg-white border-b gap-x-4">
             <x-filter-status :filters="$filters" />
             <div class="flex">
                 @if (count($selected) >= 1)
-                    <x-button wire:click="markSelectedAsInvoiced" class="text-gray-600 bg-transparent hover:bg-gray-100 hover:text-gray-900">
+                    <x-button.secondary wire:click="markSelectedAsInvoiced">
                         {{ __('Mark Selected as Invoiced') }}
-                    </x-button>
+                    </x-button.secondary>
                 @endif
             </div>
         </div>
