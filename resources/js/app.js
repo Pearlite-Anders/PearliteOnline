@@ -129,7 +129,7 @@ Alpine.data('signature_editor', (path, url, boxes) => ({
         console.log(this.stage.width())
         console.log(this.stage.height())
         console.log(cobinations)
-        if(cobinations >= 3) {
+        if(cobinations === 3) {
             this.addBox('date', cobinations, 70, 550, 93, 39);
             this.addBox('signature', cobinations, 112, 550, 93, 65);
             this.addBox('title', cobinations, 182, 550, 93, 80);
