@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <x-reports :reports="$machineMaintenance->reports" />
+            <livewire:reports :$reports :allow-delete="auth()->user()->can('delete', $machineMaintenance)" date-field="maintenance_date" />
 
             <!-- New maintenance form -->
             @if($maintenanceFormOpen)

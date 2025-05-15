@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <x-reports :reports="$supplier->reports" />
+            <livewire:reports :$reports :allow-delete="false" date-field="assessment_date" />
 
             <!-- New assessment form -->
             @if($assessmentFormOpen)

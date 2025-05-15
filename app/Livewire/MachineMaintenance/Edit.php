@@ -2,6 +2,7 @@
 
 namespace App\Livewire\MachineMaintenance;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\MachineMaintenance;
@@ -12,6 +13,7 @@ class Edit extends Component
     use Shared, WithFileUploads;
     public Form $form;
     public MachineMaintenance $machineMaintenance;
+    public $reports;
 
     public bool $maintenanceFormOpen = false;
 
@@ -29,6 +31,7 @@ class Edit extends Component
         $this->authorize('update', $machineMaintenance);
         $this->machineMaintenance = $machineMaintenance;
         $this->form->setFields($machineMaintenance);
+        $this->reports = $machineMaintenance->reports()->with('user')->get()->toArray();
     }
 
     public function render()
@@ -52,5 +55,16 @@ class Edit extends Component
 
             $this->form->data->next_maintenance_date = $newDate->addMonths((int)$this->form->data->maintenance_interval)->format('Y.m.d');
         }
+    }
+
+    #[On('delete-report')]
+    public function deleteReport($id)
+    {
+        $report = $this->machineMaintenance->reports()->find($id);
+        if ($report) {
+            $report->delete();
+        }
+
+        $this->reports = $this->machineMaintenance->reports()->with('user')->get()->toArray();
     }
 }
