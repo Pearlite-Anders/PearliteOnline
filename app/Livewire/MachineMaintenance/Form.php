@@ -19,6 +19,7 @@ class Form extends LivewireForm
     public $new_maintenance_file;
     public $responsible_user_id;
 
+    public $confirmingFile = null;
 
     public function setFields(MachineMaintenance $machineMaintenance): void
     {
@@ -54,7 +55,8 @@ class Form extends LivewireForm
             'new_files',
             'machine_maintenance_id',
             'new_maintenance_date',
-            'new_maintenance_file'
+            'new_maintenance_file',
+            'confirmingFile'
         ]));
 
         return $data;
@@ -117,6 +119,22 @@ class Form extends LivewireForm
         $machineMaintenance->save();
 
         return $report;
+    }
+
+    public function deleteFile($id)
+    {
+        $machineMaintenance = MachineMaintenance::findOrFail($this->machine_maintenance_id);
+
+        $files = [];
+        foreach($machineMaintenance->files as $file_id) {
+            if ($file_id == $id) {
+                File::find($file_id)->delete();
+            } else {
+                $files[] = $file_id;
+            }
+        }
+        $machineMaintenance->files = $files;
+        $machineMaintenance->save();
     }
 
 }
