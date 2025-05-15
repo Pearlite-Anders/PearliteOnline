@@ -70,13 +70,17 @@
                 class="relative w-full max-w-6xl p-12 overflow-y-auto bg-white shadow-lg rounded-xl"
             >
                 @if($file->isPDF())
-                    <iframe
-                        src="{{ $file->temporary_url_new() }}#navpanes=0"
-                        frameborder="0"
-                        class="w-full aspect-[1/1.4]"
-                    ></iframe>
+                    <template x-if="open">
+                        <iframe
+                            src="{{ $file->temporary_url_new() }}#navpanes=0"
+                            frameborder="0"
+                            class="w-full aspect-[1/1.4]"
+                        ></iframe>
+                    </template>
                 @elseif($file->isImage())
-                    <img src="{{ $file->temporary_url_new() }}" alt="{{ $file->name }}" />
+                    <template x-if="open">
+                        <img src="{{ $file->temporary_url_new() }}" alt="{{ $file->name }}" />
+                    </template>
                 @endif
             </div>
         </div>
