@@ -142,7 +142,8 @@ class Supplier extends Model
 
     public function getNextAssessmentAttribute()
     {
-        return $this->nextAssessment()->format('Y.m.d');
+        $next_assessment = $this->nextAssessment();
+        return $next_assessment ? $next_assessment->format('Y.m.d') : null;
     }
 
     public function nextAssessment()

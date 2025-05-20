@@ -6,6 +6,7 @@ use App\Data\MachineMaintenanceData;
 use App\Models\MachineMaintenance;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Carbon;
 
 class Create extends Component
 {
@@ -25,6 +26,16 @@ class Create extends Component
     {
         $this->authorize('create', new MachineMaintenance());
         $this->form->data = MachineMaintenanceData::from(['name' => '', 'status' => 'active']);
+    }
+
+    public function updated($property)
+    {
+        if($property == 'form.data.maintenance_interval') {
+            if(!$this->form->data->maintenance_interval) {
+                return;
+            }
+            $this->form->data->next_maintenance_date = now()->addMonths((int)$this->form->data->maintenance_interval)->format('Y.m.d');
+        }
     }
 
     public function render()
