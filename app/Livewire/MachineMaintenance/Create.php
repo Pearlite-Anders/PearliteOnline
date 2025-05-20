@@ -28,6 +28,16 @@ class Create extends Component
         $this->form->data = MachineMaintenanceData::from(['name' => '', 'status' => 'active']);
     }
 
+    public function updated($property)
+    {
+        if($property == 'form.data.maintenance_interval') {
+            if(!$this->form->data->maintenance_interval) {
+                return;
+            }
+            $this->form->data->next_maintenance_date = now()->addMonths((int)$this->form->data->maintenance_interval)->format('Y.m.d');
+        }
+    }
+
     public function render()
     {
         return view('livewire.machine-maintenance.create');
