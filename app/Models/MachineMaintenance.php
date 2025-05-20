@@ -101,7 +101,7 @@ class MachineMaintenance extends Model
 
     public function reports()
     {
-        return $this->hasMany(MachineMaintenanceMaintenance::class)->orderBy('data->maintenance_date', 'asc');
+        return $this->hasMany(MachineMaintenanceMaintenance::class)->orderBy('data->maintenance_date', 'desc');
     }
 
     public function responsible_user(): BelongsTo
