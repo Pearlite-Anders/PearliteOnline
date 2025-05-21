@@ -24,7 +24,6 @@
         <x-table>
             <x-slot name="head">
                 <x-table.heading sortable>{{ __('Name') }}</x-table.heading>
-                <x-table.heading sortable>{{ __('Active') }}</x-table.heading>
                 <x-table.heading sortable>{{ __('Upload date') }}</x-table.heading>
                 <x-table.heading />
             </x-slot>
@@ -45,16 +44,6 @@
                                     {{ $document->file?->name }}
                                 </a>
                             @endif
-                        </x-table.cell>
-
-                        <x-table.cell>
-                            <x-button wire:click="toggleStatus({{ $document->id }})" class="text-sm">
-                                @if (isset($document->data['status']) && $document->data['status'] == 'active')
-                                    <x-icon.check class="w-5 h-5 text-green-500" />
-                                @else
-                                    <x-icon.x class="w-5 h-5 text-red-500" />
-                                @endif
-                            </x-button>
                         </x-table.cell>
 
                         <x-table.cell>
