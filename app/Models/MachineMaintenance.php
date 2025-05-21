@@ -62,6 +62,11 @@ class MachineMaintenance extends Model
             'placeholder' => 'Choose user',
             'filter' => 'relationship'
         ],
+        'next_maintenance_date' => [
+            'type' => 'date',
+            'label' => 'Next Maintenance Date',
+            'filter' => 'date'
+        ],
         'maintenance_interval' => [
             'type' => 'radios',
             'label' => 'Maintenance Interval',
@@ -74,11 +79,6 @@ class MachineMaintenance extends Model
                 '36' => '36 Months',
             ],
             'filter' => 'search'
-        ],
-        'next_maintenance_date' => [
-            'type' => 'date',
-            'label' => 'Next Maintenance Date',
-            'filter' => 'date'
         ],
         'status' => [
             'type' => 'radios',
