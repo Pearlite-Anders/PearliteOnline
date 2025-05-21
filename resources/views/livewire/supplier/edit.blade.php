@@ -18,8 +18,8 @@
 
     <div class="bottom-0 right-0 px-4 pt-8 pb-4 leading-6 border-b-0 border-gray-200 border-solid text-blackborder-t border-x-0">
         <div class="py-4 mb-4 leading-6 text-black bg-white rounded-lg shadow xl:py-8 sm:py-6">
-            <div class="flex justify-between mx-0 mt-0 mb-4 px-4 xl:px-8 sm:px-6">
-                <h3 class=" text-xl font-bold leading-7">
+            <div class="flex justify-between px-4 mx-0 mt-0 mb-4 xl:px-8 sm:px-6">
+                <h3 class="text-xl font-bold leading-7 ">
                     {{ __('Supplier assessments') }}
                 </h3>
                 <div>
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <livewire:reports :$reports :allow-delete="false" date-field="assessment_date" />
+            <livewire:reports :$reports :allow-delete="auth()->user()->can('delete', $supplier)" date-field="assessment_date" />
 
             <!-- New assessment form -->
             @if($assessmentFormOpen)
