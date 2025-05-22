@@ -111,12 +111,11 @@ class MachineMaintenance extends Model
 
     public function nextMaintenanceDate()
     {
-        if (empty($this->data["lastest_maintenance_date"]) || empty($this->data["maintenance_interval"])) {
+        $next_maintenance_date = data_get($this->data, 'next_maintenance_date', null);
+        if (empty($next_maintenance_date)) {
             return null;
         }
 
-        $date = Carbon::createFromFormat('Y.m.d', $this->data['lastest_maintenance_date']);
-
-        return $date->addMonths($this->data['maintenance_interval']);
+        return Carbon::createFromFormat('Y.m.d', $next_maintenance_date);
     }
 }
