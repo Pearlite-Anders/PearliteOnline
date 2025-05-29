@@ -2,14 +2,16 @@
 
 namespace App\Livewire\WeldingCertificates;
 
+use App\Livewire\DataTable\WithDelete;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
+use App\Models\File;
 use App\Models\WeldingCertificate;
 
 class Edit extends Component
 {
-    use Shared, WithFileUploads;
+    use Shared, WithFileUploads, WithDelete;
 
     public Form $form;
     public WeldingCertificate $weldingCertificate;
@@ -36,6 +38,32 @@ class Edit extends Component
         $this->authorize('update', $weldingCertificate);
         $this->weldingCertificate = $weldingCertificate;
         $this->form->setFields($weldingCertificate);
+    }
+
+    public function delete($id)
+    {
+        $weldingCertificate = $this->weldingCertificate;
+        $this->authorize('update', $weldingCertificate);
+        $previous_files = collect($this->weldingCertificate->previous_files);
+        if (!$previous_files->first(fn($file) => $file == $id)) {
+            return;
+        }
+
+        $file = File::find($id);
+        if (!$file) {
+            return;
+        }
+
+
+        $weldingCertificate->previous_files = $previous_files->filter(fn($file) => $file != $id)->toArray();
+        $weldingCertificate->save();
+        $file->delete();
+
+        $this->dispatch(
+            'banner-message',
+            style: 'success',
+            message: __('Deleted successfully.')
+        );
     }
 
     public function render()
