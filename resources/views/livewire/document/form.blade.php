@@ -149,6 +149,7 @@
             <x-input.filepond
                 wire:model="form.files"
                 multiple="true"
+                filetypes="application/pdf"
             />
         </div>
 

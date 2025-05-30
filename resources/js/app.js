@@ -16,7 +16,12 @@ import { Danish } from 'flatpickr/dist/l10n/da.js';
 // }
 import 'flatpickr/dist/flatpickr.min.css';
 
+// FilePond
 import * as FilePond from 'filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+
 window.FilePond = FilePond;
 import 'filepond/dist/filepond.min.css';
 
