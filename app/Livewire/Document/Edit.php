@@ -5,14 +5,16 @@ namespace App\Livewire\Document;
 use Livewire\Component;
 
 use Livewire\WithFileUploads;
+use App\Livewire\DataTable\WithDelete;
 use App\Livewire\WithTrixUploads;
 use App\Models\Document;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
 class Edit extends Component
 {
-    use WithFileUploads, WithTrixUploads, NextReviewDate;
+    use WithFileUploads, WithTrixUploads, NextReviewDate, WithDelete;
 
     public Form $form;
     public Document $document;
@@ -68,5 +70,16 @@ class Edit extends Component
     public function toggleAllEditPermission()
     {
         $this->form->toggleAllEditPermission();
+    }
+
+    public function delete($id)
+    {
+        $this->form->deleteFile($id);
+
+        $this->dispatch(
+            'banner-message',
+            style: 'success',
+            message: __('Deleted successfully.')
+        );
     }
 }

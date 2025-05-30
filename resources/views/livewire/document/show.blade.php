@@ -34,6 +34,24 @@
                             </li>
                         </ul>
                     </div>
+                    @if (count($revision->files) >= 1)
+                        <div class="mb-6">
+                            <h2 class="mb-2 text-lg text-gray-900">{{ __('Attatchments') }}</h2>
+                            <ul class="text-gray-900 list-none">
+                                @foreach(array_reverse($revision->files) as $file_id)
+                                    @php( $file = \App\Models\File::find($file_id) )
+                                    <li class="py-1" wire:key="file-{{ $file_id }}">
+                                        <div class="flex flex-grow">
+                                            <x-file-with-modal
+                                                :file="$file"
+                                                svg_location="left"
+                                            />
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     @if($showActions)
                         <div>
                             <h2 class="mb-2 text-lg text-gray-900">{{ __('Actions') }}</h2>
