@@ -146,16 +146,30 @@ class Supplier extends Model
         return $next_assessment ? $next_assessment->format('Y.m.d') : null;
     }
 
+    public function getLatestAssessmentAttribute()
+    {
+        $latest_assessment = $this->latestAssessment();
+        return $latest_assessment? $latest_assessment->format('Y.m.d') : null;
+    }
+
     public function nextAssessment()
+    {
+        $latest_assessment = $this->latestAssessment();
+        if(!$latest_assessment) {
+            return null;
+        }
+
+        return $latest_assessment->addMonths($this->data['assessment_frequency']);
+    }
+
+    public function latestAssessment()
     {
         if(!$this->reports->count()) {
             return null;
         }
 
         $last_report = $this->reports->last();
-        $date = Carbon::createFromFormat('Y.m.d', $last_report->data['assessment_date']);
-
-        return $date->addMonths($this->data['assessment_frequency']);
+        return Carbon::createFromFormat('Y.m.d', $last_report->data['assessment_date']);
     }
 
     public function documents()

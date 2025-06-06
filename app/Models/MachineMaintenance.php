@@ -109,13 +109,36 @@ class MachineMaintenance extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getNextMaintenanceDateAttribute()
+    {
+        $next_maintenance_date = $this->nextMaintenanceDate();
+        return $next_maintenance_date ? $next_maintenance_date->format('Y.m.d') : null;
+    }
+
+    public function getLatestMaintenanceDateAttribute()
+    {
+        $latest_maintenance_date = $this->latestMaintenanceDate();
+        return $latest_maintenance_date ? $latest_maintenance_date->format('Y.m.d') : null;
+    }
+
     public function nextMaintenanceDate()
     {
         $next_maintenance_date = data_get($this->data, 'next_maintenance_date', null);
+        $next_maintenance_date = str_replace('-', '.', $next_maintenance_date);
         if (empty($next_maintenance_date)) {
             return null;
         }
 
         return Carbon::createFromFormat('Y.m.d', $next_maintenance_date);
+    }
+
+    public function latestMaintenanceDate()
+    {
+        if(!$this->reports->count()) {
+            return null;
+        }
+
+        $last_report = $this->reports()->first();
+        return Carbon::createFromFormat('Y.m.d', $last_report->data['maintenance_date']);
     }
 }

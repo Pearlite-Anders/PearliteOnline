@@ -13,6 +13,9 @@ class Filters extends Form
     #[Url(as: 'modules')]
     public array $modules = [];
 
+    #[Url(as: 'view')]
+    public string $view = 'table';
+
     public function init()
     {
         if (empty($this->modules)) {
