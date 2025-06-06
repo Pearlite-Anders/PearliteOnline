@@ -36,7 +36,7 @@
         <x-table.cell>{{ $task->data['number'] }}</x-table.cell>
         <x-table.cell>{{ $task->welder?->name }}</x-table>
         <x-table.cell>{{ $task->latest_signature }}</x-table>
-        <x-table.cell>{{ $task->next_signature_or_expire }}</x-table>
+        <x-table.date-status-cell :date="$task->nextSignatureOrExpire()" />
         <x-table.cell>{{ $task->responsible_user?->name }}</x-table>
     </x-table.row>
 @endif

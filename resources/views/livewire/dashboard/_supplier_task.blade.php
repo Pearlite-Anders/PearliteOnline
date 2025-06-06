@@ -17,7 +17,7 @@
         <x-table.cell />
         <x-table.cell>{{ $task->data['name'] }}</x-table>
         <x-table.cell>{{ $task->latest_assessment_date }}</x-table>
-        <x-table.cell>{{ $task->next_assessment_date }}</x-table>
+        <x-table.date-status-cell :date="$task->nextAssessment()" />
         <x-table.cell>{{ $task->responsible_user?->name }}</x-table>
     </x-table.row>
 @endif
