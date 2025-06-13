@@ -14,7 +14,7 @@
         <x-table.cell>{{ __('Maintenance') }}</x-table.cell>
         <x-table.cell />
         <x-table.cell>
-            <livewire:machine-maintenance.maintenance :machineMaintenance="$task" class="!py-0 !px-2 !leading-6 !text-xs" :button-text="__('Sign')" />
+            <livewire:machine-maintenance.maintenance :machineMaintenance="$task" class="!py-0 !px-2 !leading-6 !text-xs" :button-text="__('Sign')" @click.prevent.stop="console.log('stop')" />
         </x-table>
         <x-table.cell>{{ $task->data['serial_number'] }}</x-table.cell>
         <x-table.cell>{{ $task->data['name'] }}</x-table>

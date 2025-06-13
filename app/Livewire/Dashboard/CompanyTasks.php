@@ -30,6 +30,18 @@ class CompanyTasks extends Component
         return view('livewire.dashboard.placeholder', compact('header'));
     }
 
+    #[On('maintenance-created')]
+    public function reportCreated()
+    {
+        // Dont do anything, simply here to trigger render
+    }
+
+    #[On('assessment-created')]
+    public function assessmentCreated()
+    {
+        // Dont do anything, simply here to trigger render
+    }
+
     protected function tasks(): Collection
     {
         $tasks = [];
@@ -65,11 +77,5 @@ class CompanyTasks extends Component
         $query = $this->filters->apply($query, Module::MachineMaintenance);
 
         return $query->get();
-    }
-
-    #[On('maintenance-created')]
-    public function reportCreated()
-    {
-        // Dont do anything, simply here to trigger render
     }
 }

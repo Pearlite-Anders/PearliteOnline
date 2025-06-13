@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard;
 
 use App\Livewire\DataTable\WithClickableRow;
 use App\Models\Supplier;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
@@ -27,6 +28,18 @@ class MyTasks extends Component
     {
         $header = $params['header'];
         return view('livewire.dashboard.placeholder', compact('header'));
+    }
+
+    #[On('maintenance-created')]
+    public function reportCreated()
+    {
+        // Dont do anything, simply here to trigger render
+    }
+
+    #[On('assessment-created')]
+    public function assessmentCreated()
+    {
+        // Dont do anything, simply here to trigger render
     }
 
     protected function tasks()

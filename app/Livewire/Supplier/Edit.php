@@ -14,8 +14,6 @@ class Edit extends Component
     public Supplier $supplier;
     public $reports;
 
-    public bool $assessmentFormOpen = false;
-
     public function update()
     {
         $this->form->update($this->supplier);
@@ -38,8 +36,11 @@ class Edit extends Component
         return view('livewire.supplier.edit');
     }
 
-    public function toggleAssessmentFormOpen()
+    #[On('assessment-created')]
+    public function assessmentCreated()
     {
-        $this->assessmentFormOpen = !$this->assessmentFormOpen;
+        $this->reports = $this->supplier->reports()->with('user')->get()->toArray();
+        $this->supplier->refresh();
+        $this->form->setFields($this->supplier);
     }
 }

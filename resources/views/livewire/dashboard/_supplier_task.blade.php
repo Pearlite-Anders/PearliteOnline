@@ -13,7 +13,9 @@
     >
         <x-table.cell>{{ __('Supplier') }}</x-table.cell>
         <x-table.cell />
-        <x-table.cell></x-table>
+        <x-table.cell>
+            <livewire:supplier.assessment :supplier="$task" class="!py-0 !px-2 !leading-6 !text-xs" :button-text="__('Sign')" />
+        </x-table>
         <x-table.cell />
         <x-table.cell>{{ $task->data['name'] }}</x-table>
         <x-table.cell>{{ $task->latest_assessment_date }}</x-table>
