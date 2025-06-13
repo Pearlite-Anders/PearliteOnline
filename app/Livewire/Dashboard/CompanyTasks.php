@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard;
 
 use App\Livewire\DataTable\WithClickableRow;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
@@ -64,5 +65,11 @@ class CompanyTasks extends Component
         $query = $this->filters->apply($query, Module::MachineMaintenance);
 
         return $query->get();
+    }
+
+    #[On('maintenance-created')]
+    public function reportCreated()
+    {
+        // Dont do anything, simply here to trigger render
     }
 }
