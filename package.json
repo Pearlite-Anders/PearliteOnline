@@ -21,6 +21,7 @@
         "@dmuy/timepicker": "^2.0.2",
         "choices.js": "^10.2.0",
         "filepond": "^4.30.4",
+        "filepond-plugin-file-validate-type": "^1.2.9",
         "flatpickr": "^4.6.13",
         "puppeteer": "^21.11.0",
         "tippy.js": "^6.3.7",

@@ -51,8 +51,10 @@ class TimeRegistration extends Model
         ],
         'internal_order_id' => [
             'type' => 'dynamic_relationship',
-            'relationship' => 'company_id',
+            'relationship' => 'internalOrder',
+            'foreign_key' => 'company_id',
             'class' => InternalOrder::class,
+            'through_class' => Company::class,
             'label' => 'Order',
             'placeholder' => 'Choose order',
             'filter' => 'relationship',
@@ -108,14 +110,31 @@ class TimeRegistration extends Model
             'label' => 'Billable',
             'required' => false,
             'placeholder' => '',
-            'filter' => 'search'
+            'filter' => 'checkbox',
         ],
         'invoiced' => [
             'type' => 'checkbox',
             'label' => 'Invoiced',
             'required' => false,
             'placeholder' => '',
-            'filter' => 'search'
+            'filter' => 'checkbox',
+        ],
+        'break' => [
+            'type' => 'checkbox',
+            'label' => 'Break',
+            'required' => false,
+            'placeholder' => '',
+            'filter' => 'checkbox',
+        ],
+        'break_time' => [
+            'type' => 'number',
+            'label' => 'Break Time',
+            'required' => false,
+            'placeholder' => '',
+            'filter' => 'search',
+            'postfix' => 'min',
+            'disabled_by' => 'break',
+            'live' => true,
         ],
         'remarks' => [
             'type' => 'textarea',
@@ -124,6 +143,7 @@ class TimeRegistration extends Model
             'placeholder' => '',
             'filter' => 'search'
         ],
+
     ];
 
     public function loadAll()

@@ -22,7 +22,9 @@ class TimeRegistrationData extends Data implements Wireable
         public ?bool $paid,
         public ?array $tasks,
         public ?string $start,
-        public ?string $end
+        public ?string $end,
+        public ?bool $break = false,
+        public ?string $break_time,
     ) {
     }
 }

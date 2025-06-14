@@ -22,6 +22,23 @@ class Index extends Component
 
     public $model = TimeRegistration::class;
 
+    public function markSelectedAsInvoiced()
+    {
+        foreach ($this->selected as $registrationId) {
+            $registration = TimeRegistration::find($registrationId);
+            if (array_key_exists('invoiced', $registration->data) && array_key_exists('paid', $registration->data)) {
+                if ($registration->data['invoiced'] === false || $registration->data['invoiced'] == null) {
+                    $data = $registration->data;
+                    $data['invoiced'] = true;
+                    $registration->data = $data;
+                    $registration->save();
+                }
+            }
+        }
+
+        $this->dispatch('clearSelected');
+    }
+
     public function render()
     {
         $this->authorize('viewAny', $this->model);

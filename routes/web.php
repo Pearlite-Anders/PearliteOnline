@@ -137,6 +137,36 @@ Route::middleware([
 
         Route::get('/wps', \App\Livewire\Backoffice\Wps\Index::class)->name('wps.index');
         Route::get('/wps/{wps}/edit', \App\Livewire\Backoffice\Wps\Edit::class)->name('wps.edit');
+        Route::get('/settings', \App\Livewire\Backoffice\Settings::class)->name('settings');
     });
 
 });
+
+Route::get('impersonate/leave', function () {
+    if (session()->has('impersonated_by')) {
+        $user_id = session()->pull('impersonated_by');
+        session()->flush();
+        $user = App\Models\User::findOrFail($user_id);
+        auth()->guard('web')->logout();
+        auth()->guard('web')->login($user);
+        auth()->guard('sanctum')->setUser($user);
+        // auth()->user()->clear_cache();
+    }
+
+    return redirect()->route('dashboard');
+})->name('impersonate.leave');
+
+Route::get('impersonate/{user}', function (App\Models\User $user) {
+    if (Gate::allows('impersonate', $user)) {
+        session()->flush();
+        session()->put('impersonated_by', Auth::id());
+        auth()->guard('web')->logout();
+        auth()->guard('web')->login($user);
+        auth()->guard('sanctum')->setUser($user);
+        // auth()->user()->clear_cache();
+
+        return redirect()->route('dashboard');
+    } else {
+        abort(403);
+    }
+})->name('impersonate');

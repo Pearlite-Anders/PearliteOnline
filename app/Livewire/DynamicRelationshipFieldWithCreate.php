@@ -18,8 +18,8 @@ class DynamicRelationshipFieldWithCreate extends Component
     private $checksum;
 
     #[Reactive]
-    public $relation;
-    public $lastRelation;
+    public $foreign_key;
+    public $previous_selected_value;
 
     #[Modelable]
     public $value = '';
@@ -35,13 +35,13 @@ class DynamicRelationshipFieldWithCreate extends Component
 
     public function getChoices()
     {
-        if(!$this->relation) {
+
+        if(!$this->foreign_key) {
             return [];
         }
 
-        $model = Str::remove('_id', $this->column['relationship']);
-        $model = 'App\Models\\' . Str::ucfirst($model);
-        $model = $model::find($this->relation);
+        $model = $this->column['through_class'];
+        $model = $model::find($this->foreign_key);
         $plural_modal = Str::plural(Str::lower(Str::replace('App\Models\\', '', $this->column['class'])));
         $collection = $model->{$plural_modal};
         if(is_array($this->column['class']::LABEL_KEY)) {
@@ -62,7 +62,7 @@ class DynamicRelationshipFieldWithCreate extends Component
     public function create()
     {
         $model = $this->column['class']::create([
-            'company_id' => auth()->user()->currentCompany->id,
+            'company_id' => $this->form->company_id,
             'data' => $this->form->data->toArray()
         ]);
 
@@ -81,14 +81,16 @@ class DynamicRelationshipFieldWithCreate extends Component
 
     public function render()
     {
-
+        $choices = $this->getChoices();
         if(
             $this->checksum !== md5($this->value) &&
-            $this->relation &&
-            $this->lastRelation !== $this->relation
+            $this->foreign_key &&
+            $this->previous_selected_value !== $this->foreign_key
         ) {
-            $this->value = '';
-            $this->lastRelation = $this->relation;
+            if (!in_array($this->value, array_keys($choices))) {
+                $this->value = null;
+            }
+            $this->previous_selected_value = $this->foreign_key;
             $this->dispatch(
                 'refreshChoices',
                 $this->getChoices(),
@@ -98,7 +100,7 @@ class DynamicRelationshipFieldWithCreate extends Component
         }
 
         return view('livewire.dynamic-relationship-field-with-create')->with([
-            'choices' => $this->getChoices()
+            'choices' => $choices
         ]);
     }
 }

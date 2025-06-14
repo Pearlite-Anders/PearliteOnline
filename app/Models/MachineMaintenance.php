@@ -62,6 +62,12 @@ class MachineMaintenance extends Model
             'placeholder' => 'Choose user',
             'filter' => 'relationship'
         ],
+        'next_maintenance_date' => [
+            'type' => 'date',
+            'label' => 'Next Maintenance Date',
+            'filter' => 'date',
+            'indicator' => true
+        ],
         'maintenance_interval' => [
             'type' => 'radios',
             'label' => 'Maintenance Interval',
@@ -74,12 +80,6 @@ class MachineMaintenance extends Model
                 '36' => '36 Months',
             ],
             'filter' => 'search'
-        ],
-        'next_maintenance_date' => [
-            'type' => 'date',
-            'label' => 'Next Maintenance Date',
-            'filter' => 'date',
-            'indicator' => true
         ],
         'status' => [
             'type' => 'radios',
@@ -102,7 +102,7 @@ class MachineMaintenance extends Model
 
     public function reports()
     {
-        return $this->hasMany(MachineMaintenanceMaintenance::class)->orderBy('data->maintenance_date', 'asc');
+        return $this->hasMany(MachineMaintenanceMaintenance::class)->orderBy('data->maintenance_date', 'desc');
     }
 
     public function responsible_user(): BelongsTo
@@ -112,13 +112,12 @@ class MachineMaintenance extends Model
 
     public function nextMaintenanceDate()
     {
-        if (empty($this->data["lastest_maintenance_date"]) || empty($this->data["maintenance_interval"])) {
+        $next_maintenance_date = data_get($this->data, 'next_maintenance_date', null);
+        if (empty($next_maintenance_date)) {
             return null;
         }
 
-        $date = Carbon::createFromFormat('Y.m.d', $this->data['lastest_maintenance_date']);
-
-        return $date->addMonths($this->data['maintenance_interval']);
+        return Carbon::createFromFormat('Y.m.d', $next_maintenance_date);
     }
 
     public function edit_url()

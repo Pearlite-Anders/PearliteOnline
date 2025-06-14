@@ -53,7 +53,7 @@ class Index extends Component
         $model = $this->document->revisions()->findOrFail($id);
         $this->authorize('update', $model);
 
-        $revision = $this->document->revisions()->create(['data' => $model->data]);
+        $revision = $this->document->revisions()->create(['data' => $model->data, 'files' => $model->files]);
         $this->document->removeOldRevision();
 
         $this->dispatch(

@@ -12,6 +12,7 @@ class Edit extends Component
     use Shared, WithFileUploads;
     public Form $form;
     public Supplier $supplier;
+    public $reports;
 
     public bool $assessmentFormOpen = false;
 
@@ -29,6 +30,7 @@ class Edit extends Component
         $this->authorize('update', $supplier);
         $this->supplier = $supplier;
         $this->form->setFields($supplier);
+        $this->reports = $this->supplier->reports()->with('user')->get()->toArray();
     }
 
     public function render()

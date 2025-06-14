@@ -14,7 +14,7 @@ class Form extends LivewireForm
 {
     public $data;
     public array $files = [];
-    public Collection $current_files;
+    public array $current_files = [];
     public array $permissions;
     public $owner_id = null;
 
@@ -22,9 +22,13 @@ class Form extends LivewireForm
     {
         $this->data = DocumentData::from($document->currentRevision->data);
         $this->owner_id = $document->owner_id;
-        $this->current_files = collect($document->files)->map(function ($file) {
-            return File::find($file);
-        });
+
+        $this->current_files = $document->currentRevision->files ?? [];
+    }
+
+    public function setFiles($files)
+    {
+        $this->current_files = $files;
     }
 
     public function create(?Document $parent = null)
@@ -38,7 +42,7 @@ class Form extends LivewireForm
             ]];
         });
 
-        $document = DB::transaction(function () use ($user, $data, $permissions, $parent) {
+        $revision = DB::transaction(function () use ($user, $data, $permissions, $parent) {
             $document = Document::create([
                 'company_id' => $user->currentCompany->id,
                 'owner_id' => $this->owner_id == "" ? null : $this->owner_id,
@@ -48,10 +52,12 @@ class Form extends LivewireForm
 
             $document->users()->sync($permissions);
 
-            return $document;
+            return $revision;
         });
 
-        return $document;
+        $revision = $this->handleUploads($revision);
+
+        return $revision->document;
     }
 
     public function update(Document $document)
@@ -116,14 +122,15 @@ class Form extends LivewireForm
     {
         $current_files = [];
         if ($this->current_files) {
-            foreach ($this->current_files as $file) {
-                $current_files[] = $file->id;
+            foreach ($this->current_files as $file_id) {
+                $current_files[] = $file_id;
             }
         }
 
+        $user = auth()->user();
         if ($this->files) {
             foreach ($this->files as $file) {
-                $current_files[] = File::fromTemporaryUpload($file, $model)->id;
+                $current_files[] = File::fromTemporaryUpload($file, $model, $user->currentCompany->id)->id;
             }
         }
 
@@ -131,5 +138,22 @@ class Form extends LivewireForm
         $model->save();
 
         return $model;
+    }
+
+    public function deleteFile($id)
+    {
+        $previous_files = collect($this->current_files);
+        if (!$previous_files->first(fn($file) => $file == $id)) {
+            return;
+        }
+
+        $file = File::find($id);
+        if (!$file) {
+            return;
+        }
+
+        $files = $previous_files->filter(fn($file) => $file != $id)->toArray();
+
+        $this->setFiles($files);
     }
 }

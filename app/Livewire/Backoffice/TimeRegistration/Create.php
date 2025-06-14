@@ -4,6 +4,7 @@ namespace App\Livewire\Backoffice\TimeRegistration;
 
 use App\Data\TimeRegistrationData;
 use App\Models\TimeRegistration;
+use App\Models\Setting;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,6 +16,11 @@ class Create extends Component
 
     public Form $form;
 
+    public $duplicate_id;
+    public ?TimeRegistration $registration;
+
+    protected $queryString = ['duplicate_id'];
+
     public function create()
     {
         $this->form->create();
@@ -25,7 +31,18 @@ class Create extends Component
     public function mount()
     {
         $this->authorize('create', new TimeRegistration());
-        $this->form->data = TimeRegistrationData::from([]);
+        if ($this->duplicate_id) {
+            $timeRegistration = TimeRegistration::find($this->duplicate_id);
+            $this->registration = $timeRegistration->replicate();
+            $this->form->setFields($this->registration);
+        } else {
+            $this->form->data = TimeRegistrationData::from(['paid' => true]);
+            $this->form->user_id = auth()->user()->id;
+        }
+
+        if ($this->form->data->break_time == null) {
+            $this->form->data->break_time = Setting::get('time_registration_default_break_duration', 0);
+        }
     }
 
     public function render()

@@ -32,10 +32,20 @@
     </x-index-header>
 
     <div class="flex flex-col leading-6 text-black">
-        <x-filter-status :filters="$filters" />
+        <div class="flex items-center justify-between bg-white border-b gap-x-4">
+            <x-filter-status :filters="$filters" />
+            <div class="flex">
+                @if (count($selected) >= 1)
+                    <x-button.secondary wire:click="markSelectedAsInvoiced">
+                        {{ __('Mark Selected as Invoiced') }}
+                    </x-button.secondary>
+                @endif
+            </div>
+        </div>
         <div class="overflow-x-auto">
             <x-table>
                 <x-slot name="head">
+                    <x-table.heading />
                     @foreach($columns as $column)
                         @continue($column->visible === false)
                         @if(
@@ -56,6 +66,16 @@
                             :can_edit="auth()->user()->can('update', $regstration)"
                             class="cursor-pointer hover:bg-gray-50"
                         >
+                            <x-table.cell x-data @click.stop="">
+                                <div  class="flex items-center justify-center -mx-6 -my-1">
+                                    <input
+                                        type="checkbox"
+                                        wire:model.live="selected"
+                                        value="{{ $regstration->id }}"
+                                        class="border-gray-300 rounded text-cyan-600 focus:ring-cyan-500"
+                                    />
+                                </div>
+                            </x-table.cell>
                             @foreach($columns as $column)
                                 @continue($column->visible === false)
                                 <x-table.model-value-cell
@@ -74,6 +94,16 @@
                                         >
                                             <x-icon.pencil class="w-4 h-4 text-gray-800" />
                                         </x-button.link>
+                                    @endcan
+                                    @can('create', App\Models\TimeRegistration::class)
+                                        <div class="flex" x-data @click.prevent.stop="window.location.href='{{ route('backoffice.time-registration.create', ['duplicate_id' => $regstration->id]) }}'">
+                                            <x-button.link
+                                                href="{{ route('backoffice.time-registration.create', ['duplicate_id' => $regstration->id]) }}"
+                                                class="text-gray-600 bg-transparent hover:bg-gray-100 hover:text-gray-900"
+                                            >
+                                                <x-icon.document-duplicate class="w-4 h-4 text-gray-800" />
+                                            </x-button.link>
+                                        </div>
                                     @endcan
                                     @can('delete', $regstration)
                                         <div class="flex" x-data @click.prevent.stop="console.log('stop')">

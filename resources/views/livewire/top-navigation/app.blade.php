@@ -114,6 +114,11 @@
                             <div class="border-t border-gray-200"></div>
 
                             <!-- Authentication -->
+                            @if (session()->has('impersonated_by'))
+                                <x-dropdown-link href="{{ route('impersonate.leave') }}">
+                                    {{ __('Leave spy') }}
+                                </x-dropdown-link>
+                            @endif
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
 

@@ -5,29 +5,28 @@ namespace App\Livewire\Supplier;
 use App\Models\File;
 use App\Models\Supplier;
 use App\Data\SupplierData;
+use App\Data\SupplierDocumentData;
 use App\Models\SupplierReport;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
 {
-    public $new_file;
-    public $current_file;
     public $supplier_id;
     public $data;
     public $responsible_user_id;
     public $new_assessment_date;
     public $new_assessment_file;
+    public $files = [];
+    public $documents;
 
     public function setFields(Supplier $supplier)
     {
         $this->data = SupplierData::from($supplier->data);
 
-        if($supplier->current_file_id) {
-            $this->current_file = File::find($supplier->current_file_id);
-        }
-
         $this->responsible_user_id = $supplier->responsible_user_id;
         $this->supplier_id = $supplier->id;
+
+        $this->documents = $supplier->documents()->with('file')->get();
     }
 
     public function create()
@@ -52,30 +51,26 @@ class Form extends LivewireForm
     {
         $data = array_merge([
         ], $this->except([
-            'new_file',
-            'current_file',
             'supplier_id',
             'new_assessment_date',
             'new_assessment_file',
+            'files',
+            'documents',
         ]));
 
         return $data;
     }
 
-    public function handleUploads(Supplier $supplier)
+    public function handleUploads($model)
     {
-        if($this->new_file) {
-            if($supplier->current_file_id) {
-                $file = File::find($supplier->current_file_id);
-                $file->delete();
+        if($this->files) {
+            foreach ($this->files as $file) {
+                $document = $model->documents()->create(['data' => SupplierDocumentData::from(['status' => 'active'])]);
+                $fileModel = File::fromTemporaryUpload($file, $document, $model->company_id);
             }
-
-            $file = File::fromTemporaryUpload($this->new_file, $supplier);
-            $supplier->current_file_id = $file->id;
-            $supplier->save();
         }
 
-        return $supplier;
+        return $model;
     }
 
     public function createReport()
@@ -102,6 +97,24 @@ class Form extends LivewireForm
         $supplier->save();
 
         return $report;
+    }
+
+    public function toggleStatus($id)
+    {
+        $supplier = Supplier::findOrFail($this->supplier_id);
+        $model = $supplier->documents()->findOrFail($id);
+
+        $data = $model->data;
+        if (isset($data['status'])) {
+            $data['status'] = ($data['status'] == 'active') ? 'inactive' : 'active';
+        } else {
+            $data['status'] = 'inactive';
+        }
+
+        $model->data = $data;
+        $model->save();
+
+        return $model;
     }
 
 }

@@ -27,7 +27,6 @@
             window.ChoicesArray['{{ $attributes['prettyname'] }}'].passedElement.element.addEventListener('change', function(event) {
                 values = getSelectValues($refs.{{ $attributes['prettyname'] }});
                 if(values !== '{{ $attributes['placeholder'] }}') {
-                    console.log(@this.get('value'));
                     @this.set('{{ $attributes['wire:model'] }}', values);
                 } else {
                     @this.set('{{ $attributes['wire:model'] }}', '');

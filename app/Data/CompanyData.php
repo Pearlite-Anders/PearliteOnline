@@ -19,6 +19,7 @@ class CompanyData extends Data implements Wireable
         public ?string $invoice_email,
         public ?int $driving,
         public ?string $remarks,
+        public ?string $number,
     ) {
     }
 }

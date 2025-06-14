@@ -21,7 +21,7 @@ class InternalOrder extends Model
         'files' => 'array',
     ];
 
-    public const LABEL_KEY = 'data.name';
+    public const LABEL_KEY = ['data.number', 'data.name'];
 
     public const SYSTEM_COLUMNS = [
         'company_id' => [

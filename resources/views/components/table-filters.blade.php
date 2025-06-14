@@ -99,6 +99,7 @@
                                 @endforeach
                             </div>
                         </div>
+
                     @elseif(optional($filter_column)->filter == 'select')
                         <div class="relative">
                             <x-label :for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
@@ -114,6 +115,32 @@
                             </select>
                         </div>
                     @endif
+                @endif
+                @if(optional($filter_column)->filter == 'checkbox')
+                    <div class="relative">
+                        <x-label :for="$filter->key" :value="__($filter_column->label)" class="!mb-0 text-xs leading-tight" />
+                        <div class="flex flex-wrap -mx-2">
+
+                            <label class="flex mx-2 mb-2 px-2 py-2 text-sm leading-none border rounded-md cursor-pointer focus:outline-none focus:ring-4 ring-cyan-300/25 @if(optional($filters)[$filter->key] == "true") border-cyan-400 bg-slate-50 @else bg-white  border-gray-200 @endif">
+                                <input
+                                    type="radio"
+                                    wire:model.live="filters.{{ $filter->key }}"
+                                    value="true"
+                                    class="hidden"
+                                />
+                                    <span>{{ __('Yes') }}</span>
+                            </label>
+                            <label class="flex mx-2 mb-2 px-2 py-2 text-sm leading-none border rounded-md cursor-pointer focus:outline-none focus:ring-4 ring-cyan-300/25 @if(optional($filters)[$filter->key] == "false") border-cyan-400 bg-slate-50 @else bg-white  border-gray-200 @endif">
+                                <input
+                                    type="radio"
+                                    wire:model.live="filters.{{ $filter->key }}"
+                                    value="false"
+                                    class="hidden"
+                                />
+                                    <span>{{ __('No') }}</span>
+                            </label>
+                        </div>
+                    </div>
                 @endif
                 @if(optional($filter_column)->filter == 'search' || optional($filter_column)->filter == 'search_number')
                     <div class="relative">

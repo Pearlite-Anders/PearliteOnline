@@ -69,12 +69,43 @@
                 <ul>
                     @foreach(array_reverse($machineMaintenance->files) as $file_id)
                         @php( $file = \App\Models\File::find($file_id) )
-                        <li class="py-1">
-                            <x-file-with-modal
-                                :file="$file"
-                                svg_location="left"
-                            />
-                        </li>
+                        @if ($file)
+                            <li class="py-1">
+                                <div class="flex items-center">
+                                    <div class="grow">
+                                        <x-file-with-modal
+                                            :file="$file"
+                                            svg_location="left"
+                                        />
+                                    </div>
+                                    @can('delete', $machineMaintenance)
+                                        <div class="flex" x-data @click.prevent.stop="">
+                                            @if($confirmingFile == $file_id)
+                                                <x-button
+                                                    wire:click="deleteFile({{ $file_id }})"
+                                                    class="bg-red-700 hover:bg-red-800"
+                                                >
+                                                    <x-icon.check class="w-4 h-4 text-white" />
+                                                </x-button>
+                                                <x-button
+                                                    wire:click="cancelConfirmDeleteFile"
+                                                    class="bg-cyan-600 hover:bg-cyan-700"
+                                                >
+                                                    <x-icon.x class="w-4 h-4 text-white" />
+                                                </x-button>
+                                            @else
+                                                <x-button
+                                                    wire:click="confirmDeleteFile({{ $file_id}})"
+                                                    class="bg-transparent hover:bg-gray-100 hover:text-gray-900"
+                                                >
+                                                    <x-icon.trash class="w-4 h-4 text-red-600" />
+                                                </x-button>
+                                            @endif
+                                        </div>
+                                    @endcan
+                                </div>
+                            </li>
+                        @endif
                     @endforeach
                 </ul>
             </div>

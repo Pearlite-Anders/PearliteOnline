@@ -22,6 +22,12 @@ class Company extends Model
     public const LABEL_KEY = 'data.name';
 
     public const SYSTEM_COLUMNS = [
+        'number' => [
+            'type' => 'text',
+            'label' => 'Number',
+            'required' => true,
+            'filter' => 'search'
+        ],
         'name' => [
             'type' => 'text',
             'label' => 'Name',
@@ -131,7 +137,7 @@ class Company extends Model
 
     public function internalorders($view = null)
     {
-        if($view == 'index') {
+        if ($view == 'index') {
             return InternalOrder::query();
         }
 
@@ -146,7 +152,7 @@ class Company extends Model
     public function timeregistrations()
     {
         $query = TimeRegistration::query();
-        if(auth()->user()->isAdmin()) {
+        if (auth()->user()->isAdmin()) {
             return $query;
         }
 
@@ -156,7 +162,7 @@ class Company extends Model
 
     public static function get_choices()
     {
-        if(auth()->user()->is_admin) {
+        if (auth()->user()->is_admin) {
             return self::all()->pluck('data.name', 'id')->toArray();
         }
         return auth()->user()->companies->pluck('data.name', 'id')->toArray();
