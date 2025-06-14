@@ -33,13 +33,11 @@ trait Shared
             } else {
                 $diff = $start->diffInHours($end);
                 $diffMinutes = $start->diffInMinutes($end) % 60;
-                if ($diffMinutes) {
-                    if ($diffMinutes < 10) {
-                        $diffMinutes = '0' . $diffMinutes;
-                    }
 
-                    $diff .= ':' . $diffMinutes;
-                }
+                $diff = floatval($diff);
+                $diff = $diff + (intval($diffMinutes) / 60);
+                $diff = round($diff, 2);
+                $diff = str_replace(".", ",", $diff);
             }
 
             $this->form->data->hours = $diff;
