@@ -17,7 +17,7 @@ class Form extends LivewireForm
     public $new_assessment_date;
     public $new_assessment_file;
     public $files = [];
-    public $documents;
+    public $documents = [];
 
     public function setFields(Supplier $supplier)
     {
@@ -63,7 +63,7 @@ class Form extends LivewireForm
 
     public function handleUploads($model)
     {
-        if($this->files) {
+        if ($this->files) {
             foreach ($this->files as $file) {
                 $document = $model->documents()->create(['data' => SupplierDocumentData::from(['status' => 'active'])]);
                 $fileModel = File::fromTemporaryUpload($file, $document, $model->company_id);
@@ -83,7 +83,7 @@ class Form extends LivewireForm
         ];
         $report->save();
 
-        if($this->new_assessment_file) {
+        if ($this->new_assessment_file) {
             $file = File::fromTemporaryUpload($this->new_assessment_file, $report, $report->supplier->company_id);
             $report->current_file_id = $file->id;
             $report->save();
