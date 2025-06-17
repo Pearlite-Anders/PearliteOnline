@@ -38,6 +38,21 @@
                         <x-input-error for="" class="mt-2" />
                     </div>
                     <div>
+                        <x-label for="welding_certificates.welding_certificate_notification_users" :value="__('Notification user(s)')" />
+                        <x-input.choices
+                            id="welding_certificates.welding_certificate_notification_users"
+                            type="text"
+                            class="block w-full"
+                            wire:model="settings.welding_certificate_notification_users"
+                            :options="$users"
+                            prettyname="welding_certificate_notification_users"
+                            multiple="true"
+                            :selected="data_get($settings, 'welding_certificate_notification_users', [])"
+                        />
+                        <x-input-error for="" class="mt-2" />
+                        <p class="mt-2 text-sm text-gray-500">{{ __('Separate multiple emails with a comma.') }}</p>
+                    </div>
+                    <div>
                         <x-label for="welding_certificates.welding_certificate_notification_email" :value="__('Notification email(s)')" />
                         <x-input
                             id="welding_certificates.welding_certificate_notification_email"

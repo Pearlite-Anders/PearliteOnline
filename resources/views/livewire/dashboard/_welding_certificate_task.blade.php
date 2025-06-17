@@ -38,7 +38,7 @@
         <x-table.cell>{{ $task->latest_signature }}</x-table>
         <x-table.date-status-cell :date="$task->nextSignatureOrExpire()" />
         <x-table.cell>
-            {{ \App\Models\Setting::get('welding_certificate_notification_email', null, $task->company->id) }}
+            <x-welding-certificate-users :company-id="$task->company_id" />
         </x-table>
     </x-table.row>
 @endif
