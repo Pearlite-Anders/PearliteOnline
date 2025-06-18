@@ -23,6 +23,7 @@
                     :edit_link="route($editRoute, $wpqr)"
                     :can_edit="auth()->user()->can('update', $wpqr)"
                     class="cursor-pointer hover:bg-gray-50"
+                    :wire:key="$wpqr->id"
                 >
                     <x-table.cell>
                         <div x-data @click.stop="console.log('stop')" class="flex items-center justify-center -mx-6 -my-1">

@@ -91,6 +91,7 @@
                             :edit_link="route('welding-coordination.edit', $weldingCoordination)"
                             :can_edit="auth()->user()->can('update', $weldingCoordination)"
                             class="cursor-pointer hover:bg-gray-50"
+                            :wire:key="$weldingCoordination->id"
                         >
                             <x-table.cell>
                                 <div x-data @click.stop="console.log('stop')" class="flex items-center justify-center -mx-6 -my-1">

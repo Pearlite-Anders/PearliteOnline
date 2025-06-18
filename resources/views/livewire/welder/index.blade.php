@@ -85,6 +85,7 @@
                             :edit_link="route('welder.edit', $welder)"
                             :can_edit="auth()->user()->can('update', $welder)"
                             class="cursor-pointer hover:bg-gray-50"
+                            :wire:key="$welder->id"
                         >
                             <x-table.cell>
                                 <div x-data @click.stop="console.log('stop')" class="flex items-center justify-center -mx-6 -my-1">

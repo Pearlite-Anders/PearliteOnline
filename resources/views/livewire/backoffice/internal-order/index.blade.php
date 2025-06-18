@@ -55,6 +55,7 @@
                             :edit_link="route('backoffice.internal-order.edit', $internalOrder)"
                             :can_edit="auth()->user()->can('update', $internalOrder)"
                             class="cursor-pointer hover:bg-gray-50"
+                            :wire:key="$internalOrder->id"
                         >
                             @foreach($columns as $column)
                                 @continue($column->visible === false)

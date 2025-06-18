@@ -62,7 +62,6 @@
         @unless($hide_filters)
             <x-filter-status :filters="$filters" />
         @endunless
-        Selected: {{ count($selected) }}
         <livewire:wpqr.table :resource="$company" :columns="$columns" :filters="$filters" :search="$search" :project_id="$project_id"/>
     </div>
 </div>

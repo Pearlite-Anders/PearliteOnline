@@ -55,6 +55,7 @@
                             :edit_link="route('project.edit', $project)"
                             :can_edit="auth()->user()->can('update', $project)"
                             class="cursor-pointer hover:bg-gray-50"
+                            :wire:key="$project->id"
                         >
                             @foreach($columns as $column)
                                 @continue($column->visible === false)

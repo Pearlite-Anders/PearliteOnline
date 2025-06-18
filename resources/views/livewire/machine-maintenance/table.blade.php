@@ -24,6 +24,7 @@
                         :edit_link="route('machine-maintenance.edit', $machineMaintenance)"
                         :can_edit="auth()->user()->can('update', $machineMaintenance)"
                         class="cursor-pointer hover:bg-gray-50"
+                        :wire:key="$machineMaintenance->id"
                     >
                         @foreach($columns as $column)
                             @continue($column->visible === false)

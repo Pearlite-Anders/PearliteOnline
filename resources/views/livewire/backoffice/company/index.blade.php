@@ -25,7 +25,7 @@
                     </x-slot>
                     <x-slot name="body">
                         @foreach($companies as $company)
-                            <x-table.row class="hover:bg-gray-50">
+                            <x-table.row class="hover:bg-gray-50" :wire:key="$company->id">
                                 <x-table.cell>
                                     <a href="{{ route('backoffice.companies.show', $company) }}" class="text-gray-900 hover:text-gray-600">
                                         {{ optional($company->data)['number'] }}

@@ -65,6 +65,7 @@
                             :edit_link="route('backoffice.time-registration.edit', $regstration)"
                             :can_edit="auth()->user()->can('update', $regstration)"
                             class="cursor-pointer hover:bg-gray-50"
+                            :wire:key="$regstration->id"
                         >
                             <x-table.cell x-data @click.stop="">
                                 <div  class="flex items-center justify-center -mx-6 -my-1">

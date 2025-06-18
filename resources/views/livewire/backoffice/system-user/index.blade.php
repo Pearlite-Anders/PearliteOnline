@@ -28,7 +28,7 @@
                     </x-slot>
                     <x-slot name="body">
                         @foreach($users as $user)
-                            <x-table.row>
+                            <x-table.row :wire:key="$user->id">
                                 <x-table.cell>{{ $user->name }}</x-table.cell>
                                 <x-table.cell>{{ $user->humanRole() }}</x-table.cell>
 

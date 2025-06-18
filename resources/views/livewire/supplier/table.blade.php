@@ -22,6 +22,7 @@
                         :edit_link="route('supplier.edit', $supplier)"
                         :can_edit="!$hideActions && auth()->user()->can('update', $supplier)"
                         class="hover:bg-gray-50 cursor-pointer"
+                        :wire:key="$supplier->id"
                     >
                         @foreach($columns as $column)
                             @continue($column->visible === false)

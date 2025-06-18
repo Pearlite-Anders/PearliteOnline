@@ -32,7 +32,7 @@
         <div class="overflow-x-auto">
             <ul role="list" class="grid grid-cols-1 gap-6 mx-6 my-5 sm:grid-cols-3 lg:grid-cols-4">
                 @foreach($documents as $document)
-                    <li class="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
+                    <li class="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow" wire:key="{{ $document->id }}">
                         <div class="flex items-center justify-between w-full p-6 space-x-6">
                             <div class="flex-1 truncate">
                                 <div class="flex items-center space-x-3">

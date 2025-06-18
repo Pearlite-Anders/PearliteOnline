@@ -27,6 +27,7 @@
                     :edit_link="route($editRoute, $wps)"
                     :can_edit="auth()->user()->can('update', $wps)"
                     class="cursor-pointer hover:bg-gray-50"
+                    :wire:key="$wps->id"
                 >
                     <x-table.cell>
                         <div x-data @click.stop="console.log('stop')" class="flex items-center justify-center -mx-6 -my-1">

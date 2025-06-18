@@ -21,6 +21,7 @@
                     @foreach($revisions as $revision)
                         <x-table.row
                             class="cursor-pointer hover:bg-gray-50"
+                            :wire:key="$revision->id"
                         >
                             <x-table.cell>
                                 {{ $revision->created_at->format('Y-m-d H:i') }}

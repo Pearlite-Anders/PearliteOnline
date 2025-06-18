@@ -53,6 +53,7 @@
                             :edit_link="route('backoffice.contact-person.edit', [$company, $contactPerson])"
                             :can_edit="auth()->user()->can('update', $contactPerson)"
                             class="cursor-pointer hover:bg-gray-50"
+                            :wire:key="$contactPerson->id"
                         >
                             @foreach($columns as $column)
                                 @continue($column->visible === false)

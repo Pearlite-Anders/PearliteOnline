@@ -55,6 +55,7 @@
                             :edit_link="route('ce.edit', $ce)"
                             :can_edit="auth()->user()->can('update', $ce)"
                             class="cursor-pointer hover:bg-gray-50"
+                            :wire:key="$ce->id"
                         >
                             <x-table.cell class="text-right">
                                 <livewire:table-row-preview
