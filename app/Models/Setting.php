@@ -57,7 +57,7 @@ class Setting extends Model
             return $value;
         }
 
-        return $deault;
+        return $default;
     }
 
     public static function default()
