@@ -52,17 +52,6 @@
                         <x-input-error for="" class="mt-2" />
                         <p class="mt-2 text-sm text-gray-500">{{ __('Separate multiple emails with a comma.') }}</p>
                     </div>
-                    <div>
-                        <x-label for="welding_certificates.welding_certificate_notification_email" :value="__('Notification email(s)')" />
-                        <x-input
-                            id="welding_certificates.welding_certificate_notification_email"
-                            type="text"
-                            class="block w-full"
-                            wire:model="settings.welding_certificate_notification_email"
-                        />
-                        <x-input-error for="" class="mt-2" />
-                        <p class="mt-2 text-sm text-gray-500">{{ __('Separate multiple emails with a comma.') }}</p>
-                    </div>
                 </div>
             </x-slot>
         </x-setting-section>
