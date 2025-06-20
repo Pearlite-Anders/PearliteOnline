@@ -48,7 +48,7 @@ class CheckSupplierAssessment extends Command
                     continue;
                 }
 
-                $days = Setting::get('supplier_notification_before_next_assessment', 0, $supplier->responsible_user->currentCompany?->id);
+                $days = Setting::get('supplier_notification_before_next_assessment', 14, $supplier->responsible_user->currentCompany?->id);
                 if ($nextAssessmentDate->subDays($days)->isFuture()) {
                     continue;
                 }

@@ -34,7 +34,7 @@ class CheckWeldingCertificateExpiration extends Command
 
         Company::all()->each(function ($company) {
             $this->info('Company: ' . $company->data['name']);
-            $notification_before_expiration = Setting::get('welding_certificate_notification_before_expiration', null, $company->id);
+            $notification_before_expiration = Setting::get('welding_certificate_notification_before_expiration', 14, $company->id);
 
             $weldingCertificates = WeldingCertificate::query()
                 ->whereCompanyId($company->id)

@@ -40,20 +40,20 @@ class Setting extends Model
         return self::default()->merge($database_settings);
     }
 
-    public static function get($key, $deault = null, $company_id = null)
+    public static function get($key, $default = null, $company_id = null)
     {
         $company_id = $company_id;
-        if(is_null($company_id) && auth()->user()) {
+        if (is_null($company_id) && auth()->user()) {
             $company_id = auth()->user()->currentCompany->id;
         }
 
         $database_value = self::whereCompanyId($company_id)->where('key', $key)->first();
-        if($database_value) {
+        if ($database_value) {
             return $database_value->value;
         }
 
         $value = self::default()->get($key);
-        if(!is_null($value)) {
+        if (!is_null($value)) {
             return $value;
         }
 
@@ -65,6 +65,9 @@ class Setting extends Model
         return collect([
             'welding_certificate_notification_before_expiration' => 14,
             'welding_certificate_notification_before_verification' => 7,
+            'maintenance_notification_before_next_maintenance' => 14,
+            'document_notification_before_next_review' => 14,
+            'supplier_notification_before_next_assessment' => 14,
             'welding_processes' => [
                 '111' => '111',
                 '131' => '131',

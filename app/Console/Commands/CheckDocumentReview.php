@@ -30,8 +30,8 @@ class CheckDocumentReview extends Command
     {
         $this->info('Check if time for Document Review');
         $users = [];
-        Document::with('owner', 'currentRevision')->chunk(100, function($documents) use (&$users) {
-            foreach($documents as $document) {
+        Document::with('owner', 'currentRevision')->chunk(100, function ($documents) use (&$users) {
+            foreach ($documents as $document) {
                 if (!$document->currentRevision) {
                     continue;
                 }
@@ -45,7 +45,7 @@ class CheckDocumentReview extends Command
                     continue;
                 }
 
-                $days = Setting::get('document_notification_before_next_review', 0, $document->owner->currentCompany?->id);
+                $days = Setting::get('document_notification_before_next_review', 14, $document->owner->currentCompany?->id);
                 if ($nextReviewDate->subDays($days)->isFuture()) {
                     continue;
                 }
@@ -61,7 +61,7 @@ class CheckDocumentReview extends Command
 
         $users = collect($users);
         if ($users->count() > 0) {
-            foreach($users as $userId => $documentIds) {
+            foreach ($users as $userId => $documentIds) {
                 $user = \App\Models\User::find($userId);
                 $this->info('Documents for ' . $user->name . ': ' . count($documentIds));
                 $user->notify(new Review($documentIds));

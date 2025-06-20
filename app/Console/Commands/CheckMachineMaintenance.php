@@ -34,8 +34,8 @@ class CheckMachineMaintenance extends Command
         $this->info('Check if time for Maintenance');
 
         $users = [];
-        MachineMaintenance::with('responsible_user')->chunk(100, function($machines) use (&$users) {
-            foreach($machines as $machine) {
+        MachineMaintenance::with('responsible_user')->chunk(100, function ($machines) use (&$users) {
+            foreach ($machines as $machine) {
                 if (!$machine->responsible_user) {
                     continue;
                 }
@@ -45,7 +45,7 @@ class CheckMachineMaintenance extends Command
                     continue;
                 }
 
-                $days = Setting::get('maintenance_notification_before_next_maintenance', 0, $machine->responsible_user->currentCompany?->id);
+                $days = Setting::get('maintenance_notification_before_next_maintenance', 14, $machine->responsible_user->currentCompany?->id);
                 if ($nextMaintenanceDate->subDays($days)->isFuture()) {
                     continue;
                 }
@@ -61,7 +61,7 @@ class CheckMachineMaintenance extends Command
 
         $users = collect($users);
         if ($users->count() > 0) {
-            foreach($users as $userId => $maintenancesIds) {
+            foreach ($users as $userId => $maintenancesIds) {
                 $user = \App\Models\User::find($userId);
                 $this->info('MachineMaintenance for ' . $user->name . ': ' . count($maintenancesIds));
                 $user->notify(new Maintenance($maintenancesIds));
