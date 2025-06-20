@@ -30,4 +30,13 @@ class Index extends Component
             'internalOrders' => $this->rows
         ]);
     }
+
+    public function resource()
+    {
+        if (\Auth::user()->isAdmin() || \Auth::user()->isPartner()) {
+            return InternalOrder::query()->whereIn('company_id', \Auth::user()->companies->pluck('id'));
+        }
+
+        return null;
+    }
 }

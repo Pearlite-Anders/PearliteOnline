@@ -25,7 +25,7 @@
                         :model="$model"
                         :filter_columns="$filter_columns"
                         :show_modal="$showFilterSettingsModal"
-                        :company-ids="auth()->user()->companies()->pluck('id')->toArray()"
+                        :company-ids="auth()->user()->companies()->pluck('companies.id')->toArray()"
                     />
                 @endunless
             </div>
