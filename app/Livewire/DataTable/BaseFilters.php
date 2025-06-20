@@ -60,14 +60,14 @@ trait BaseFilters
             } elseif ($column->filter == 'date') {
                 if(optional($value)['min'] && optional($value)['max']) {
                     if(optional($value)['min'] == optional($value)['max']) {
-                        $query->where('data->' . $key, Carbon::createFromFormat('Y.m.d', $value['min'])->format('Y-m-d'));
+                        $query->where('data->' . $key, $value['min']);
                     } else {
-                        $query->whereBetween('data->' . $key, [Carbon::createFromFormat('Y.m.d', $value['min'])->format('Y-m-d'), Carbon::createFromFormat('Y.m.d', $value['max'])->format('Y-m-d')]);
+                        $query->whereBetween('data->' . $key, [$value['min'], $value['max']]);
                     }
                 } elseif(optional($value)['min']) {
-                    $query->where('data->' . $key, '>=', Carbon::createFromFormat('Y.m.d', $value['min']));
+                    $query->where('data->' . $key, '>=', $value['min']);
                 } elseif(optional($value)['max']) {
-                    $query->where('data->' . $key, '<=', Carbon::createFromFormat('Y.m.d', $value['max']));
+                    $query->where('data->' . $key, '<=', $value['max']);
                 }
                 continue;
             } elseif ($column->filter == 'relationship') {
