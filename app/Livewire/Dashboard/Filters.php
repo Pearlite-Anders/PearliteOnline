@@ -8,7 +8,7 @@ use Livewire\Form;
 class Filters extends Form
 {
     #[Url(as: 'interval')]
-    public string $interval = Interval::Today->value;
+    public string $interval = Interval::Next_14_Days->value;
 
     #[Url(as: 'modules')]
     public array $modules = [];
