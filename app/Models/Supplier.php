@@ -114,7 +114,8 @@ class Supplier extends Model
         'next_assessment' => [
             'type' => 'calculated',
             'label' => 'Next assessment',
-            'filter' => 'date'
+            'filter' => 'date',
+            'indicator' => true
         ],
         'remarks' => [
             'type' => 'textarea',
@@ -170,6 +171,16 @@ class Supplier extends Model
 
         $last_report = $this->reports->last();
         return Carbon::createFromFormat('Y.m.d', $last_report->data['assessment_date']);
+    }
+
+    public function edit_url()
+    {
+        return route('supplier.edit', ['supplier' => $this->id]);
+    }
+
+    public function getNeedsReviewAttribute()
+    {
+        return isset($this->data['needs_assessment']) && $this->data['needs_assessment'] == 'yes';
     }
 
     public function documents()

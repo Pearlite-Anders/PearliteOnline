@@ -195,7 +195,8 @@ class WeldingCertificate extends Model
         'date_next_signature' => [
             'type' => 'date',
             'label' => 'Date next signature',
-            'filter' => 'date'
+            'filter' => 'date',
+            'indicator' => true
         ],
         'signed' => [
             'type' => 'number',
@@ -279,5 +280,15 @@ class WeldingCertificate extends Model
 
         $date = str_replace('-', '.', $this->data['last_signature']);
         return Carbon::createFromFormat('Y.m.d', $date);
+    }
+
+    public function edit_url()
+    {
+        return route('welding-certificates.edit', ['weldingCertificate' => $this->id]);
+    }
+
+    public function getNeedsReviewAttribute()
+    {
+        return isset($this->data['status']) && $this->data['status'] == 'active';
     }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Livewire\Dashboard;
 
-use App\Livewire\DataTable\WithClickableRow;
-use App\Models\Supplier;
 use Livewire\Attributes\On;
+use App\Enums\Module;
+use App\Models\Supplier;
+use App\Livewire\DataTable\WithClickableRow;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 

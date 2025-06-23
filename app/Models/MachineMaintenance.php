@@ -65,7 +65,8 @@ class MachineMaintenance extends Model
         'next_maintenance_date' => [
             'type' => 'date',
             'label' => 'Next Maintenance Date',
-            'filter' => 'date'
+            'filter' => 'date',
+            'indicator' => true
         ],
         'maintenance_interval' => [
             'type' => 'radios',
@@ -140,5 +141,15 @@ class MachineMaintenance extends Model
 
         $last_report = $this->reports()->first();
         return Carbon::createFromFormat('Y.m.d', $last_report->data['maintenance_date']);
+    }
+
+    public function edit_url()
+    {
+        return route('machine-maintenance.edit', ['machineMaintenance' => $this->id]);
+    }
+
+    public function getNeedsReviewAttribute()
+    {
+        return isset($this->data['status']) && $this->data['status'] == 'active';
     }
 }

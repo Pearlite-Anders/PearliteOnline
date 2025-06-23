@@ -36,42 +36,44 @@
                 @endif
             </div>
         @else
-            @if ($tasks->count() > 0 && $totalTasks == 0)
-                <p class="text-sm text-gray-500">
-                    {{ __('You haven’t any open tasks.') }} <br />
-                    {{ __('Good work!, keep it up.') }} {{ __('Or maybe you should check your filters') }}
-                </p>
-            @else
-                <x-table>
-                    <x-slot name="head">
-                        <x-table.heading class="text-left">{{ __('Module') }}</x-table.heading>
-                        <x-table.heading class="text-left">{{ __('Preview') }}</x-table.heading>
-                        <x-table.heading class="text-left">{{ __('Sign') }}</x-table.heading>
-                        <x-table.heading class="text-left">{{ __('Number') }}</x-table.heading>
-                        <x-table.heading class="text-left">{{ __('Name') }}</x-table.heading>
-                        <x-table.heading class="text-left">{{ __('Latest validation') }}</x-table.heading>
-                        <x-table.heading class="text-left">{{ __('Next validation') }}</x-table.heading>
-                        <x-table.heading class="text-left">{{ __('Responsible') }}</x-table.heading>
-                    </x-slot>
-                    <x-slot name="body">
-                        @foreach($tasks as $module => $moduleTasks)
-                            @foreach($moduleTasks as $task)
-                                @switch($module)
-                                    @case(App\Livewire\Dashboard\Module::Supplier->value)
-                                        @include('livewire.dashboard._supplier_task')
-                                        @break
-                                    @case(App\Livewire\Dashboard\Module::WeldingCertificate->value)
-                                        @include('livewire.dashboard._welding_certificate_task')
-                                        @break
-                                    @case(App\Livewire\Dashboard\Module::MachineMaintenance->value)
-                                        @include('livewire.dashboard._machine_maintenance_task')
-                                        @break
-                                @endswitch
+            <div class="max-w-7xl">
+                @if ($tasks->count() > 0 && $totalTasks == 0)
+                    <p class="text-sm text-gray-500">
+                        {{ __('You haven’t any open tasks.') }} <br />
+                        {{ __('Good work!, keep it up.') }} {{ __('Or maybe you should check your filters') }}
+                    </p>
+                @else
+                    <x-table>
+                        <x-slot name="head">
+                            <x-table.heading class="text-left">{{ __('Module') }}</x-table.heading>
+                            <x-table.heading class="text-left">{{ __('Preview') }}</x-table.heading>
+                            <x-table.heading class="text-left">{{ __('Sign') }}</x-table.heading>
+                            <x-table.heading class="text-left">{{ __('Number') }}</x-table.heading>
+                            <x-table.heading class="text-left">{{ __('Name') }}</x-table.heading>
+                            <x-table.heading class="text-left">{{ __('Latest validation') }}</x-table.heading>
+                            <x-table.heading class="text-left">{{ __('Next validation') }}</x-table.heading>
+                            <x-table.heading class="text-left">{{ __('Responsible') }}</x-table.heading>
+                        </x-slot>
+                        <x-slot name="body">
+                            @foreach($tasks as $module => $moduleTasks)
+                                @foreach($moduleTasks as $task)
+                                    @switch($module)
+                                        @case(\App\Enums\Module::Supplier->value)
+                                            @include('livewire.dashboard._supplier_task')
+                                            @break
+                                        @case(\App\Enums\Module::WeldingCertificate->value)
+                                            @include('livewire.dashboard._welding_certificate_task')
+                                            @break
+                                        @case(\App\Enums\Module::MachineMaintenance->value)
+                                            @include('livewire.dashboard._machine_maintenance_task')
+                                            @break
+                                    @endswitch
+                                @endforeach
                             @endforeach
-                        @endforeach
-                    </x-slot>
-                </x-table>
-            @endif
+                        </x-slot>
+                    </x-table>
+                @endif
+                </div>
         @endif
     </div>
 </div>

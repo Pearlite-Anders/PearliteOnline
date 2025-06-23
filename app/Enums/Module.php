@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Dashboard;
+namespace App\Enums;
 
 use Illuminate\Support\Carbon;
 
