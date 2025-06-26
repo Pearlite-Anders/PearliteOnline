@@ -35,6 +35,7 @@ class SidebarEntryNotifications extends Component
             Module::Supplier => $this->suppliers(),
             Module::MachineMaintenance => $this->machineMaintenance(),
             Module::WeldingCertificate => $this->weldingCertificates(),
+            Module::Document => $this->documents(),
             default => collect()
         };
     }
@@ -85,6 +86,20 @@ class SidebarEntryNotifications extends Component
         $query->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.date_next_signature'))) <= ?", [now()->format('Y-m-d')]);
 
         $query = $query->where('data->status', '!=', "no");
+        return $query->get();
+    }
+
+    private function documents()
+    {
+        $user = \Auth::user();
+
+        if (!$user->can('company_task.view')) {
+            return collect();
+        }
+        $query = $user->currentCompany->documents()->whereHas('currentRevision', function ($revisionQuery) {
+            $revisionQuery->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.next_review_date'))) <= ?", [now()->format('Y-m-d')]);
+        });
+
         return $query->get();
     }
 
