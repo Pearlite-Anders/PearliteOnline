@@ -15,16 +15,22 @@
                     @forelse($tasks as $module => $moduleTasks)
                         @foreach($moduleTasks as $task)
                             <div class="overflow-hidden rounded-lg bg-white shadow" wire:key="{{$module}}-{{$task->id}}">
+
                                 @switch($module)
-                                    @case(App\Livewire\Dashboard\Module::Supplier->value)
+                                    @case(\App\Enums\Module::Supplier->value)
                                         @include('livewire.dashboard._supplier_task')
                                         @break
-                                    @case(App\Livewire\Dashboard\Module::WeldingCertificate->value)
+                                    @case(\App\Enums\Module::WeldingCertificate->value)
                                         @include('livewire.dashboard._welding_certificate_task')
                                         @break
-                                    @case(App\Livewire\Dashboard\Module::MachineMaintenance->value)
+                                    @case(\App\Enums\Module::MachineMaintenance->value)
                                         @include('livewire.dashboard._machine_maintenance_task')
                                         @break
+                                    @case(\App\Enums\Module::Document->value)
+                                        @include('livewire.dashboard._document_task')
+                                        @break
+                                    @default
+                                    {{ $module }}
                                 @endswitch
                             </div>
                         @endforeach
@@ -66,6 +72,9 @@
                                             @break
                                         @case(\App\Enums\Module::MachineMaintenance->value)
                                             @include('livewire.dashboard._machine_maintenance_task')
+                                            @break
+                                        @case(\App\Enums\Module::Document->value)
+                                            @include('livewire.dashboard._document_task')
                                             @break
                                     @endswitch
                                 @endforeach

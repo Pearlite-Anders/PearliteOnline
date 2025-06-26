@@ -9,6 +9,7 @@ enum Module: string
     case Supplier = 'supplier';
     case WeldingCertificate = 'welding_certificate';
     case MachineMaintenance = 'machine_maintenance';
+    case Document = 'document';
 
     public function label()
     {
@@ -16,6 +17,7 @@ enum Module: string
             static::Supplier => __('Supplier'),
             static::WeldingCertificate => __('Welding Certificate'),
             static::MachineMaintenance => __('Maintenance'),
+            static::Document => __('Document'),
         };
     }
 }

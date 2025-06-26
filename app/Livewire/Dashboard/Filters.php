@@ -44,6 +44,7 @@ class Filters extends Form
             Module::Supplier => $this->applySupplierModule($query),
             Module::WeldingCertificate => $this->applyWeldingCertificateModule($query),
             Module::MachineMaintenance => $this->applyMachineMaintenanceModule($query),
+            Module::Document => $this->applyDocumentModule($query),
         };
     }
 
@@ -68,6 +69,14 @@ class Filters extends Form
     {
         $interval = Interval::from($this->interval);
         return $query->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.next_maintenance_date'))) <= ?", [$interval->date()]);
+    }
+
+    protected function applyDocumentModule($query)
+    {
+        $interval = Interval::from($this->interval);
+        return $query->whereHas('currentRevision', function ($revisionQuery) use ($interval) {
+            $revisionQuery->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.next_review_date'))) <= ?", [$interval->date()]);
+        });
     }
 
 

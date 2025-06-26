@@ -116,4 +116,41 @@ class Document extends Model
     {
         return [];
     }
+
+    public function getNextEvaluationAttribute()
+    {
+        $next_evaluation = $this->nextEvaluation();
+        return $next_evaluation ? $next_evaluation->format('Y.m.d') : null;
+    }
+
+    public function getLatestEvaluationAttribute()
+    {
+        $latest_evaluation = $this->latestEvaluation();
+        return $latest_evaluation? $latest_evaluation->format('Y.m.d') : null;
+    }
+
+    public function nextEvaluation()
+    {
+        $latest_evaluation = $this->latestEvaluation();
+        if(!$latest_evaluation) {
+            return null;
+        }
+
+        return $latest_evaluation->addMonths(data_get($this->currentRevision->data, 'review_interval', 0));
+    }
+
+    public function latestEvaluation()
+    {
+        if(!$this->currentRevision()) {
+            return null;
+        }
+
+        $last_report = $this->currentRevision;
+        return Carbon::createFromFormat('Y.m.d', $this->currentRevision->data['lastest_review_date']);
+    }
+
+    public function edit_url()
+    {
+        return route('documents.edit', ['document' => $this->id]);
+    }
 }

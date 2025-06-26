@@ -79,4 +79,13 @@ class CompanyTasks extends Component
 
         return $query->get();
     }
+
+    protected function document(): Collection
+    {
+        $user = \Auth::user();
+        $query = $user->currentCompany->documents();
+        $query = $this->filters->apply($query, Module::Document);
+
+        return $query->get();
+    }
 }
