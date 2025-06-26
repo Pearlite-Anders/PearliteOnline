@@ -3,6 +3,8 @@
 namespace App\View\Components;
 
 use App\Enums\Module;
+use App\Models\Document;
+use App\Models\MachineMaintenance;
 use App\Models\Supplier;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -62,11 +64,11 @@ class SidebarEntryNotifications extends Component
     {
         $user = \Auth::user();
 
-        if (!$user->can('company_task.view')) {
-            return collect();
+        if ($user->can('company_task.view')) {
+            $query = $user->currentCompany->machineMaintenances();
+        } else {
+            $query = MachineMaintenance::where("responsible_user_id", "=", $user->id);
         }
-
-        $query = $user->currentCompany->machineMaintenances();
 
         $query = $query->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.next_maintenance_date'))) <= ?", [now()->format('Y-m-d')]);
 
@@ -93,10 +95,13 @@ class SidebarEntryNotifications extends Component
     {
         $user = \Auth::user();
 
-        if (!$user->can('company_task.view')) {
-            return collect();
+        if ($user->can('company_task.view')) {
+            $query = $user->currentCompany->documents();
+        } else {
+            $query = Document::where("owner_id", "=", $user->id);
         }
-        $query = $user->currentCompany->documents()->whereHas('currentRevision', function ($revisionQuery) {
+
+        $query = $query->whereHas('currentRevision', function ($revisionQuery) {
             $revisionQuery->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.next_review_date'))) <= ?", [now()->format('Y-m-d')]);
         });
 
