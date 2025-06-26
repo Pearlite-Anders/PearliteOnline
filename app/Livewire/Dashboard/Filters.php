@@ -51,10 +51,14 @@ class Filters extends Form
     protected function applySupplierModule($query)
     {
         $interval = Interval::from($this->interval);
-        $query = $query->whereRaw(
-            "DATE_ADD(JSON_UNQUOTE(JSON_EXTRACT(data, '$.latest_assessment_date')), INTERVAL JSON_UNQUOTE(JSON_EXTRACT(data, '$.assessment_frequency')) MONTH) <= ?",
-            [$interval->date()]
-        );
+        $query = $query->where(function($nextAssessmentDateQuery) use ($interval) {
+            $nextAssessmentDateQuery
+                ->whereRaw("DATE(JSON_UNQUOTE(JSON_EXTRACT(data, '$.next_assessment'))) <= ?", [$interval->date()])
+                ->orWhereRaw(
+                    "DATE_ADD(JSON_UNQUOTE(JSON_EXTRACT(data, '$.latest_assessment_date')), INTERVAL JSON_UNQUOTE(JSON_EXTRACT(data, '$.assessment_frequency')) MONTH) <= ?",
+                    [$interval->date()]
+                );
+        });
 
         return $query->where('data->needs_assessment', '!=', "no");
     }

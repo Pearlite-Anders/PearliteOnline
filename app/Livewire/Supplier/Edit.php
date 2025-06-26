@@ -43,4 +43,21 @@ class Edit extends Component
         $this->supplier->refresh();
         $this->form->setFields($this->supplier);
     }
+
+    public function updated($property)
+    {
+        if ($property == 'form.data.assessment_frequency') {
+
+            if(!$this->form->data->assessment_frequency) {
+                return;
+            }
+
+            $latestAssessment = $this->supplier->latestAssessment();
+            if (!$latestAssessment) {
+                return;
+            }
+
+            $this->form->data->next_assessment = $latestAssessment->addMonths((int)$this->form->data->assessment_frequency)->format('Y.m.d');
+        }
+    }
 }
