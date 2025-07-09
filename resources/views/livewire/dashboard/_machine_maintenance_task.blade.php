@@ -15,11 +15,11 @@
         <x-table.cell />
         <x-table.cell>
             <livewire:machine-maintenance.maintenance :machineMaintenance="$task" class="!py-0 !px-2 !leading-6 !text-xs" :button-text="__('Sign')" @click.prevent.stop="console.log('stop')" />
-        </x-table>
+        </x-table.cell>
         <x-table.cell>{{ $task->data['serial_number'] }}</x-table.cell>
-        <x-table.cell>{{ $task->data['name'] }}</x-table>
-        <x-table.cell>{{ $task->latest_maintenance_date }}</x-table>
+        <x-table.cell>{{ $task->data['name'] }}</x-table.cell>
+        <x-table.cell>{{ $task->latest_maintenance_date }}</x-table.cell>
         <x-table.date-status-cell :date="$task->nextMaintenanceDate()" />
-        <x-table.cell>{{ $task->responsible_user?->name }}</x-table>
+        <x-table.cell>{{ $task->responsible_user?->name }}</x-table.cell>
     </x-table.row>
 @endif

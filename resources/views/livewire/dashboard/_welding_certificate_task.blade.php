@@ -34,11 +34,11 @@
             @endif
         </x-table.cell>
         <x-table.cell>{{ $task->data['number'] }}</x-table.cell>
-        <x-table.cell>{{ $task->welder?->name }}</x-table>
-        <x-table.cell>{{ $task->latest_signature }}</x-table>
+        <x-table.cell>{{ $task->welder?->name }}</x-table.cell>
+        <x-table.cell>{{ $task->latest_signature }}</x-table.cell>
         <x-table.date-status-cell :date="$task->nextSignatureOrExpire()" />
         <x-table.cell>
             <x-welding-certificate-users :company-id="$task->company_id" />
-        </x-table>
+        </x-table.cell>
     </x-table.row>
 @endif

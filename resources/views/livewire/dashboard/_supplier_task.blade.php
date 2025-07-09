@@ -15,11 +15,11 @@
         <x-table.cell />
         <x-table.cell>
             <livewire:supplier.assessment :supplier="$task" class="!py-0 !px-2 !leading-6 !text-xs" :button-text="__('Sign')" />
-        </x-table>
+        </x-table.cell>
         <x-table.cell />
-        <x-table.cell>{{ $task->data['name'] }}</x-table>
-        <x-table.cell>{{ $task->latest_assessment_date }}</x-table>
+        <x-table.cell>{{ $task->data['name'] }}</x-table.cell>
+        <x-table.cell>{{ $task->latest_assessment_date }}</x-table.cell>
         <x-table.date-status-cell :date="$task->nextAssessment()" />
-        <x-table.cell>{{ $task->responsible_user?->name }}</x-table>
+        <x-table.cell>{{ $task->responsible_user?->name }}</x-table.cell>
     </x-table.row>
 @endif
