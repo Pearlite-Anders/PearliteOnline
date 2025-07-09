@@ -29,9 +29,9 @@
 
         </x-table.cell>
         <x-table.cell>{{ data_get($task->currentRevision->data, 'title') }}</x-table.cell>
-        <x-table.cell>{{ data_get($task->currentRevision->data, 'title') }}</x-table>
-        <x-table.cell>{{ $task->latest_evaluation }}</x-table>
+        <x-table.cell>{{ data_get($task->currentRevision->data, 'title') }}</x-table.cell>
+        <x-table.cell>{{ $task->latest_evaluation }}</x-table.cell>
         <x-table.date-status-cell :date="$task->nextEvaluation()" />
-        <x-table.cell>{{ $task->owner?->name }}</x-table>
+        <x-table.cell>{{ $task->owner?->name }}</x-table.cell>
     </x-table.row>
 @endif
