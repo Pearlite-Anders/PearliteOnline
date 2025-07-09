@@ -195,7 +195,8 @@ class WeldingCertificate extends Model
         'date_next_signature' => [
             'type' => 'date',
             'label' => 'Date next signature',
-            'filter' => 'date'
+            'filter' => 'date',
+            'indicator' => true
         ],
         'signed' => [
             'type' => 'number',
@@ -234,4 +235,60 @@ class WeldingCertificate extends Model
         return $this->load(['company', 'welder']);
     }
 
+    public function getNextSignatureOrExpireAttribute()
+    {
+        $next = $this->nextSignatureOrExpire();
+        return $next ? $next->format('Y.m.d') : null;
+    }
+
+    public function getLatestSignatureAttribute()
+    {
+        $latest_signature = $this->latestSignature();
+        return $latest_signature? $latest_signature->format('Y.m.d') : null;
+    }
+
+    public function nextSignatureOrExpire()
+    {
+        $dates = [];
+        if (data_get($this->data, 'date_next_signature', '') != '') {
+            $dates[] = Carbon::createFromFormat('Y.m.d', $this->data['date_next_signature']);
+        }
+
+        if (data_get($this->data, 'date_expiration', '') != '') {
+            $dates[] = Carbon::createFromFormat('Y.m.d', $this->data['date_expiration']);
+        }
+
+        if (count($dates) == 0) {
+            return null;
+        }
+
+        uasort($dates, function ($a, $b) {
+            if ($a->eq($b)) {
+                return 0;
+            }
+            return ($a->isBefore($b)) ? -1 : 1;
+        });
+
+        return $dates[0];
+    }
+
+    public function latestSignature()
+    {
+        if (data_get($this->data, 'last_signature', '') == '') {
+            return null;
+        }
+
+        $date = str_replace('-', '.', $this->data['last_signature']);
+        return Carbon::createFromFormat('Y.m.d', $date);
+    }
+
+    public function edit_url()
+    {
+        return route('welding-certificates.edit', ['weldingCertificate' => $this->id]);
+    }
+
+    public function getNeedsReviewAttribute()
+    {
+        return isset($this->data['status']) && $this->data['status'] == 'active';
+    }
 }

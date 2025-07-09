@@ -194,4 +194,21 @@ trait HasFilter
             return [__($column->label) => $value];
         })->toArray();
     }
+
+    public function getColumnTimeDiff($column_key, ?Carbon $time = null)
+    {
+        $time = $time ?? Carbon::now();
+
+        $column = self::getColumn($column_key);
+        $value = $this->getColumnValue($column->key);
+
+        try {
+            $valueAsDate = Carbon::createFromFormat('Y.m.d', $value);
+            $diff = $time->diffInDays($valueAsDate, false);
+        } catch (\Carbon\Exceptions\InvalidFormatException $e) {
+            $diff = null;
+        }
+
+        return $diff;
+    }
 }

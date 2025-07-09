@@ -67,4 +67,12 @@ class Edit extends Component
 
         $this->reports = $this->machineMaintenance->reports()->with('user')->get()->toArray();
     }
+
+    #[On('maintenance-created')]
+    public function reportCreated()
+    {
+        $this->reports = $this->machineMaintenance->reports()->with('user')->get()->toArray();
+        $this->machineMaintenance->refresh();
+        $this->form->setFields($this->machineMaintenance);
+    }
 }

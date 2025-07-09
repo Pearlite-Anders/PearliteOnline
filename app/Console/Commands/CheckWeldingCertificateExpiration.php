@@ -73,14 +73,6 @@ class CheckWeldingCertificateExpiration extends Command
             if ($weldingCertificates->count() > 0) {
                 $this->info('Welding Certificates: ' . $weldingCertificates->count());
                 $company->notify(new Expiration($weldingCertificates->pluck('id'), $notification_before_expiration));
-
-                // $mails = Setting::get('welding_certificate_notification_email', null, $weldingCertificates->first()->company_id);
-                // $mails = explode(',', $mails);
-                // $mails = array_map('trim', $mails);
-                // foreach ($mails as $mail) {
-                //     $this->info('Mail: ' . $mail);
-                //     Notification::route('mail', $mail)->notify(new Expiration($weldingCertificates, $notification_before_expiration));
-                // }
             }
         });
     }

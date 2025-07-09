@@ -16,6 +16,8 @@ class Settings extends Component
 
     public $confirming;
 
+    public $users;
+
     public function confirmDelete($id)
     {
         $this->confirming = $id;
@@ -62,6 +64,7 @@ class Settings extends Component
                 $settings[$key] = json_decode($value, true);
             }
         }
+        $this->users = \Auth::user()->currentCompany->users()->pluck('name', 'users.id')->toArray();
         $this->settings = $settings;
         $this->section = request()->get('section', 'welding-certificates');
     }

@@ -12,13 +12,6 @@ trait Shared
 {
     public $confirmingFile = null;
 
-    public function createReport()
-    {
-        $this->form->createReport();
-
-        return redirect()->route('machine-maintenance.edit', $this->form->machine_maintenance_id)->with('flash.banner', __('Maintenance created.'));
-    }
-
     public function confirmDeleteFile($id)
     {
         $this->confirmingFile = $id;

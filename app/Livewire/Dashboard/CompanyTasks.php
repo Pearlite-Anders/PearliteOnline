@@ -2,12 +2,17 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Livewire\DataTable\WithClickableRow;
+use App\Enums\Module;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class CompanyTasks extends Component
 {
+    use WithClickableRow;
+
     #[Reactive]
     public Filters $filters;
 
@@ -24,6 +29,18 @@ class CompanyTasks extends Component
     {
         $header = $params['header'];
         return view('livewire.dashboard.placeholder', compact('header'));
+    }
+
+    #[On('maintenance-created')]
+    public function reportCreated()
+    {
+        // Dont do anything, simply here to trigger render
+    }
+
+    #[On('assessment-created')]
+    public function assessmentCreated()
+    {
+        // Dont do anything, simply here to trigger render
     }
 
     protected function tasks(): Collection
@@ -59,6 +76,15 @@ class CompanyTasks extends Component
         $user = \Auth::user();
         $query = $user->currentCompany->machineMaintenances();
         $query = $this->filters->apply($query, Module::MachineMaintenance);
+
+        return $query->get();
+    }
+
+    protected function document(): Collection
+    {
+        $user = \Auth::user();
+        $query = $user->currentCompany->documents();
+        $query = $this->filters->apply($query, Module::Document);
 
         return $query->get();
     }

@@ -185,8 +185,13 @@
                 </x-responsive-nav-link>
             @endcan
             @can('viewAny', App\Models\Supplier::class)
-                <x-responsive-nav-link href="{{ route('supplier.index') }}" :active="request()->routeIs('supplier.*')">
-                    {{ __('Suppliers') }}
+                <x-responsive-nav-link href="{{ route('supplier.index') }}" :active="request()->routeIs('supplier.*')" class="flex">
+                    <div class="flex-1 flex items-center">
+                        {{ __('Suppliers') }}
+                    </div>
+                    <div class="flex-0 flex items-center">
+                        <x-sidebar-entry-notifications module="{{ App\Enums\Module::Supplier->value }}" />
+                    </div>
                 </x-responsive-nav-link>
             @endcan
             @if(
