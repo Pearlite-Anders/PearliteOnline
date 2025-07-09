@@ -146,7 +146,17 @@ class Document extends Model
         }
 
         $last_report = $this->currentRevision;
-        return Carbon::createFromFormat('Y.m.d', $this->currentRevision->data['lastest_review_date']);
+        $date = data_get($this->currentRevision->data, 'lastest_review_date');
+        
+        if (empty($date)) {
+            return null;
+        }
+        
+        try {
+            return Carbon::createFromFormat('Y.m.d', $date);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     public function edit_url()
