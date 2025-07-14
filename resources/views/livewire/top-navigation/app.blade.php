@@ -32,7 +32,7 @@
                                 </span>
                             </x-slot>
                             <x-slot name="content">
-                                @foreach(auth()->user()->companies as $company)
+                                @foreach(auth()->user()->companies()->orderBy('data->name', 'asc')->get() as $company)
                                     <x-dropdown-link href="{{ route('switch-company', $company) }}">
                                         {{ $company->data['name'] }}
                                     </x-dropdown-link>
