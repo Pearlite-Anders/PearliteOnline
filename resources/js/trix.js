@@ -15,14 +15,15 @@ addEventListener("trix-initialize", function(event) {
     let element;
 
     var resize = function() {
-        iframe.setAttribute('width', document.body.clientWidth - 2 * border);
-        iframe.setAttribute('height', document.body.clientHeight - 2 * border);
+        iframe.setAttribute('width', window.innerWidth - 2 * border);
+        iframe.setAttribute('height', window.innerHeight - 2 * border);
     };
 
     var close = function() {
         window.removeEventListener('resize', resize);
         window.removeEventListener('message', receive);
         document.body.removeChild(iframe);
+        document.body.style.overflow = '';
         element = null;
     }
 
@@ -87,6 +88,7 @@ addEventListener("trix-initialize", function(event) {
             return true;
         },
         perform() {
+			document.body.style.overflow = 'hidden';
 			iframe = document.createElement('iframe');
 			iframe.style.zIndex = '9999';
 			iframe.style.position = 'absolute';
@@ -106,6 +108,7 @@ addEventListener("trix-initialize", function(event) {
     window.addEventListener("edit-drawio-element", function(event) {
         element = event.detail.trixElement;
         console.log(event.detail);
+        document.body.style.overflow = 'hidden';
         iframe = document.createElement('iframe');
         iframe.style.zIndex = '9999';
         iframe.style.position = 'absolute';
