@@ -112,7 +112,7 @@ class Supplier extends Model
             'postfix' => ' months'
         ],
         'next_assessment' => [
-            'type' => 'calculated',
+            'type' => 'calculated_date',
             'label' => 'Next assessment',
             'filter' => 'date',
             'indicator' => true
@@ -155,6 +155,10 @@ class Supplier extends Model
 
     public function nextAssessment()
     {
+        if (data_get($this->data, 'next_assessment')) {
+            return Carbon::createFromFormat('Y.m.d', data_get($this->data, 'next_assessment'));
+        }
+
         $latest_assessment = $this->latestAssessment();
         if(!$latest_assessment) {
             return null;

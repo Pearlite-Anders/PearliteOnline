@@ -34,4 +34,14 @@ class Create extends Component
     {
         return view('livewire.supplier.create');
     }
+
+    public function updated($property)
+    {
+        if($property == 'form.data.assessment_frequency') {
+            if(!$this->form->data->assessment_frequency) {
+                return;
+            }
+            $this->form->data->next_assessment = now()->addMonths((int)$this->form->data->assessment_frequency)->format('Y.m.d');
+        }
+    }
 }

@@ -7,6 +7,7 @@ use App\Models\Supplier;
 use App\Data\SupplierData;
 use App\Data\SupplierDocumentData;
 use App\Models\SupplierReport;
+use Illuminate\Support\Carbon;
 use Livewire\Form as LivewireForm;
 
 class Form extends LivewireForm
@@ -93,6 +94,10 @@ class Form extends LivewireForm
         $supplier = Supplier::find($this->supplier_id);
         $supplierData = $supplier->data;
         $supplierData["latest_assessment_date"] = $this->new_assessment_date;
+        if ($supplierData["assessment_frequency"]) {
+            $date = Carbon::createFromFormat('Y.m.d', $this->new_assessment_date);
+            $supplierData["next_assessment"] = $date->addMonths($supplierData["assessment_frequency"])->format('Y.m.d');
+        }
         $supplier->data = $supplierData;
         $supplier->save();
 
